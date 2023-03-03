@@ -1,0 +1,16 @@
+Accelerators:
+- label: 不选择
+  value: None
+- label: UU(未完成)
+  value: UU
+- label: ACGP(未完成)
+  value: ACGP
+- label: 和家亲
+  value: Universal
+Simulator:
+  Accelerator: Universal
+  Serial: emulator-5554
+Socket:
+  HideWindow: false
+  NameSpace: /nkas
+  Port: 5000

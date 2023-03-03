@@ -1,0 +1,10 @@
+android-platform-tools/
+python-3.9.13-embed-amd64/
+*.bat
+**/.idea
+**/.vscode
+**/__pycache__
+**/dist
+**/dist_electron
+**/node_modules
+
