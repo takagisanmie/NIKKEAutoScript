@@ -16,7 +16,7 @@
           <Setting/>
         </el-icon>
       </el-menu-item>
-      <el-menu-item route="Main" @click="testinfo" index="3">
+      <el-menu-item route="Main" @click="checkVersion" index="3">
         <el-icon>
           <Link/>
         </el-icon>
@@ -45,12 +45,13 @@ const translateMenu = () => {
 const Log = inject('Log')
 const NKASLog = inject('NKASLog')
 
-const testinfo = () => {
-  Log.LINE('Page Change: page_main', NKASLog)
+const checkVersion = () => {
+  socket.emit('checkVersion')
+  // Log.LINE('Page Change: page_main', NKASLog)
   // const now = dayjs().unix()
   // Log.ERROR('Page Change: page_main', NKASLog)
   // socket.emit('test_update', {'key': 'Task.Reward.nextExecutionTime', 'value': now - 100})
-  socket.emit('test')
+  // socket.emit('test')
 }
 
 socket.on('update_success', () => {

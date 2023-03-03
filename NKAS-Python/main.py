@@ -15,8 +15,6 @@ class NikkeAutoScript:
         glo.set_value('nkas', self)
         self.state = False
 
-    pass
-
     @cached_property
     def config(self):
         from module.config.config import GeneralConfig

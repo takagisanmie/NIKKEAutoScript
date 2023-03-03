@@ -123,20 +123,8 @@ class Socket(BaseModule):
         del glo.getDevice().u2
 
     @staticmethod
-    @socketio.on('test', namespace=config.Socket_NameSpace)
-    def test():
-        import requests
-        import cv2
-        import numpy as np
-        from module.thread.thread import futures
+    @socketio.on('checkVersion', namespace=config.Socket_NameSpace)
+    def checkVersion():
 
-        url = 'http://localhost:53516/screenshot'
-        device = glo.getNKAS().device
-        # futures.submit(device.automate)
-        # session = requests.Session()
-        session = device.droidcast_session
-        print(session)
-        image = session.get(url, timeout=3).content
-        image = np.frombuffer(image, np.uint8)
-        image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-        cv2.imwrite('./pic/droidcast_test.png', image)
+        pass
+
