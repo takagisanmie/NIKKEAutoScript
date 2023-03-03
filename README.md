@@ -7,6 +7,10 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 然后想到了自己写的最初版代码，那写的是什么shit😅😅😅  
 虽然现在写的依旧是shit  
 
+### 下载
+[123网盘下载](https://www.123pan.com/s/1HLA-TWdVh.html)（不限速，不登录的）     
+或者在Releases下载
+
 ### 使用
 1.解压NKAS.zip，用管理员运行setADB.bat，如果电脑已经配置过ADB可以跳过  
 2.在**\NKAS-Python中，运行runNKAS.bat  
