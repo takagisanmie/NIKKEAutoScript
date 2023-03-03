@@ -120,9 +120,6 @@ class NikkeAutoScript:
 
 
 if __name__ == '__main__':
-
-    # updated
-
     # TODO 改进主页识别
     # TODO 咨询时跳过好感上限的nikke
     # TODO 咨询时没有识别到正确选项时，保存截图

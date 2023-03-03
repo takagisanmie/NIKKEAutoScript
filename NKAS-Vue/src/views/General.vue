@@ -61,7 +61,10 @@ socket.on('is_current_version', () => {
 })
 
 socket.on('check_version_failed', () => {
-  ElMessage.error('检查更新失败')
+  ElNotification({
+    title: '检查更新失败，无法连接到Github',
+    type: 'warning',
+  })
 })
 
 const updating = ref(false)

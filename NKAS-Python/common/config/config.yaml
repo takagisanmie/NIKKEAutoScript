@@ -14,4 +14,4 @@ Socket:
   HideWindow: false
   NameSpace: /nkas
   Port: 5000
-Version: 'v0.0.0'
+Version: 'v0.0.2'
