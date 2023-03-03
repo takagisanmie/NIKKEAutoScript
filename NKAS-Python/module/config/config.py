@@ -4,6 +4,9 @@ from module.tools.yamlStrategy import *
 
 
 class GeneralConfig:
+    Version: str = ''
+    New_Version: str = ''
+
     dict: dict = {}
     Task_Dict: dict = {}
     Simulator_Serial: str = ''

@@ -125,6 +125,40 @@ class Socket(BaseModule):
     @staticmethod
     @socketio.on('checkVersion', namespace=config.Socket_NameSpace)
     def checkVersion():
+        import requests
+        import json
+        from module.tools.yamlStrategy import get
 
-        pass
+        latest = 'https://api.github.com/repos/takagisanmie/NIKKEAutoScript/releases/latest'
+        session = requests.Session()
+        request = session.get(latest)
+        code = request.status_code
+        if code == 200:
+            content = json.loads(request.content.decode())
+            version = get('tag_name', content, False)
+            if version == Socket.config.Version:
+                glo.getSocket().emit('is_current_version', None)
+            else:
+                Socket.config.New_Version = version
+                glo.getSocket().emitSingleParameter('new_version_available', 'data', version)
 
+        else:
+            glo.getSocket().emit('check_version_failed', None)
+
+    @staticmethod
+    @socketio.on('updateNKAS', namespace=config.Socket_NameSpace)
+    def updateNKAS():
+        import requests
+        import io
+        import zipfile
+
+        session = requests.Session()
+        latest = f'https://github.com/takagisanmie/NIKKEAutoScript/releases/download/{Socket.config.New_Version}/NKAS-Update.zip'
+        response = session.get(latest)
+        code = response.status_code
+        if code == 200:
+            zip_file = zipfile.ZipFile(io.BytesIO(response.content))
+            for file in zip_file.namelist():
+                zip_file.extract(file, path='../')
+
+        glo.getSocket().emit('update_NKAS_success', None)

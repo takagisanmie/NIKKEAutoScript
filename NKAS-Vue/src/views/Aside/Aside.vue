@@ -31,7 +31,7 @@ import {
   Menu as IconMenu,
   Setting, Link
 } from '@element-plus/icons-vue'
-import {ElNotification} from 'element-plus'
+import {ElNotification, ElMessage} from 'element-plus'
 import Socket from "@/assets/js/socket";
 import dayjs from "dayjs";
 
@@ -47,11 +47,6 @@ const NKASLog = inject('NKASLog')
 
 const checkVersion = () => {
   socket.emit('checkVersion')
-  // Log.LINE('Page Change: page_main', NKASLog)
-  // const now = dayjs().unix()
-  // Log.ERROR('Page Change: page_main', NKASLog)
-  // socket.emit('test_update', {'key': 'Task.Reward.nextExecutionTime', 'value': now - 100})
-  // socket.emit('test')
 }
 
 socket.on('update_success', () => {

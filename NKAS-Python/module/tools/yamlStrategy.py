@@ -8,11 +8,14 @@ def read(path):
         return result
 
 
-def get(key, data):
-    if '.' in key:
-        keyList = key.split('.')
+def get(key, data, split=True):
+    if split:
+        if '.' in key:
+            keyList = key.split('.')
+        else:
+            keyList = key.split('_')
     else:
-        keyList = key.split('_')
+        keyList = [key]
 
     for index, key in enumerate(keyList):
         if isinstance(data, dict):
