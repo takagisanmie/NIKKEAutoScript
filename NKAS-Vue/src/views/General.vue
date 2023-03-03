@@ -44,6 +44,15 @@ socket.on('new_version_available', async (result) => {
 
 })
 
+socket.on('new_nkas_version_available', async (result) => {
+  ElNotification({
+    title: '检查到NKAS的最新版本',
+    duration: '10000',
+    message: `最新版本为: ${result.data}，并且需要手动更新NKAS的Vue端。`,
+    type: 'warning',
+  })
+})
+
 socket.on('is_current_version', () => {
   ElNotification({
     title: '当前NKAS已是最新版',
@@ -66,7 +75,7 @@ socket.on('update_NKAS_success', () => {
   updating.value = false
   updateDialogVisible.value = false
   ElNotification({
-    title: '请重启NKAS已应用更改',
+    title: '请重启NKAS以应用更改',
     type: 'success',
   })
 })

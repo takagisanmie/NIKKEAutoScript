@@ -141,7 +141,10 @@ class Socket(BaseModule):
             else:
                 Socket.config.New_Version = version
                 glo.getSocket().emitSingleParameter('new_version_available', 'data', version)
-
+                assets = get('assets', content)
+                data = list(filter(lambda x: 'NKAS-Update-Vue' in x['name'], assets))
+                if len(data) > 0:
+                    glo.getSocket().emitSingleParameter('new_nkas_version_available', 'data', version)
         else:
             glo.getSocket().emit('check_version_failed', None)
 
@@ -159,6 +162,10 @@ class Socket(BaseModule):
         if code == 200:
             zip_file = zipfile.ZipFile(io.BytesIO(response.content))
             for file in zip_file.namelist():
+                if str(file) == 'NKAS-Vue':
+                    # 需要手动更新
+                    pass
+
                 zip_file.extract(file, path='../')
 
         glo.getSocket().emit('update_NKAS_success', None)
