@@ -49,7 +49,9 @@ class LoginHandler(UI):
                 if self.start_universalapp():
                     return True
 
-        self.device.app_start()
+        if self.device.app_start():
+            return True
+
         if self.isHorizontalScreen():
             return True
         self.handle_app_login()

@@ -61,6 +61,8 @@ socket.on('is_current_version', () => {
 })
 
 socket.on('check_version_failed', () => {
+  updating.value = false
+  updateDialogVisible.value = false
   ElNotification({
     title: '检查更新失败，无法连接到Github',
     type: 'warning',

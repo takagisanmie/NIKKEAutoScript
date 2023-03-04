@@ -123,17 +123,43 @@ class NikkeAutoScript:
                 self.socket.emit('insertLog', self.socket.getLog('INFO', 'ADB重启成功'))
                 self.device.stop_droidcast()
 
-            self.socket.emitSingleParameter('checkSchedulerState', 'state', True)
+            self.state = True
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
             return True
 
         except AdbError as e:
-            from adbutils import adb as adb_client
-            self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{str(e)}，正在尝试重启ADB'))
-            self.socket.emitSingleParameter('checkSchedulerState', 'state', False)
-            adb_client.server_kill()
-            adb_client._connect(timeout=10)
-            self.device.sleep(5)
+            e = str(e)
+            if 'not found' in e:
+                self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，当前模拟器离线，正在尝试重启ADB'))
+            else:
+                self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，正在尝试重启ADB'))
+
+            self.state = True
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
+            self.device.adb_restart()
+            self.device.sleep(6)
             return self.checkService(restart=True)
+
+        except RuntimeError as e:
+            e = str(e)
+            self.state = False
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
+            if 'offline' in e:
+                self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，当前模拟器离线'))
+            else:
+                self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}'))
+
+        except ConnectionError as e:
+            e = str(e)
+            self.state = False
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
+            self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}'))
+
+        except Exception as e:
+            e = str(e)
+            self.state = False
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
+            self.ui.getErrorInfo()
 
     def checkResolution(self):
         self.socket.emitSingleParameter('checkSimulator', 'info', self.device.u2.info)
@@ -145,11 +171,13 @@ class NikkeAutoScript:
             self.socket.emit('insertLog',
                              self.socket.getLog('ERROR',
                                                 '模拟器分辨率错误: 必须为1920x1080，或当前模拟器非强制横屏模式'))
-            self.socket.emitSingleParameter('checkSchedulerState', 'state', False)
+            self.state = False
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
         return False
 
 
 if __name__ == '__main__':
+    # TODO 选择服务器
     # TODO 在活动时，如果当前难度的关卡已经全部完成，但选项还开着，则关闭 待测试
     # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）待测试
     # TODO 企业塔

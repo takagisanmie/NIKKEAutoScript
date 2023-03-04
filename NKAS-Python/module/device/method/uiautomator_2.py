@@ -3,6 +3,7 @@ import subprocess
 import cv2
 import numpy as np
 
+import glo
 from common.enum.enum import Path
 from module.device.connection import Connection
 
@@ -28,6 +29,15 @@ class Uiautomator2(Connection):
 
     def app_start_uiautomator2(self, package_name=None):
         if not package_name:
-            package_name = self.package
+            if self.jp_package in self.u2.app_list():
+                package_name = self.jp_package
 
-        self.u2.app_start(package_name)
+            elif self.tw_package in self.u2.app_list():
+                package_name = self.tw_package
+
+        if package_name is not None:
+            self.u2.app_start(package_name)
+            return False
+
+        glo.getNKAS().socket.emit('insertLog', glo.getNKAS().socket.getLog('ERROR', '没有找到NIKKE'))
+        return True

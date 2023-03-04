@@ -22,9 +22,11 @@ class ConnectionAttr:
 
     @cached_property
     def adb_client(self) -> AdbClient:
-        host = '127.0.0.1'
-        port = 5037
-        return AdbClient(host, port)
+        from adbutils import adb as adb_client
+        # host = '127.0.0.1'
+        # port = 5037
+        # return AdbClient(host, port)
+        return adb_client
 
     @cached_property
     def adb(self) -> AdbDevice:

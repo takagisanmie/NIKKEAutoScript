@@ -9,4 +9,4 @@ class Device(Control):
 
 
     def app_start(self, package_name=None):
-        self.app_start_uiautomator2(package_name)
+        return self.app_start_uiautomator2(package_name)

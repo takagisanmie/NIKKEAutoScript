@@ -120,7 +120,9 @@ class Socket(BaseModule):
     @staticmethod
     @socketio.on('changeSerial', namespace=config.Socket_NameSpace)
     def changeSerial():
-        del glo.getDevice().u2
+        from module.base.decorator import del_cached_property
+        del_cached_property(glo.getNKAS().device, 'u2')
+        del_cached_property(glo.getNKAS().device, 'adb')
 
     @staticmethod
     @socketio.on('checkVersion', namespace=config.Socket_NameSpace)
@@ -136,15 +138,30 @@ class Socket(BaseModule):
         if code == 200:
             content = json.loads(request.content.decode())
             version = get('tag_name', content, False)
-            if version == Socket.config.Version:
+
+            version = version[1:].split('.')
+            sum1 = 0
+            for n in version:
+                sum1 += int(n)
+
+            version2 = Socket.config.Version[1:].split('.')
+            sum2 = 0
+            for n in version2:
+                sum2 += int(n)
+
+            if sum1 == sum2:
                 glo.getSocket().emit('is_current_version', None)
-            else:
+            elif sum1 > sum2:
                 Socket.config.New_Version = version
                 glo.getSocket().emitSingleParameter('new_version_available', 'data', version)
                 assets = get('assets', content)
                 data = list(filter(lambda x: 'NKAS-Update-Vue' in x['name'], assets))
                 if len(data) > 0:
                     glo.getSocket().emitSingleParameter('new_nkas_version_available', 'data', version)
+            else:
+                glo.getSocket().emit('is_current_version', None)
+
+
         else:
             glo.getSocket().emit('check_version_failed', None)
 
@@ -167,5 +184,8 @@ class Socket(BaseModule):
                     pass
 
                 zip_file.extract(file, path='../')
+        else:
+            glo.getSocket().emit('check_version_failed', None)
+            return
 
         glo.getSocket().emit('update_NKAS_success', None)

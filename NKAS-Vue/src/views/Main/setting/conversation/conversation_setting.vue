@@ -6,8 +6,12 @@
       <hr>
       <div>
         <p style="text-align: center; margin: 0 0 20px">
-          <el-transfer @change="nikke_list_change" v-model="Nikke_List_selected" :data="Nikke_List"
+          <el-transfer @change="nikke_list_change"
+                       v-model="Nikke_List_selected"
+                       :data="Nikke_List"
                        :titles="['可选', '已选']"
+                       filter-placeholder="输入NIKKE的名字"
+                       filterable
           />
         </p>
       </div>
