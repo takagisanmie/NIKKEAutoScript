@@ -89,7 +89,8 @@ class DroidCast(Uiautomator2):
             print(e)
 
     def run_adb(self, args, pipeOutput=True):
-        if (args_in.device_serial):
+        args_in.device_serial = self.config.Simulator_Serial
+        if args_in.device_serial:
             args = adb + ['-s', args_in.device_serial] + args
         else:
             args = adb + args

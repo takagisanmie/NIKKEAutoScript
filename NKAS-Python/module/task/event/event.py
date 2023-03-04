@@ -84,7 +84,7 @@ class Event(UI, Task):
                 self.device.clickLocation(lc, AssetResponse.ASSET_SHOW, assets.into_battle3)
                 self.device.click(assets.into_battle3, AssetResponse.ASSET_HIDE)
             else:
-                self.socket.ERROR('关卡填写错误')
+                self.ERROR('关卡填写错误，或未完成所有关卡')
                 return
 
         self.chance -= 1

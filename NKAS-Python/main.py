@@ -113,6 +113,10 @@ class NikkeAutoScript:
     def checkService(self, restart=False):
         from adbutils.errors import AdbError
         try:
+            if self.config.Simulator_Serial.startswith('127.0.0.1'):
+                self.device.adb_client.connect(self.config.Simulator_Serial, timeout=5)
+                self.device.sleep(5)
+
             output = self.device.adb.shell("ps; ps -A")
             service = list(filter(lambda x: 'atx-agent' in x, output.split('\n')))
             if len(service) == 0:
@@ -192,10 +196,9 @@ class NikkeAutoScript:
 
 if __name__ == '__main__':
     # TODO 选择服务器
+    # TODO 企业塔
     # TODO 在活动时，如果当前难度的关卡已经全部完成，但选项还开着，则关闭 待测试
     # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）待测试
-    # TODO 企业塔
-    # TODO 添加剩余的nikke的对话
     # TODO 咨询时没有识别到正确选项时，保存截图 待测试
 
     nkas = NikkeAutoScript()
