@@ -15,15 +15,9 @@ class Reward(UI, Task):
     def getReward(self, button):
         from module.tools.match import match
         self.device.click(button, AssetResponse.ASSET_HIDE)
+        self.device.sleep(1)
         while 1:
             self.device.screenshot()
-            if lc := match(self.device.image, assets.rewards_page, 0.84, ImgResult.LOCATION):
-                self.device.clickLocation(lc, AssetResponse.NONE)
-                continue
-
-            if self.device.isVisible(assets.in_menu_sign, 0.92):
-                return
-
             if lc := self.device.textStrategy('确', None, OcrResult.LOCATION):
                 self.device.clickLocation(lc, AssetResponse.NONE)
                 continue
@@ -40,3 +34,10 @@ class Reward(UI, Task):
                                                 resized_shape=(2000, 2000)):
                 self.device.clickLocation(lc, AssetResponse.NONE)
                 continue
+
+            if lc := match(self.device.image, assets.rewards_page, 0.84, ImgResult.LOCATION):
+                self.device.clickLocation(lc, AssetResponse.NONE)
+                continue
+
+            if self.device.isVisible(assets.in_menu_sign, 0.92):
+                return

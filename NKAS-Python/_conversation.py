@@ -1554,7 +1554,7 @@ Nikke_list = [
     },
     {
         'key': 'Novel',
-        'label': '诺薇尔',
+        'label': '诺薇儿',
     },
     {
         'key': 'Liter',
@@ -1574,11 +1574,11 @@ Nikke_list = [
     },
     {
         'key': 'Rupee_Winter_Shopper',
-        'label': '露菲：冬日购物狂',
+        'label': '冬日购物狂',
     },
     {
         'key': 'Anne_Miracle_Fairy',
-        'label': '安妮·奇迹仙女',
+        'label': '奇迹仙女',
     },
     {
         'key': 'Viper',

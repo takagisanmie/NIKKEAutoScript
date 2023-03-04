@@ -10,7 +10,7 @@ def response(origin):
     def prefix(*args, **kwargs):
         # TODO 超时
         # sleep_time = 0.45
-        sleep_time = 0.03
+        sleep_time = 0.1
         limit = 6
         while 1:
             res = origin(*args, **kwargs)

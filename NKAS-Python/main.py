@@ -106,6 +106,7 @@ class NikkeAutoScript:
                             self.run(str.lower(task))
 
         except Exception as e:
+            e = str(e)
             print(e)
             self.ui.getErrorInfo()
 
@@ -116,8 +117,11 @@ class NikkeAutoScript:
             service = list(filter(lambda x: 'atx-agent' in x, output.split('\n')))
             if len(service) == 0:
                 self.device.adb.shell('/data/local/tmp/atx-agent server -d --stop --nouia')
+                self.device.stop_droidcast()
+
             if not self.device.u2.uiautomator.running():
                 self.device.u2.uiautomator.start()
+                self.device.stop_droidcast()
 
             if restart:
                 self.socket.emit('insertLog', self.socket.getLog('INFO', 'ADB重启成功'))
@@ -129,6 +133,7 @@ class NikkeAutoScript:
 
         except AdbError as e:
             e = str(e)
+            print(e)
             if 'not found' in e:
                 self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，当前模拟器离线，正在尝试重启ADB'))
             else:
@@ -140,26 +145,35 @@ class NikkeAutoScript:
             self.device.sleep(6)
             return self.checkService(restart=True)
 
+
         except RuntimeError as e:
             e = str(e)
+            print(e)
             self.state = False
             self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
             if 'offline' in e:
                 self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，当前模拟器离线'))
             else:
                 self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}'))
+            self.ui.getErrorInfo()
 
         except ConnectionError as e:
             e = str(e)
+            print(e)
             self.state = False
             self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
             self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}'))
+            self.ui.getErrorInfo()
 
         except Exception as e:
             e = str(e)
-            self.state = False
+            print(e)
+            self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，正在尝试重启ADB'))
+            self.state = True
             self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
-            self.ui.getErrorInfo()
+            self.device.adb_restart()
+            self.device.sleep(6)
+            return self.checkService(restart=True)
 
     def checkResolution(self):
         self.socket.emitSingleParameter('checkSimulator', 'info', self.device.u2.info)
