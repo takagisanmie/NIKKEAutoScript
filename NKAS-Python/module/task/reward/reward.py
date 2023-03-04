@@ -13,5 +13,30 @@ class Reward(UI, Task):
         self.INFO('Reward is finished')
 
     def getReward(self, button):
-        self.device.click(button, AssetResponse.ASSET_SHOW, assets.rewards_page)
-        self.device.click(assets.rewards_page, AssetResponse.ASSET_SHOW, assets.in_menu_sign)
+        from module.tools.match import match
+        self.device.click(button, AssetResponse.ASSET_HIDE)
+        while 1:
+            self.device.screenshot()
+            if lc := match(self.device.image, assets.rewards_page, 0.84, ImgResult.LOCATION):
+                self.device.clickLocation(lc, AssetResponse.NONE)
+                continue
+
+            if self.device.isVisible(assets.in_menu_sign, 0.92):
+                return
+
+            if lc := self.device.textStrategy('确', None, OcrResult.LOCATION):
+                self.device.clickLocation(lc, AssetResponse.NONE)
+                continue
+
+            elif lc := self.device.textStrategy('确', None, OcrResult.LOCATION, False,
+                                                resized_shape=(2000, 2000)):
+                self.device.clickLocation(lc, AssetResponse.NONE)
+                continue
+
+            if lc := self.device.textStrategy('点击关闭', None, OcrResult.LOCATION):
+                self.device.clickLocation(lc, AssetResponse.NONE)
+                continue
+            elif lc := self.device.textStrategy('点击关闭', None, OcrResult.LOCATION, False,
+                                                resized_shape=(2000, 2000)):
+                self.device.clickLocation(lc, AssetResponse.NONE)
+                continue

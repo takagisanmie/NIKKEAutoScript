@@ -21,6 +21,12 @@ class UI(BaseModule):
             else:
                 self.device.screenshot()
 
+            # 匹配子页面标识
+            result = self.checkChildPage()
+            if result is not None:
+                UI.current_page = result
+                self.closeChildPage()
+
             # 匹配主页面标识
             for page in page_list:
                 for sign in page.signs:
@@ -29,12 +35,6 @@ class UI(BaseModule):
                         return page
                     else:
                         continue
-
-            # 匹配子页面标识
-            result = self.checkChildPage()
-            if result is not None:
-                UI.current_page = result
-                self.closeChildPage()
 
             # 在未知页面,但是有主页面按钮
             if self.device.isVisible(assets.home):
@@ -140,7 +140,18 @@ class UI(BaseModule):
                     return result
 
     def closeChildPage(self):
-        self.device.click(UI.current_page.closeButton, AssetResponse.ASSET_SHOW, UI.current_page.parent.signs[0])
+        while 1:
+            isVisible = False
+            self.device.screenshot()
+            self.device.click(UI.current_page.closeButton, AssetResponse.NONE)
+            for sign in UI.current_page.parent.signs:
+                if self.device.isVisible(sign):
+                    isVisible = True
+                    break
+
+            if isVisible:
+                break
+
         UI.current_page = UI.current_page.parent
         if self.isChildPage(UI.current_page):
             self.closeChildPage()

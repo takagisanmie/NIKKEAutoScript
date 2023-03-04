@@ -49,6 +49,18 @@ class DroidCast(Uiautomator2):
         self.sleep(3)
         return session
 
+    def stop_droidcast(self):
+        import threading
+        from module.thread.thread import threadManager
+        from module.base.decorator import del_cached_property
+
+        for thread in threading.enumerate():
+            if 'Droidcast' in thread.name:
+                threadManager.stopThread(thread)
+                continue
+
+        del_cached_property(self, 'droidcast_session')
+
     def droidcast_url(self, url='/screenshot'):
         return f'http://127.0.0.1:{self._droidcast_port}{url}'
 

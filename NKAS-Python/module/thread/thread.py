@@ -63,7 +63,7 @@ class Futures:
         return futures.as_completed()
 
     def submit(self, *args, **kwargs):
-        executor = futures.getExecutor()
+        executor = futures.getExecutor('NKAS_Droidcast')
         futures.insertQueue(executor.submit(*args, **kwargs))
 
 

@@ -23,6 +23,12 @@ class Conversation(UI, Task):
             for nikke in _list:
                 self.device.clickTextLocation(nikke['label'], AssetResponse.ASSET_SHOW, True,
                                               assets.in_conversation_detail_sign)
+
+                if self.device.isVisible(assets.in_conversation_detail_max):
+                    self.device.click(assets.back, AssetResponse.ASSET_SHOW, assets.in_conversation_list_sign)
+                    self.INFO(f'Love and affection point with {nikke["label"]} are max')
+                    continue
+
                 self.device.click(assets.in_conversation_detail_start_conversation, AssetResponse.ASSET_HIDE)
                 self.device.click(assets.confirm, AssetResponse.ASSET_SHOW,
                                   assets.in_conversation_detai_in_talking_cancel)
@@ -73,6 +79,9 @@ class Conversation(UI, Task):
         return _list
 
     def chooseAnswer(self, nikke):
+        import cv2
+        import time
+
         # 回答
         self.device.screenshot()
         resized_shape = [(3000, 3000), (768, 768)]
@@ -94,8 +103,12 @@ class Conversation(UI, Task):
                                               assets.in_conversation_detai_in_talking_cancel)
                     return True
 
-        self.INFO(f'{nikke} No correct answer was found')
+        self.device.screenshot()
+        cv2.imwrite(f'./pic/answer-{time.time()}.png', self.device.image)
+        self.INFO(f'{nikke} No correct answer was found.')
+        self.INFO('NKAS has saved the screenshot and the path is "./pic".')
         self.INFO(f'Love and affection point with {nikke["name"]} + 50')
+
         self.device.clickLocation((950, 730), AssetResponse.ASSET_HIDE, assets.in_conversation_detai_in_talking_cancel)
         return True
 

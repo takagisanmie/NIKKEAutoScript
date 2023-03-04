@@ -47,7 +47,9 @@ class BaseModule(Log):
     def getErrorInfo():
         import glo
         import traceback
+
         socket = glo.getSocket()
+
         tb = traceback.format_exc().split('File')
         for index, i in enumerate(tb):
             e = i.split('\\')

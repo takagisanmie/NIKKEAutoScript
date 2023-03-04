@@ -26,3 +26,17 @@ def run_once(f):
 
     wrapper.has_run = False
     return wrapper
+
+
+def del_cached_property(obj, name):
+    """
+    Delete a cached property safely.
+
+    Args:
+        obj:
+        name (str):
+    """
+    try:
+        del obj.__dict__[name]
+    except KeyError:
+        pass

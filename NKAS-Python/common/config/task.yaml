@@ -3,12 +3,12 @@ Task:
     activate: true
     displayName: 委托
     name: Commission
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
   Conversation:
     activate: true
     displayName: 咨询
     name: Conversation
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
     nikkeList:
     - Anis
     - Sugar
@@ -23,11 +23,11 @@ Task:
     activate: true
     displayName: 一举歼灭
     name: Destroy
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
   Event:
     activate: true
     currentEvent: 1
-    difficulty: 1
+    difficulty: 0
     displayName: 活动
     finishAllSteps: true
     historyEvent:
@@ -40,33 +40,33 @@ Task:
       type: 1
       value: 1
     name: Event
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
     part: 2
     step: 1-9
   FreeStore:
     activate: true
     displayName: 商店
     name: FreeStore
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
   FriendshipPoint:
     activate: true
     displayName: 赠送友情点
     name: FriendshipPoint
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
   Reward:
     activate: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
   RookieArena:
     activate: true
     displayName: 新人竞技场
     name: RookieArena
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000
   SimulationRoom:
     activate: true
-    area: '2'
+    area: '3'
     difficulty: '5'
     displayName: 模拟室
     name: SimulationRoom
-    nextExecutionTime: 1677873600
+    nextExecutionTime: 1677960000

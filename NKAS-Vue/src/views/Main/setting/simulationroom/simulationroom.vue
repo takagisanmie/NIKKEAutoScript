@@ -19,7 +19,7 @@
         </el-select>
       </div>
       <div style="">
-        地区
+        起始地区
         <el-select @change="changeArea" effect="dark" style="float:right;" v-model="area"
                    class="m-2" placeholder=" "
                    size="large">

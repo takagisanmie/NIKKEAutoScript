@@ -26,7 +26,7 @@ class ChildPage(BasePage):
 
 
 # 主页面
-page_main = Page(signs=[assets.in_menu_sign], name='page_main')
+page_main = Page(signs=[assets.in_menu_sign, assets.in_menu_sign2], name='page_main')
 
 # 主页面-子页面
 # 主页面-奖励箱页

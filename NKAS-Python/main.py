@@ -84,45 +84,78 @@ class NikkeAutoScript:
         Event(config=self.config, device=self.device, socket=self.socket).run()
 
     def loop(self):
-        if self.checkResolution():
+        if not self.checkService():
             return
         try:
-            self.state = True
+            if not self.checkResolution():
+                return
+
             if self.start():
                 self.state = False
                 self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
                 return
 
+            self.state = True
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
             while 1:
                 for task in self.config.Task_List:
                     if Task.isActivated(self.config, task):
                         now = time.time()
                         if Task.getNextExecutionTime(self.config, task) < now:
+                            self.checkService()
                             self.run(str.lower(task))
 
         except Exception as e:
+            print(e)
             self.ui.getErrorInfo()
-            del self.device.u2
+
+    def checkService(self, restart=False):
+        from adbutils.errors import AdbError
+        try:
+            output = self.device.adb.shell("ps; ps -A")
+            service = list(filter(lambda x: 'atx-agent' in x, output.split('\n')))
+            if len(service) == 0:
+                self.device.adb.shell('/data/local/tmp/atx-agent server -d --stop --nouia')
+            if not self.device.u2.uiautomator.running():
+                self.device.u2.uiautomator.start()
+
+            if restart:
+                self.socket.emit('insertLog', self.socket.getLog('INFO', 'ADB重启成功'))
+                self.device.stop_droidcast()
+
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', True)
+            return True
+
+        except AdbError as e:
+            from adbutils import adb as adb_client
+            self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{str(e)}，正在尝试重启ADB'))
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', False)
+            adb_client.server_kill()
+            adb_client._connect(timeout=10)
+            self.device.sleep(5)
+            return self.checkService(restart=True)
 
     def checkResolution(self):
-        if self.device.u2 is not None:
-            self.socket.emitSingleParameter('checkSimulator', 'info', self.device.u2.info)
-            displayWidth = int(self.device.u2.info['displayWidth'])
-            displayHeight = int(self.device.u2.info['displayHeight'])
-            if displayWidth == 1920 and displayHeight == 1080:
-                return False
-
-        self.socket.emit('insertLog',
-                         self.socket.getLog('ERROR', '模拟器分辨率错误: 必须为1920x1080，或当前模拟器非强制横屏模式'))
-        self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
-        del self.device.u2
-        return True
+        self.socket.emitSingleParameter('checkSimulator', 'info', self.device.u2.info)
+        displayWidth = int(self.device.u2.info['displayWidth'])
+        displayHeight = int(self.device.u2.info['displayHeight'])
+        if displayWidth == 1920 and displayHeight == 1080:
+            return True
+        else:
+            self.socket.emit('insertLog',
+                             self.socket.getLog('ERROR',
+                                                '模拟器分辨率错误: 必须为1920x1080，或当前模拟器非强制横屏模式'))
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', False)
+        return False
 
 
 if __name__ == '__main__':
-    # TODO 改进主页识别
-    # TODO 咨询时跳过好感上限的nikke
-    # TODO 咨询时没有识别到正确选项时，保存截图
+    # TODO 在活动时，如果当前难度的关卡已经全部完成，但选项还开着，则关闭 待测试
+    # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）待测试
+    # TODO 企业塔
+    # TODO 添加剩余的nikke的对话
+    # TODO 咨询时没有识别到正确选项时，保存截图 待测试
+
     nkas = NikkeAutoScript()
     nkas.socket.run()
     # nkas.start()

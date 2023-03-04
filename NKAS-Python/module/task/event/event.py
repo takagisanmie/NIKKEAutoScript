@@ -5,7 +5,7 @@ from module.base.task import Task
 from module.tools.match import match
 from module.ui.ui import UI
 from module.ui.page import *
-from common.enum.enum import AssetResponse, EventParameter, ImgResult, OcrResult
+from common.enum.enum import AssetResponse, EventParameter, ImgResult, OcrResult, Path
 
 
 class Event(UI, Task):
@@ -78,9 +78,14 @@ class Event(UI, Task):
             self.step -= count_A
             self.srollToBottom()
             part_B = self.checkState(self.part_B, self.part_finished_template)
-            lc = part_B[self.step - 1]
-            self.device.clickLocation(lc, AssetResponse.ASSET_SHOW, assets.into_battle3)
-            self.device.click(assets.into_battle3, AssetResponse.ASSET_HIDE)
+            count_B = len(part_B)
+            if count_B >= self.step:
+                lc = part_B[self.step - 1]
+                self.device.clickLocation(lc, AssetResponse.ASSET_SHOW, assets.into_battle3)
+                self.device.click(assets.into_battle3, AssetResponse.ASSET_HIDE)
+            else:
+                self.socket.ERROR('关卡填写错误')
+                return
 
         self.chance -= 1
 
@@ -117,6 +122,8 @@ class Event(UI, Task):
         available_count = len(locations)
 
         if available_count == 0 or self.chance == 0:
+            if part is self.part_B and available_count == 0:
+                self.config.update('Task.Event.finishAllSteps', False, self.config.Task_Dict, Path.TASK)
             return
 
         while 1:

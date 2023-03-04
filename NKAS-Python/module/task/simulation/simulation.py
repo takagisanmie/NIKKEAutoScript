@@ -63,6 +63,18 @@ class SimulationRoom(UI, Task, EffectControl):
         if UI.current_page != page_simulation_room2:
             self.go(destination=page_simulationOption_room)
             self.chooseDifficulty()
+        else:
+            if lc := self.device.textStrategy('模拟结束', None, OcrResult.LOCATION):
+                self.device.clickLocation(lc, AssetResponse.TEXT_SHOW, '确')
+
+            elif lc := self.device.textStrategy('模拟结束', None, OcrResult.LOCATION, False,
+                                                resized_shape=(2000, 2000)):
+                self.device.clickLocation(lc, AssetResponse.TEXT_SHOW, '确')
+
+            self.device.clickTextLocation('确', AssetResponse.ASSET_SHOW, False, assets.in_simulation_room_sign)
+            UI.current_page = page_simulation_room
+            self.go(destination=page_simulationOption_room)
+            self.chooseDifficulty()
 
         while 1:
             self.initEvent()
