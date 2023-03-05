@@ -1510,7 +1510,7 @@ Nikke_list = [
     },
     {
         'key': 'Rupee',
-        'label': '露菲',
+        'label': '_露菲',
     },
     {
         'key': 'Poli',
