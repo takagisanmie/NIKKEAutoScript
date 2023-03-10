@@ -1,6 +1,6 @@
 import glo
 from common.enum.enum import *
-from module.tools._time import *
+from module.tools.timer import *
 
 
 class Task:

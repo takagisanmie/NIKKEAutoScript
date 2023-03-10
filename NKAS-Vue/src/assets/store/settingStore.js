@@ -10,7 +10,7 @@ const useSettings = defineStore('Settings', {
                 },
             event_settings:
                 {
-                    step: '',
+                    event: '',
                 },
         }
     },

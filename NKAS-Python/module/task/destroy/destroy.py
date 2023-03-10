@@ -1,18 +1,42 @@
-import assets
-from common.enum.enum import *
+from common.exception import Timeout
 from module.base.task import Task
+from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
+from module.task.destroy.destroy_assets import _destroy
 
 
 class Destroy(UI, Task):
     def run(self):
         self.LINE('Destroy')
-        self.go(destination=page_main_child_reward_box_child_destroy)
-        if self.device.isVisible(assets.in_menu_reward_box_destroy, 0.95):
-            self.device.click(assets.in_menu_reward_box_destroy, AssetResponse.ASSET_HIDE)
-            self.device.click(assets.rewards_page, AssetResponse.ASSET_HIDE)
-        else:
-            self.INFO('Destroy has no free chance')
+        self.go(destination=page_destroy)
+        self.destroy()
+        self.INFO('Destroy has no free chance')
         self.finish(self.config, 'Destroy')
         self.INFO('Destroy is finished')
+
+    def destroy(self):
+
+        timeout = Timer(10).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(0.6)
+
+        while 1:
+            self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(_destroy, value=0.92):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+
+            if confirm_timer.reached():
+                return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout

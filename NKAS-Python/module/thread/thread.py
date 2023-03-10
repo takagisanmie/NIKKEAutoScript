@@ -62,9 +62,25 @@ class Futures:
         futures.insertQueue(executor.submit(*args, **kwargs))
         return futures.as_completed()
 
-    def submit(self, *args, **kwargs):
+    def run_droidcast(self, *args, **kwargs):
         executor = futures.getExecutor('NKAS_Droidcast')
         futures.insertQueue(executor.submit(*args, **kwargs))
 
+    def _run(self, name, *args, **kwargs):
+        executor = futures.getExecutor(name)
+        futures.insertQueue(executor.submit(*args, **kwargs))
+        return futures.as_completed()
+
 
 futures = Futures()
+
+
+def a(a, b, c):
+    print(a)
+    print(b)
+    print(c)
+    return 'finished'
+
+
+if __name__ == '__main__':
+    print(futures._run('a_f', a, 'b', 2, 3))

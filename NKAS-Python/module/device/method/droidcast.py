@@ -30,7 +30,6 @@ class DroidCast(Uiautomator2):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.installDroidCast()
         self._droidcast_port = '53516'
 
     def screenshot(self):
@@ -40,12 +39,13 @@ class DroidCast(Uiautomator2):
         image = self.droidcast_session.get(self.droidcast_url(), timeout=3).content
         image = np.frombuffer(image, np.uint8)
         self.image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+        return self.image
 
     @cached_property
     def droidcast_session(self):
         from module.thread.thread import futures
         self.installDroidCast()
-        futures.submit(self.initDroidCast)
+        futures.run_droidcast(self.initDroidCast)
         session = requests.Session()
         self.sleep(5)
         return session

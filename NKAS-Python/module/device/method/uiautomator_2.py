@@ -22,10 +22,15 @@ class Uiautomator2(Connection):
 
     def uiautomator_click(self, x, y):
         self.u2.click(x, y)
+        return True
 
     def swipe(self, sx, sy, ex, ey, duration=0.3):
         self.u2.swipe(sx, sy, ex, ey, duration)
-        # self.u2.drag(sx, sy, ex, ey, duration)
+        return True
+
+    def drag(self, sx, sy, ex, ey, duration=0.3):
+        self.u2.drag(sx, sy, ex, ey, duration)
+        return True
 
     def app_start_uiautomator2(self, package_name=None):
         if not package_name:
@@ -37,6 +42,8 @@ class Uiautomator2(Connection):
 
         if package_name is not None:
             self.u2.app_start(package_name)
+            return False
+        elif package_name in self.u2.app_list_running():
             return False
 
         glo.getNKAS().socket.emit('insertLog', glo.getNKAS().socket.getLog('ERROR', '没有找到NIKKE'))

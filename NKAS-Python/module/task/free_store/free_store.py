@@ -1,31 +1,79 @@
-import assets
-from common.enum.enum import *
+from common.exception import Timeout
 from module.base.task import Task
+from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
+from module.task.free_store.free_store_assets import *
 
 
 class FreeStore(UI, Task):
     def run(self):
         self.LINE('Free Store')
         self.go(destination=page_free_store)
-        if self.device.isVisible(assets.in_free_store_free_goods, 0.95):
-            self.buy()
-        else:
-            self.INFO('store is at present has no free product')
-        self.device.clickLocation((350, 490), AssetResponse.ASSET_SHOW, assets.in_free_store_free_reset_confirm)
-        if self.device.isVisible(assets.in_free_store_free_reset, 0.95):
-            self.device.click(assets.in_free_store_free_reset_confirm, AssetResponse.ASSET_HIDE)
-            self.INFO('reset store')
-            self.buy()
-        else:
-            self.device.click(assets.in_free_store_free_reset_cancel, AssetResponse.ASSET_HIDE)
-
-        self.device.click(assets.home, AssetResponse.ASSET_HIDE)
+        self.buy()
+        self.device.appear_then_click(home)
         self.finish(self.config, 'FreeStore')
         self.INFO('Free Store is finished')
 
     def buy(self):
-        self.device.click(assets.in_free_store_free_goods, AssetResponse.ASSET_SHOW, assets.in_free_store_confrim)
-        self.device.click(assets.in_free_store_confrim, AssetResponse.ASSET_SHOW, assets.rewards_page)
-        self.device.click(assets.rewards_page, AssetResponse.ASSET_HIDE)
+        timeout = Timer(10).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(0.8)
+
+        _refresh = True
+
+        while 1:
+            self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(free_sale, value=0.92):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear(free_sale_2, value=0.92) and self.device.appear_then_click(
+                    confirm,
+                    value=0.92,
+                    img_template=bottom):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if _refresh and click_timer.reached() and self.device.appear_then_click(refresh):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.device.appear(refresh_sign):
+                _refresh = False
+
+            if click_timer.reached() \
+                    and self.device.appear(refresh_sign) \
+                    and self.device.appear(free_refresh, value=0.95) \
+                    and self.device.appear_then_click(confirm, value=0.92, img_template=middle):
+                self.INFO('refresh store')
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(cancel_2):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if confirm_timer.reached():
+                return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout

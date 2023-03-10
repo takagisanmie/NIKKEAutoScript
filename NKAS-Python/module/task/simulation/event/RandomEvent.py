@@ -1,50 +1,76 @@
-import assets
-from common.enum.enum import *
 
+from common.enum.enum import *
+from assets import *
+from common.exception import Timeout
+from module.task.simulation.simulation_assets import *
 from module.task.simulation.base.event_base import BaseEvent
 from module.tools.match import match
+from module.tools.timer import Timer
 
 
 class RandomEvent(BaseEvent):
     def run(self):
         print('RandomEvent')
         self.INFO('start RandomEvent')
-        self.device.multiClickLocation(self.getLocation(), 2, AssetResponse.NONE)
-        while 1:
-            if self.device.isVisible(assets.in_Simulation_BUFF, 0.84, True):
-                self.device.clickLocation(self.getLocation(), AssetResponse.NONE)
-                self.device.clickLocation((970, 605), AssetResponse.NONE)
-            else:
-                self.device.sleep(1)
-                break
+
+        timeout = Timer(10).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(0.6)
 
         while 1:
             self.device.screenshot()
-            # 取消按钮
-            if lc := match(self.device.image, assets.in_Simulation_cancel, 0.84, ImgResult.LOCATION):
-                self.device.clickLocation(lc, AssetResponse.TEXT_SHOW, '什么都没有发生')
-                self.finish()
+
+            if click_timer.reached() and self.device.appear_then_click(Random):
+                timeout.reset()
+                confirm_timer.reset()
+                continue
+
+            # 在选择具体事件
+            if click_timer.reached() and self.device.appear_then_click(random_option):
+                timeout.reset()
+                confirm_timer.reset()
+
+            # 在替换相同效果
+            if self.device.appear(replacement):
+                self.parent.skip_replacement()
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
                 return
-            else:
-                # 取消选项
-                if lc := self.device.textStrategy('不选择', None, OcrResult.LOCATION):
-                    self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
 
-                elif lc := self.device.textStrategy('第一个选项', None, OcrResult.LOCATION, False):
-                    self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
+            # 需要选择一个效果，进行操作 or 选择效果升级
+            if self.device.appear(need_to_choose) or self.device.appear(need_to_improve):
+                self.parent.getPreferentialEffect()
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                return
 
-                elif lc := self.device.textStrategy('第二个选项', None, OcrResult.LOCATION, False):
-                    self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
+            # 不选择
+            if self.device.appear(cancel):
+                self.parent.skip()
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                return
 
-                # TODO 下滑，选泽第三个
-                self.device.clickTextLocation('确认', AssetResponse.NONE, False, resized_shape=(2000, 2000))
+            if self.device.appear(no_condition):
+                self.parent.skip()
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                return
 
-                # if self.device.textStrategy('个选项', None, OcrResult.LOCATION, True) is None:
-                #     break
+            if click_timer.reached() and self.device.appear_then_click(confirm):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
 
-                if self.device.textStrategy('结果', None, OcrResult.TEXT, False, resized_shape=(2000, 2000)):
-                    self.finish()
+            if self.device.appear(reset_time):
+                if confirm_timer.reached():
                     return
-                elif self.device.textStrategy('请选择', None, OcrResult.TEXT):
-                    self.finish()
-                    return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout

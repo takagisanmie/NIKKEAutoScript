@@ -17,12 +17,11 @@
               <el-menu-item route="reward_setting" index="1-3">收获</el-menu-item>
               <el-menu-item route="destroy_setting" index="1-4">歼灭</el-menu-item>
               <el-menu-item route="store_setting" index="1-5">商店</el-menu-item>
-              <el-menu-item route="friendship_setting" index="1-6">友情点</el-menu-item>
-              <el-menu-item route="commission_setting" index="1-7">委托</el-menu-item>
-              <el-menu-item route="conversation_setting" index="1-8">咨询</el-menu-item>
-              <el-menu-item route="rookie_arena" index="1-9">新人竞技场</el-menu-item>
-              <el-menu-item route="simulation_room" index="1-10">模拟室</el-menu-item>
-              <el-menu-item route="event_setting" index="1-11">活动</el-menu-item>
+              <el-menu-item route="commission_setting" index="1-6">委托</el-menu-item>
+              <el-menu-item route="conversation_setting" index="1-7">咨询</el-menu-item>
+              <el-menu-item route="rookie_arena" index="1-8">新人竞技场</el-menu-item>
+              <el-menu-item route="simulation_room" index="1-9">模拟室</el-menu-item>
+              <el-menu-item route="event_setting" index="1-10">活动</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>

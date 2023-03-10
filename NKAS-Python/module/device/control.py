@@ -1,51 +1,52 @@
-import cv2
-
 from common.enum.enum import *
-from common.annotation.annotation import response
 from module.device.method.droidcast import DroidCast
-# from module.device.method.uiautomator_2 import Uiautomator2
 from module.device.ocr import Ocr
 from module.tools.utils import random_rectangle_point
-from module.tools.match import match
+from module.tools.match import match, matchAllTemplate
 
 
 class Control(DroidCast, Ocr):
 
-    @response
-    def click(self, button, then, *args, **kwargs):
+    def click(self, button):
         x, y = random_rectangle_point(button['area'])
         self.uiautomator_click(x, y)
-        return [self, button, then, *args, *kwargs]
+        return True
 
-    @response
-    def clickLocation(self, location, then, *args, **kwargs):
-        self.uiautomator_click(location[0], location[1])
-        return [self, location, then, *args, *kwargs]
+    def appear_then_click(self, button, value=0.84, screenshot=False, gary=False, img=None, img_template=None,
+                          hide=False, index=0):
+        if lc := self.appear(button, value, screenshot=screenshot, _result=ImgResult.LOCATION, gary=gary, img=img,
+                             img_template=img_template, hide=hide, index=index):
 
-    @response
-    def clickTextLocation(self, text, then, screenshot=False, *args, **kwargs):
+            # x, y = random_rectangle_point(button['area'])
+            # print(button['id'], lc)
+
+            self.uiautomator_click(lc[0], lc[1])
+            return True
+        else:
+            return False
+
+    def clickTextLocation(self, text, screenshot=False, *args, **kwargs):
         lc = self.ocrByAsset(text, None, OcrResult.LOCATION, screenshot, *args, **kwargs)
         if lc is not None:
             self.uiautomator_click(lc[0], lc[1])
-            return [self, text, then, *args, *kwargs]
+            return True
         else:
-            return [self, text, then, *args, *kwargs]
+            return False
 
-    def multiClickLocation(self, location, count, then, *args, **kwargs):
+    def multiClickLocation(self, location, count, delay=0.15):
         for i in range(count):
             self.uiautomator_click(location[0], location[1])
-            self.sleep(0.15)
+            self.sleep(delay)
 
-        if then == AssetResponse.ASSET_SHOW:
-            asset = args[0]
-            self.screenshot()
-            if self.isVisible(asset):
-                return
-            else:
-                self.multiClickLocation(location, count, then, *args, **kwargs)
+        return True
 
-        if then == AssetResponse.NONE:
-            return
+    def multiClick(self, button, count, delay=0.15):
+        for i in range(count):
+            x, y = random_rectangle_point(button['area'])
+            self.uiautomator_click(x, y)
+            self.sleep(delay)
+
+        return True
 
     def textStrategy(self, text, asset, _result, screenshot=False, *args, **kwargs):
         result = self.ocrByAsset(text, asset, _result, screenshot, *args, **kwargs)
@@ -54,33 +55,54 @@ class Control(DroidCast, Ocr):
         else:
             return None
 
-    def wait(self, template=None, value=0.84, screenshot=True, sleep=0.5):
-        while 1:
-            if screenshot:
-                self.screenshot()
-            if self.isVisible(template, value):
-                return True
-            self.sleep(sleep)
-
-    def ocr(self, *args, **kwargs):
-        return self._ocr(self.image, *args, **kwargs)
 
     def ocrByAsset(self, *args, **kwargs):
         if args[3] is True:
             self.screenshot()
         return self._ocrByAsset(self.image, *args, **kwargs)
 
-    def isVisible(self, template=None, value=0.84, screenshot=False):
-        if screenshot:
+    def appear(self, template=None, value=0.84, _result=ImgResult.SIMILARITY, screenshot=False, gary=False,
+               img=None, img_template=None, sort_by='top', hide=False, index=0):
+
+        if screenshot or not hasattr(self, "image"):
             self.screenshot()
 
-        sl = match(img=self.image, template=template, _result=ImgResult.SIMILARITY, value=value)
-        if sl is not None:
+        img = self.image if screenshot or img is None else img
+
+        # res = match(img=self.image, template=template, _result=_result, value=value, gray=gary)
+
+        locations = []
+        matchAllTemplate(img, [template], img_template=img_template, value=value,
+                         gray=gary,
+                         relative_locations=locations, sort_by=sort_by, hide=hide)
+
+        if _result == ImgResult.ALL_RESULT:
+            return locations
+
+        elif locations:
+            return locations[index]['location']
+        else:
+            return None
+
+    def hide(self, template=None, value=0.84, _result=ImgResult.SIMILARITY, screenshot=False, gary=False,
+             img=None, img_template=None, sort_by='top', hide=False):
+
+        if screenshot or not hasattr(self, "image"):
+            self.screenshot()
+
+        img = self.image if screenshot or not img else img
+
+        locations = []
+        matchAllTemplate(img, [template], img_template=img_template, value=value,
+                         gray=gary,
+                         relative_locations=locations, sort_by=sort_by, hide=hide)
+
+        if not locations:
             return True
         else:
             return None
 
-    def isHidden(self, template=None, value=0.84, screenshot=False):
+    def _hide(self, template=None, value=0.84, screenshot=False):
         if screenshot:
             self.screenshot()
 
@@ -100,9 +122,11 @@ class Control(DroidCast, Ocr):
         y2 += add_y2
         img = self.image[y:y2, x:x2]
         # img = cv2.imread(Path.SCREENSHOT_PATH)[y:y2, x:x2]
-        # cv2.imwrite(f'./pic/img{template["id"]}{index}.png', img)
+        # cv2.imwrite(f'./pic/img-{template["id"]}{time.time()}.png', img)
+
         sl = match(img, template, value, ImgResult.SIMILARITY)
-        # print(index, template['id'], sl)
+
+        # print(index, templates['id'], sl)
         if sl and _result == ImgResult.SIMILARITY:
             return sl
         if sl and _result == ImgResult.POSITION:

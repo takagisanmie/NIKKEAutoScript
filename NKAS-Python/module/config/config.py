@@ -14,10 +14,10 @@ class GeneralConfig:
     Emulator_JP_PackageName: str = 'com.proximabeta.nikke'
     Emulator_TW_PackageName: str = 'com.gamamobi.nikke'
 
-    Task_List: tuple = ['Reward', 'Destroy', 'FreeStore', 'FriendshipPoint', 'Commission', 'Conversation',
+    Task_List: tuple = ['Reward', 'Destroy', 'FreeStore', 'Commission', 'Conversation',
                         'RookieArena', 'SimulationRoom', 'Event']
 
-    # Task_List: tuple = ['Reward', 'Destroy', 'FreeStore', 'FriendshipPoint', 'Commission', 'Conversation',
+    # Task_List: tuple = ['Reward', 'Destroy', 'FreeStore', 'Commission', 'Conversation',
     #                     'RookieArena','SimulationRoom']
 
     # Socket:

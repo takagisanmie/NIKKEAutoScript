@@ -1,11 +1,11 @@
 from functools import cached_property
 
-import assets
+from common.exception import Timeout
 from module.base.task import Task
-from module.tools.match import match
+from module.tools.timer import Timer
 from module.ui.ui import UI
 from module.ui.page import *
-from common.enum.enum import AssetResponse, EventParameter, ImgResult, OcrResult, Path
+from common.enum.enum import EP, ImgResult, OcrResult, Path
 
 
 class Event(UI, Task):
@@ -17,272 +17,230 @@ class Event(UI, Task):
         self.type = e['type']
         self.path = e['path']
         self.part = self.config.get('Task.Event.part', self.config.Task_Dict)
-        self.step = int(self.config.get('Task.Event.step', self.config.Task_Dict).split('-')[1])
+        self.step = int(self.config.get('Task.Event.event', self.config.Task_Dict).split('-')[1])
         self.difficulty = self.config.get('Task.Event.difficulty', self.config.Task_Dict)
-        self.finishAllSteps = self.config.get('Task.Event.finishAllSteps', self.config.Task_Dict)
+        self._finishAllEvent = self.config.get('Task.Event.finishAllEvent', self.config.Task_Dict)
+        if self.type == EP.SMALL:
+            self.part = EP.PART_1
 
     def run(self):
         self.LINE('Event')
-        self.go(destination=page_main)
-
-        if self.device.isHidden(self.assets.page_main_button):
-            self.INFO('当前活动已经结束')
-            self._finish()
-            return
-
         print(self.pages)
-        # 路径
-        # 小活动只有part1
-        if self.type == EventParameter.SMALL:
-            self._go(destination=self.assets.event_part1)
-            self.checkRestChance()
-            self.device.click(self.assets.event_part1_to_steps, AssetResponse.ASSET_SHOW,
-                              self.assets.event_part1_steps_sign)
+        self.go(destination=page_main)
+        self.go_to_steps()
+        if self._finishAllEvent:
+            self.finishAllEvent()
 
-        # 大活动有part1、part2
-        elif self.type == EventParameter.LARGE:
-            if self.part == EventParameter.PART_1:
-                self._go(destination=self.assets.event_part1)
-                self.checkRestChance()
-                self.device.click(self.assets.event_part1_to_steps, AssetResponse.ASSET_SHOW,
-                                  self.assets.event_part1_steps_sign)
-
-            elif self.part == EventParameter.PART_2:
-                self._go(destination=self.assets.event_part2)
-                self.checkRestChance()
-                self.device.click(self.assets.event_part2_to_steps, AssetResponse.ASSET_SHOW,
-                                  self.assets.event_part2_steps_sign)
-
-        if self.chance == 0:
+        if self.rest_chance == 0:
             self._finish()
-            return
 
         self.change_part_difficulty()
-
-        if self.finishAllSteps:
-            self.finishAllStep()
-
         self.loop()
 
         self._finish()
 
     def loop(self):
-        self.srollToTop()
-        part_A = self.checkState(self.part_A, self.part_finished_template)
-        count_A = len(part_A)
-        if count_A >= self.step:
-            lc = part_A[self.step - 1]
-            self.device.clickLocation(lc, AssetResponse.ASSET_SHOW, assets.into_battle3)
-            self.device.click(assets.into_battle3, AssetResponse.ASSET_HIDE)
+        self.sroll_to_top()
+        locations_1 = self.device.appear(self.finished, img_template=self.area_1, _result=ImgResult.ALL_RESULT,
+                                         screenshot=True)
+        if len(locations_1) >= self.step:
+            lc = locations_1[self.step - 1]['location']
         else:
-            self.step -= count_A
-            self.srollToBottom()
-            part_B = self.checkState(self.part_B, self.part_finished_template)
-            count_B = len(part_B)
-            if count_B >= self.step:
-                lc = part_B[self.step - 1]
-                self.device.clickLocation(lc, AssetResponse.ASSET_SHOW, assets.into_battle3)
-                self.device.click(assets.into_battle3, AssetResponse.ASSET_HIDE)
-            else:
-                self.ERROR('关卡填写错误，或未完成所有关卡')
-                return
 
-        self.chance -= 1
+            self.step -= len(locations_1)
+            self.sroll_to_bottom()
+            locations_2 = self.device.appear(self.finished, img_template=self.area_2, _result=ImgResult.ALL_RESULT,
+                                             screenshot=True)
 
-        # 通过重新开始完成
+            lc = locations_2[self.step - 1]['location']
+
+        timeout = Timer(60).start()
+        confirm_timer = Timer(1, count=2).start()
+        click_timer = Timer(0.6)
+
         while 1:
-            self.device.wait(assets.end_battle3)
-            if lc := match(self.device.image, assets.event_restart, 0.92, ImgResult.LOCATION):
-                self.device.clickLocation(lc, AssetResponse.ASSET_HIDE, assets.event_restart)
-                self.chance -= 1
+            self.device.screenshot()
+            if click_timer.reached() and self.device.appear(self.assets.auto, gary=True):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                self.device.sleep(5)
+                continue
 
-            if self.chance == 0:
-                self.device.clickLocation((300, 300), AssetResponse.ASSET_SHOW, assets.home)
+            if click_timer.reached() \
+                    and self.device.appear(self.finished) \
+                    and self.device._hide(self.assets.into_battle) \
+                    and self.device.uiautomator_click(lc[0], lc[1]):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.device.appear_then_click(self.assets.restart):
+                self.rest_chance -= 1
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
+                self.rest_chance -= 1
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            # 没机会时
+            if self.rest_chance == 0 and self.device.appear_then_click(self.assets.end_battle):
                 return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
 
     def _finish(self):
-        self.device.click(assets.home, AssetResponse.ASSET_HIDE)
+        self.device.appear_then_click(home)
         self.INFO('Event has no chance')
         self.finish(self.config, 'Event')
         self.INFO('Event is finished')
 
-    def checkRestChance(self):
-        self.chance = self.device.textStrategy(None, assets.event_chance, OcrResult.TEXT)
-        self.chance = int(self.chance.split('/')[0])
-        pass
-
-    def finishAllStep(self):
-        self.srollToTop()
-        self.checkPart(self.part_A, self.part_template)
-        self.srollToBottom()
-        self.checkPart(self.part_B, self.part_template)
-
-    def checkPart(self, part, temp):
-        locations = self.checkState(part, temp)
-        available_count = len(locations)
-
-        if available_count == 0 or self.chance == 0:
-            if part is self.part_B and available_count == 0:
-                self.config.update('Task.Event.finishAllSteps', False, self.config.Task_Dict, Path.TASK)
-            return
+    def finishAllEvent(self):
+        self.sroll_to_top()
+        timeout = Timer(60).start()
+        confirm_timer = Timer(1, count=2).start()
+        click_timer = Timer(0.6)
 
         while 1:
             self.device.screenshot()
-
-            if lc := match(self.device.image, temp, 0.92, ImgResult.LOCATION, gray=True):
-                self.device.clickLocation(lc, AssetResponse.ASSET_SHOW, assets.into_battle3)
-                self.device.click(assets.into_battle3, AssetResponse.ASSET_HIDE)
-
-            if lc := match(self.device.image, assets.skip, 0.84, ImgResult.LOCATION):
-                self.device.clickLocation(lc, AssetResponse.ASSET_HIDE, assets.skip)
-
-            if match(self.device.image, assets.end_battle3, 0.84, ImgResult.LOCATION):
-                while 1:
-                    if lc := match(self.device.image, assets.skip, 0.84, ImgResult.LOCATION):
-                        self.device.clickLocation(lc, AssetResponse.ASSET_HIDE, assets.skip)
-
-                    self.device.clickLocation((300, 300), AssetResponse.NONE)
-
-                    if self.device.isVisible(assets.home):
-                        break
-
-                available_count -= 1
-                self.chance -= 1
-
-            if available_count == 0 or self.chance == 0:
+            if self.rest_chance == 0:
                 return
 
-            self.device.sleep(1)
+            if self.device.appear(self.assets.auto, gary=True):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                self.device.sleep(5)
+                continue
+
+            if self.device.appear_then_click(self.assets.end_battle):
+                self.rest_chance -= 1
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(self.unlocked):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                click_timer.wait()
+                continue
+
+            if self.device.swipe(360, 1100, 360, 800, 0.4):
+                self.device.sleep(1)
+                if confirm_timer.reached():
+                    self.config.update('Task.Event.finishAllEvent', False, self.config.Task_Dict, Path.TASK)
+                    return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
+
+    def go_to_steps(self):
+        if self.type == EP.SMALL or self.type == EP.LARGE and self.part == EP.PART_1:
+            self._go(destination=self.part1)
+        elif self.type == EP.LARGE and self.part == EP.PART_2:
+            self._go(destination=self.part2)
+        self.checkRestChance()
+        if self.rest_chance == 0:
+            return
+
+        if self.type == EP.SMALL and self.part == EP.PART_1:
+            self.device.multiClick(self.assets.to_part1_detail, 2)
+        elif self.type == EP.LARGE and self.part == EP.PART_2:
+            self.device.multiClick(self.assets.to_part2_detail, 2)
+        else:
+            self.device.multiClick(self.assets.to_part1_detail, 2)
+
+        self.device.sleep(2)
 
     def change_part_difficulty(self):
-        normal = None
-        hard = None
-        if self.type == EventParameter.SMALL:
 
-            normal = self.assets.part1_difficulty_normal
-            hard = self.assets.part1_difficulty_hard
+        # 小活动 大活动 part1 普通
+        if self.type == EP.SMALL \
+                or self.type == EP.LARGE \
+                and self.part == EP.PART_1 \
+                and self.difficulty == EP.NORMAL:
+            self.device.multiClick(self.assets.normal, 2)
+            self.unlocked = self.assets.part1_normal_unlocked
+            self.finished = self.assets.part1_normal_finished
+            self.area_1 = self.assets.part1_normal_area_1
+            self.area_2 = self.assets.part1_normal_area_2
 
-            if self.difficulty == EventParameter.NORMAL:
-                self.part_A = self.assets.part1_normal_A
-                self.part_B = self.assets.part1_normal_B
-                self.part_template = self.assets.part1_normal
-                self.part_locked_template = self.assets.part1_normal_locked
-                self.part_finished_template = self.assets.part1_normal_finished
+        # 小活动 Part1 困难
+        if self.type == EP.SMALL \
+                and self.part == EP.PART_1 \
+                and self.difficulty == EP.HARD:
+            self.device.multiClick(self.assets.hard, 2)
+            self.unlocked = self.assets.part1_hard_unlocked
+            self.finished = self.assets.part1_hard_finished
+            self.area_1 = self.assets.part1_hard_area_1
+            self.area_2 = self.assets.part1_hard_area_2
 
-            elif self.difficulty == EventParameter.HARD:
-                self.part_A = self.assets.part1_hard_A
-                self.part_B = self.assets.part1_hard_B
-                self.part_template = self.assets.part1_hard
-                self.part_locked_template = self.assets.part1_hard_locked
-                self.part_finished_template = self.assets.part1_hard_finished
+        # 大活动 Part2 普通
+        if self.type == EP.LARGE \
+                and self.part == EP.PART_2 \
+                and self.difficulty == EP.NORMAL:
+            self.device.multiClick(self.assets.normal, 2)
+            self.unlocked = self.assets.part2_normal_unlocked
+            self.finished = self.assets.part2_normal_finished
+            self.area_1 = self.assets.part2_normal_area_1
+            self.area_2 = self.assets.part2_normal_area_2
 
+        # 大活动 Part2 困难
+        if self.type == EP.LARGE \
+                and self.part == EP.PART_2 \
+                and self.difficulty == EP.HARD:
+            self.device.multiClick(self.assets.hard, 2)
+            self.unlocked = self.assets.part2_hard_unlocked
+            self.finished = self.assets.part2_hard_finished
+            self.area_1 = self.assets.part2_hard_area_1
+            self.area_2 = self.assets.part2_hard_area_2
+        else:
+            self.unlocked = self.assets.part1_normal_unlocked
+            self.finished = self.assets.part1_normal_finished
+            self.area_1 = self.assets.part1_normal_area_1
+            self.area_2 = self.assets.part1_normal_area_2
+        self.device.sleep(2)
 
-        elif self.type == EventParameter.LARGE:
+    def checkRestChance(self):
+        self.rest_chance = self.device.textStrategy(None, self.assets.rest_chance, OcrResult.TEXT)
+        self.rest_chance = int(self.rest_chance.split('/')[0])
+        if self.rest_chance > 0:
+            self.INFO(f'rest chance: {self.rest_chance}')
+            return True
+        else:
+            self.INFO('Event has no chance')
 
-            if self.part == EventParameter.PART_1:
-
-                normal = self.assets.part1_difficulty_normal
-                hard = None
-
-                if self.difficulty == EventParameter.NORMAL:
-                    self.part_A = self.assets.part1_normal_A
-                    self.part_B = self.assets.part1_normal_B
-                    self.part_template = self.assets.part1_normal
-                    self.part_locked_template = self.assets.part1_normal_locked
-                    self.part_finished_template = self.assets.part1_normal_finished
-
-            elif self.part == EventParameter.PART_2:
-
-                normal = self.assets.part2_difficulty_normal
-                hard = self.assets.part2_difficulty_hard
-
-                if self.difficulty == EventParameter.NORMAL:
-                    self.part_A = self.assets.part2_normal_A
-                    self.part_B = self.assets.part2_normal_B
-                    self.part_template = self.assets.part2_normal
-                    self.part_locked_template = self.assets.part2_normal_locked
-                    self.part_finished_template = self.assets.part2_normal_finished
-
-                elif self.difficulty == EventParameter.HARD:
-                    self.part_A = self.assets.part2_hard_A
-                    self.part_B = self.assets.part2_hard_B
-                    self.part_template = self.assets.part2_hard
-                    self.part_locked_template = self.assets.part2_hard_locked
-                    self.part_finished_template = self.assets.part2_hard_finished
-
-        if self.difficulty == EventParameter.NORMAL:
-            self.changeDifficulty(normal)
-
-        elif self.difficulty == EventParameter.HARD:
-            try:
-                self.changeDifficulty(hard)
-
-            except Exception as e:
-                self.ERROR('难度选择错误')
-                self.getErrorInfo()
-
-    def changeDifficulty(self, asset):
-        position = asset['area']
-        lc = (((position[2] - position[0]) / 2 + position[0]), ((position[3] - position[1]) / 2 + position[1]))
-        self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
-        pass
-
-    def checkState(self, part, template):
-        import cv2
-        import numpy as np
-
-        self.device.screenshot()
-        p = part['area']
-        img = self.device.image[p[1]:p[3], p[0]:p[2]]
-        width = p[0]
-        height = p[1]
-        p = template['area']
-        template = cv2.imread(template['path'])[p[1]:p[3], p[0]:p[2]]
-        h, w, c = template.shape
-        mask = np.zeros(img.shape[:2], np.uint8)
-        relative_locations = []
-        while 1:
-            img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
-            result = cv2.matchTemplate(img_gray, template_gray, cv2.TM_CCOEFF_NORMED)
-            _, sl, _, upper_left = cv2.minMaxLoc(result)
-            sl = round(sl, 2)
-            if sl < 0.9:
-                break
-
-            else:
-                bottom_right = (upper_left[0] + w, upper_left[1] + h)
-                position = (upper_left[0], upper_left[1], bottom_right[0], bottom_right[1])
-                lc = (((position[2] - position[0]) / 2 + position[0]), ((position[3] - position[1]) / 2 + position[1]))
-                x, y = int(lc[0]), int(lc[1])
-                # cv2.putText(img, str(count + 1), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (111, 255, 0), 2, cv2.LINE_AA)
-                mask[y:y + h, x:x + w] = 255
-                img = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))  # 去除已经匹配到的标识
-                # relative_locations.append((lc, (x + w // 2, y + h // 2)))
-                x += width
-                y += height
-                relative_locations.append((int(x + w // 2), int(y + h // 2)))
-
-        # relative_locations.sort(key=lambda x: (x[1][1], x[1][0]))
-        if len(relative_locations) > 0:
-            relative_locations.sort(key=lambda x: x[1])
-
-        return relative_locations
-
-    def srollToTop(self):
+    def sroll_to_top(self):
         for i in range(2):
-            self.device.swipe(960, 400, 960, 760, 0.2)
-            self.device.sleep(0.6)
-        pass
+            self.device.swipe(360, 400, 360, 1100, 0.2)
+            self.device.sleep(0.8)
 
-    def srollToBottom(self):
+    def sroll_to_bottom(self):
         for i in range(2):
-            self.device.swipe(960, 760, 960, 400, 0.2)
-            self.device.sleep(0.6)
+            self.device.swipe(360, 1100, 360, 400, 0.2)
+            self.device.sleep(0.8)
 
     @cached_property
     def assets(self):
-        from module.task.event.e_assets import EventAssets
+        from module.task.event.event_assets import EventAssets
         from module.task.event.generateAssets import generateTemplate, generateAssets
         e = EventAssets()
         generateTemplate(f'./module/task/event/templates{self.path}')
@@ -292,50 +250,37 @@ class Event(UI, Task):
     @cached_property
     def pages(self):
         from module.ui.page import Page, page_main
+        # 活动主页(大活动才有)
         event_page_main = Page(signs=[self.assets.event_page_main_sign], name='event_page_main', parent=page_main)
-        event_page_main.link(button=assets.home, destination=page_main)
-        event_page_main.link(button=assets.back, destination=page_main)
+        event_page_main.link(button=home, destination=page_main)
+        event_page_main.link(button=back, destination=page_main)
 
-        event_part1 = Page(signs=[self.assets.event_part1_sign], name='event_part1', parent=event_page_main)
-        event_part1.link(button=assets.home, destination=page_main)
-        event_part1.link(button=assets.back, destination=event_page_main)
+        # 活动—part1
+        part1 = Page(signs=[self.assets.part1_sign], name='part1', parent=event_page_main)
+        part1.link(button=home, destination=page_main)
+        part1.link(button=back, destination=event_page_main)
 
-        event_page_main.link(button=self.assets.event_page_main_to_part1, destination=event_part1)
+        event_page_main.link(button=self.assets.to_part1, destination=part1)
 
-        event_part1_steps = Page(signs=[self.assets.event_part1_steps_sign], name='event_part1_steps',
-                                 parent=event_part1)
+        # 活动—part2
+        part2 = Page(signs=[self.assets.part2_sign], name='part2', parent=event_page_main)
+        part2.link(button=home, destination=page_main)
+        part2.link(button=back, destination=event_page_main)
 
-        event_part1_steps.link(button=assets.home, destination=page_main)
-        event_part1_steps.link(button=assets.back, destination=event_part1)
+        event_page_main.link(button=self.assets.to_part2, destination=part2)
 
-        event_part1.link(button=self.assets.event_part1_to_steps, destination=event_part1_steps)
+        # 如何是小活动，主页按钮链接到Part1
+        if self.type == EP.SMALL:
+            page_main.link(button=self.assets.main_button, destination=part1)
+        # 如何是打活动，主页按钮链接到活动主页
+        elif self.type == EP.LARGE:
+            page_main.link(button=self.assets.main_button, destination=event_page_main)
 
-        event_part2 = Page(signs=[self.assets.event_part2_sign], name='event_part2', parent=event_page_main)
-        event_part2.link(button=assets.home, destination=page_main)
-        event_part2.link(button=assets.back, destination=event_page_main)
+        self.event_page_main = event_page_main
+        self.part1 = part1
+        self.part2 = part2
 
-        event_page_main.link(button=self.assets.event_page_main_to_part2, destination=event_part2)
-
-        event_part2_steps = Page(signs=[self.assets.event_part2_steps_sign], name='event_part2_steps',
-                                 parent=event_part2)
-
-        event_part2_steps.link(button=assets.home, destination=page_main)
-        event_part2_steps.link(button=assets.back, destination=event_part2)
-
-        event_part2.link(button=self.assets.event_part2_to_steps, destination=event_part2_steps)
-
-        if self.type == EventParameter.SMALL:
-            page_main.link(button=self.assets.page_main_button, destination=event_part1)
-        elif self.type == EventParameter.LARGE:
-            page_main.link(button=self.assets.page_main_button, destination=event_page_main)
-
-        self.assets.event_page_main = event_page_main
-        self.assets.event_part1 = event_part1
-        self.assets.event_part1_steps = event_part1_steps
-        self.assets.event_part2 = event_part2
-        self.assets.event_part2_steps = event_part2_steps
-
-        return [event_page_main, event_part1]
+        return event_page_main
 
     def _go(self, destination):
         path1 = []
@@ -346,8 +291,7 @@ class Event(UI, Task):
             for b_index, b_value in enumerate(path2):
                 if a_value['destination'].name == b_value['destination'].name:
                     path1 = path1[b_index:a_index + 1]
-                    path2 = path2[b_index + 1:len(path2)]
+                    path2 = path2[b_index + 1:]
 
         path = path1 + path2
         self.go_to_destination(path)
-        pass

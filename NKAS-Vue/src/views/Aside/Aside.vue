@@ -16,11 +16,11 @@
           <Setting/>
         </el-icon>
       </el-menu-item>
-      <el-menu-item route="Main" @click="checkVersion" index="3">
-        <el-icon>
-          <Link/>
-        </el-icon>
-      </el-menu-item>
+<!--      <el-menu-item @click="checkVersion" index="3">-->
+<!--        <el-icon>-->
+<!--          <Link/>-->
+<!--        </el-icon>-->
+<!--      </el-menu-item>-->
     </el-menu>
   </el-aside>
 </template>

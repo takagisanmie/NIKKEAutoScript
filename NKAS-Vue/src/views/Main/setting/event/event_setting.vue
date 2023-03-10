@@ -21,15 +21,15 @@
       <br>
       <div>
         关卡名称
-        <el-input style="width: 210px;float: right" @input="changeStep"
-                  v-model="Settings.event_settings.step"/>
+        <el-input style="width: 210px;float: right" @input="_changeEvent"
+                  v-model="Settings.event_settings.event"/>
         <p>例如1-5，1-11</p>
       </div>
       <div>
         完成当前难度所有未完成的关卡
         <el-switch size="large" width="60px"
                    style="--el-switch-on-color: #626aef; --el-switch-off-color: #ff4949;float: right;"
-                   @change="_finishAllSteps" v-model="finishAllSteps"/>
+                   @change="_finishAllEvent" v-model="finishAllEvent"/>
       </div>
       <br>
       <div>
@@ -98,7 +98,7 @@ const Settings = useSettings()
 const events = ref('')
 const event = ref()
 const isLarge = ref(false)
-const finishAllSteps = ref(false)
+const finishAllEvent = ref(false)
 const difficulty = ref(0)
 const story = ref(1)
 const activate = ref('Task.Event.activate')
@@ -120,13 +120,13 @@ const changeEvent = _.debounce(() => {
 }, 2000)
 
 
-const changeStep = _.debounce(() => {
+const _changeEvent = _.debounce(() => {
   Socket.updateConfigByKey(
       [
-        'Task.Event.step'
+        'Task.Event.event'
       ],
       [
-        Settings.event_settings.step
+        Settings.event_settings.event
       ],
       'task',
       'update_success'
@@ -159,13 +159,13 @@ const changeStory = _.debounce(() => {
   )
 }, 2000)
 
-const _finishAllSteps = _.debounce(async () => {
+const _finishAllEvent = _.debounce(async () => {
   await Socket.updateConfigByKey(
       [
-        'Task.Event.finishAllSteps'
+        'Task.Event.finishAllEvent'
       ],
       [
-        finishAllSteps.value
+        finishAllEvent.value
       ],
       'task',
       'update_success'
@@ -178,7 +178,7 @@ function setOptions() {
         'Task.Event.currentEvent',
         'Task.Event.historyEvent',
         'Task.Event.difficulty',
-        'Task.Event.finishAllSteps',
+        'Task.Event.finishAllEvent',
         'Task.Event.part'
       ],
       'task',
@@ -188,8 +188,8 @@ function setOptions() {
 
 socket.on('setEventOptions', async (result) => {
   await _.forEach(result.result, function (option, index) {
-    if (option.key === 'Task.Event.finishAllSteps') {
-      finishAllSteps.value = option.value
+    if (option.key === 'Task.Event.finishAllEvent') {
+      finishAllEvent.value = option.value
     } else if (option.key === 'Task.Event.difficulty') {
       difficulty.value = option.value
     } else if (option.key === 'Task.Event.part') {
@@ -203,7 +203,7 @@ socket.on('setEventOptions', async (result) => {
 
   _.forEach(events.value, function (e, index) {
     if (e.value === event.value) {
-      if (e.type == 1) {
+      if (e.type === 1) {
         isLarge.value = true
       } else {
         isLarge.value = false

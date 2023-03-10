@@ -5,7 +5,8 @@ import cv2
 import numpy as np
 
 TEMPLATE_FOLDER = './templates'
-ASSETS_FILE = 'login_assets.py'
+ASSETS_FILE = './reward_assets.py'
+path = './module/task/reward'
 
 dirList = []
 
@@ -52,7 +53,7 @@ def getFileType(file, dirName):
 def generateExpression(name, position, dirName):
     dn = (dirName[1:len(dirName)]).replace('\\', '/')
     dn = dn.replace('../', '')
-    template = '\'' + './module/handler' + dn + '/' + name + '.png\''
+    template = '\'' + path + dn + '/' + name + '.png\''
     id = '\'' + name + '\''
     return '%s = { \'area\' : %s , \'path\' : %s , \'id\' : %s }' % (
         name, position, template, id)

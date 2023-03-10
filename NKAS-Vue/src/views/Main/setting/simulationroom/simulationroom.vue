@@ -31,6 +31,22 @@
           />
         </el-select>
       </div>
+      <br>
+      <br>
+      <br>
+      <div style="">
+        结束地区
+        <el-select @change="changeEndArea" effect="dark" style="float:right;" v-model="end_area"
+                   class="m-2" placeholder=" "
+                   size="large">
+          <el-option
+              v-for="item in areas"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+          />
+        </el-select>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +62,7 @@ const activate = ref('Task.SimulationRoom.activate')
 const nextExecutionTime = ref('Task.SimulationRoom.nextExecutionTime')
 const difficulty = ref('')
 const area = ref('')
+const end_area = ref('')
 
 
 const difficulties = [
@@ -91,6 +108,7 @@ function setOptions() {
       [
         'Task.SimulationRoom.difficulty',
         'Task.SimulationRoom.area',
+        'Task.SimulationRoom.end_area',
       ],
       'task',
       'setSimulationOption'
@@ -103,9 +121,13 @@ socket.on('setSimulationOption', (result) => {
       console.log(option.value)
       difficulty.value = String(option.value)
     }
-    if (option.key === 'Task.SimulationRoom.area') {
+    else if (option.key === 'Task.SimulationRoom.area') {
       console.log(option.value)
       area.value = String(option.value)
+    }
+    else if (option.key === 'Task.SimulationRoom.end_area') {
+      console.log(option.value)
+      end_area.value = String(option.value)
     }
   })
 })
@@ -127,6 +149,19 @@ const changeArea = _.debounce((val) => {
   Socket.updateConfigByKey(
       [
         'Task.SimulationRoom.area'
+      ],
+      [
+        val
+      ],
+      'task',
+      'update_success'
+  )
+}, 127)
+
+const changeEndArea = _.debounce((val) => {
+  Socket.updateConfigByKey(
+      [
+        'Task.SimulationRoom.end_area'
       ],
       [
         val

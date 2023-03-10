@@ -52,12 +52,6 @@ const router = createRouter({
 
                     },
                     {
-                        path: '/friendship_setting',
-                        name: 'friendship_setting',
-                        component: () => import('@/views/Main/setting/friendship/friendship.vue'),
-
-                    },
-                    {
                         path: '/commission_setting',
                         name: 'commission_setting',
                         component: () => import('@/views/Main/setting/commission/commission.vue'),

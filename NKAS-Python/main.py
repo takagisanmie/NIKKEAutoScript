@@ -1,8 +1,7 @@
-import sys
+import time
 
 from cached_property import cached_property
 
-import assets
 import glo
 
 from module.base.task import *
@@ -63,16 +62,12 @@ class NikkeAutoScript:
         from module.task.conversation.conversation import Conversation
         Conversation(config=self.config, device=self.device, socket=self.socket).run()
 
-    def friendshippoint(self):
-        from module.task.friendship_point.friendship_point import FriendshipPoint
-        FriendshipPoint(config=self.config, device=self.device, socket=self.socket).run()
-
     def commission(self):
         from module.task.commission.commission import Commission
         Commission(config=self.config, device=self.device, socket=self.socket).run()
 
     def rookiearena(self):
-        from module.task.rookie_arean.rookie_arena import RookieArena
+        from module.task.rookie_arena.rookie_arena import RookieArena
         RookieArena(config=self.config, device=self.device, socket=self.socket).run()
 
     def simulationroom(self):
@@ -90,7 +85,7 @@ class NikkeAutoScript:
             if not self.checkResolution():
                 return
 
-            if self.start():
+            if not self.start():
                 self.state = False
                 self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
                 return
@@ -102,12 +97,19 @@ class NikkeAutoScript:
                     if Task.isActivated(self.config, task):
                         now = time.time()
                         if Task.getNextExecutionTime(self.config, task) < now:
-                            self.checkService()
+                            if not self.start():
+                                self.state = False
+                                self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
+                                return
+
                             self.run(str.lower(task))
 
         except Exception as e:
             e = str(e)
             print(e)
+            self.state = False
+            self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
+            self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}'))
             self.ui.getErrorInfo()
 
     def checkService(self, restart=False):
@@ -139,7 +141,7 @@ class NikkeAutoScript:
             e = str(e)
             print(e)
             if 'not found' in e:
-                self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，当前模拟器离线，正在尝试重启ADB'))
+                self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，没有找到模拟器，正在尝试重启ADB'))
             else:
                 self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，正在尝试重启ADB'))
 
@@ -172,23 +174,21 @@ class NikkeAutoScript:
         except Exception as e:
             e = str(e)
             print(e)
-            self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}，正在尝试重启ADB'))
-            self.state = True
+            self.state = False
             self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
-            self.device.adb_restart()
-            self.device.sleep(6)
-            return self.checkService(restart=True)
+            self.socket.emit('insertLog', self.socket.getLog('ERROR', f'{e}'))
+            self.ui.getErrorInfo()
 
     def checkResolution(self):
         self.socket.emitSingleParameter('checkSimulator', 'info', self.device.u2.info)
         displayWidth = int(self.device.u2.info['displayWidth'])
         displayHeight = int(self.device.u2.info['displayHeight'])
-        if displayWidth == 1920 and displayHeight == 1080:
+        if displayWidth == 720 and displayHeight == 1280:
             return True
         else:
             self.socket.emit('insertLog',
                              self.socket.getLog('ERROR',
-                                                '模拟器分辨率错误: 必须为1920x1080，或当前模拟器非强制横屏模式'))
+                                                '模拟器分辨率错误: 必须为720x1280'))
             self.state = False
             self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
         return False
@@ -197,11 +197,15 @@ class NikkeAutoScript:
 if __name__ == '__main__':
     # TODO 选择服务器
     # TODO 企业塔
-    # TODO 在活动时，如果当前难度的关卡已经全部完成，但选项还开着，则关闭 待测试
-    # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）待测试
+    # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）没示例
     # TODO 咨询时没有识别到正确选项时，保存截图 待测试
     # TODO 关闭主程序时，关闭后端
+    # TODO 模拟时战败换人
+    # TODO 战败进入下个任务
+    # TODO 模拟室指定结束区域
+
+    # TODO 处理每日登录
+    # TODO 选择是否收获特殊竞技场点数
 
     nkas = NikkeAutoScript()
     nkas.socket.run()
-    # nkas.start()

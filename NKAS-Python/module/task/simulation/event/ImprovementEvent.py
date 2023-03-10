@@ -1,49 +1,73 @@
-import assets
+
 from common.enum.enum import *
+from common.exception import Timeout
 
 from module.task.simulation.base.event_base import BaseEvent
+from module.tools.timer import Timer
+from assets import *
+from module.task.simulation.simulation_assets import *
 
 
 class ImprovementEvent(BaseEvent):
     def run(self):
         print('ImprovementEvent')
         self.INFO('start ImprovementEvent')
-        self.device.multiClickLocation(self.getLocation(), 2, AssetResponse.NONE)
+
+        timeout = Timer(10).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(0.6)
+
         while 1:
-            self.device.sleep(0.6)
-            if self.device.isVisible(assets.in_Simulation_BUFF, 0.84, True):
-                self.device.clickLocation(self.getLocation(), AssetResponse.NONE)
-                self.device.clickLocation((970, 605), AssetResponse.NONE)
-            else:
-                break
-        self.device.screenshot()
-        if self.device.textStrategy('条件不符', None, OcrResult.TEXT):
-            self.device.clickTextLocation('不选择', AssetResponse.TEXT_SHOW, False, '什么都没有发生')
-            self.finish()
-        else:
-            while 1:
+            self.device.screenshot()
 
-                self.device.screenshot()
+            if click_timer.reached() and self.device.appear_then_click(Improvement):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
 
-                if lc := self.device.textStrategy('第一个选项', None, OcrResult.LOCATION, False,
-                                                  resized_shape=(2000, 2000)):
-                    self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
-                elif lc := self.device.textStrategy('第二个选项', None, OcrResult.LOCATION, False,
-                                                    resized_shape=(2000, 2000)):
-                    self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
+            # 不满足选项
+            if self.device.appear(no_condition):
+                self.parent.skip()
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                return
 
-                if self.device.textStrategy('结果', None, OcrResult.TEXT, False, resized_shape=(2000, 2000)):
-                    self.finish()
+            if click_timer.reached() and self.device.appear_then_click(improvement_option):
+                timeout.reset()
+                confirm_timer.reset()
+
+            # 需要选择一个效果，进行操作
+            if self.device.appear(need_to_choose) or self.device.appear(need_to_improve):
+                self.parent.getPreferentialEffect()
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                return
+
+            if click_timer.reached() and self.device.appear_then_click(confirm):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if self.device.appear(reset_time):
+                if confirm_timer.reached():
                     return
-                elif self.device.textStrategy('请选择', None, OcrResult.TEXT, False, resized_shape=(2000, 2000)):
-                    self.finish()
+
+            # 不满足选项
+            if self.device.hide(improvement_option):
+                if self.device.appear(cancel):
+                    self.parent.skip()
+                    timeout.reset()
+                    click_timer.reset()
+                    confirm_timer.reset()
                     return
-                else:
-                    self.device.clickTextLocation('确认', AssetResponse.NONE)
 
-                self.device.sleep(0.5)
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
 
-                if self.device.isVisible(assets.in_Simulation_reset_time, 0.84, True):
-                    if self.device.isVisible(assets.in_Simulation_BUFF, 0.84, True):
-                        print('finished')
-                        return
+    def need_to_choose(self):
+        pass

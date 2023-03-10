@@ -4,6 +4,7 @@ class ImgResult:
     SIMILARITY = 3
     LOCATION_AND_SIMILARITY = 4
     POSITION_AND_SIMILARITY = 5
+    ALL_RESULT = 5
     NONE = 0
 
 
@@ -14,15 +15,6 @@ class OcrResult:
     POSITION = 4
     LOCATION_AND_POSITION = 5
     ALL_RESULT = 6
-    NONE = 0
-
-
-class AssetResponse:
-    ASSET_HIDE = 1
-    ASSET_SHOW = 2
-    TEXT_HIDE = 3
-    TEXT_SHOW = 4
-    PAGE_CHANGE = 5
     NONE = 0
 
 
@@ -56,7 +48,7 @@ class TimeoutStrategy:
     NONE = 0
 
 
-class EventParameter:
+class EP:
     SMALL = 0
     LARGE = 1
 

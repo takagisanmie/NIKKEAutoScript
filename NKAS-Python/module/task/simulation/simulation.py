@@ -1,174 +1,196 @@
-import assets
-from common.enum.enum import *
+import time
+from common.exception import Timeout
 from module.base.task import Task
+from module.task.simulation.simulation_assets import *
 from module.task.simulation.effect_control import EffectControl
 from module.task.simulation.event.BattleEvent import BattleEvent
 from module.task.simulation.event.BossEvent import BossEvent
 from module.task.simulation.event.HealingEvent import HealingEvent
 from module.task.simulation.event.ImprovementEvent import ImprovementEvent
 from module.task.simulation.event.RandomEvent import RandomEvent
+from module.tools.match import *
+from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
-
-appearances = [
-    assets.appearance_1,
-    assets.appearance_2,
-    assets.appearance_3,
-]
-
-eventType = [
-    {
-        'asset': assets.Battle,
-        'type': EventType.BATTLE
-    },
-    {
-        'asset': assets.Random,
-        'type': EventType.RANDOM
-    },
-    {
-        'asset': assets.Boss,
-        'type': EventType.BOSS
-    },
-    {
-        'asset': assets.Healing,
-        'type': EventType.HEALING
-    },
-    {
-        'asset': assets.Improvement,
-        'type': EventType.IMPROVEMENT
-    },
-]
-
-eventDifficulty = [
-    {
-        'asset': assets.Normal,
-        'difficulty': BattleEventDifficulty.NORMAL
-    },
-    {
-        'asset': assets.Hard,
-        'difficulty': BattleEventDifficulty.HARD
-    },
-]
 
 
 class SimulationRoom(UI, Task, EffectControl):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.eventList = []
-        self.isFinished = False
-        self.currentArea = self.config.get('Task.SimulationRoom.area', self.config.Task_Dict)
+        self.end_area = int(self.config.get('Task.SimulationRoom.end_area', self.config.Task_Dict))
+        self.is_finished = False
 
     def run(self):
         self.LINE('Simulation Room')
-        if UI.current_page != page_simulation_room2:
-            self.go(destination=page_simulationOption_room)
-            self.chooseDifficulty()
-        else:
-            if lc := self.device.textStrategy('模拟结束', None, OcrResult.LOCATION):
-                self.device.clickLocation(lc, AssetResponse.TEXT_SHOW, '确')
-
-            elif lc := self.device.textStrategy('模拟结束', None, OcrResult.LOCATION, False,
-                                                resized_shape=(2000, 2000)):
-                self.device.clickLocation(lc, AssetResponse.TEXT_SHOW, '确')
-
-            self.device.clickTextLocation('确', AssetResponse.ASSET_SHOW, False, assets.in_simulation_room_sign)
-            UI.current_page = page_simulation_room
-            self.go(destination=page_simulationOption_room)
-            self.chooseDifficulty()
-
+        self.go_to_simulation()
+        self.check_level_and_area()
+        # self.check_own_effects()
+        # 处于事件选择
         while 1:
-            self.initEvent()
-            eventList = sorted(self.eventList, key=lambda event: event.eventType)
-            print(eventList[0].eventType)
-            eventList[0].run()
-            if self.isFinished:
+            self.matchEvents()
+            if self.is_finished:
                 break
 
-        self.device.click(assets.home, AssetResponse.ASSET_HIDE)
+        self.device.appear_then_click(home)
         self.finish(self.config, 'SimulationRoom')
         self.INFO('Simulation Room is finished')
 
-    def initEvent(self):
-        self.device.wait(assets.in_Simulation_BUFF)
-        self.device.wait(assets.in_Simulation_reset_time)
-        self.eventList.clear()
-        eventCount = len(self.device.textStrategy(None, assets.in_Simulation_effect_area, OcrResult.ALL_RESULT, True))
-        position = appearances[eventCount - 1]['area']
-        for i in range(eventCount):
-            for event_type in eventType:
-                event_position = self.device.matchRelative(position, (171 * i), (171 * i), 0, 0, event_type['asset'],
-                                                           0.94, ImgResult.POSITION, i)
-                if event_position:
-                    if event_type['type'] == EventType.BATTLE:
-                        self.eventList.append(
-                            BattleEvent(event_position, self.initDifficulty(i, event_position), self, self.config,
-                                        self.device, self.socket))
-                        continue
+    def check_level_and_area(self):
+        self.device.screenshot()
+        if self.device.appear(area_a, gary=True):
+            self.current_area = 1
+        elif self.device.appear(area_b, gary=True):
+            self.current_area = 2
+        elif self.device.appear(area_c, gary=True):
+            self.current_area = 3
 
-                    elif event_type['type'] == EventType.HEALING:
-                        self.eventList.append(
-                            HealingEvent(event_position, EventType.HEALING, self, self.config, self.device,
-                                         self.socket))
-                        continue
+    def matchEvents(self):
+        event_list = []
+        self.device.screenshot()
+        matchAllTemplate(img=self.device.image,
+                         templates=[Normal_Battle, Hard_Battle, Random, Improvement, Healing, Boss],
+                         img_template=event_list_area, value=0.84, gray=True, relative_locations=event_list,
+                         max_count=3,
+                         min_count=1, sort_by='left')
 
-                    elif event_type['type'] == EventType.IMPROVEMENT:
-                        self.eventList.append(
-                            ImprovementEvent(event_position, EventType.IMPROVEMENT, self, self.config, self.device,
-                                             self.socket))
-                        continue
+        # if e := list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+        #     BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
+        #
+        # elif e := list(filter(lambda x: x['id'] == 'Random', event_list)):
+        #     RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
 
-                    elif event_type['type'] == EventType.RANDOM:
-                        self.eventList.append(
-                            RandomEvent(event_position, EventType.RANDOM, self, self.config, self.device,
-                                        self.socket))
-                        continue
+        if e := list(filter(lambda x: x['id'] == 'Random', event_list)):
+            RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
 
-                    elif event_type['type'] == EventType.BOSS:
-                        self.eventList.append(
-                            BossEvent(event_position, EventType.BOSS, self, self.config, self.device,
-                                      self.socket))
-                        continue
+        elif e := list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+            BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
 
-    def initDifficulty(self, id, event_position):
-        for index, difficulty in enumerate(eventDifficulty):
-            sl = self.device.matchRelative(event_position, 0, -110, 0, -83, difficulty['asset'], 0.45,
-                                           ImgResult.SIMILARITY, id)
+        elif e := list(filter(lambda x: x['id'] == 'Improvement', event_list)):
+            ImprovementEvent(EventType.IMPROVEMENT, self, self.config, self.device, self.socket).run()
 
-            if sl is not None and sl > 0.45:
-                if difficulty['difficulty'] == BattleEventDifficulty.NORMAL:
-                    return EventType.BATTLE
-                elif difficulty['difficulty'] == BattleEventDifficulty.HARD:
-                    return EventType.HARD_BATTLE
+        elif e := list(filter(lambda x: x['id'] == 'Healing', event_list)):
+            HealingEvent(EventType.HEALING, self, self.config, self.device, self.socket).run()
 
-    def chooseDifficulty(self):
-        from module.tools.match import match
-        difficulty = self.config.get('Task.SimulationRoom.difficulty', self.config.Task_Dict)
-        area = self.config.get('Task.SimulationRoom.area', self.config.Task_Dict)
-        lc = None
-        if difficulty == '1':
-            lc = match(self.device.image, assets.Level_1, 0.84, ImgResult.LOCATION)
-        elif difficulty == '2':
-            lc = match(self.device.image, assets.Level_2, 0.84, ImgResult.LOCATION)
-        elif difficulty == '3':
-            lc = match(self.device.image, assets.Level_3, 0.84, ImgResult.LOCATION)
-        elif difficulty == '4':
-            lc = match(self.device.image, assets.Level_4, 0.84, ImgResult.LOCATION)
-        elif difficulty == '5':
-            lc = match(self.device.image, assets.Level_5, 0.84, ImgResult.LOCATION)
+        elif e := list(filter(lambda x: x['id'] == 'Boss', event_list)):
+            BossEvent(EventType.BOSS, self, self.config, self.device, self.socket).run()
 
-        self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
+        elif e := list(filter(lambda x: x['id'] == 'Hard_Battle', event_list)):
+            BattleEvent(EventType.HARD_BATTLE, self, self.config, self.device, self.socket).run()
 
-        if area == '1':
-            lc = match(self.device.image, assets.area_A, 0.84, ImgResult.LOCATION)
-        elif area == '2':
-            lc = match(self.device.image, assets.area_B, 0.84, ImgResult.LOCATION)
-        elif area == '3':
-            lc = match(self.device.image, assets.area_C, 0.84, ImgResult.LOCATION)
+    def choose_difficulty(self):
+        difficulty = int(self.config.get('Task.SimulationRoom.difficulty', self.config.Task_Dict))
+        area = int(self.config.get('Task.SimulationRoom.area', self.config.Task_Dict))
 
-        self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
-        self.device.multiClickLocation((960, 880), 2, AssetResponse.NONE)
-        for i in range(6):
+        timeout = Timer(10).start()
+        confirm_timer = Timer(1, count=2).start()
+
+        difficulties = [Level_1, Level_2, Level_3, Level_4, Level_5]
+        areas = [Area_A, Area_B, Area_C]
+
+        while 1:
+            self.device.screenshot()
+            if self.device.appear_then_click(difficulties[difficulty - 1]):
+                timeout.reset()
+
+            if self.device.appear_then_click(areas[area - 1]):
+                timeout.reset()
+
+            if self.device.appear_then_click(to_simulation):
+                timeout.reset()
+
+            if self.device.appear(reset_time):
+                if confirm_timer.reached():
+                    return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
+
+    def check_own_effects(self):
+
+        timeout = Timer(10).start()
+        confirm_timer = Timer(1, count=2).start()
+        click_timer = Timer(1.2)
+
+        while 1:
+            self.device.screenshot()
+            if click_timer.reached() and self.device.appear_then_click(own_effect_list):
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if self.device.appear(own_effect_list_sign):
+                if confirm_timer.reached():
+                    break
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
+
+        for i in range(2):
+            self.device.swipe(360, 570, 360, 930, 0.1)
             self.device.sleep(1)
-            if self.device.isVisible(assets.in_Simulation_BUFF, 0.84, True):
+
+        self.getCurrentEffects(area=own_effect_list_area)
+
+        timeout.reset()
+        click_timer.reset()
+        confirm_timer.reset()
+
+        while 1:
+            self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(confirm):
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if self.device.hide(own_effect_list_sign):
+                if confirm_timer.reached():
+                    break
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
+
+    def go_to_simulation(self):
+        self.where()
+        if UI.current_page is page_simulation_room:
+            self.go(destination=page_simulation_option)
+            self.choose_difficulty()
+            return
+
+        elif UI.current_page is page_simulation_option:
+            self.choose_difficulty()
+            return
+
+        elif UI.current_page is page_simulation:
+            return
+
+        self.go(destination=page_ark)
+
+        timeout = Timer(10).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(0.3)
+
+        while 1:
+            self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(to_simulation_room):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if self.device.appear(simulation_room_sign):
+                UI.current_page = page_simulation_room
+                self.go_to_simulation()
                 return
-        self.chooseDifficulty()
+
+            # 已经开始过
+            if self.device.appear(reset_time):
+                return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout

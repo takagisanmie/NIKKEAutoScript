@@ -1,116 +1,274 @@
 import re
-
-import assets
 from common.enum.enum import *
+from common.exception import Timeout
 from module.base.task import Task
+from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
 from _conversation import Nikke_list, Nikke_dialog
+from module.task.conversation.conversation_assets import *
 
 
 class Conversation(UI, Task):
     def run(self):
         self.LINE('Conversation')
-        self.go(destination=page_conversation_list)
-        self.device.screenshot()
+        # 选择的中nikke列表
+        self.go(page_conversation_list)
         self.checkRestChance()
-        # 未咨询nikke列表
-        _list = self.getNikkeList()
+        selected_list = self.config.get('Task.Conversation.nikkeList', self.config.Task_Dict)
+        _Nikke_list = list(filter(lambda x: x["key"] in selected_list, Nikke_list))
 
-        _list = _list[:self.restChance]
+        company_list = [Elysion, Missilis, Tetra, Pilgrim, Abnormal]
+        if self.rest_chance == 0:
+            self._finish()
+            return
+        self.chooseNikke(_Nikke_list, company_list)
 
-        if len(_list) > 0:
-            for nikke in _list:
-                self.device.clickTextLocation(nikke['label'], AssetResponse.ASSET_SHOW, True,
-                                              assets.in_conversation_detail_sign)
+        self._finish()
 
-                if self.device.isVisible(assets.in_conversation_detail_max):
-                    self.device.click(assets.back, AssetResponse.ASSET_SHOW, assets.in_conversation_list_sign)
-                    self.INFO(f'Love and affection point with {nikke["label"]} are max')
-                    continue
-
-                self.device.click(assets.in_conversation_detail_start_conversation, AssetResponse.ASSET_HIDE)
-                self.device.click(assets.confirm, AssetResponse.ASSET_SHOW,
-                                  assets.in_conversation_detai_in_talking_cancel)
-                self.device.multiClickLocation((150, 50), 2, AssetResponse.ASSET_SHOW, assets.dialog_box)
-                self.chooseAnswer(nikke)
-                self.device.multiClickLocation((950, 730), 2, AssetResponse.ASSET_SHOW, assets.back)
-                self.device.sleep(3.5)
-                self.appear_then_click(assets.confirm2, AssetResponse.ASSET_HIDE, True)
-                self.device.click(assets.back, AssetResponse.ASSET_SHOW, assets.in_conversation_list_sign)
-                continue
-
-        self.device.click(assets.home, AssetResponse.ASSET_HIDE)
+    def _finish(self):
+        self.device.appear_then_click(home)
         self.finish(self.config, 'Conversation')
         self.INFO('Conversation is finished')
 
     def checkRestChance(self):
-        self.restChance = self.device.textStrategy(None, assets.in_conversation_list_rest_number, OcrResult.TEXT)
-        self.restChance = int(self.restChance.split('/')[0])
-        if self.restChance > 0:
-            self.INFO(f'rest chance: {self.restChance}')
+        self.rest_chance = self.device.textStrategy(None, rest_chance, OcrResult.TEXT)
+        self.rest_chance = int(self.rest_chance.split('/')[0])
+        if self.rest_chance > 0:
+            self.INFO(f'rest chance: {self.rest_chance}')
             return True
         else:
             self.INFO('Conversation has no chance')
 
-    def getNikkeList(self):
-        _list = []
-        # 选择的中nikke列表
-        selected_list = self.config.get('Task.Conversation.nikkeList', self.config.Task_Dict)
-        for name in selected_list:
-            nikke = list(filter(lambda n: n['key'] == name, Nikke_list))[0]
-            # 获取名字位置
-            p = self.device.textStrategy(nikke['label'], None, OcrResult.POSITION)
-            try:
-                if p.all():
-                    upper_left, bottom_right = p[0], p[2]
-                    position = [int(upper_left[0]), int(upper_left[1]), int(bottom_right[0]), int(bottom_right[1])]
-                    # 匹配相对名字位置的已咨询标识
-                    sl = self.device.matchRelative(position, 420, 500, 10, 40, assets.case_closed, 0.8,
+    def chooseNikke(self, _Nikke_list, company_list):
+        print('chooseNikke')
+
+        timeout = Timer(60).start()
+        confirm_timer = Timer(1, count=2).start()
+        click_timer = Timer(0.6)
+
+        company = company_list[0]
+        flag = True
+
+        while 1:
+            self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(company):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                click_timer.wait()
+                self.device.sleep(0.5)
+                continue
+
+            if flag and self.device.hide(company):
+                flag = False
+                company_list = company_list[1:]
+
+            for index, value in enumerate(_Nikke_list):
+
+                p = self.device.textStrategy(value['label'], name_list, OcrResult.POSITION)
+
+                if p is not None:
+
+                    template_left = name_list['area'][0]
+                    template_top = name_list['area'][1]
+
+                    left, right = p[0][0] + template_left, p[2][0] + template_left
+                    top, bottom = p[0][1] + template_top, p[2][1] + template_top
+
+                    # upper_left, bottom_right = p[0], p[2]
+                    # left top right bottom
+
+                    position = [left, top, right, bottom]
+
+                    sl = self.device.matchRelative(position, 500, 520, 15, 40, case_closed, 0.8,
                                                    ImgResult.SIMILARITY)
-                    # 将未匹配到nikke加入列表
-                    if sl is None:
-                        self.INFO(f'wait to communicate: {name}')
-                        _list.append({'name': name, 'label': nikke['label']})
 
-            except Exception as e:
-                self.ERROR(f'{nikke["label"]}: no data was found')
+                    if not sl:
 
-        return _list
+                        print('咨询')
+                        print(value['label'])
 
-    def chooseAnswer(self, nikke):
+                        self.communicate(value['key'], value['label'])
+
+                        _Nikke_list.remove(value)
+
+                        timeout.reset()
+                        confirm_timer.reset()
+                        click_timer.reset()
+                        self.rest_chance -= 1
+                        if self.rest_chance == 0:
+                            return
+
+                    else:
+                        print('已经咨询')
+                        print(value['label'])
+
+                        _Nikke_list.remove(value)
+                        confirm_timer.reset()
+
+            if confirm_timer.reached():
+                if len(company_list) > 0 and self.rest_chance > 0:
+                    self.device.swipe(300, 1020, 300, 640, 0.2)
+                    self.device.sleep(1.2)
+                    timeout.reset()
+                    confirm_timer.reset()
+                    click_timer.reset()
+                    continue
+                else:
+                    return
+
+            if self.device._hide(favourite):
+                if len(company_list) > 0 and self.rest_chance > 0:
+                    return self.chooseNikke(_Nikke_list, company_list)
+                else:
+                    return
+
+            if timeout.reached():
+                print('wait too long')
+                raise Timeout
+
+    def communicate(self, key, name):
+
+        timeout = Timer(30).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(0.3)
+
+        flag = True
+
+        while 1:
+            self.device.screenshot()
+
+            if flag and click_timer.reached() \
+                    and self.device.hide(conversation_detail_sign) \
+                    and self.device.hide(auto) \
+                    and self.device.clickTextLocation(name):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.device.appear(conversation_detail_sign) and self.device.appear(
+                    level_max) and self.device.appear_then_click(back):
+                flag = False
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if flag and click_timer.reached() and self.device.appear_then_click(confirm, img_template=middle):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if flag and click_timer.reached() and self.device.appear_then_click(start_conversation):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if flag and click_timer.reached() and self.device.appear(option):
+                flag = False
+                self.chooseAnswer(key, name)
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() \
+                    and self.device.appear(auto) \
+                    and self.device.multiClickLocation((200, 200), 4, 0.1):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.device.appear(conversation_list_sign):
+                if confirm_timer.reached():
+                    return
+
+            if timeout.reached():
+                print('wait too long')
+                raise Timeout
+
+    def chooseAnswer(self, key, name):
         import cv2
         import time
 
-        # 回答
-        self.device.screenshot()
+        timeout = Timer(30).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(0.6)
+
+        answer_list = Nikke_dialog[key]
         resized_shape = [(3000, 3000), (768, 768)]
-        for shape in resized_shape:
-            if answer1 := self.device.textStrategy(None, assets.answer1, OcrResult.TEXT, resized_shape=shape):
-                answer1 = self.removePunctuation(answer1)
-            if answer2 := self.device.textStrategy(None, assets.answer2, OcrResult.TEXT, resized_shape=shape):
-                answer2 = self.removePunctuation(answer2)
-            for text in Nikke_dialog[nikke['name']]:
-                if answer1 is not None and text in answer1:
-                    self.INFO(f'Love and affection point with {nikke["name"]} + 100')
-                    self.device.clickLocation((950, 730), AssetResponse.ASSET_HIDE,
-                                              assets.in_conversation_detai_in_talking_cancel)
-                    return True
 
-                elif answer2 is not None and text in answer2:
-                    self.INFO(f'Love and affection point with {nikke["name"]} + 100')
-                    self.device.clickLocation((950, 820), AssetResponse.ASSET_HIDE,
-                                              assets.in_conversation_detai_in_talking_cancel)
-                    return True
+        flag = True
+        match = True
 
-        self.device.screenshot()
-        cv2.imwrite(f'./pic/answer-{time.time()}.png', self.device.image)
-        self.INFO(f'{nikke} No correct answer was found.')
-        self.INFO('NKAS has saved the screenshot and the path is "./pic".')
-        self.INFO(f'Love and affection point with {nikke["name"]} + 50')
+        while 1:
+            self.device.screenshot()
 
-        self.device.clickLocation((950, 730), AssetResponse.ASSET_HIDE, assets.in_conversation_detai_in_talking_cancel)
-        return True
+            if match and click_timer.reached() and self.device.appear(option):
+
+                match = False
+
+                for shape in resized_shape:
+                    if answer1 := self.device.textStrategy(None, answer_area_1, OcrResult.TEXT, resized_shape=shape):
+                        answer1 = self.removePunctuation(answer1)
+                    if answer2 := self.device.textStrategy(None, answer_area_2, OcrResult.TEXT, resized_shape=shape):
+                        answer2 = self.removePunctuation(answer2)
+
+                    for text in answer_list:
+                        if answer1 is not None and text in answer1:
+                            self.device.multiClickLocation((340, 860), 2, 0.2)
+                            self.INFO(f'Love and affection point with {key} + 100')
+                            flag = False
+
+                        elif answer2 is not None and text in answer2:
+                            self.device.multiClickLocation((340, 960), 2, 0.2)
+                            self.INFO(f'Love and affection point with {key} + 100')
+                            flag = False
+
+            if flag:
+                flag = False
+                self.device.screenshot()
+                cv2.imwrite(f'./pic/answer-{key}-{time.time()}.png', self.device.image)
+                self.INFO(f'{key} No correct answer was found.')
+                self.INFO('NKAS has saved the screenshot and the path is "./pic".')
+                self.INFO(f'Love and affection point with {key} + 50')
+
+            if click_timer.reached() \
+                    and self.device.appear(auto) \
+                    and self.device.multiClickLocation((340, 860), 2, 0.2):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(level_up_confirm):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() \
+                    and self.device.appear(conversation_deatil_sign_2, gary=True) \
+                    and self.device.appear_then_click(back):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                click_timer.wait()
+                continue
+
+            if self.device.appear(conversation_list_sign):
+                if confirm_timer.reached():
+                    return
+
+            if timeout.reached():
+                print('wait too long')
+                raise Timeout
 
     def removePunctuation(self, text):
         return re.sub(r'[\W]', '', text)

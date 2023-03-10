@@ -7,14 +7,6 @@ class BaseModule(Log):
         self.device = device
         self.socket = socket
 
-    def appear_then_click(self, button, then, screenshot=False, *args, **kwargs):
-        if screenshot:
-            self.device.screenshot()
-
-        if self.device.isVisible(button):
-            self.device.click(button, then, *args, **kwargs)
-            return True
-
     def INFO(self, *args, **kwargs):
         super(BaseModule, self).INFO(self.socket, *args, **kwargs)
 
