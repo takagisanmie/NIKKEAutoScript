@@ -26,4 +26,4 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 
 ### 预览
 
-![Snipaste_2023-03-03_16-09-11.png](https://s2.loli.net/2023/03/03/2iESL1hIV8yAqr5.png)
+![Snipaste_2023-03-12_22-15-45.png](https://s2.loli.net/2023/03/12/MYS2imngO7qPeED.png)
