@@ -32,6 +32,11 @@ class RookieArena(UI, Task):
 
         while 1:
             self.device.screenshot()
+            if click_timer.reached() and self.device.appear_then_click(save_formation):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if click_timer.reached() and self.device.appear_then_click(free_chance, index=self.target - 1):
                 timeout.reset()

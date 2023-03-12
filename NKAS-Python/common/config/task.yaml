@@ -24,7 +24,7 @@ Task:
     displayName: 每日任务
     equipmentUpgrade: false
     name: Daily
-    nextExecutionTime: 1678651200
+    nextExecutionTime: 1678478400
     nikkeUpgrade: true
   Destroy:
     activate: true

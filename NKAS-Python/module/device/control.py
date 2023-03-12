@@ -16,29 +16,33 @@ class Control(DroidCast, Ocr):
     def appear_then_click(self, button, value=0.84, screenshot=False, gray=False, img=None, img_template=None,
                           mask_id=None, index=0):
 
-        if 'button' in button.keys():
-            _button: Button = button['button']
-            template = _button.template
-            lc = _button.location
+        # if 'button' in button.keys():
+        #     _button: Button = button['button']
+        #     template = _button.template
+        #     lc = _button.location
+        #
+        #     if self.appear(template, value, screenshot=screenshot, _result=ImgResult.LOCATION, gray=gray, img=img,
+        #                    img_template=img_template, mask_id=mask_id, index=index):
+        #         self.uiautomator_click(lc[0], lc[1])
+        #         return True
+        #     else:
+        #         return False
 
-            if self.appear(template, value, screenshot=screenshot, _result=ImgResult.LOCATION, gray=gray, img=img,
-                           img_template=img_template, mask_id=mask_id, index=index):
-                self.uiautomator_click(lc[0], lc[1])
-                return True
-            else:
-                return False
+        if lc := self.appear(button, value, screenshot=screenshot, _result=ImgResult.LOCATION, gray=gray, img=img,
+
+                             img_template=img_template, mask_id=mask_id, index=index):
+
+            # x, y = random_rectangle_point(button['area'])
+
+            # print(button['id'], lc)
+
+            self.uiautomator_click(lc[0], lc[1])
+
+            return True
 
         else:
-            if lc := self.appear(button, value, screenshot=screenshot, _result=ImgResult.LOCATION, gray=gray, img=img,
-                                 img_template=img_template, mask_id=mask_id, index=index):
 
-                # x, y = random_rectangle_point(button['area'])
-                # print(button['id'], lc)
-
-                self.uiautomator_click(lc[0], lc[1])
-                return True
-            else:
-                return False
+            return False
 
     def clickTextLocation(self, text, screenshot=False, *args, **kwargs):
         lc = self.ocrByAsset(text, None, OcrResult.LOCATION, screenshot, *args, **kwargs)

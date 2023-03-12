@@ -18,10 +18,10 @@ class Daily(UI, Task):
         self.LINE('Daily')
         if self.equipmentUpgrade:
             self.improve_equipment()
-        self.to_pass()
         self.to_liberation()
         self.go(destination=page_daily)
         self.getReward()
+        self.to_pass()
         self.finish(self.config, 'Daily')
         self.INFO('Daily is finished')
 
@@ -163,7 +163,7 @@ class Daily(UI, Task):
 
         timeout = Timer(10).start()
         confirm_timer = Timer(3, count=8).start()
-        reset_timer = Timer(1, count=8).start()
+        reset_timer = Timer(1, count=24).start()
         click_timer = Timer(1.2)
 
         glo.set_value('pass', [])
@@ -184,7 +184,14 @@ class Daily(UI, Task):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(emphasis, img_template=pass_area,
+            if click_timer.reached() and self.device.appear_then_click(pass_mission, img_template=pass_area,
+                                                                       mask_id=mask_id):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(pass_reward, img_template=pass_area,
                                                                        mask_id=mask_id):
                 timeout.reset()
                 confirm_timer.reset()
