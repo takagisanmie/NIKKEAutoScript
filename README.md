@@ -12,7 +12,7 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 或者在Releases下载
 
 ### 使用
-0.保持使用语言为简体中文  
+0.保持在NIKKE中使用语言为简体中文  
 1.解压NKAS.zip，用管理员运行setADB.bat，如果电脑已经配置过ADB可以跳过  
 2.在**\NKAS-Python中，运行runNKAS.bat  
 3.在等待主程序加载完成后，在NKAS的设置中填写Serial  
