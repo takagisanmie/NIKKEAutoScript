@@ -45,7 +45,7 @@ class Conversation(UI, Task):
 
         timeout = Timer(60).start()
         confirm_timer = Timer(1, count=2).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.2)
 
         company = company_list[0]
         flag = True
@@ -89,6 +89,7 @@ class Conversation(UI, Task):
 
                         print('咨询')
                         print(value['label'])
+                        # TODO 日志
 
                         self.communicate(value['key'], value['label'])
 
@@ -97,6 +98,7 @@ class Conversation(UI, Task):
                         timeout.reset()
                         confirm_timer.reset()
                         click_timer.reset()
+
                         self.rest_chance -= 1
                         if self.rest_chance == 0:
                             return
@@ -104,6 +106,7 @@ class Conversation(UI, Task):
                     else:
                         print('已经咨询')
                         print(value['label'])
+                        # TODO 日志
 
                         _Nikke_list.remove(value)
                         confirm_timer.reset()
@@ -133,7 +136,7 @@ class Conversation(UI, Task):
 
         timeout = Timer(30).start()
         confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.3)
+        click_timer = Timer(1.2)
 
         flag = True
 
@@ -199,7 +202,7 @@ class Conversation(UI, Task):
 
         timeout = Timer(30).start()
         confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.2)
 
         answer_list = Nikke_dialog[key]
         resized_shape = [(3000, 3000), (768, 768)]
@@ -225,19 +228,24 @@ class Conversation(UI, Task):
                             self.device.multiClickLocation((340, 860), 2, 0.2)
                             self.INFO(f'Love and affection point with {key} + 100')
                             flag = False
+                            break
 
                         elif answer2 is not None and text in answer2:
                             self.device.multiClickLocation((340, 960), 2, 0.2)
                             self.INFO(f'Love and affection point with {key} + 100')
                             flag = False
+                            break
+
+                    if not flag:
+                        break
 
             if flag:
                 flag = False
                 self.device.screenshot()
                 cv2.imwrite(f'./pic/answer-{key}-{time.time()}.png', self.device.image)
-                self.INFO(f'{key} No correct answer was found.')
-                self.INFO('NKAS has saved the screenshot and the path is "./pic".')
-                self.INFO(f'Love and affection point with {key} + 50')
+                self.WARNING(f'{key} No correct answer was found.')
+                self.WARNING('NKAS has saved the screenshot and the path is "./pic".')
+                self.WARNING(f'Love and affection point with {key} + 50')
 
             if click_timer.reached() \
                     and self.device.appear(auto) \
@@ -254,12 +262,13 @@ class Conversation(UI, Task):
                 continue
 
             if click_timer.reached() \
-                    and self.device.appear(conversation_deatil_sign_2, gary=True) \
+                    and self.device.appear(conversation_deatil_sign_2, gray=True) \
                     and self.device.appear_then_click(back):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
                 click_timer.wait()
+                click_timer.reset()
                 continue
 
             if self.device.appear(conversation_list_sign):

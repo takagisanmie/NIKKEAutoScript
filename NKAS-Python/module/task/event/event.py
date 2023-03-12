@@ -28,13 +28,13 @@ class Event(UI, Task):
         print(self.pages)
         self.go(destination=page_main)
         self.go_to_steps()
+        self.change_part_difficulty()
         if self._finishAllEvent:
             self.finishAllEvent()
 
         if self.rest_chance == 0:
             self._finish()
 
-        self.change_part_difficulty()
         self.loop()
 
         self._finish()
@@ -56,18 +56,37 @@ class Event(UI, Task):
 
         timeout = Timer(60).start()
         confirm_timer = Timer(1, count=2).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
-            if click_timer.reached() and self.device.appear(self.assets.auto, gary=True):
+            if not self.rest_chance \
+                    and self.device.appear(home) \
+                    and confirm_timer.reached():
+                return
+
+            if click_timer.reached() and self.device.appear_then_click(self.assets.option):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() \
+                    and self.device.appear_then_click(self.assets.skip) \
+                    or self.device.appear_then_click(self.assets.skip_2):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear(self.assets.auto, gray=True):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
                 self.device.sleep(5)
                 continue
 
-            if click_timer.reached() \
+            if self.rest_chance and click_timer.reached() \
                     and self.device.appear(self.finished) \
                     and self.device._hide(self.assets.into_battle) \
                     and self.device.uiautomator_click(lc[0], lc[1]):
@@ -76,14 +95,14 @@ class Event(UI, Task):
                 click_timer.reset()
                 continue
 
-            if self.device.appear_then_click(self.assets.restart):
+            if self.rest_chance and self.device.appear_then_click(self.assets.restart):
                 self.rest_chance -= 1
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
+            if self.rest_chance and click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
                 self.rest_chance -= 1
                 timeout.reset()
                 confirm_timer.reset()
@@ -91,8 +110,11 @@ class Event(UI, Task):
                 continue
 
             # 没机会时
-            if self.rest_chance == 0 and self.device.appear_then_click(self.assets.end_battle):
-                return
+            if self.device.appear_then_click(self.assets.end_battle):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if timeout.reached():
                 self.ERROR('wait too long')
@@ -108,14 +130,28 @@ class Event(UI, Task):
         self.sroll_to_top()
         timeout = Timer(60).start()
         confirm_timer = Timer(1, count=2).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
             if self.rest_chance == 0:
                 return
 
-            if self.device.appear(self.assets.auto, gary=True):
+            if click_timer.reached() and self.device.appear_then_click(self.assets.option):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() \
+                    and self.device.appear_then_click(self.assets.skip) \
+                    or self.device.appear_then_click(self.assets.skip_2):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.device.appear(self.assets.auto, gray=True):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -153,7 +189,7 @@ class Event(UI, Task):
                 raise Timeout
 
     def go_to_steps(self):
-        if self.type == EP.SMALL or self.type == EP.LARGE and self.part == EP.PART_1:
+        if (self.type == EP.SMALL or self.type == EP.LARGE) and self.part == EP.PART_1:
             self._go(destination=self.part1)
         elif self.type == EP.LARGE and self.part == EP.PART_2:
             self._go(destination=self.part2)
@@ -173,13 +209,24 @@ class Event(UI, Task):
     def change_part_difficulty(self):
 
         # 小活动 大活动 part1 普通
-        if self.type == EP.SMALL \
-                or self.type == EP.LARGE \
+        if (self.type == EP.SMALL or self.type == EP.LARGE) \
                 and self.part == EP.PART_1 \
                 and self.difficulty == EP.NORMAL:
             self.device.multiClick(self.assets.normal, 2)
-            self.unlocked = self.assets.part1_normal_unlocked
-            self.finished = self.assets.part1_normal_finished
+            self.unlocked = [self.assets.part1_normal_unlocked]
+
+            if self.assets.part1_normal_unlocked_2:
+                self.unlocked.append(self.assets.part1_normal_unlocked_2)
+            if self.assets.part1_normal_unlocked_3:
+                self.unlocked.append(self.assets.part1_normal_unlocked_3)
+
+            self.finished = [self.assets.part1_normal_finished]
+
+            if self.assets.part1_normal_finished_2:
+                self.finished.append(self.assets.part1_normal_finished_2)
+            if self.assets.part1_normal_finished_3:
+                self.finished.append(self.assets.part1_normal_finished_3)
+
             self.area_1 = self.assets.part1_normal_area_1
             self.area_2 = self.assets.part1_normal_area_2
 
@@ -188,8 +235,19 @@ class Event(UI, Task):
                 and self.part == EP.PART_1 \
                 and self.difficulty == EP.HARD:
             self.device.multiClick(self.assets.hard, 2)
-            self.unlocked = self.assets.part1_hard_unlocked
-            self.finished = self.assets.part1_hard_finished
+
+            self.unlocked = [self.assets.part1_hard_unlocked]
+            if self.assets.part1_hard_unlocked_2:
+                self.unlocked.append(self.assets.part1_hard_unlocked_2)
+            if self.assets.part1_hard_unlocked_3:
+                self.unlocked.append(self.assets.part1_hard_unlocked_3)
+
+            self.finished = [self.assets.part1_hard_finished]
+            if self.assets.part1_hard_finished_2:
+                self.finished.append(self.assets.part1_hard_finished_2)
+            if self.assets.part1_hard_finished_3:
+                self.finished.append(self.assets.part1_hard_finished_3)
+
             self.area_1 = self.assets.part1_hard_area_1
             self.area_2 = self.assets.part1_hard_area_2
 
@@ -198,8 +256,20 @@ class Event(UI, Task):
                 and self.part == EP.PART_2 \
                 and self.difficulty == EP.NORMAL:
             self.device.multiClick(self.assets.normal, 2)
-            self.unlocked = self.assets.part2_normal_unlocked
-            self.finished = self.assets.part2_normal_finished
+            self.unlocked = [self.assets.part2_normal_unlocked]
+
+            if self.assets.part2_normal_unlocked_2:
+                self.unlocked.append(self.assets.part2_normal_unlocked_2)
+            if self.assets.part2_normal_unlocked_3:
+                self.unlocked.append(self.assets.part2_normal_unlocked_3)
+
+            self.finished = [self.assets.part2_normal_finished]
+
+            if self.assets.part2_normal_finished_2:
+                self.finished.append(self.assets.part2_normal_finished_2)
+            if self.assets.part2_normal_finished_3:
+                self.finished.append(self.assets.part2_normal_finished_3)
+
             self.area_1 = self.assets.part2_normal_area_1
             self.area_2 = self.assets.part2_normal_area_2
 
@@ -208,13 +278,38 @@ class Event(UI, Task):
                 and self.part == EP.PART_2 \
                 and self.difficulty == EP.HARD:
             self.device.multiClick(self.assets.hard, 2)
-            self.unlocked = self.assets.part2_hard_unlocked
-            self.finished = self.assets.part2_hard_finished
+
+            self.unlocked = [self.assets.part2_hard_unlocked]
+
+            if self.assets.part2_hard_unlocked_2:
+                self.unlocked.append(self.assets.part2_hard_unlocked_2)
+            if self.assets.part2_hard_unlocked_3:
+                self.unlocked.append(self.assets.part2_hard_unlocked_3)
+
+            self.finished = [self.assets.part2_hard_finished]
+
+            if self.assets.part2_hard_finished_2:
+                self.finished.append(self.assets.part2_hard_finished_2)
+            if self.assets.part2_hard_finished_3:
+                self.finished.append(self.assets.part2_hard_finished_3)
+
             self.area_1 = self.assets.part2_hard_area_1
             self.area_2 = self.assets.part2_hard_area_2
         else:
-            self.unlocked = self.assets.part1_normal_unlocked
-            self.finished = self.assets.part1_normal_finished
+            self.unlocked = [self.assets.part1_normal_unlocked]
+
+            if self.assets.part1_normal_unlocked_2:
+                self.unlocked.append(self.assets.part1_normal_unlocked_2)
+            if self.assets.part1_normal_unlocked_3:
+                self.unlocked.append(self.assets.part1_normal_unlocked_3)
+
+            self.finished = [self.assets.part1_normal_finished]
+
+            if self.assets.part1_normal_finished_2:
+                self.finished.append(self.assets.part1_normal_finished_2)
+            if self.assets.part1_normal_finished_3:
+                self.finished.append(self.assets.part1_normal_finished_3)
+
             self.area_1 = self.assets.part1_normal_area_1
             self.area_2 = self.assets.part1_normal_area_2
         self.device.sleep(2)
@@ -294,4 +389,44 @@ class Event(UI, Task):
                     path2 = path2[b_index + 1:]
 
         path = path1 + path2
-        self.go_to_destination(path)
+
+        timeout = Timer(30).start()
+        confirm_timer = Timer(limit=0, count=len(path)).start()
+        click_timer = Timer(1.2)
+
+        while 1:
+            for index, value in enumerate(path):
+                self.device.screenshot()
+
+                if click_timer.reached() and self.device.appear_then_click(self.assets.touch_to_continue):
+                    timeout.reset()
+                    click_timer.reset()
+
+                if click_timer.reached() and self.device.appear_then_click(self.assets.option):
+                    timeout.reset()
+                    click_timer.reset()
+
+                if click_timer.reached() \
+                        and self.device.appear_then_click(self.assets.skip) \
+                        or self.device.appear_then_click(self.assets.skip_2):
+                    timeout.reset()
+                    click_timer.reset()
+
+                if self.device.appear(value['destination'].signs[0]):
+                    path = path[index + 1:]
+                    confirm_timer.count = len(path)
+                    if confirm_timer.reached():
+                        return
+
+                    break
+
+                if click_timer.reached() and self.device.appear_then_click(value['button']):
+                    click_timer.reset()
+                    timeout.reset()
+                    click_timer.wait()
+                    confirm_timer.reset()
+                    click_timer.reset()
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout

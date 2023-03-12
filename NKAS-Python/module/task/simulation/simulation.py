@@ -37,11 +37,11 @@ class SimulationRoom(UI, Task, EffectControl):
 
     def check_level_and_area(self):
         self.device.screenshot()
-        if self.device.appear(area_a, gary=True):
+        if self.device.appear(area_a, gray=True):
             self.current_area = 1
-        elif self.device.appear(area_b, gary=True):
+        elif self.device.appear(area_b, gray=True):
             self.current_area = 2
-        elif self.device.appear(area_c, gary=True):
+        elif self.device.appear(area_c, gray=True):
             self.current_area = 3
 
     def matchEvents(self):
@@ -53,28 +53,28 @@ class SimulationRoom(UI, Task, EffectControl):
                          max_count=3,
                          min_count=1, sort_by='left')
 
-        # if e := list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
-        #     BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
-        #
-        # elif e := list(filter(lambda x: x['id'] == 'Random', event_list)):
-        #     RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
-
-        if e := list(filter(lambda x: x['id'] == 'Random', event_list)):
-            RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
-
-        elif e := list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+        if list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
             BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
 
-        elif e := list(filter(lambda x: x['id'] == 'Improvement', event_list)):
+        elif list(filter(lambda x: x['id'] == 'Random', event_list)):
+            RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
+
+        # if e := list(filter(lambda x: x['id'] == 'Random', event_list)):
+        #     RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
+        #
+        # elif e := list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+        #     BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
+
+        elif list(filter(lambda x: x['id'] == 'Improvement', event_list)):
             ImprovementEvent(EventType.IMPROVEMENT, self, self.config, self.device, self.socket).run()
 
-        elif e := list(filter(lambda x: x['id'] == 'Healing', event_list)):
+        elif list(filter(lambda x: x['id'] == 'Healing', event_list)):
             HealingEvent(EventType.HEALING, self, self.config, self.device, self.socket).run()
 
-        elif e := list(filter(lambda x: x['id'] == 'Boss', event_list)):
+        elif list(filter(lambda x: x['id'] == 'Boss', event_list)):
             BossEvent(EventType.BOSS, self, self.config, self.device, self.socket).run()
 
-        elif e := list(filter(lambda x: x['id'] == 'Hard_Battle', event_list)):
+        elif list(filter(lambda x: x['id'] == 'Hard_Battle', event_list)):
             BattleEvent(EventType.HARD_BATTLE, self, self.config, self.device, self.socket).run()
 
     def choose_difficulty(self):
@@ -171,7 +171,7 @@ class SimulationRoom(UI, Task, EffectControl):
 
         timeout = Timer(10).start()
         confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.3)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()

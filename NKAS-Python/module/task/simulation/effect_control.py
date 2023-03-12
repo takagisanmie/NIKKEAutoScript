@@ -1,4 +1,4 @@
-
+import glo
 from assets import *
 from common.enum.enum import *
 from common.exception import Timeout
@@ -26,7 +26,7 @@ class EffectControl(BaseModule):
 
             timeout = Timer(15).start()
             confirm_timer = Timer(1, count=3).start()
-            click_timer = Timer(0.6)
+            click_timer = Timer(1.2)
 
             for i in current_effect_list:
                 for x in preferential_effect_list:
@@ -233,7 +233,7 @@ class EffectControl(BaseModule):
         print('skip')
         timeout = Timer(10).start()
         confirm_timer = Timer(1, count=4).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.2)
 
         import numpy as np
         import cv2
@@ -288,31 +288,38 @@ class EffectControl(BaseModule):
     def skip_replacement(self):
         print('skip_replacement')
         timeout = Timer(10).start()
-        reset_timer = Timer(2).start()
-        confirm_timer = Timer(1, count=4).start()
-        click_timer = Timer(0.6)
+        confirm_timer = Timer(1, count=3).start()
+        reset_timer = Timer(1, count=3).start()
+        click_timer = Timer(1.2)
 
         # cancel 为不相交X号
         # cancel_2 为相交X号
 
+        glo.set_value('skip_replacement', [])
+        mask_id = 'skip_replacement'
+
         while 1:
-            if reset_timer.reached():
-                self.device.screenshot()
-                reset_timer.reset()
+            self.device.screenshot()
 
-            if click_timer.reached() and self.device.appear_then_click(cancel, hide=True):
+            if click_timer.reached() and self.device.appear_then_click(cancel, mask_id=mask_id):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
+                continue
 
-            if click_timer.reached() and self.device.appear_then_click(confirm, hide=True):
+            if click_timer.reached() and self.device.appear_then_click(confirm, mask_id=mask_id):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
+                continue
 
             if self.device.appear(reset_time) or self.device.appear(end_simulation):
                 if confirm_timer.reached():
                     return
+
+            if reset_timer.reached():
+                reset_timer.reset()
+                glo.set_value(mask_id, [])
 
             if timeout.reached():
                 self.ERROR('wait too long')
@@ -334,7 +341,7 @@ preferential_effect_list = [
     },
     {
         'displayName': '快速弹匣',
-        'name': '快速弹匣',
+        'name': '快速',
         'priority': 1
 
     },

@@ -19,7 +19,7 @@ class Destroy(UI, Task):
 
         timeout = Timer(10).start()
         confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
@@ -29,12 +29,12 @@ class Destroy(UI, Task):
                 click_timer.reset()
                 confirm_timer.reset()
 
-            if click_timer.reached() and self.device.appear_then_click(reward):
+            if click_timer.reached() and self.device.hide(destroy_sign) and self.device.multiClickLocation((300, 300)):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
 
-            if confirm_timer.reached():
+            if self.device.appear(destroy_sign) and confirm_timer.reached():
                 return
 
             if timeout.reached():

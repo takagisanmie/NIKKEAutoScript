@@ -18,6 +18,21 @@
       </div>
       <br>
       <div>
+        服务器
+        <el-select @change="changeServer" effect="dark" style="float:right;width: 200px;" v-model="server"
+                   class="m-2" placeholder=" "
+                   size="large">
+          <el-option
+              v-for="item in servers"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+          />
+        </el-select>
+      </div>
+      <br>
+      <br>
+      <div>
         加速器
         <el-select @change="changeAccelerator" effect="dark" style="float:right;width: 200px;" v-model="accelerator"
                    class="m-2" placeholder=" "
@@ -44,6 +59,7 @@ import dayjs from "dayjs";
 const socket = Socket.getSocket()
 const Settings = useSettings()
 const accelerator = ref('')
+const server = ref('')
 
 
 const changeSerial = _.debounce(() => {
@@ -72,11 +88,26 @@ const changeAccelerator = _.debounce((val) => {
   )
 }, 127)
 
+const changeServer = _.debounce((val) => {
+  Socket.updateConfigByKey(
+      [
+        'Server'
+      ],
+      [
+        val
+      ],
+      'config',
+      'update_success'
+  )
+}, 127)
+
 function setOptions() {
   Socket.getConfigByKey(
       [
         'Accelerators',
-        'Simulator.Accelerator'
+        'Simulator.Accelerator',
+        'Servers',
+        'Server',
       ],
       'config',
       'setAccelerator'
@@ -84,14 +115,21 @@ function setOptions() {
 }
 
 const accelerators = ref([])
+const servers = ref([])
 
 socket.on('setAccelerator', (result) => {
   _.forEach(result.result, function (option, index) {
     if (option.key === 'Accelerators') {
       accelerators.value = option.value
     }
-    if (option.key === 'Simulator.Accelerator') {
+    else if (option.key === 'Simulator.Accelerator') {
       accelerator.value = option.value
+    }
+    else if (option.key === 'Servers') {
+      servers.value = option.value
+    }
+    else if (option.key === 'Server') {
+      server.value = option.value
     }
   })
 })

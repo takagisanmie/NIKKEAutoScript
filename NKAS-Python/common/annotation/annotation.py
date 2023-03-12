@@ -18,7 +18,6 @@ import time
 #                 return res
 #
 #             if timeout.reached():
-#                 # TODO 抛出异常
 #                 return res
 #
 #     return prefix

@@ -21,7 +21,9 @@
               <el-menu-item route="conversation_setting" index="1-7">咨询</el-menu-item>
               <el-menu-item route="rookie_arena" index="1-8">新人竞技场</el-menu-item>
               <el-menu-item route="simulation_room" index="1-9">模拟室</el-menu-item>
-              <el-menu-item route="event_setting" index="1-10">活动</el-menu-item>
+              <el-menu-item route="tribe_tower" index="1-10">企业塔</el-menu-item>
+              <el-menu-item route="daily" index="1-11">每日任务</el-menu-item>
+              <el-menu-item route="event_setting" index="1-12">活动</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>

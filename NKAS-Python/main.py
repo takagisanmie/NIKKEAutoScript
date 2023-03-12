@@ -70,6 +70,10 @@ class NikkeAutoScript:
         from module.task.rookie_arena.rookie_arena import RookieArena
         RookieArena(config=self.config, device=self.device, socket=self.socket).run()
 
+    def tribetower(self):
+        from module.task.tribe_tower.tribe_tower import TribeTower
+        TribeTower(config=self.config, device=self.device, socket=self.socket).run()
+
     def simulationroom(self):
         from module.task.simulation.simulation import SimulationRoom
         SimulationRoom(config=self.config, device=self.device, socket=self.socket).run()
@@ -77,6 +81,10 @@ class NikkeAutoScript:
     def event(self):
         from module.task.event.event import Event
         Event(config=self.config, device=self.device, socket=self.socket).run()
+
+    def daily(self):
+        from module.task.daily.daily import Daily
+        Daily(config=self.config, device=self.device, socket=self.socket).run()
 
     def loop(self):
         if not self.checkService():
@@ -195,17 +203,10 @@ class NikkeAutoScript:
 
 
 if __name__ == '__main__':
-    # TODO 选择服务器
-    # TODO 企业塔
     # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）没示例
-    # TODO 咨询时没有识别到正确选项时，保存截图 待测试
     # TODO 关闭主程序时，关闭后端
-    # TODO 模拟时战败换人
-    # TODO 战败进入下个任务
-    # TODO 模拟室指定结束区域
-
     # TODO 处理每日登录
-    # TODO 选择是否收获特殊竞技场点数
 
     nkas = NikkeAutoScript()
     nkas.socket.run()
+

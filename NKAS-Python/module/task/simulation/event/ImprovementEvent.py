@@ -15,7 +15,7 @@ class ImprovementEvent(BaseEvent):
 
         timeout = Timer(10).start()
         confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()

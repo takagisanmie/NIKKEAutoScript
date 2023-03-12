@@ -16,7 +16,7 @@
           <Setting/>
         </el-icon>
       </el-menu-item>
-<!--      <el-menu-item @click="checkVersion" index="3">-->
+<!--      <el-menu-item @click="test" route="Main" index="3">-->
 <!--        <el-icon>-->
 <!--          <Link/>-->
 <!--        </el-icon>-->
@@ -44,6 +44,13 @@ const translateMenu = () => {
 
 const Log = inject('Log')
 const NKASLog = inject('NKASLog')
+
+const test = () => {
+  Log.INFO('11111111111111111111111', NKASLog)
+  Log.WARNING('11111111111111111111111', NKASLog)
+  Log.ERROR('11111111111111111111111', NKASLog)
+
+}
 
 const checkVersion = () => {
   socket.emit('checkVersion')
@@ -74,6 +81,8 @@ socket.on('serial_update_success', () => {
 socket.on('insertLog', (result) => {
   if (result.type === 'INFO') {
     Log.INFO(result.text, NKASLog)
+  } else if (result.type === 'WARNING') {
+    Log.WARNING(result.text, NKASLog)
   } else if (result.type === 'ERROR') {
     Log.ERROR(result.text, NKASLog)
   } else if (result.type === 'LINE') {

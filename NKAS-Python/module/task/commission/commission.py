@@ -19,8 +19,8 @@ class Commission(UI, Task):
         print(restart)
         self.device.sleep(3)
         timeout = Timer(10).start()
-        confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.8)
+        confirm_timer = Timer(3, count=3).start()
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()

@@ -1,12 +1,21 @@
 import dayjs from 'dayjs'
-import {inject} from "vue";
 
 export default class Log {
     static INFO(message, NKASLog) {
         let date = dayjs().format('HH:mm:ss:SSS')
         let info = `<span style='width: auto;position:relative;top:0px;left:10px;display:block;font-size: 19px;'>
-                      <span style="color:#54bac0;">INFO&nbsp&nbsp&nbsp&nbsp</span>
+                      <span style="color:#54bac0;">INFO&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                       <span style="color:#61a06b;">&nbsp&nbsp&nbsp${date}&nbsp</span>
+                      ${message}
+                    </span>`
+        NKASLog.insert(info)
+    }
+
+    static WARNING(message, NKASLog) {
+        let date = dayjs().format('HH:mm:ss:SSS')
+        let info = `<span style='width: auto;position:relative;top:0px;left:10px;display:block;font-size: 19px;color: #DFD546FF'>
+                      <span style="color:#dfd546;">WARNING&nbsp&nbsp</span>
+                      <span style="color:#61a06b;">${date}&nbsp</span>
                       ${message}
                     </span>`
         NKASLog.insert(info)
@@ -15,7 +24,7 @@ export default class Log {
     static ERROR(message, NKASLog) {
         let date = dayjs().format('HH:mm:ss:SSS')
         let info = `<span style='width: auto;position:relative;top:0px;left:10px;display:block;font-size: 19px;color: #cc4f4f'>
-                      <span style="color:#cc4f4f;">ERROR&nbsp&nbsp&nbsp&nbsp</span>
+                      <span style="color:#cc4f4f;">ERROR&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                       <span style="color:#61a06b;">${date}&nbsp</span>
                       ${message}
                     </span>`

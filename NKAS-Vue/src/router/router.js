@@ -76,9 +76,21 @@ const router = createRouter({
 
                     },
                     {
+                        path: '/tribe_tower',
+                        name: 'tribe_tower',
+                        component: () => import('@/views/Main/setting/tribe_tower/tribe_tower.vue'),
+
+                    },
+                    {
                         path: '/event_setting',
                         name: 'event_setting',
                         component: () => import('@/views/Main/setting/event/event_setting.vue'),
+
+                    },
+                    {
+                        path: '/daily',
+                        name: 'daily',
+                        component: () => import('@/views/Main/setting/daily/daily.vue'),
 
                     }
                 ]

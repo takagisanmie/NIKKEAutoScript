@@ -22,14 +22,23 @@ def getNKAS():
     except:
         print('读取' + 'nkas' + '失败\r\n')
 
+
 def getSocket():
     try:
         return _global_dict['socket']
     except:
         print('读取' + 'socket' + '失败\r\n')
 
+
 def getDevice():
     try:
         return _global_dict['device']
+    except:
+        print('读取' + 'device' + '失败\r\n')
+
+
+def getMaskList(id):
+    try:
+        return _global_dict[id]
     except:
         print('读取' + 'device' + '失败\r\n')

@@ -14,6 +14,12 @@ def getTaskResetTime():
         return round(midnight + 14400)
 
 
+def after(second):
+    # 现在
+    now = time.time()
+    return round(second + now)
+
+
 def getStrfTime(_time):
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(_time))
 

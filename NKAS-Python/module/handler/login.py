@@ -7,9 +7,14 @@ from module.handler.login_assets import *
 
 
 class LoginHandler(UI):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.server = int(self.config.get('Server', self.config.dict))
+        self.is_finished = False
+
     def handle_app_login(self):
         timeout = Timer(180).start()
-        click_timer = Timer(0.5)
+        click_timer = Timer(1.2)
         confirm_timer = Timer(1, count=4).start()
 
         self.where()
@@ -22,13 +27,19 @@ class LoginHandler(UI):
 
             self.device.screenshot()
 
+            if self.server == NIKKEServer.JP and self.config.Emulator_JP_PackageName not in self.device.u2.app_list_running():
+                self.device.u2.app_start(self.config.Emulator_JP_PackageName)
+
+            elif self.server == NIKKEServer.TW and self.config.Emulator_TW_PackageName not in self.device.u2.app_list_running():
+                self.device.u2.app_start(self.config.Emulator_TW_PackageName)
+
             if click_timer.reached() and self.device.appear_then_click(confirm):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(login_confrim):
+            if click_timer.reached() and self.device.appear_then_click(login_confirm):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
@@ -48,11 +59,13 @@ class LoginHandler(UI):
                 break
 
             if click_timer.reached() and self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):
+                self.device.multiClickLocation((20, 600))
                 timeout.reset()
                 click_timer.reset()
                 continue
 
             if click_timer.reached() and self.device.textStrategy('剩余时间', None, OcrResult.TEXT):
+                self.device.multiClickLocation((20, 600))
                 timeout.reset()
                 click_timer.reset()
                 continue
@@ -90,7 +103,7 @@ class LoginHandler(UI):
             #         return
 
     def app_start(self):
-        # TODO 自动启动加速器，以及服务器选择
+        # TODO 自动启动加速器
         accelerator = self.config.Simulator_Accelerator
         if accelerator is not None:
             if accelerator == 'UU':
@@ -126,7 +139,7 @@ class LoginHandler(UI):
             return False
 
         timeout = Timer(30).start()
-        click_timer = Timer(0.3)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
@@ -144,6 +157,12 @@ class LoginHandler(UI):
                 continue
 
             if click_timer.reached() and self.device.appear(selected_sign) and self.device.appear_then_click(start):
+                timeout.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear(AD):
+                self.device.u2.press(key='back')
                 timeout.reset()
                 click_timer.reset()
                 continue

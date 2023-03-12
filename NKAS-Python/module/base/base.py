@@ -10,6 +10,9 @@ class BaseModule(Log):
     def INFO(self, *args, **kwargs):
         super(BaseModule, self).INFO(self.socket, *args, **kwargs)
 
+    def WARNING(self, *args, **kwargs):
+        super(BaseModule, self).WARNING(self.socket, *args, **kwargs)
+
     def ERROR(self, *args, **kwargs):
         super(BaseModule, self).ERROR(self.socket, *args, **kwargs)
 

@@ -35,7 +35,7 @@ class DroidCast(Uiautomator2):
     def screenshot(self):
         import cv2
         import numpy as np
-        self.sleep(0.1)
+        self.sleep(0.2)
         image = self.droidcast_session.get(self.droidcast_url(), timeout=3).content
         image = np.frombuffer(image, np.uint8)
         self.image = cv2.imdecode(image, cv2.IMREAD_COLOR)

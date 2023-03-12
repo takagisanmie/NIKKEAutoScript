@@ -15,7 +15,7 @@ class GeneralConfig:
     Emulator_TW_PackageName: str = 'com.gamamobi.nikke'
 
     Task_List: tuple = ['Reward', 'Destroy', 'FreeStore', 'Commission', 'Conversation',
-                        'RookieArena', 'SimulationRoom', 'Event']
+                        'RookieArena', 'TribeTower', 'SimulationRoom', 'Event', 'Daily']
 
     # Task_List: tuple = ['Reward', 'Destroy', 'FreeStore', 'Commission', 'Conversation',
     #                     'RookieArena','SimulationRoom']
@@ -24,6 +24,9 @@ class GeneralConfig:
     Socket_NameSpace: str = '/nkas'
     Socket_Port: int = 5000
     Socket_HideWindow: bool = False
+
+    # Server:
+    Server: int = 1
 
     # DroidCast
     Droid_Cast_APK_Path = './apk/DroidCast-debug-1.1.0.apk'
@@ -38,7 +41,6 @@ class GeneralConfig:
         self.dict = read(Path.CONFIG)
         self.Task_Dict = read(Path.TASK)
         self.initDict()
-        pass
 
     def initDict(self):
         for varName in self.__class__.__dict__:

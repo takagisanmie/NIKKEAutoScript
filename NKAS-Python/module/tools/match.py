@@ -39,8 +39,17 @@ def match(img=None, template=None, value=0.84, _result=None, gray=False):
 
 def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_template: dict = None, value: float = 0.84,
                      gray: bool = False, relative_locations: list = None, max_count: int = None, min_count: int = None,
-                     hide=False, sort_by: str = 'top'):
+                     sort_by: str = 'top', mask_id: str = None):
+    if mask_id:
+        import glo
+        mask_list = glo.get_value(mask_id)
+        _img = glo.getDevice().image
+        mask = np.zeros(_img.shape[:2], np.uint8)
 
+        if mask_list:
+            for mp in mask_list:
+                mask[mp[0]:mp[1], mp[2]:mp[3]] = 255
+                img = cv2.bitwise_and(img, img, mask=cv2.bitwise_not(mask))
 
     # 如果有模板，则截取为模板大小
     if img_template:
@@ -58,8 +67,8 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
         for index, template in enumerate(templates):
             id = template['id']
             p = template['area']
+            _template = template
             template = cv2.imread(template['path'])[p[1]:p[3], p[0]:p[2]]
-
 
             if gray:
                 template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
@@ -96,12 +105,11 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
                     top += img_template_top
                     bottom += img_template_top
 
-                if hide:
+                if mask_id:
                     import glo
-                    _img = glo.getDevice().screenshot()
-                    mask = np.zeros(_img.shape[:2], np.uint8)
-                    mask[top:bottom, left:right] = 255
-                    glo.getDevice().image = cv2.bitwise_and(_img, _img, mask=cv2.bitwise_not(mask))
+                    mask_list = glo.get_value(mask_id)
+                    mask_list.append((top, bottom, left, right))
+                    glo.set_value(mask_id, mask_list)
 
                 lc = (((right - left) / 2 + left), ((bottom - top) / 2 + top))
                 x, y = int(lc[0]), int(lc[1])
@@ -113,7 +121,8 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
                     'top': top,
                     'bottom': bottom,
                     'left': left,
-                    'right': right
+                    'right': right,
+                    'template': _template
                 }
 
                 relative_locations.append(info)

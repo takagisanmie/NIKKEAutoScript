@@ -15,17 +15,24 @@ class Ocr:
         else:
             return None
 
-    def _ocrByAsset(self, img, text, asset=None, _result=None, screenshot=False, *args, **kwargs):
+    def _ocrByAsset(self, img, text, asset=None, _result=None, line=None, screenshot=False, *args, **kwargs):
         if asset is not None:
             p = asset['area']
             img = img[p[1]:p[3], p[0]:p[2]]
 
-        res = cnOcr.ocr(img, **kwargs)
-        result = self.filterText(text, res, _result)
-        if result is not None:
-            return result
-        else:
-            return None
+        if not line:
+            res = cnOcr.ocr(img)
+            result = self.filterText(text, res, _result)
+            if result is not None:
+                return result
+            else:
+                return None
+        elif line:
+            res = cnOcr.ocr_for_single_line(img)
+            if res is not None:
+                return res['text']
+            else:
+                return None
 
     def filterText(self, text, res, _result):
         if text is None:

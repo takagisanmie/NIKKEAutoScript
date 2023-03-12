@@ -1,0 +1,14 @@
+advanced_materials = { 'area' : (208, 607, 272, 670) , 'path' : './module/task/daily/templates/ui/advanced_materials.png' , 'id' : 'advanced_materials' }
+close_equipment = { 'area' : (632, 162, 661, 190) , 'path' : './module/task/daily/templates/ui/close_equipment.png' , 'id' : 'close_equipment' }
+confirm_improvement = { 'area' : (417, 1058, 566, 1105) , 'path' : './module/task/daily/templates/ui/confirm_improvement.png' , 'id' : 'confirm_improvement' }
+emphasis = { 'area' : (174, 208, 185, 218) , 'path' : './module/task/daily/templates/ui/emphasis.png' , 'id' : 'emphasis' }
+emphasis_area = { 'area' : (43, 190, 690, 263) , 'path' : './module/task/daily/templates/ui/emphasis_area.png' , 'id' : 'emphasis_area' }
+equipment = { 'area' : (373, 200, 428, 216) , 'path' : './module/task/daily/templates/ui/equipment.png' , 'id' : 'equipment' }
+get = { 'area' : (532, 1138, 618, 1162) , 'path' : './module/task/daily/templates/ui/get.png' , 'id' : 'get' }
+improve = { 'area' : (290, 973, 319, 1008) , 'path' : './module/task/daily/templates/ui/improve.png' , 'id' : 'improve' }
+Level_0 = { 'area' : (121, 342, 137, 363) , 'path' : './module/task/daily/templates/ui/Level_0.png' , 'id' : 'Level_0' }
+liberation_finished_sign = { 'area' : (503, 910, 529, 923) , 'path' : './module/task/daily/templates/ui/liberation_finished_sign.png' , 'id' : 'liberation_finished_sign' }
+normal_materials = { 'area' : (97, 609, 154, 670) , 'path' : './module/task/daily/templates/ui/normal_materials.png' , 'id' : 'normal_materials' }
+pass_area = { 'area' : (47, 382, 678, 438) , 'path' : './module/task/daily/templates/ui/pass/pass_area.png' , 'id' : 'pass_area' }
+pass_get = { 'area' : (309, 1177, 412, 1211) , 'path' : './module/task/daily/templates/ui/pass/pass_get.png' , 'id' : 'pass_get' }
+pass_mission = { 'area' : (490, 399, 559, 441) , 'path' : './module/task/daily/templates/ui/pass/pass_mission.png' , 'id' : 'pass_mission' }

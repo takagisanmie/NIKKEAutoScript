@@ -47,6 +47,9 @@ class TimeoutStrategy:
     THROW_EXCEPTION = 1
     NONE = 0
 
+class NIKKEServer:
+    JP = 1
+    TW = 2
 
 class EP:
     SMALL = 0

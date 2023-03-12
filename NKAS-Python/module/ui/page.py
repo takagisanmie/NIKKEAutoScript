@@ -25,6 +25,13 @@ class ChildPage(BasePage):
     pass
 
 
+class Button:
+    def __init__(self, location, template, name=None):
+        self.location = location
+        self.template = template
+        self.name = name
+
+
 # 主页面
 page_main = Page(signs=[main_sign], name='page_main')
 
@@ -38,9 +45,15 @@ page_main.link(button=to_ark, destination=page_ark)
 # nikke列表
 page_nikke_list = Page(signs=[nikke_list_sign], name='page_nikke_list', parent=page_main)
 page_nikke_list.link(button=to_main, destination=page_main)
-page_nikke_list.link(button=to_main, destination=page_main)
 
 page_main.link(button=to_nikke_list, destination=page_nikke_list)
+
+# 物品栏
+page_inventory = Page(signs=[inventory_sign], name='page_inventory', parent=page_nikke_list)
+page_inventory.link(button=to_nikke_list, destination=page_nikke_list)
+page_inventory.link(button=to_main, destination=page_main)
+
+page_nikke_list.link(button=to_inventory, destination=page_inventory)
 
 # 咨询列表
 page_conversation_list = Page(signs=[conversation_list_sign], name='page_conversation_list', parent=page_nikke_list)
@@ -48,6 +61,13 @@ page_conversation_list.link(button=home, destination=page_main)
 page_conversation_list.link(button=back, destination=page_nikke_list)
 
 page_nikke_list.link(button=to_conversation_list, destination=page_conversation_list)
+
+# 解放
+page_liberation = Page(signs=[liberation_sign], name='page_liberation', parent=page_nikke_list)
+page_liberation.link(button=home, destination=page_main)
+page_liberation.link(button=back, destination=page_nikke_list)
+
+page_nikke_list.link(button=to_liberation, destination=page_liberation)
 
 # 咨询详情
 page_conversation_detail = Page(signs=[conversation_detail_sign], name='page_conversation_detail',
@@ -60,6 +80,18 @@ page_reward_box = ChildPage(signs=[reward_box_sign], parent=page_main,
                             name='page_reward_box', closeButton=reward_box_close)
 
 page_main.link_chlid(button=to_reward_box, destination=page_reward_box)
+
+# 每日任务
+page_daily = ChildPage(signs=[daily_sign], parent=page_main,
+                       name='page_daily', closeButton=daily_close)
+
+page_main.link_chlid(button=to_daily, destination=page_daily)
+
+# Pass
+page_pass = ChildPage(signs=[pass_sign], parent=page_main,
+                      name='page_pass', closeButton=pass_close)
+
+page_main.link_chlid(button=to_pass, destination=page_pass)
 
 # 好友
 page_friends = ChildPage(signs=[friend_sign], parent=page_main,
@@ -92,6 +124,20 @@ page_simulation_room.link(button=home, destination=page_main)
 page_simulation_room.link(button=back, destination=page_ark)
 
 page_ark.link(button=to_simulation_room, destination=page_simulation_room)
+
+# 无限之塔
+page_tribe_tower = Page(signs=[tribe_tower_sign], name='page_tribe_tower', parent=page_ark)
+page_tribe_tower.link(button=home, destination=page_main)
+page_tribe_tower.link(button=back, destination=page_ark)
+
+page_ark.link(button=to_tower, destination=page_tribe_tower)
+
+# 真无限塔
+page_infinite_tower = Page(signs=[infinite_tower_sign], name='page_infinite_tower', parent=page_tribe_tower)
+page_infinite_tower.link(button=home, destination=page_main)
+page_infinite_tower.link(button=back, destination=page_tribe_tower)
+
+page_tribe_tower.link(button=to_infinite_tower, destination=page_infinite_tower)
 
 # 竞技场
 page_arena = Page(signs=[arena_sign], name='page_arena', parent=page_ark)
@@ -143,6 +189,9 @@ page_outpost.link_chlid(button=to_commission, destination=page_outpost_commissio
 # 登录
 page_login = Page(signs=[login_sign], name='page_login')
 
-page_list = [page_main, page_ark, page_nikke_list, page_conversation_list, page_conversation_detail, page_free_store,
-             page_simulation_room, page_arena, page_rookie_arena, page_special_arena, page_outpost,
+page_list = [page_main, page_ark, page_nikke_list, page_inventory, page_liberation, page_conversation_list,
+             page_conversation_detail,
+             page_free_store,
+             page_simulation_room, page_tribe_tower, page_infinite_tower, page_arena, page_rookie_arena,
+             page_special_arena, page_outpost,
              page_simulation, page_login]

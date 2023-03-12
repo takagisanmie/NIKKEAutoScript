@@ -1,6 +1,5 @@
 from functools import cached_property
 
-
 from common.exception import Timeout
 from module.tools.timer import Timer
 from module.ui.page import *
@@ -16,6 +15,7 @@ class UI(BaseModule):
     def where(self, skip_first_screenshot=True):
 
         timeout = Timer(180).start()
+        click_timer = Timer(1.2)
 
         while 1:
             if skip_first_screenshot:
@@ -42,8 +42,10 @@ class UI(BaseModule):
                 return result
 
             # 在未知页面,但是有主页面按钮
-            if self.device.appear_then_click(home):
+            if click_timer.reached() and self.device.appear_then_click(home, screenshot=True):
+                click_timer.reset()
                 timeout.reset()
+                self.device.sleep(5)
                 continue
 
             if timeout.reached():
@@ -93,6 +95,12 @@ class UI(BaseModule):
         self.getPathByBack(path1, UI.current_page)
         path2 = []
         self.getPathByParent(path2, destination)
+
+        # for i in path1:
+        #     print(i)
+        #
+        # for i in path2:
+        #     print(i)
 
         flag = False
         for i1, value1 in enumerate(path1):
@@ -163,7 +171,10 @@ class UI(BaseModule):
         path = {
             'page': page,
             'destination': destination,
-            'button': button
+            'button':
+                {'id': button.name, 'button': button}
+                if isinstance(button, Button)
+                else button
         }
         return path
 
@@ -171,7 +182,7 @@ class UI(BaseModule):
 
         timeout = Timer(10).start()
         confirm_timer = Timer(1, count=1).start()
-        click_timer = Timer(0.8)
+        click_timer = Timer(1.2)
 
         while 1:
 
@@ -255,7 +266,7 @@ class UI(BaseModule):
 
         timeout = Timer(30).start()
         confirm_timer = Timer(limit=0, count=len(path)).start()
-        click_timer = Timer(0.8)
+        click_timer = Timer(1.2)
 
         while 1:
             for index, value in enumerate(path):

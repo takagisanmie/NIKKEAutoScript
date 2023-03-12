@@ -1,31 +1,46 @@
 from common.enum.enum import *
 from common.exception import Timeout
 from module.base.task import Task
-from module.tools.timer import Timer
+from module.tools.timer import Timer, getTaskResetTime
 from module.ui.page import *
 from module.ui.ui import UI
 from module.task.reward.reward_assets import *
 
 
 class Reward(UI, Task):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.recordTwiceTime = int(self.config.get('Task.Reward.recordTwiceTime', self.config.Task_Dict))
+        self.nextExecutionTime = int(self.config.get('Task.Reward.nextExecutionTime', self.config.Task_Dict))
+        self.arena = int(self.config.get('Task.Reward.arena', self.config.Task_Dict))
+
     def run(self):
         self.LINE('Reward')
         self.go(destination=page_reward_box)
         self.getReward(get_reward)
         self.go(destination=page_friends)
         self.send_and_receive_social_point()
-        # TODO 可能没有解锁
-        self.go(destination=page_special_arena)
-        self.get_special_arena_reward()
-
-        self.finish(self.config, 'Reward')
+        if self.arena:
+            self.go(destination=page_special_arena)
+            self.get_special_arena_reward()
+        self._finish()
         self.INFO('Reward is finished')
+
+    def _finish(self):
+        import time
+        if time.time() >= self.recordTwiceTime:
+            self.when(self.config, 'Reward', 300)
+        else:
+            self.finish(self.config, 'Reward')
+
+        key = 'Task.Reward.recordTwiceTime'
+        self.config.update(key, getTaskResetTime(), self.config.Task_Dict, Path.TASK)
 
     def send_and_receive_social_point(self):
         self.device.sleep(3)
         timeout = Timer(10).start()
         confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.8)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
@@ -71,7 +86,7 @@ class Reward(UI, Task):
     def getReward(self, button):
         timeout = Timer(10).start()
         confirm_timer = Timer(1, count=3).start()
-        click_timer = Timer(0.5)
+        click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
@@ -83,12 +98,12 @@ class Reward(UI, Task):
                 click_timer.reset()
                 confirm_timer.reset()
 
-            if click_timer.reached() and self.device.appear_then_click(reward):
+            if click_timer.reached() and self.device.hide(main_sign) and self.device.multiClickLocation((300, 300)):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
 
-            if confirm_timer.reached():
+            if self.device.appear(main_sign) and confirm_timer.reached():
                 return
 
             if timeout.reached():
