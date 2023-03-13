@@ -17,7 +17,7 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 2.在**\NKAS-Python中，运行runNKAS.bat  
 3.在等待主程序加载完成后，在NKAS的设置中填写Serial  
 不清楚的话，在模拟器完成启动后，运行setADB.bat同级目录下checkDevices.bat可以查看Serial  
-4.设置模拟器分辨率为720*1280  
+4.设置模拟器分辨率为720*1280 320DPI    
 5.运行调度器  
 
 ### 其他
