@@ -13,7 +13,7 @@ class Control(DroidCast, Ocr):
         self.uiautomator_click(x, y)
         return True
 
-    def appear_then_click(self, button, value=0.84, screenshot=False, gray=False, img=None, img_template=None,
+    def appear_then_click(self, button, value=0.8, screenshot=False, gray=False, img=None, img_template=None,
                           mask_id=None, index=0):
 
         # if 'button' in button.keys():
@@ -75,11 +75,11 @@ class Control(DroidCast, Ocr):
             return None
 
     def ocrByAsset(self, *args, **kwargs):
-        if args[3] is True:
+        if kwargs.get('screenshot'):
             self.screenshot()
         return self._ocrByAsset(self.image, *args, **kwargs)
 
-    def appear(self, template=None, value=0.84, _result=ImgResult.SIMILARITY, screenshot=False, gray=False,
+    def appear(self, template=None, value=0.8, _result=ImgResult.SIMILARITY, screenshot=False, gray=False,
                img=None, img_template=None, sort_by='top', mask_id=None, index=0):
 
         if screenshot or not hasattr(self, "image"):
@@ -103,7 +103,7 @@ class Control(DroidCast, Ocr):
         else:
             return None
 
-    def hide(self, template=None, value=0.84, _result=ImgResult.SIMILARITY, screenshot=False, gray=False,
+    def hide(self, template=None, value=0.8, _result=ImgResult.SIMILARITY, screenshot=False, gray=False,
              img=None, img_template=None, sort_by='top', mask_id=None):
 
         if screenshot or not hasattr(self, "image"):
@@ -124,7 +124,7 @@ class Control(DroidCast, Ocr):
         else:
             return None
 
-    def _hide(self, template=None, value=0.84, screenshot=False):
+    def _hide(self, template=None, value=0.8, screenshot=False):
         if screenshot:
             self.screenshot()
 
@@ -134,8 +134,9 @@ class Control(DroidCast, Ocr):
         else:
             return None
 
-    def matchRelative(self, position, add_x, add_x2, add_y, add_y2, template, value=0.84, _result=None, index=None):
+    def matchRelative(self, position, add_x, add_x2, add_y, add_y2, template, value=0.8, _result=None, index=None):
         x, y, x2, y2 = int(position[0]), int(position[1]), int(position[2]), int(position[3])
+        # left,top,right,bottom
         # x, y, x2, y2 = position[0], position[1], position[2], position[3]
 
         x += add_x

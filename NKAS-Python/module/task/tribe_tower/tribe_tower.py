@@ -174,7 +174,7 @@ class TribeTower(UI, Task):
             return True
 
     def end_battle(self):
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 

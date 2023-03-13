@@ -38,7 +38,7 @@ class Reward(UI, Task):
 
     def send_and_receive_social_point(self):
         self.device.sleep(3)
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
@@ -84,7 +84,7 @@ class Reward(UI, Task):
                 raise Timeout
 
     def getReward(self, button):
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 

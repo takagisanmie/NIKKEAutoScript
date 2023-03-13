@@ -177,7 +177,7 @@ class LoginHandler(UI):
         #     self.device.sleep(0.3)
         #     self.device.screenshot()
         #
-        #     if lc := match(self.device.image, _close1, 0.84, ImgResult.LOCATION):
+        #     if lc := match(self.device.image, _close1, 0.8, ImgResult.LOCATION):
         #         self.device.clickLocation(lc, AssetResponse.NONE)
         #         continue
         #
@@ -185,7 +185,7 @@ class LoginHandler(UI):
         #         self.device.u2.press('back')
         #         continue
         #
-        #     if lc := match(self.device.image, scene, 0.84, ImgResult.LOCATION):
+        #     if lc := match(self.device.image, scene, 0.8, ImgResult.LOCATION):
         #         self.device.clickLocation(lc, AssetResponse.NONE)
         #         continue
         #
@@ -234,7 +234,7 @@ class LoginHandler(UI):
         #         self.device.clickLocation(lc, AssetResponse.NONE)
         #         continue
         #
-        #     if lc := match(self.device.image, _global, 0.84, ImgResult.LOCATION):
+        #     if lc := match(self.device.image, _global, 0.8, ImgResult.LOCATION):
         #         self.device.clickLocation(lc, AssetResponse.ASSET_HIDE, _global)
         #         if lc := self.device.textStrategy('日服', None, OcrResult.LOCATION):
         #             self.device.clickLocation(lc, AssetResponse.NONE)

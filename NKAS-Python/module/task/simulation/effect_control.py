@@ -36,7 +36,8 @@ class EffectControl(BaseModule):
                         user = i['user']
                         x, y = int(i['x']), int(i['y'])
 
-                        print(name, x, y)
+                        self.INFO(f'choose effect: {name}')
+
                         effect_info = {
                             'quality': quality,
                             'name': name,
@@ -48,11 +49,13 @@ class EffectControl(BaseModule):
                         confirm_timer.reset()
                         click_timer.reset()
 
+                        self.device.multiClickLocation((x, y), 1, 0.1)
+
                         while 1:
                             self.device.screenshot()
 
                             if click_timer.reached() and self.device.appear(get_effect_sign):
-                                self.device.multiClickLocation((x, y), 2, 0.1)
+                                self.device.multiClickLocation((x, y), 1, 0.1)
                                 confirm_timer.reset()
 
                             # 持有效果到底上限
@@ -115,19 +118,11 @@ class EffectControl(BaseModule):
     def matchEffect(self, area, add=True, _filter=False):
         current_effect_list = []
         quality_locations = []
-        # user_locations = []
         text_result = self.device.textStrategy(None, area, OcrResult.ALL_RESULT,
-                                               resized_shape=(3000, 3000))
+                                               resized_shape=(2000, 2000))
         matchAllTemplate(self.device.image, [R, SR, SSR, EPIC], img_template=area, value=0.92,
                          gray=True,
                          relative_locations=quality_locations, max_count=3, min_count=2)
-
-        # matchAllTemplate(self.device.image,
-        #                  [],
-        #                  img_template=area,
-        #                  value=0.87,
-        #                  gray=True,
-        #                  relative_locations=user_locations, max_count=3, min_count=0)
 
         text_result = list(map(lambda x: (x['text'], x['position']), text_result))
 
@@ -143,12 +138,6 @@ class EffectControl(BaseModule):
 
                     name = i[0]
                     quality = q['id']
-
-                    # user = list(
-                    #     filter(lambda x: 45 >= bottom - x['bottom'] >= 15 and 45 >= top - x['top'] >= 15,
-                    #            user_locations))
-
-                    # user_name = user[0]['id'] if user else None
 
                     x = (right - left) / 2 + left
                     y = (bottom - top) / 2 + top
@@ -184,6 +173,21 @@ class EffectControl(BaseModule):
 
                     break
 
+        if not current_effect_list:
+            x, y = quality_locations[0]['location']
+            quality = quality_locations[0]['id']
+
+            effect_info = {
+                'quality': quality,
+                'name': 'None',
+                'user': None,
+                'priority': 10,
+                'x': int(x),
+                'y': int(y),
+            }
+
+            current_effect_list.append(effect_info)
+
         return current_effect_list
 
     def getPreferentialEffect(self):
@@ -195,14 +199,10 @@ class EffectControl(BaseModule):
         current_effect_list = self.matchEffect(own_effect_list_area, add=False)
         current_effect_list.sort(key=lambda x: x['priority'])
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
-
-        if current_effect_list:
-            x, y = current_effect_list[0]['x'], current_effect_list[0]['y']
-        else:
-            x, y = 330, 730
+        x, y = current_effect_list[0]['x'], current_effect_list[0]['y']
 
         while 1:
             self.device.screenshot()
@@ -231,7 +231,7 @@ class EffectControl(BaseModule):
 
     def skip(self):
         print('skip')
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=4).start()
         click_timer = Timer(1.2)
 
@@ -287,7 +287,7 @@ class EffectControl(BaseModule):
 
     def skip_replacement(self):
         print('skip_replacement')
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         reset_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
@@ -295,13 +295,17 @@ class EffectControl(BaseModule):
         # cancel 为不相交X号
         # cancel_2 为相交X号
 
+        # 在替换界面为 cancel_2
+
         glo.set_value('skip_replacement', [])
         mask_id = 'skip_replacement'
 
         while 1:
             self.device.screenshot()
 
-            if click_timer.reached() and self.device.appear_then_click(cancel, mask_id=mask_id):
+            if click_timer.reached() \
+                    and self.device.appear_then_click(cancel, mask_id=mask_id) \
+                    or self.device.appear_then_click(cancel_2):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -389,13 +393,19 @@ preferential_effect_list = [
     },
     {
         'displayName': '连结AMO',
-        'name': '连结AMO',
+        'name': '连结',
+        'priority': 4
+
+    },
+    {
+        'displayName': '连结AMO',
+        'name': 'AMO',
         'priority': 4
 
     },
     {
         'displayName': '引流转换器',
-        'name': '引流转换器',
+        'name': '引流',
         'priority': 5
 
     },
@@ -411,12 +421,49 @@ preferential_effect_list = [
         'priority': 6
 
     },
+    {
+        'displayName': '辅助发电机',
+        'name': '发电',
+        'priority': 10
+
+    },
+    {
+        'displayName': '自动对焦眼球',
+        'name': '对焦',
+        'priority': 10
+
+    },
+    {
+        'displayName': '重启载体',
+        'name': '重启',
+        'priority': 10
+
+    },
 ]
 
 useless_effect_list = [
     {
+        'displayName': '小型离子束屏障',
+        'name': '离子',
+        'priority': 6
+
+    },
+    {
         'displayName': '辅助发电机',
-        'name': '发电机',
+        'name': '发电',
+        'priority': 10
+
+    },
+    {
+        'displayName': '自动对焦眼球',
+        'name': '对焦',
+        'priority': 10
+
+    },
+    {
+        'displayName': '重启载体',
+        'name': '重启',
+        'priority': 10
 
     },
 ]

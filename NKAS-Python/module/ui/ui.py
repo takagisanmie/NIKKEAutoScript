@@ -176,7 +176,7 @@ class UI(BaseModule):
 
     def go_to_main(self):
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=1).start()
         click_timer = Timer(1.2)
 
@@ -215,7 +215,7 @@ class UI(BaseModule):
         for child_page in page.children_links:
             for child_sign in child_page.signs:
                 sl = match(img=self.device.image, template=child_sign, _result=ImgResult.SIMILARITY)
-                if sl is not None and sl > 0.84:
+                if sl is not None and sl > 0.8:
                     return child_page
 
             if (len(child_page.children_links)) > 0:
@@ -224,7 +224,7 @@ class UI(BaseModule):
                     return result
 
     def closeChildPage(self):
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         while 1:
             self.device.screenshot()
             if self.device.appear_then_click(UI.current_page.closeButton):

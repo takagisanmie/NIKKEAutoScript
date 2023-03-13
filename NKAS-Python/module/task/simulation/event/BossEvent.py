@@ -19,7 +19,7 @@ class BossEvent(BattleEvent):
         if self.parent.current_area == 1 or self.parent.current_area == 2:
             self.parent.get_effect_by_battle()
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 

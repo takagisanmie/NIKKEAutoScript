@@ -26,7 +26,7 @@
 
 <script setup>
 import {ref, nextTick} from 'vue'
-import Aside from '@/views/Aside/Aside.vue'
+import Aside from '@/views/aside/aside.vue'
 import {ElMessage, ElNotification, ElLoading} from "element-plus";
 import Socket from "@/assets/js/socket";
 

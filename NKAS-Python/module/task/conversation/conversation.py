@@ -86,12 +86,9 @@ class Conversation(UI, Task):
                                                    ImgResult.SIMILARITY)
 
                     if not sl:
-
                         self.INFO(f'wait to communicate: {value["label"]}')
                         self.communicate(value['key'], value['label'])
-
                         _Nikke_list.remove(value)
-
                         timeout.reset()
                         confirm_timer.reset()
                         click_timer.reset()
@@ -99,13 +96,8 @@ class Conversation(UI, Task):
                         self.rest_chance -= 1
                         if self.rest_chance == 0:
                             return
-
                     else:
-
                         self.WARNING(f'already communicated: {value["label"]}')
-
-                        # TODO 日志
-
                         _Nikke_list.remove(value)
                         confirm_timer.reset()
 

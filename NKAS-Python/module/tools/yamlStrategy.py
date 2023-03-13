@@ -5,6 +5,7 @@ def read(path):
     with open(path, 'r', encoding="utf-8") as file:
         data = file.read()
         result = yaml.load(data, Loader=yaml.FullLoader)
+        file.close()
         return result
 
 
@@ -40,6 +41,7 @@ def update(key, value, data, path):
     result = deepUpdate(data, keyList, value)
     with open(path, "w", encoding="utf-8") as f:
         yaml.dump(result, f, allow_unicode=True)
+        f.close()
 
 
 def deepUpdate(root, key, value):

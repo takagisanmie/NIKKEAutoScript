@@ -13,7 +13,7 @@ from module.thread.thread import *
 
 class Socket(BaseModule):
     app = Flask(__name__)
-    socketio = SocketIO(app)
+    socketio = SocketIO(app, async_mode='threading')
     config = glo.getNKAS().config
 
     def __init__(self, *args, **kwargs):
@@ -53,6 +53,23 @@ class Socket(BaseModule):
             if 'NKAS' in thread.name:
                 threadManager.stopThread(thread)
                 continue
+
+    @staticmethod
+    @socketio.on('stopNKAS', namespace=config.Socket_NameSpace)
+    def stopNKAS():
+        import os
+        from module.base.decorator import del_cached_property
+
+        for thread in threading.enumerate():
+            if 'NKAS' in thread.name:
+                threadManager.stopThread(thread)
+                continue
+
+        del_cached_property(glo.getNKAS(), 'config')
+        del_cached_property(glo.getNKAS(), 'socket')
+        del_cached_property(glo.getNKAS(), 'device')
+        del_cached_property(glo.getNKAS(), 'ui')
+        os._exit(0)
 
     @staticmethod
     @socketio.on('checkSchedulerState', namespace=config.Socket_NameSpace)

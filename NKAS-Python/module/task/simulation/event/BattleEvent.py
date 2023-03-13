@@ -37,7 +37,7 @@ class BattleEvent(BaseEvent):
         while 1:
             self.device.screenshot()
 
-            if not failed and click_timer.reached() and self.device.appear_then_click(button, 0.9):
+            if not failed and click_timer.reached() and self.device.appear_then_click(button, gray=True):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
@@ -111,7 +111,7 @@ class BattleEvent(BaseEvent):
                 raise Timeout
 
     def stop_simulation(self):
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
@@ -144,7 +144,7 @@ class BattleEvent(BaseEvent):
         glo.set_value('end_simulation', [])
         mask_id = 'end_simulation'
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         reset_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)

@@ -29,7 +29,7 @@ def generateAssets():
                             y = np.where(np.max(template, axis=1) > 0)[0]
                             position = (x[0], y[0], x[-1], y[-1])
                             f.write(generateExpression(name, position, dirName) + '\n')
-
+    f.close()
 
 def getFileType(file, dirName):
     # 读取二进制文件开头一定的长度
@@ -43,6 +43,7 @@ def getFileType(file, dirName):
     code = ''.join([('%X' % each).zfill(2) for each in byte_list])
     # 根据标识符筛选判断文件格式
     result = list(filter(lambda x: code.startswith(x), TYPE_DICT))
+    f.close()
     if result:
         return TYPE_DICT[result[0]]
     else:

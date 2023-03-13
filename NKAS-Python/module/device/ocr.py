@@ -7,13 +7,20 @@ cnOcr = CnOcr()
 
 
 class Ocr:
-    def _ocr(self, img, text=None, _result=None, *args, **kwargs):
-        res = cnOcr.ocr(img, *args, **kwargs)
-        result = self.filterText(text, res, _result)
-        if result is not None:
-            return result
-        else:
-            return None
+    def _ocr(self, img, text=None, _result=None, line=False, *args, **kwargs):
+        if not line:
+            res = cnOcr.ocr(img, **kwargs)
+            result = self.filterText(text, res, _result)
+            if result is not None:
+                return result
+            else:
+                return None
+        elif line:
+            res = cnOcr.ocr_for_single_line(img)
+            if res is not None:
+                return res['text']
+            else:
+                return None
 
     def _ocrByAsset(self, img, text, asset=None, _result=None, line=None, screenshot=False, *args, **kwargs):
         if asset is not None:
@@ -21,7 +28,7 @@ class Ocr:
             img = img[p[1]:p[3], p[0]:p[2]]
 
         if not line:
-            res = cnOcr.ocr(img)
+            res = cnOcr.ocr(img, **kwargs)
             result = self.filterText(text, res, _result)
             if result is not None:
                 return result

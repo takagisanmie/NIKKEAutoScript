@@ -49,7 +49,7 @@ class SimulationRoom(UI, Task, EffectControl):
         self.device.screenshot()
         matchAllTemplate(img=self.device.image,
                          templates=[Normal_Battle, Hard_Battle, Random, Improvement, Healing, Boss],
-                         img_template=event_list_area, value=0.84, gray=True, relative_locations=event_list,
+                         img_template=event_list_area, gray=True, value=0.8, relative_locations=event_list,
                          max_count=3,
                          min_count=1, sort_by='left')
 
@@ -81,7 +81,7 @@ class SimulationRoom(UI, Task, EffectControl):
         difficulty = int(self.config.get('Task.SimulationRoom.difficulty', self.config.Task_Dict))
         area = int(self.config.get('Task.SimulationRoom.area', self.config.Task_Dict))
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=2).start()
 
         difficulties = [Level_1, Level_2, Level_3, Level_4, Level_5]
@@ -108,7 +108,7 @@ class SimulationRoom(UI, Task, EffectControl):
 
     def check_own_effects(self):
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=2).start()
         click_timer = Timer(1.2)
 
@@ -169,7 +169,7 @@ class SimulationRoom(UI, Task, EffectControl):
 
         self.go(destination=page_ark)
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 

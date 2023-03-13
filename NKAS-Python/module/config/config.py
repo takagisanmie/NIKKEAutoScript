@@ -65,6 +65,7 @@ class GeneralConfig:
         result = self.deepUpdate(data, key.split('.'), value)
         with open(path, "w", encoding="utf-8") as f:
             yaml.dump(result, f, allow_unicode=True)
+            f.close()
 
         if path is Path.CONFIG:
             self.initDict()

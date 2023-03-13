@@ -16,7 +16,7 @@
           <Setting/>
         </el-icon>
       </el-menu-item>
-<!--      <el-menu-item @click="test" route="Main" index="3">-->
+<!--      <el-menu-item @click="test" route="main" index="3">-->
 <!--        <el-icon>-->
 <!--          <Link/>-->
 <!--        </el-icon>-->

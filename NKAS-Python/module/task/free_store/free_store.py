@@ -16,7 +16,7 @@ class FreeStore(UI, Task):
         self.INFO('Free Store is finished')
 
     def buy(self):
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
@@ -32,7 +32,7 @@ class FreeStore(UI, Task):
                 continue
 
             if click_timer.reached() and self.device.appear(free_sale_2) and self.device.appear_then_click(
-                    confirm,
+                    confirm, value=0.75,
                     img_template=bottom):
                 timeout.reset()
                 confirm_timer.reset()
@@ -57,7 +57,7 @@ class FreeStore(UI, Task):
             if click_timer.reached() \
                     and self.device.appear(refresh_sign) \
                     and self.device.appear(free_refresh) \
-                    and self.device.appear_then_click(confirm, img_template=middle):
+                    and self.device.appear_then_click(confirm, value=0.75, img_template=middle):
                 self.INFO('refresh store')
                 timeout.reset()
                 confirm_timer.reset()

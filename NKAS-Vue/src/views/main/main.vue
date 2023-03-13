@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import Console from "@/views/Main/console/console.vue";
+import Console from "@/views/main/console/console.vue";
 import {inject, ref, onMounted, computed} from "vue";
 import Socket from "@/assets/js/socket"
 import Log from "@/assets/js/Log";

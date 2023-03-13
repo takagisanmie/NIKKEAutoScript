@@ -1,6 +1,4 @@
-import {provide} from "vue";
 import {defineStore} from 'pinia'
-import _ from 'lodash'
 
 const size = 50
 

@@ -13,7 +13,7 @@ class ImprovementEvent(BaseEvent):
         print('ImprovementEvent')
         self.INFO('start ImprovementEvent')
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 

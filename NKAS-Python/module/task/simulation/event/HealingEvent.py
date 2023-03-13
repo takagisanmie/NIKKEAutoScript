@@ -12,7 +12,7 @@ class HealingEvent(BaseEvent):
         print('HealingEvent')
         self.INFO('start HealingEvent')
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
@@ -29,7 +29,7 @@ class HealingEvent(BaseEvent):
                 timeout.reset()
                 confirm_timer.reset()
 
-            if click_timer.reached() and self.device.appear_then_click(confirm, 0.84):
+            if click_timer.reached() and self.device.appear_then_click(confirm, 0.8):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()

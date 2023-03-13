@@ -67,11 +67,13 @@ Task:
     displayName: 新人竞技场
     name: RookieArena
     nextExecutionTime: 1678737600
+    refresh_chance: 3
     target: 1
+    under: '0'
   SimulationRoom:
     activate: true
-    area: '3'
-    difficulty: '5'
+    area: '1'
+    difficulty: '1'
     displayName: 模拟室
     end_area: '3'
     name: SimulationRoom

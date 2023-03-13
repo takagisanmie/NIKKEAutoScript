@@ -1,5 +1,4 @@
 import {defineStore} from 'pinia'
-import _ from 'lodash'
 
 const useSettings = defineStore('Settings', {
     state: () => {

@@ -6,7 +6,7 @@ import numpy as np
 from common.enum.enum import *
 
 
-def matchTemplate(img=None, img_terminal=None, value=0.84, _result=None, gray=False):
+def matchTemplate(img=None, img_terminal=None, value=0.8, _result=None, gray=False):
     h, w, c = img_terminal.shape
     if gray:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -27,7 +27,7 @@ def matchTemplate(img=None, img_terminal=None, value=0.84, _result=None, gray=Fa
 
 
 # @timer
-def match(img=None, template=None, value=0.84, _result=None, gray=False):
+def match(img=None, template=None, value=0.8, _result=None, gray=False):
     if isinstance(template, dict):
         p = template['area']
         img_terminal = cv2.imread(template['path'])[p[1]:p[3], p[0]:p[2]]
@@ -37,7 +37,7 @@ def match(img=None, template=None, value=0.84, _result=None, gray=False):
     return matchTemplate(img, img_terminal, value, _result, gray)
 
 
-def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_template: dict = None, value: float = 0.84,
+def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_template: dict = None, value: float = 0.8,
                      gray: bool = False, relative_locations: list = None, max_count: int = None, min_count: int = None,
                      sort_by: str = 'top', mask_id: str = None):
     if mask_id:
@@ -110,6 +110,7 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
                     mask_list = glo.get_value(mask_id)
                     mask_list.append((top, bottom, left, right))
                     glo.set_value(mask_id, mask_list)
+                    glo.set_value('mask_img', img)
 
                 lc = (((right - left) / 2 + left), ((bottom - top) / 2 + top))
                 x, y = int(lc[0]), int(lc[1])
@@ -149,3 +150,12 @@ def returnResult(value, sl, lc, _result):
             return lc, sl
     else:
         return None
+
+
+def resize(img, asset=None, dst=(0, 0), fx=1, fy=1, interpolation=None):
+    if asset:
+        p = asset['area']
+        img = img[p[1]:p[3], p[0]:p[2]]
+
+    cv2.resize(img, dst, fx=fx, fy=fy, interpolation=interpolation)
+    return img

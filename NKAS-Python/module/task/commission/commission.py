@@ -16,9 +16,8 @@ class Commission(UI, Task):
         self.INFO('Commission is finished')
 
     def getReward(self, restart=True):
-        print(restart)
-        self.device.sleep(3)
-        timeout = Timer(10).start()
+        self.device.sleep(4)
+        timeout = Timer(20).start()
         confirm_timer = Timer(3, count=3).start()
         click_timer = Timer(1.2)
 
@@ -56,6 +55,7 @@ class Commission(UI, Task):
 
             if confirm_timer.reached():
                 if restart:
+                    self.device.sleep(3)
                     if self.device.appear_then_click(commission_close):
                         return self.getReward(restart=False)
                 else:

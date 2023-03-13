@@ -30,6 +30,10 @@ import {
 } from '@element-plus/icons-vue'
 import packageJson from '../../../package.json'
 import {defineProps} from "vue";
+import Socket from "@/assets/js/socket";
+
+const socket = Socket.getSocket()
+
 const props = defineProps(['isConnected'])
 
 const ToMin = () => {
@@ -41,6 +45,7 @@ const ToFullScreen = () => {
 }
 
 const ToClose = () => {
+  socket.emit('stopNKAS')
   window.WindowStrategyAPI.WindowToClose()
 }
 

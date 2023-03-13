@@ -17,6 +17,21 @@
           />
         </el-select>
       </div>
+      <br>
+      <br>
+      <div>
+        战力低于X
+        <el-input style="width: auto;float: right;font-size: 17px;height: 43px"
+                  @input="_under" v-model="under"/>
+        <p>填0，则选择目标对象</p>
+      </div>
+      <div>
+        刷新次数
+        <el-input style="width: auto;float: right;font-size: 17px;height: 43px"
+                  @input="_refresh_chance" v-model="refresh_chance"/>
+        <p>在刷新完后，没有符合条件的目标，则选择目标对象</p>
+
+      </div>
     </div>
   </div>
 </template>
@@ -31,6 +46,8 @@ const socket = Socket.getSocket()
 const activate = ref('Task.RookieArena.activate')
 const nextExecutionTime = ref('Task.RookieArena.nextExecutionTime')
 const target = ref()
+const refresh_chance = ref(0)
+const under = ref(0)
 
 
 const targets = [
@@ -61,11 +78,43 @@ const changeTarget = _.debounce((val) => {
   )
 }, 127)
 
+const _under = _.debounce((val) => {
+  Socket.updateConfigByKey(
+      [
+        'Task.RookieArena.under'
+      ],
+      [
+        val
+      ],
+      'task',
+      'update_success'
+  )
+}, 1270)
+
+const _refresh_chance = _.debounce((val) => {
+  Socket.updateConfigByKey(
+      [
+        'Task.RookieArena.refresh_chance'
+      ],
+      [
+        val
+      ],
+      'task',
+      'update_success'
+  )
+}, 1270)
+
 socket.on('setRookieArenaOption', (result) => {
   _.forEach(result.result, function (option, index) {
     if (option.key === 'Task.RookieArena.target') {
       console.log(option.value)
       target.value = option.value
+    } else if (option.key === 'Task.RookieArena.under') {
+      console.log(option.value)
+      under.value = option.value
+    } else if (option.key === 'Task.RookieArena.refresh_chance') {
+      console.log(option.value)
+      refresh_chance.value = option.value
     }
   })
 })
@@ -74,6 +123,8 @@ function setOptions() {
   Socket.getConfigByKey(
       [
         'Task.RookieArena.target',
+        'Task.RookieArena.under',
+        'Task.RookieArena.refresh_chance',
       ],
       'task',
       'setRookieArenaOption'

@@ -10,13 +10,12 @@
       <!--                   style="&#45;&#45;el-switch-on-color: #626aef; &#45;&#45;el-switch-off-color: #ff4949;float: right;"-->
       <!--                   @change="_nikke_upgrade" v-model="nikke_upgrade"/>-->
       <!--      </div>-->
-      <br>
       <div>
         升级装备
         <el-switch inline-prompt size="large" width="60px"
                    style="--el-switch-on-color: #626aef; --el-switch-off-color: #ff4949;float: right;"
                    @change="_equipment_upgrade" v-model="equipment_upgrade"/>
-        <p>会使用一个模组高级增强器，模组推进器，升级背包中的任意一个装备</p>
+        <p>会使用一个模组高级增强器或模组推进器，升级背包中的任意一个装备</p>
       </div>
     </div>
   </div>

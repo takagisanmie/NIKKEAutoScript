@@ -26,7 +26,7 @@ class Daily(UI, Task):
         self.INFO('Daily is finished')
 
     def getReward(self):
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=8).start()
         reset_timer = Timer(1, count=8).start()
         click_timer = Timer(1.2)
@@ -69,7 +69,7 @@ class Daily(UI, Task):
 
     def improve_equipment(self):
         self.go(destination=page_inventory)
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         reset_timer = Timer(1, count=8).start()
         click_timer = Timer(1.2)

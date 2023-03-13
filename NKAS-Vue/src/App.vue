@@ -8,8 +8,8 @@ import Socket from "@/assets/js/socket"
 import Log from '@/assets/js/Log'
 import {inject, onMounted, provide, ref} from "vue";
 import {useRouter} from 'vue-router'
-import WindowButton from '@/views/WindowButton/WindowButton.vue'
-import General from '@/views/General.vue'
+import WindowButton from '@/views/window_button/window_button.vue'
+import General from '@/views/general.vue'
 import useNKASLog from "@/assets/store/logStore";
 
 const NKASLog = useNKASLog()

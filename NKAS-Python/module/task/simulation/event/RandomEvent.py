@@ -13,7 +13,7 @@ class RandomEvent(BaseEvent):
         print('RandomEvent')
         self.INFO('start RandomEvent')
 
-        timeout = Timer(10).start()
+        timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
