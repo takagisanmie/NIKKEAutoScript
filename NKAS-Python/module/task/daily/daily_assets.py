@@ -14,3 +14,4 @@ pass_area = { 'area' : (47, 382, 678, 438) , 'path' : './module/task/daily/templ
 pass_get = { 'area' : (309, 1177, 412, 1211) , 'path' : './module/task/daily/templates/ui/pass/pass_get.png' , 'id' : 'pass_get' }
 pass_mission = { 'area' : (504, 409, 543, 427) , 'path' : './module/task/daily/templates/ui/pass/pass_mission.png' , 'id' : 'pass_mission' }
 pass_reward = { 'area' : (177, 409, 215, 428) , 'path' : './module/task/daily/templates/ui/pass/pass_reward.png' , 'id' : 'pass_reward' }
+rank_up = { 'area' : (262, 549, 458, 613) , 'path' : './module/task/daily/templates/ui/pass/rank_up.png' , 'id' : 'rank_up' }

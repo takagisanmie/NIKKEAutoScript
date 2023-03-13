@@ -18,10 +18,10 @@ class Daily(UI, Task):
         self.LINE('Daily')
         if self.equipmentUpgrade:
             self.improve_equipment()
-        self.to_liberation()
         self.go(destination=page_daily)
         self.getReward()
         self.to_pass()
+        self.to_liberation()
         self.finish(self.config, 'Daily')
         self.INFO('Daily is finished')
 
@@ -138,14 +138,14 @@ class Daily(UI, Task):
     def to_liberation(self):
         self.go(page_liberation)
 
-        timeout = Timer(10).start()
-        confirm_timer = Timer(3, count=8).start()
+        timeout = Timer(20).start()
+        confirm_timer = Timer(3, count=5).start()
         click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
 
-            if click_timer.reached() and self.device.clickTextLocation('_完成'):
+            if click_timer.reached() and self.device.clickTextLocation('完成'):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
@@ -161,16 +161,19 @@ class Daily(UI, Task):
     def to_pass(self):
         self.go(page_pass)
 
-        timeout = Timer(10).start()
-        confirm_timer = Timer(3, count=8).start()
-        reset_timer = Timer(1, count=24).start()
+        timeout = Timer(20).start()
+        confirm_timer = Timer(3, count=5).start()
         click_timer = Timer(1.2)
-
-        glo.set_value('pass', [])
-        mask_id = 'pass'
 
         while 1:
             self.device.screenshot()
+            if click_timer.reached() \
+                    and self.device.appear(rank_up, value=0.8) \
+                    and self.device.uiautomator_click(360, 820):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if click_timer.reached() and self.device.appear_then_click(reward, value=0.8):
                 timeout.reset()
@@ -184,19 +187,13 @@ class Daily(UI, Task):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(pass_mission, img_template=pass_area,
-                                                                       mask_id=mask_id):
+            if click_timer.reached() and self.device.appear_then_click(pass_mission):
                 timeout.reset()
-                confirm_timer.reset()
                 click_timer.reset()
-                continue
 
-            if click_timer.reached() and self.device.appear_then_click(pass_reward, img_template=pass_area,
-                                                                       mask_id=mask_id):
+            if click_timer.reached() and self.device.appear_then_click(pass_reward):
                 timeout.reset()
-                confirm_timer.reset()
                 click_timer.reset()
-                continue
 
             if confirm_timer.reached():
                 return
@@ -204,7 +201,3 @@ class Daily(UI, Task):
             if timeout.reached():
                 self.ERROR('wait too long')
                 raise Timeout
-
-            if reset_timer.reached():
-                reset_timer.reset()
-                glo.set_value(mask_id, [])

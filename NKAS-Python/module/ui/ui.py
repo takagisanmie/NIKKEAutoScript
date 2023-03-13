@@ -1,10 +1,7 @@
-from functools import cached_property
-
 from common.exception import Timeout
 from module.tools.timer import Timer
 from module.ui.page import *
 from common.enum.enum import *
-from module.base.decorator import run_once
 from module.tools.match import match
 from module.base.base import BaseModule
 
@@ -49,10 +46,9 @@ class UI(BaseModule):
                 continue
 
             if timeout.reached():
-                self.ERROR('unknown page')
                 raise Timeout
 
-            print('unknown page')
+            self.WARNING('unknown page')
 
     def go(self, destination, skip_first_screenshot=True):
         self.INFO(f'go to: {destination.name}')

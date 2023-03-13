@@ -87,10 +87,7 @@ class Conversation(UI, Task):
 
                     if not sl:
 
-                        print('咨询')
-                        print(value['label'])
-                        # TODO 日志
-
+                        self.INFO(f'wait to communicate: {value["label"]}')
                         self.communicate(value['key'], value['label'])
 
                         _Nikke_list.remove(value)
@@ -104,8 +101,9 @@ class Conversation(UI, Task):
                             return
 
                     else:
-                        print('已经咨询')
-                        print(value['label'])
+
+                        self.WARNING(f'already communicated: {value["label"]}')
+
                         # TODO 日志
 
                         _Nikke_list.remove(value)
@@ -155,6 +153,7 @@ class Conversation(UI, Task):
             if self.device.appear(conversation_detail_sign) and self.device.appear(
                     level_max) and self.device.appear_then_click(back):
                 flag = False
+                self.device.sleep(2)
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -264,6 +263,7 @@ class Conversation(UI, Task):
             if click_timer.reached() \
                     and self.device.appear(conversation_deatil_sign_2, gray=True) \
                     and self.device.appear_then_click(back):
+                self.device.sleep(2)
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
