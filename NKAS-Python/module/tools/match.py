@@ -137,7 +137,11 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
         if flag:
             continue
 
-        return relative_locations.sort(key=lambda x: x[sort_by])
+        if sort_by:
+            return relative_locations.sort(key=lambda x: x[sort_by])
+        else:
+            # 添加顺序
+            return relative_locations
 
 
 def returnResult(value, sl, lc, _result):

@@ -55,7 +55,7 @@ class Event(UI, Task):
             lc = locations_2[self.step - 1]['location']
 
         timeout = Timer(60).start()
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
         while 1:
@@ -129,7 +129,7 @@ class Event(UI, Task):
     def finishAllEvent(self):
         self.sroll_to_top()
         timeout = Timer(60).start()
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
         while 1:

@@ -44,7 +44,7 @@ class Conversation(UI, Task):
         print('chooseNikke')
 
         timeout = Timer(60).start()
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
         company = company_list[0]

@@ -3,12 +3,12 @@ Task:
     activate: true
     displayName: 委托
     name: Commission
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
   Conversation:
     activate: true
     displayName: 咨询
     name: Conversation
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
     nikkeList:
     - Snow_White
     - Centi
@@ -22,15 +22,15 @@ Task:
   Daily:
     activate: true
     displayName: 每日任务
-    equipmentUpgrade: false
+    equipmentUpgrade: true
     name: Daily
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
     nikkeUpgrade: true
   Destroy:
     activate: true
     displayName: 一举歼灭
     name: Destroy
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
   Event:
     activate: true
     currentEvent: 1
@@ -39,45 +39,47 @@ Task:
     event: 1-9
     finishAllEvent: false
     historyEvent:
-    - label: next
+    - label: BOW-WOW PARADISE
       path: /event_2
       type: 0
       value: 2
-    - label: 电锯人
+    - label: Chainsaw Man
       path: /event_1
       type: 1
       value: 1
     name: Event
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
     part: 2
   FreeStore:
     activate: true
+    activate_arena_store: true
+    arena_product_list: 'selection_box > wind > electric'
     displayName: 商店
     name: FreeStore
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
   Reward:
     activate: true
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1678737600
-    recordTwiceTime: 1678737600
+    nextExecutionTime: 1678824000
+    recordTwiceTime: 1678824000
   RookieArena:
     activate: true
     displayName: 新人竞技场
     name: RookieArena
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
     refresh_chance: 3
     target: 1
     under: '0'
   SimulationRoom:
     activate: true
-    area: '1'
-    difficulty: '1'
+    area: '3'
+    difficulty: '5'
     displayName: 模拟室
     end_area: '3'
     name: SimulationRoom
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000
   TribeTower:
     Elysion: true
     Missilis: true
@@ -87,4 +89,4 @@ Task:
     daily: true
     displayName: 企业塔
     name: TribeTower
-    nextExecutionTime: 1678737600
+    nextExecutionTime: 1678824000

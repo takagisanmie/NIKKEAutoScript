@@ -13,7 +13,8 @@ from module.thread.thread import *
 
 class Socket(BaseModule):
     app = Flask(__name__)
-    socketio = SocketIO(app, async_mode='threading')
+    # socketio = SocketIO(app, async_mode='threading')
+    socketio = SocketIO(app)
     config = glo.getNKAS().config
 
     def __init__(self, *args, **kwargs):

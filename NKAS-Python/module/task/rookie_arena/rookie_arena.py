@@ -74,6 +74,7 @@ class RookieArena(UI, Task):
                 raise Timeout
 
     def refresh(self):
+        import re
         import cv2
 
         timeout = Timer(30).start()
@@ -94,7 +95,7 @@ class RookieArena(UI, Task):
             # self.own_power = int(self.device._ocr(img, line=True))
 
             img = resize(own_power_area, fx=1.6, fy=0.6, interpolation=cv2.INTER_NEAREST)
-            self.own_power = int(self.device._ocr(img, _result=OcrResult.TEXT))
+            self.own_power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT)))
 
             break
 
@@ -113,7 +114,7 @@ class RookieArena(UI, Task):
 
                 _img = self.device.image[top:bottom, left:right]
                 img = resize(_img, fx=1.6, fy=0.6, interpolation=cv2.INTER_NEAREST)
-                power = int(self.device._ocr(img, _result=OcrResult.TEXT))
+                power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT)))
 
                 if self.own_power - power >= self.under:
                     self.INFO(f'own power: {self.own_power}')

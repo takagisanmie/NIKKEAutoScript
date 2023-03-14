@@ -32,7 +32,7 @@ class RandomEvent(BaseEvent):
 
             # 在替换相同效果
             if self.device.appear(replacement):
-                self.parent.skip_replacement()
+                self.parent.skip()
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()

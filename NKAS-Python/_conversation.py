@@ -1307,6 +1307,10 @@ Himeno = [
     ''
 ]
 
+Biscuit = [
+    ''
+]
+
 Nikke_dialog = {
     'Alice': Alice,
     'Scarlet': Scarlet,
@@ -1369,6 +1373,7 @@ Nikke_dialog = {
     'Power': Power,
     'Makima': Makima,
     'Himeno': Himeno,
+    'Biscuit': Biscuit,
 }
 
 Nikke_list = [
@@ -1615,6 +1620,10 @@ Nikke_list = [
     {
         'key': 'Himeno',
         'label': '姬野(无数据)',
+    },
+    {
+        'key': 'Biscuit',
+        'label': '饼干(无数据)',
     },
 
 ]

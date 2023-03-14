@@ -65,10 +65,7 @@ class EffectControl(BaseModule):
 
                             # 在替换相同效果
                             if self.device.appear(replacement):
-                                self.skip_replacement()
-                                timeout.reset()
-                                click_timer.reset()
-                                confirm_timer.reset()
+                                self.skip()
                                 return
 
                             if click_timer.reached() and self.device.appear_then_click(confirm):
@@ -90,31 +87,6 @@ class EffectControl(BaseModule):
 
         self.skip()
 
-    def getCurrentEffects(self, area):
-        self.device.screenshot()
-        old_image = self.device.screenshot()
-
-        current_effect_list = self.matchEffect(area)
-        if not current_effect_list:
-            return
-
-        first_effect = current_effect_list[0]
-        last_effect = current_effect_list[-1]
-
-        x1, y1 = first_effect['x'], first_effect['y']
-        x2, y2 = last_effect['x'], last_effect['y'] + 10
-
-        self.device.swipe(x1 - 50, y2, x1 - 50, y1, 0.3)
-        self.device.sleep(3)
-
-        new_image = self.device.screenshot()
-
-        sl = match(old_image, new_image, 0.98, ImgResult.SIMILARITY, gray=True)
-        if sl:
-            return
-        else:
-            self.getCurrentEffects(area)
-
     def matchEffect(self, area, add=True, _filter=False):
         current_effect_list = []
         quality_locations = []
@@ -122,7 +94,7 @@ class EffectControl(BaseModule):
                                                resized_shape=(2000, 2000))
         matchAllTemplate(self.device.image, [R, SR, SSR, EPIC], img_template=area, value=0.92,
                          gray=True,
-                         relative_locations=quality_locations, max_count=3, min_count=2)
+                         relative_locations=quality_locations, max_count=3, min_count=3)
 
         text_result = list(map(lambda x: (x['text'], x['position']), text_result))
 
@@ -159,17 +131,19 @@ class EffectControl(BaseModule):
                         'y': int(y),
                     }
 
-                    same = list(
-                        filter(lambda x: x['name'] == name, self.effect_list))
+                    # same = list(
+                    #     filter(lambda x: x['name'] == name, self.effect_list))
+                    #
+                    # if not same and add:
+                    #     self.effect_list.append(effect_info)
 
-                    if not same and add:
-                        self.effect_list.append(effect_info)
+                    # if filter:
+                    #     if not same:
+                    #         current_effect_list.append(effect_info)
+                    # else:
+                    #     current_effect_list.append(effect_info)
 
-                    if filter:
-                        if not same:
-                            current_effect_list.append(effect_info)
-                    else:
-                        current_effect_list.append(effect_info)
+                    current_effect_list.append(effect_info)
 
                     break
 
@@ -202,7 +176,10 @@ class EffectControl(BaseModule):
         timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
+
         x, y = current_effect_list[0]['x'], current_effect_list[0]['y']
+
+        self.device.uiautomator_click(x, y)
 
         while 1:
             self.device.screenshot()
@@ -237,6 +214,11 @@ class EffectControl(BaseModule):
 
         import numpy as np
         import cv2
+
+        # cancel 为不相交X号
+        # cancel_2 为相交X号
+
+        # 在替换界面为 cancel_2
 
         mask = np.zeros(self.device.image.shape[:2], np.uint8)
 
@@ -280,50 +262,6 @@ class EffectControl(BaseModule):
             if self.device.appear(reset_time) or self.device.appear(end_simulation):
                 if confirm_timer.reached():
                     return
-
-            if timeout.reached():
-                self.ERROR('wait too long')
-                raise Timeout
-
-    def skip_replacement(self):
-        print('skip_replacement')
-        timeout = Timer(20).start()
-        confirm_timer = Timer(1, count=3).start()
-        reset_timer = Timer(1, count=3).start()
-        click_timer = Timer(1.2)
-
-        # cancel 为不相交X号
-        # cancel_2 为相交X号
-
-        # 在替换界面为 cancel_2
-
-        glo.set_value('skip_replacement', [])
-        mask_id = 'skip_replacement'
-
-        while 1:
-            self.device.screenshot()
-
-            if click_timer.reached() \
-                    and self.device.appear_then_click(cancel, mask_id=mask_id) \
-                    or self.device.appear_then_click(cancel_2):
-                timeout.reset()
-                confirm_timer.reset()
-                click_timer.reset()
-                continue
-
-            if click_timer.reached() and self.device.appear_then_click(confirm, mask_id=mask_id):
-                timeout.reset()
-                confirm_timer.reset()
-                click_timer.reset()
-                continue
-
-            if self.device.appear(reset_time) or self.device.appear(end_simulation):
-                if confirm_timer.reached():
-                    return
-
-            if reset_timer.reached():
-                reset_timer.reset()
-                glo.set_value(mask_id, [])
 
             if timeout.reached():
                 self.ERROR('wait too long')

@@ -205,6 +205,7 @@ class NikkeAutoScript:
 if __name__ == '__main__':
     # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）没示例
     # TODO 处理每日登录
+
     # TODO 购买竞技场商店的代码手册（技能书）
 
     nkas = NikkeAutoScript()

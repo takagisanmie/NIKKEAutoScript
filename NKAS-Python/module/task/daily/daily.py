@@ -88,6 +88,9 @@ class Daily(UI, Task):
                 confirm_timer.reset()
                 continue
 
+            if self.device.appear(nothing):
+                return
+
             if not is_finished \
                     and click_timer.reached() \
                     and self.device.appear(inventory_sign) \

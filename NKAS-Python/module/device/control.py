@@ -52,7 +52,7 @@ class Control(DroidCast, Ocr):
         else:
             return False
 
-    def multiClickLocation(self, location, count=2, delay=0.15):
+    def multiClickLocation(self, location, count=3, delay=0.15):
         for i in range(count):
             self.uiautomator_click(location[0], location[1])
             self.sleep(delay)
@@ -134,18 +134,23 @@ class Control(DroidCast, Ocr):
         else:
             return None
 
-    def matchRelative(self, position, add_x, add_x2, add_y, add_y2, template, value=0.8, _result=None, index=None):
+    def matchRelative(self, position, left=0, right=0, top=0, bottom=0, template=None, value=0.8,
+                      _result=ImgResult.SIMILARITY,
+                      index=None):
         x, y, x2, y2 = int(position[0]), int(position[1]), int(position[2]), int(position[3])
         # left,top,right,bottom
         # x, y, x2, y2 = position[0], position[1], position[2], position[3]
 
-        x += add_x
-        x2 += add_x2
-        y += add_y
-        y2 += add_y2
+        x += left
+        x2 += right
+        y += top
+        y2 += bottom
         img = self.image[y:y2, x:x2]
         # img = cv2.imread(Path.SCREENSHOT_PATH)[y:y2, x:x2]
-        # cv2.imwrite(f'./pic/img-{template["id"]}{time.time()}.png', img)
+        import cv2
+        import time
+
+        cv2.imwrite(f'./pic/img-{template["id"]}{time.time()}.png', img)
 
         sl = match(img, template, value, ImgResult.SIMILARITY)
 

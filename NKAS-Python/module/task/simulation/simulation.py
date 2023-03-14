@@ -24,7 +24,6 @@ class SimulationRoom(UI, Task, EffectControl):
         self.LINE('Simulation Room')
         self.go_to_simulation()
         self.check_level_and_area()
-        # self.check_own_effects()
         # 处于事件选择
         while 1:
             self.matchEvents()
@@ -53,17 +52,17 @@ class SimulationRoom(UI, Task, EffectControl):
                          max_count=3,
                          min_count=1, sort_by='left')
 
-        if list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
-            BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
+        # if list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+        #     BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
 
-        elif list(filter(lambda x: x['id'] == 'Random', event_list)):
+        # elif list(filter(lambda x: x['id'] == 'Random', event_list)):
+        #     RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
+
+        if list(filter(lambda x: x['id'] == 'Random', event_list)):
             RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
 
-        # if e := list(filter(lambda x: x['id'] == 'Random', event_list)):
-        #     RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
-        #
-        # elif e := list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
-        #     BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
+        elif list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+            BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
 
         elif list(filter(lambda x: x['id'] == 'Improvement', event_list)):
             ImprovementEvent(EventType.IMPROVEMENT, self, self.config, self.device, self.socket).run()
@@ -82,7 +81,7 @@ class SimulationRoom(UI, Task, EffectControl):
         area = int(self.config.get('Task.SimulationRoom.area', self.config.Task_Dict))
 
         timeout = Timer(20).start()
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(1, count=3).start()
 
         difficulties = [Level_1, Level_2, Level_3, Level_4, Level_5]
         areas = [Area_A, Area_B, Area_C]
@@ -101,53 +100,6 @@ class SimulationRoom(UI, Task, EffectControl):
             if self.device.appear(reset_time):
                 if confirm_timer.reached():
                     return
-
-            if timeout.reached():
-                self.ERROR('wait too long')
-                raise Timeout
-
-    def check_own_effects(self):
-
-        timeout = Timer(20).start()
-        confirm_timer = Timer(1, count=2).start()
-        click_timer = Timer(1.2)
-
-        while 1:
-            self.device.screenshot()
-            if click_timer.reached() and self.device.appear_then_click(own_effect_list):
-                click_timer.reset()
-                confirm_timer.reset()
-                continue
-
-            if self.device.appear(own_effect_list_sign):
-                if confirm_timer.reached():
-                    break
-
-            if timeout.reached():
-                self.ERROR('wait too long')
-                raise Timeout
-
-        for i in range(2):
-            self.device.swipe(360, 570, 360, 930, 0.1)
-            self.device.sleep(1)
-
-        self.getCurrentEffects(area=own_effect_list_area)
-
-        timeout.reset()
-        click_timer.reset()
-        confirm_timer.reset()
-
-        while 1:
-            self.device.screenshot()
-
-            if click_timer.reached() and self.device.appear_then_click(confirm):
-                click_timer.reset()
-                confirm_timer.reset()
-                continue
-
-            if self.device.hide(own_effect_list_sign):
-                if confirm_timer.reached():
-                    break
 
             if timeout.reached():
                 self.ERROR('wait too long')

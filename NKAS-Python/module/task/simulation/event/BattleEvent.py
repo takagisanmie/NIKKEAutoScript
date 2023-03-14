@@ -22,7 +22,7 @@ class BattleEvent(BaseEvent):
 
     def initBattle(self):
         timeout = Timer(60).start()
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
         if self.eventType == EventType.BATTLE:
@@ -183,6 +183,3 @@ class BattleEvent(BaseEvent):
                 raise Timeout
 
             self.device.sleep(1)
-            import cv2
-            import time
-            cv2.imwrite(f'./pic/{time.time()}.png', self.device.image)
