@@ -1,0 +1,2 @@
+*.py linguist-language=python
+*.vue linguist-language=vue
