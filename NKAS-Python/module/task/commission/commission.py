@@ -1,10 +1,9 @@
-from common.enum.enum import *
 from common.exception import Timeout
 from module.base.task import Task
+from module.task.commission.commission_assets import *
 from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
-from module.task.commission.commission_assets import *
 
 
 class Commission(UI, Task):

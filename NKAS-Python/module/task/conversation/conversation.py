@@ -17,7 +17,6 @@ class Conversation(UI, Task):
         self.checkRestChance()
         selected_list = self.config.get('Task.Conversation.nikkeList', self.config.Task_Dict)
         _Nikke_list = list(filter(lambda x: x["key"] in selected_list, Nikke_list))
-
         company_list = [Elysion, Missilis, Tetra, Pilgrim, Abnormal]
         if self.rest_chance == 0:
             self._finish()
@@ -32,6 +31,8 @@ class Conversation(UI, Task):
         self.INFO('Conversation is finished')
 
     def checkRestChance(self):
+        self.device.sleep(0.3)
+        self.device.screenshot()
         self.rest_chance = self.device.textStrategy(None, rest_chance, OcrResult.TEXT)
         self.rest_chance = int(self.rest_chance.split('/')[0])
         if self.rest_chance > 0:
@@ -57,8 +58,7 @@ class Conversation(UI, Task):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
-                click_timer.wait()
-                self.device.sleep(0.5)
+                self.device.sleep(2.5)
                 continue
 
             if flag and self.device.hide(company):
@@ -234,7 +234,7 @@ class Conversation(UI, Task):
                 flag = False
                 self.device.screenshot()
                 cv2.imwrite(f'./pic/answer-{key}-{time.time()}.png', self.device.image)
-                self.WARNING(f'{key} No correct answer was found.')
+                self.WARNING(f'{name} No correct answer was found.')
                 self.WARNING('NKAS has saved the screenshot and the path is "./pic".')
                 self.WARNING(f'Love and affection point with {key} + 50')
 

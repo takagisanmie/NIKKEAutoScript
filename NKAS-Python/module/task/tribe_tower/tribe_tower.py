@@ -156,6 +156,19 @@ class TribeTower(UI, Task):
                 click_timer.reset()
                 continue
 
+            # 礼包
+            if click_timer.reached() and self.device.appear(gift) and self.device.appear_then_click(confirm):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(gift):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
             if self.device.appear(tribe_tower_sign) and confirm_timer.reached():
                 return
 

@@ -1,12 +1,8 @@
-import threading
-
-import socketio
 from flask import Flask
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 
 import glo
 from common.enum.enum import Path
-
 from module.base.base import BaseModule
 from module.thread.thread import *
 

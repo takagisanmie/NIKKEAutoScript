@@ -1,12 +1,10 @@
 import glo
+from assets import *
 from common.enum.enum import *
 from common.exception import Timeout
-from assets import *
 from module.task.simulation.base.event_base import BaseEvent
 from module.task.simulation.simulation_assets import *
-from module.tools.match import match
 from module.tools.timer import Timer
-from module.task.simulation.simulation_assets import *
 
 
 class BattleEvent(BaseEvent):

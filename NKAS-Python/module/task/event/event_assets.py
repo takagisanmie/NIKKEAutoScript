@@ -12,6 +12,8 @@ class EventAssets:
     skip_2: dict = None
     touch_to_continue: dict = None
     option: dict = None
+    step_sign: dict = None
+    skip_area: dict = None
 
     # 活动主页
     event_page_main_sign: dict = None

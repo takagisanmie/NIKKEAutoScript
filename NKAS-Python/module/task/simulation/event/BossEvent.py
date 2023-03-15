@@ -1,10 +1,8 @@
-from common.enum.enum import *
+from assets import *
 from common.exception import Timeout
 from module.task.simulation.event.BattleEvent import BattleEvent
+from module.task.simulation.simulation_assets import *
 from module.tools.timer import Timer
-from module.task.simulation.simulation_assets import *
-from assets import *
-from module.task.simulation.simulation_assets import *
 
 
 class BossEvent(BattleEvent):

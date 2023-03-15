@@ -1,4 +1,3 @@
-import glo
 from common.enum.enum import *
 from module.tools.yamlStrategy import *
 

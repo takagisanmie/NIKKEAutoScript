@@ -20,13 +20,13 @@
       <br>
       <br>
       <div>
-        关卡名称
+        循环关卡名称
         <el-input style="width: 210px;float: right" @input="_changeEvent"
                   v-model="Settings.event_settings.event"/>
         <p>例如1-5，1-11</p>
       </div>
       <div>
-        完成当前难度所有未完成的关卡
+        完成当前难度所有未完成的关卡，如果没完成，请打开
         <el-switch size="large" width="60px"
                    style="--el-switch-on-color: #626aef; --el-switch-off-color: #ff4949;float: right;"
                    @change="_finishAllEvent" v-model="finishAllEvent"/>

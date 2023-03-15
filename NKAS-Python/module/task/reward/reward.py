@@ -45,15 +45,18 @@ class Reward(UI, Task):
         while 1:
             self.device.screenshot()
 
-            if click_timer.reached() and self.device.appear_then_click(send_and_receive):
-                timeout.reset()
-                click_timer.reset()
-                confirm_timer.reset()
-
             if click_timer.reached() and self.device.appear_then_click(confirm):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(send_and_receive):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                self.device.sleep(2)
+                continue
 
             if confirm_timer.reached():
                 return
@@ -68,16 +71,19 @@ class Reward(UI, Task):
 
         while 1:
             self.device.screenshot()
+
             if self.device.appear(no_special_arena_point) or self.device.appear(no_special_arena_point_2):
                 return
-
-            if click_timer.reached() and self.device.appear_then_click(get_arean_reward):
-                timeout.reset()
-                click_timer.reset()
 
             if click_timer.reached() and self.device.appear_then_click(reward):
                 timeout.reset()
                 click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(get_arean_reward):
+                timeout.reset()
+                click_timer.reset()
+                continue
 
             if timeout.reached():
                 self.ERROR('wait too long')
@@ -92,6 +98,19 @@ class Reward(UI, Task):
             self.device.screenshot()
             if self.device.appear(no_reward):
                 return
+
+            # 礼包
+            if click_timer.reached() and self.device.appear(gift) and self.device.appear_then_click(confirm):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(gift):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
 
             if click_timer.reached() and self.device.appear_then_click(button):
                 timeout.reset()

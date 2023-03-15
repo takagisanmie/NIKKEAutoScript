@@ -1,10 +1,5 @@
-import subprocess
-
-import cv2
-import numpy as np
-
 import glo
-from common.enum.enum import Path, NIKKEServer
+from common.enum.enum import NIKKEServer
 from module.device.connection import Connection
 
 

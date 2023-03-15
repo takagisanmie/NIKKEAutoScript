@@ -1,11 +1,9 @@
-import glo
 from assets import *
 from common.enum.enum import *
 from common.exception import Timeout
-
 from module.base.base import BaseModule
 from module.task.simulation.simulation_assets import *
-from module.tools.match import matchAllTemplate, match
+from module.tools.match import matchAllTemplate
 from module.tools.timer import Timer
 
 
@@ -16,7 +14,7 @@ class EffectControl(BaseModule):
 
     def get_effect_by_battle(self):
         self.device.screenshot()
-        if self.device.appear(limited_2, value=0.92):
+        if self.device.appear(limited_2, value=0.97):
             self.skip()
             return
 
@@ -49,13 +47,13 @@ class EffectControl(BaseModule):
                         confirm_timer.reset()
                         click_timer.reset()
 
-                        self.device.multiClickLocation((x, y), 1, 0.1)
+                        self.device.uiautomator_click(x, y)
 
                         while 1:
                             self.device.screenshot()
 
                             if click_timer.reached() and self.device.appear(get_effect_sign):
-                                self.device.multiClickLocation((x, y), 1, 0.1)
+                                self.device.uiautomator_click(x, y)
                                 confirm_timer.reset()
 
                             # 持有效果到底上限
@@ -283,7 +281,7 @@ preferential_effect_list = [
     },
     {
         'displayName': '快速弹匣',
-        'name': '快速',
+        'name': '速弹',
         'priority': 1
 
     },
@@ -377,6 +375,12 @@ preferential_effect_list = [
         'priority': 10
 
     },
+    {
+        'displayName': '快速换弹程序',
+        'name': '速换',
+        'priority': 10
+
+    },
 ]
 
 useless_effect_list = [
@@ -401,6 +405,12 @@ useless_effect_list = [
     {
         'displayName': '重启载体',
         'name': '重启',
+        'priority': 10
+
+    },
+    {
+        'displayName': '快速换弹程序',
+        'name': '速换',
         'priority': 10
 
     },

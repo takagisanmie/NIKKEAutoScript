@@ -1,11 +1,10 @@
-import glo
 from common.enum.enum import ImgResult
 from common.exception import Timeout
 from module.base.task import Task
+from module.task.free_store.free_store_assets import *
 from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
-from module.task.free_store.free_store_assets import *
 
 
 class FreeStore(UI, Task):
@@ -128,6 +127,9 @@ class FreeStore(UI, Task):
             pl = pl[1:]
             if not pl:
                 break
+
+        if not selected_list:
+            return
 
         res = self.device.appear(selected_list, _result=ImgResult.ALL_RESULT, sort_by=None)
         selected_list.clear()

@@ -14,10 +14,10 @@ Servers:
 - label: 港澳台
   value: 2
 Simulator:
-  Accelerator: Universal
+  Accelerator: None
   Serial: emulator-5554
 Socket:
-  HideWindow: false
+  HideWindow: true
   NameSpace: /nkas
   Port: 5000
 Version: v0.0.4

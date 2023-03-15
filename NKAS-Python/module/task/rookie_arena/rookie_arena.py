@@ -1,20 +1,21 @@
-import glo
 from common.enum.enum import *
 from common.exception import Timeout
 from module.base.task import Task
+from module.task.rookie_arena.rookie_arena_assets import *
 from module.tools.match import resize
 from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
-from module.task.rookie_arena.rookie_arena_assets import *
 
 
 class RookieArena(UI, Task):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.target = self.config.get('Task.RookieArena.target', self.config.Task_Dict)
-        self.under = int(self.config.get('Task.RookieArena.under', self.config.Task_Dict))
-        self.refresh_chance = int(self.config.get('Task.RookieArena.refresh_chance', self.config.Task_Dict))
+        under = self.config.get('Task.RookieArena.under', self.config.Task_Dict)
+        self.under = int(under) if under else 0
+        refresh_chance = self.config.get('Task.RookieArena.refresh_chance', self.config.Task_Dict)
+        self.refresh_chance = int(refresh_chance) if refresh_chance else 1
         self.index = -1
 
     def run(self):
@@ -23,8 +24,6 @@ class RookieArena(UI, Task):
         if self.device._hide(free_chance):
             self._finish()
             return
-        if self.under:
-            self.refresh()
         self.choose_target()
         self._finish()
 
@@ -37,17 +36,20 @@ class RookieArena(UI, Task):
         confirm_timer = Timer(1, count=5).start()
         click_timer = Timer(1.2)
 
-        index = self.target - 1 if self.index == -1 else self.index
-
         while 1:
             self.device.screenshot()
+
+            if self.device.appear(free_chance) and self.device.appear(refresh) and self.under and self.index == -1:
+                self.refresh()
+
             if click_timer.reached() and self.device.appear_then_click(save_formation):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(free_chance, index=index):
+            if click_timer.reached() and self.device.appear_then_click(free_chance,
+                                                                       index=self.target - 1 if self.index == -1 else self.index):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -59,10 +61,14 @@ class RookieArena(UI, Task):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear(end_battle) and self.device.uiautomator_click(300, 300):
+            if click_timer.reached() \
+                    and self.device.appear(end_battle) \
+                    and self.device.uiautomator_click(300, 300):
+                self.index = -1
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
+                self.device.sleep(8)
                 continue
 
             if self.device.appear(rookie_arena_sign) and confirm_timer.reached():
@@ -78,7 +84,6 @@ class RookieArena(UI, Task):
         import cv2
 
         timeout = Timer(30).start()
-        confirm_timer = Timer(0, count=self.refresh_chance).start()
         click_timer = Timer(1.2)
 
         lcs = self.device.appear(own_power_sign, _result=ImgResult.ALL_RESULT)
@@ -91,11 +96,8 @@ class RookieArena(UI, Task):
 
             own_power_area = self.device.image[top:bottom, left:right]
 
-            # img = resize(own_power_area, fx=1.2, fy=1, interpolation=cv2.INTER_NEAREST)
-            # self.own_power = int(self.device._ocr(img, line=True))
-
-            img = resize(own_power_area, fx=1.6, fy=0.6, interpolation=cv2.INTER_NEAREST)
-            self.own_power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT)))
+            img = resize(own_power_area, fx=1.3, fy=0.9, interpolation=cv2.INTER_NEAREST)
+            self.own_power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT, line=True)))
 
             break
 
@@ -113,10 +115,10 @@ class RookieArena(UI, Task):
                 bottom += 2
 
                 _img = self.device.image[top:bottom, left:right]
-                img = resize(_img, fx=1.6, fy=0.6, interpolation=cv2.INTER_NEAREST)
-                power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT)))
+                img = resize(_img, fx=1.3, fy=0.9, interpolation=cv2.INTER_NEAREST)
+                power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT, line=True)))
 
-                if self.own_power - power >= self.under:
+                if self.own_power - self.under > power:
                     self.INFO(f'own power: {self.own_power}')
                     self.INFO(f'target power: {power}')
                     self.INFO(f'target index: {index + 1}')

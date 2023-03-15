@@ -1,13 +1,12 @@
-import time
 from common.exception import Timeout
 from module.base.task import Task
-from module.task.simulation.simulation_assets import *
 from module.task.simulation.effect_control import EffectControl
 from module.task.simulation.event.BattleEvent import BattleEvent
 from module.task.simulation.event.BossEvent import BossEvent
 from module.task.simulation.event.HealingEvent import HealingEvent
 from module.task.simulation.event.ImprovementEvent import ImprovementEvent
 from module.task.simulation.event.RandomEvent import RandomEvent
+from module.task.simulation.simulation_assets import *
 from module.tools.match import *
 from module.tools.timer import Timer
 from module.ui.page import *
@@ -52,17 +51,17 @@ class SimulationRoom(UI, Task, EffectControl):
                          max_count=3,
                          min_count=1, sort_by='left')
 
-        # if list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
-        #     BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
+        if list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+            BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
 
-        # elif list(filter(lambda x: x['id'] == 'Random', event_list)):
-        #     RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
-
-        if list(filter(lambda x: x['id'] == 'Random', event_list)):
+        elif list(filter(lambda x: x['id'] == 'Random', event_list)):
             RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
 
-        elif list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
-            BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
+        # if list(filter(lambda x: x['id'] == 'Random', event_list)):
+        #     RandomEvent(EventType.RANDOM, self, self.config, self.device, self.socket).run()
+        #
+        # elif list(filter(lambda x: x['id'] == 'Normal_Battle', event_list)):
+        #     BattleEvent(EventType.BATTLE, self, self.config, self.device, self.socket).run()
 
         elif list(filter(lambda x: x['id'] == 'Improvement', event_list)):
             ImprovementEvent(EventType.IMPROVEMENT, self, self.config, self.device, self.socket).run()
@@ -88,7 +87,7 @@ class SimulationRoom(UI, Task, EffectControl):
 
         while 1:
             self.device.screenshot()
-            if self.device.appear_then_click(difficulties[difficulty - 1]):
+            if self.device.appear_then_click(difficulties[difficulty - 1], img_template=middle):
                 timeout.reset()
 
             if self.device.appear_then_click(areas[area - 1]):

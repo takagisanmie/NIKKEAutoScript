@@ -12,16 +12,18 @@ class LoginHandler(UI):
         self.server = int(self.config.get('Server', self.config.dict))
         self.is_finished = False
 
-    def handle_app_login(self):
+    def handle_app_login(self, where=True):
         timeout = Timer(180).start()
-        click_timer = Timer(1.2)
-        confirm_timer = Timer(1, count=4).start()
+        click_timer = Timer(0.3)
+        confirm_timer = Timer(1, count=8).start()
 
-        self.where()
+        if where:
+            self.where()
+
+        self.INFO(f'current page: {UI.current_page.name}')
+
         if UI.current_page is not None and UI.current_page is not page_login:
             return
-
-        flag = False
 
         while 1:
 
@@ -33,7 +35,40 @@ class LoginHandler(UI):
             elif self.server == NIKKEServer.TW and self.config.Emulator_TW_PackageName not in self.device.u2.app_list_running():
                 self.device.u2.app_start(self.config.Emulator_TW_PackageName)
 
+            # 在登录页
+            if self.device.appear(login_sign):
+                timeout.reset()
+                confirm_timer.reset()
+
+            # 需要下载
+            if self.device.appear(download_sign):
+                timeout.reset()
+                confirm_timer.reset()
+
+            # 在下载页
+            if self.device.textStrategy('正在下载', None, OcrResult.TEXT):
+                timeout.reset()
+                confirm_timer.reset()
+                self.device.sleep(5)
+                continue
+
             if click_timer.reached() and self.device.appear_then_click(confirm):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            # 系统错误
+            if click_timer.reached() and self.device.appear(system_error) and self.device.appear_then_click(
+                    small_confirm):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            # 更新NIKKE
+            if click_timer.reached() and self.device.appear(download_sign) and self.device.appear_then_click(
+                    small_confirm):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
@@ -46,17 +81,18 @@ class LoginHandler(UI):
                 continue
 
             if click_timer.reached() and self.device.appear_then_click(touch_to_continue):
+                self.device.sleep(5)
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
 
             if click_timer.reached() and self.device.appear_then_click(notice_close):
-                flag = True
+                self.device.sleep(5)
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
-                break
+                continue
 
             if click_timer.reached() and self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):
                 self.device.multiClickLocation((20, 600))
@@ -70,37 +106,15 @@ class LoginHandler(UI):
                 click_timer.reset()
                 continue
 
-            if flag:
-                if confirm_timer.reached():
-                    return
+            if confirm_timer.reached():
+                self.INFO('login success')
+                return
 
             if timeout.reached():
                 self.ERROR('wait too long')
                 raise Timeout
 
-            self.device.sleep(3)
-            # # 关闭公告
-            # if self._appear_then_click(assets.close, AssetResponse.ASSET_HIDE):
-            #     continue
-            # # 选择服务器
-            # # if self.appear_then_click(assets.confirm4, AssetResponse.ASSET_HIDE):
-            # #     continue
-            # self.device.clickTextLocation('确认', AssetResponse.NONE)
-            # self.device.clickTextLocation('碓', AssetResponse.NONE)
-            # # 进入游戏
-            # if self._appear_then_click(assets.enter_into_menu, AssetResponse.ASSET_HIDE):
-            #     self.device.wait(assets.in_menu_announcement_sign)
-            #     self.device.click(assets.close6, AssetResponse.ASSET_HIDE)
-            #     self.device.sleep(8)
-            #     if self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT, True):
-            #         self.device.clickLocation((300, 300), AssetResponse.TEXT_HIDE, '根据累积登入天数')
-            #         return
-            #     elif self.device.textStrategy('活动期间', None, OcrResult.TEXT, False):
-            #         self.device.clickLocation((300, 300), AssetResponse.TEXT_HIDE, '活动期间')
-            #         return
-            #     elif self.device.textStrategy('剩余时间', None, OcrResult.TEXT, False):
-            #         self.device.clickLocation((300, 300), AssetResponse.TEXT_HIDE, '剩余时间')
-            #         return
+            self.device.sleep(1.27)
 
     def app_start(self):
         # TODO 自动启动加速器
@@ -174,46 +188,6 @@ class LoginHandler(UI):
                 self.ERROR('wait too long')
                 raise Timeout
 
-        #     self.device.sleep(0.3)
-        #     self.device.screenshot()
-        #
-        #     if lc := match(self.device.image, _close1, 0.8, ImgResult.LOCATION):
-        #         self.device.clickLocation(lc, AssetResponse.NONE)
-        #         continue
-        #
-        #     if self.device.textStrategy('发现新版本', None, OcrResult.TEXT):
-        #         self.device.u2.press('back')
-        #         continue
-        #
-        #     if lc := match(self.device.image, scene, 0.8, ImgResult.LOCATION):
-        #         self.device.clickLocation(lc, AssetResponse.NONE)
-        #         continue
-        #
-        #     if lc := self.device.textStrategy('电竞宽带', None, OcrResult.LOCATION):
-        #         self.device.clickLocation(lc, AssetResponse.NONE)
-        #         continue
-        #
-        #     if lc := self.device.textStrategy('开始加速', None, OcrResult.LOCATION):
-        #         self.device.clickLocation(lc, AssetResponse.NONE)
-        #         continue
-        #
-        #     if self.device.textStrategy('预计提速', None, OcrResult.LOCATION):
-        #         self.device.u2.press(key='back')
-        #         continue
-        #         # return False
-        #
-        #     elif self.device.textStrategy('加速计时', None, OcrResult.LOCATION):
-        #         return False
-        #
-        #     elif self.device.textStrategy('停止加速', None, OcrResult.LOCATION):
-        #         return False
-        #
-        #     elif self.device.textStrategy('开始游戏', None, OcrResult.LOCATION):
-        #         return False
-        #
-        #     elif self.device.textStrategy('正在加速', None, OcrResult.LOCATION):
-        #         return False
-
     # uu
     def start_uu(self):
         package = 'com.netease.uu'
@@ -221,63 +195,6 @@ class LoginHandler(UI):
         if package not in self.device.u2.app_list():
             self.ERROR('UU加速器未安装')
             return True
-
-        # if package not in self.device.u2.app_list_running():
-        #     self.device.app_start(package)
-        #     self.device.wait(_global)
-        # else:
-        #     return False
-        #
-        # while 1:
-        #     self.device.screenshot()
-        #     if lc := self.device.textStrategy('取消', None, OcrResult.LOCATION):
-        #         self.device.clickLocation(lc, AssetResponse.NONE)
-        #         continue
-        #
-        #     if lc := match(self.device.image, _global, 0.8, ImgResult.LOCATION):
-        #         self.device.clickLocation(lc, AssetResponse.ASSET_HIDE, _global)
-        #         if lc := self.device.textStrategy('日服', None, OcrResult.LOCATION):
-        #             self.device.clickLocation(lc, AssetResponse.NONE)
-        #             continue
-        #
-        #         if lc := self.device.textStrategy('韩服', None, OcrResult.LOCATION):
-        #             self.device.clickLocation(lc, AssetResponse.NONE)
-        #             continue
-        #
-        #         if lc := self.device.textStrategy('国际服', None, OcrResult.LOCATION):
-        #             self.device.clickLocation(lc, AssetResponse.NONE)
-        #             continue
-        #
-        #         if lc := self.device.textStrategy('北美', None, OcrResult.LOCATION):
-        #             self.device.clickLocation(lc, AssetResponse.NONE)
-        #             continue
-        #
-        #         if lc := self.device.textStrategy('东南亚', None, OcrResult.LOCATION):
-        #             self.device.clickLocation(lc, AssetResponse.NONE)
-        #             continue
-        #
-        #     else:
-        #         if lc := self.device.textStrategy('胜利女神', None, OcrResult.LOCATION):
-        #             self.device.multiClickLocation(lc, 2, AssetResponse.NONE)
-        #             self.device.sleep(3)
-        #             self.device.screenshot()
-        #             if self.device.textStrategy('中国台湾', None, OcrResult.LOCATION, False,
-        #                                         resized_shape=(2000, 2000)):
-        #                 if lc := self.device.textStrategy('加速', None, OcrResult.LOCATION):
-        #                     self.device.clickLocation(lc, AssetResponse.NONE)
-        #                     continue
-        #
-        #     if self.device.textStrategy('加速时长', None, OcrResult.LOCATION):
-        #         return False
-        #
-        #     elif self.device.textStrategy('丢包率', None, OcrResult.LOCATION):
-        #         return False
-        #
-        #     elif self.device.textStrategy('综合提速', None, OcrResult.LOCATION):
-        #         return False
-        #
-        #     elif self.device.textStrategy('延迟', None, OcrResult.LOCATION):
-        #         return False
 
     def isVerticalScreen(self):
         self.device.sleep(3)

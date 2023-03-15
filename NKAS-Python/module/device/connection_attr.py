@@ -1,8 +1,6 @@
-from adbutils import AdbClient, AdbDevice
 import uiautomator2 as u2
+from adbutils import AdbClient, AdbDevice
 from cached_property import cached_property
-
-import glo
 
 
 class ConnectionAttr:

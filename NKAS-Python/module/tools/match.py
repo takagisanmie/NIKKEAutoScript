@@ -1,5 +1,3 @@
-from time import sleep, time
-
 import cv2
 import numpy as np
 
@@ -39,7 +37,7 @@ def match(img=None, template=None, value=0.8, _result=None, gray=False):
 
 def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_template: dict = None, value: float = 0.8,
                      gray: bool = False, relative_locations: list = None, max_count: int = None, min_count: int = None,
-                     sort_by: str = 'top', mask_id: str = None):
+                     sort_by: str = 'top', mask_id: str = None, once: bool = False):
     if mask_id:
         import glo
         mask_list = glo.get_value(mask_id)
@@ -134,6 +132,13 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
         if not relative_locations:
             return None
 
+        if once:
+            if sort_by:
+                return relative_locations.sort(key=lambda x: x[sort_by])
+            else:
+                # 添加顺序
+                return relative_locations
+
         if flag:
             continue
 
@@ -161,5 +166,5 @@ def resize(img, asset=None, dst=(0, 0), fx=1, fy=1, interpolation=None):
         p = asset['area']
         img = img[p[1]:p[3], p[0]:p[2]]
 
-    cv2.resize(img, dst, fx=fx, fy=fy, interpolation=interpolation)
+    img = cv2.resize(img, dst, fx=fx, fy=fy, interpolation=interpolation)
     return img

@@ -99,6 +99,12 @@ page_friends = ChildPage(signs=[friend_sign], parent=page_main,
 
 page_main.link_chlid(button=to_friend, destination=page_friends)
 
+# 邮件
+page_mail = ChildPage(signs=[mail_sign], parent=page_main,
+                      name='page_mail', closeButton=mail_close)
+
+page_main.link_chlid(button=to_mail, destination=page_mail)
+
 # 公告
 page_notice = ChildPage(signs=[notice_sign], parent=page_main,
                         name='page_notice', closeButton=notice_close)

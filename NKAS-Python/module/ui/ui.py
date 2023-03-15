@@ -45,6 +45,23 @@ class UI(BaseModule):
                 self.device.sleep(5)
                 continue
 
+            if self.device.appear(system_error) or self.device.appear(download_sign):
+                UI.current_page = page_login
+                from module.handler.login import LoginHandler
+                LoginHandler(self.config, device=self.device, socket=self.socket).handle_app_login(where=False)
+
+            if self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):
+                self.device.multiClickLocation((20, 600))
+                timeout.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.textStrategy('剩余时间', None, OcrResult.TEXT):
+                self.device.multiClickLocation((20, 600))
+                timeout.reset()
+                click_timer.reset()
+                continue
+
             if timeout.reached():
                 raise Timeout
 
@@ -167,10 +184,7 @@ class UI(BaseModule):
         path = {
             'page': page,
             'destination': destination,
-            'button':
-                {'id': button.name, 'button': button}
-                if isinstance(button, Button)
-                else button
+            'button': button,
         }
         return path
 

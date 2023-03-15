@@ -1,11 +1,6 @@
-import time
-
 from cached_property import cached_property
 
-import glo
-
 from module.base.task import *
-from module.ui.page import *
 
 
 class NikkeAutoScript:
@@ -203,10 +198,8 @@ class NikkeAutoScript:
 
 
 if __name__ == '__main__':
-    # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）没示例
-    # TODO 处理每日登录
-
-    # TODO 购买竞技场商店的代码手册（技能书）
+    # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）待测试
+    # TODO 竞技场商店货币不足时 没示例
 
     nkas = NikkeAutoScript()
     nkas.socket.run()

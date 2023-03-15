@@ -1,9 +1,8 @@
 from common.enum.enum import *
 from module.device.method.droidcast import DroidCast
 from module.device.ocr import Ocr
-from module.tools.utils import random_rectangle_point
 from module.tools.match import match, matchAllTemplate
-from module.ui.page import Button
+from module.tools.utils import random_rectangle_point
 
 
 class Control(DroidCast, Ocr):
@@ -14,7 +13,7 @@ class Control(DroidCast, Ocr):
         return True
 
     def appear_then_click(self, button, value=0.8, screenshot=False, gray=False, img=None, img_template=None,
-                          mask_id=None, index=0):
+                          mask_id=None, index=0, once=False):
 
         # if 'button' in button.keys():
         #     _button: Button = button['button']
@@ -30,7 +29,7 @@ class Control(DroidCast, Ocr):
 
         if lc := self.appear(button, value, screenshot=screenshot, _result=ImgResult.LOCATION, gray=gray, img=img,
 
-                             img_template=img_template, mask_id=mask_id, index=index):
+                             img_template=img_template, mask_id=mask_id, index=index, once=once):
 
             # x, y = random_rectangle_point(button['area'])
 
@@ -44,8 +43,8 @@ class Control(DroidCast, Ocr):
 
             return False
 
-    def clickTextLocation(self, text, screenshot=False, *args, **kwargs):
-        lc = self.ocrByAsset(text, None, OcrResult.LOCATION, screenshot, *args, **kwargs)
+    def clickTextLocation(self, text, screenshot=False, asset=None, *args, **kwargs):
+        lc = self.ocrByAsset(text, asset, OcrResult.LOCATION, screenshot, *args, **kwargs)
         if lc is not None:
             self.uiautomator_click(lc[0], lc[1])
             return True
@@ -80,7 +79,7 @@ class Control(DroidCast, Ocr):
         return self._ocrByAsset(self.image, *args, **kwargs)
 
     def appear(self, template=None, value=0.8, _result=ImgResult.SIMILARITY, screenshot=False, gray=False,
-               img=None, img_template=None, sort_by='top', mask_id=None, index=0):
+               img=None, img_template=None, sort_by='top', mask_id=None, index=0, once=False):
 
         if screenshot or not hasattr(self, "image"):
             self.screenshot()
@@ -93,7 +92,7 @@ class Control(DroidCast, Ocr):
         matchAllTemplate(img, [*template] if isinstance(template, list) else [template], img_template=img_template,
                          value=value,
                          gray=gray,
-                         relative_locations=locations, sort_by=sort_by, mask_id=mask_id)
+                         relative_locations=locations, sort_by=sort_by, mask_id=mask_id, once=once)
 
         if _result == ImgResult.ALL_RESULT:
             return locations
@@ -147,10 +146,9 @@ class Control(DroidCast, Ocr):
         y2 += bottom
         img = self.image[y:y2, x:x2]
         # img = cv2.imread(Path.SCREENSHOT_PATH)[y:y2, x:x2]
-        import cv2
-        import time
-
-        cv2.imwrite(f'./pic/img-{template["id"]}{time.time()}.png', img)
+        # import cv2
+        # import time
+        # cv2.imwrite(f'./pic/img-{template["id"]}{time.time()}.png', img)
 
         sl = match(img, template, value, ImgResult.SIMILARITY)
 

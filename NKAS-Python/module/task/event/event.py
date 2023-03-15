@@ -28,12 +28,18 @@ class Event(UI, Task):
         print(self.pages)
         self.go(destination=page_main)
         self.go_to_steps()
+
+        if not self.rest_chance:
+            self._finish()
+            return
+
         self.change_part_difficulty()
         if self._finishAllEvent:
             self.finishAllEvent()
 
-        if self.rest_chance == 0:
+        if not self.rest_chance:
             self._finish()
+            return
 
         self.loop()
 
@@ -71,9 +77,7 @@ class Event(UI, Task):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() \
-                    and self.device.appear_then_click(self.assets.skip) \
-                    or self.device.appear_then_click(self.assets.skip_2):
+            if click_timer.reached() and self.device.clickTextLocation(text='SKIP', asset=self.assets.skip_area):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -87,7 +91,7 @@ class Event(UI, Task):
                 continue
 
             if self.rest_chance and click_timer.reached() \
-                    and self.device.appear(self.finished) \
+                    and self.device.appear(self.assets.step_sign) \
                     and self.device._hide(self.assets.into_battle) \
                     and self.device.uiautomator_click(lc[0], lc[1]):
                 timeout.reset()
@@ -97,6 +101,7 @@ class Event(UI, Task):
 
             if self.rest_chance and self.device.appear_then_click(self.assets.restart):
                 self.rest_chance -= 1
+                self.INFO(f'rest chance: {self.rest_chance}')
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
@@ -129,13 +134,11 @@ class Event(UI, Task):
     def finishAllEvent(self):
         self.sroll_to_top()
         timeout = Timer(60).start()
-        confirm_timer = Timer(1, count=3).start()
+        confirm_timer = Timer(1, count=5).start()
         click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
-            if self.rest_chance == 0:
-                return
 
             if click_timer.reached() and self.device.appear_then_click(self.assets.option):
                 timeout.reset()
@@ -143,15 +146,13 @@ class Event(UI, Task):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() \
-                    and self.device.appear_then_click(self.assets.skip) \
-                    or self.device.appear_then_click(self.assets.skip_2):
+            if click_timer.reached() and self.device.clickTextLocation(text='SKIP', asset=self.assets.skip_area):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.device.appear(self.assets.auto, gray=True):
+            if self.rest_chance and self.device.appear(self.assets.auto, gray=True):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -160,25 +161,29 @@ class Event(UI, Task):
 
             if self.device.appear_then_click(self.assets.end_battle):
                 self.rest_chance -= 1
+                self.INFO(f'rest chance: {self.rest_chance}')
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
+            if self.rest_chance and click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(self.unlocked):
+            if self.rest_chance and click_timer.reached() and self.device.appear_then_click(self.unlocked):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
                 click_timer.wait()
                 continue
 
-            if self.device.swipe(360, 1100, 360, 800, 0.4):
+            if self.device.appear(home) and not self.rest_chance:
+                return
+
+            if self.device.appear(home) and self.device.swipe(360, 1000, 360, 800, 0.4):
                 self.device.sleep(1)
                 if confirm_timer.reached():
                     self.config.update('Task.Event.finishAllEvent', False, self.config.Task_Dict, Path.TASK)
@@ -198,11 +203,11 @@ class Event(UI, Task):
             return
 
         if self.type == EP.SMALL and self.part == EP.PART_1:
-            self.device.multiClick(self.assets.to_part1_detail, 2)
+            self._go(destination=self.part1_detail)
         elif self.type == EP.LARGE and self.part == EP.PART_2:
-            self.device.multiClick(self.assets.to_part2_detail, 2)
+            self._go(destination=self.part2_detail)
         else:
-            self.device.multiClick(self.assets.to_part1_detail, 2)
+            self._go(destination=self.part1_detail)
 
         self.device.sleep(2)
 
@@ -325,12 +330,12 @@ class Event(UI, Task):
 
     def sroll_to_top(self):
         for i in range(2):
-            self.device.swipe(360, 400, 360, 1100, 0.2)
+            self.device.swipe(360, 550, 360, 1000, 0.1)
             self.device.sleep(0.8)
 
     def sroll_to_bottom(self):
         for i in range(2):
-            self.device.swipe(360, 1100, 360, 400, 0.2)
+            self.device.swipe(360, 1000, 360, 550, 0.1)
             self.device.sleep(0.8)
 
     @cached_property
@@ -353,27 +358,51 @@ class Event(UI, Task):
         # 活动—part1
         part1 = Page(signs=[self.assets.part1_sign], name='part1', parent=event_page_main)
         part1.link(button=home, destination=page_main)
-        part1.link(button=back, destination=event_page_main)
+        if self.type == EP.SMALL:
+            part1.link(button=back, destination=page_main)
+        elif self.type == EP.LARGE:
+            part1.link(button=back, destination=event_page_main)
 
         event_page_main.link(button=self.assets.to_part1, destination=part1)
+
+        # 活动—part1-关卡页
+        part1_detail = Page(signs=[self.assets.step_sign], name='part1_detail', parent=event_page_main)
+        part1_detail.link(button=home, destination=page_main)
+        part1_detail.link(button=back, destination=part1)
+
+        part1.link(button=self.assets.to_part1_detail, destination=part1_detail)
 
         # 活动—part2
         part2 = Page(signs=[self.assets.part2_sign], name='part2', parent=event_page_main)
         part2.link(button=home, destination=page_main)
-        part2.link(button=back, destination=event_page_main)
+        if self.type == EP.SMALL:
+            part2.link(button=back, destination=page_main)
+        elif self.type == EP.LARGE:
+            part2.link(button=back, destination=event_page_main)
 
         event_page_main.link(button=self.assets.to_part2, destination=part2)
 
+        # 活动—part2-关卡页
+        part2_detail = Page(signs=[self.assets.step_sign], name='part2_detail', parent=event_page_main)
+        part2_detail.link(button=home, destination=page_main)
+        part2_detail.link(button=back, destination=part2)
+
+        part2.link(button=self.assets.to_part2_detail, destination=part2_detail)
+
         # 如何是小活动，主页按钮链接到Part1
         if self.type == EP.SMALL:
+            part1.parent = page_main
             page_main.link(button=self.assets.main_button, destination=part1)
-        # 如何是打活动，主页按钮链接到活动主页
+            part1_detail.parent = part1
+        # 如何是大活动，主页按钮链接到活动主页
         elif self.type == EP.LARGE:
             page_main.link(button=self.assets.main_button, destination=event_page_main)
 
         self.event_page_main = event_page_main
         self.part1 = part1
+        self.part1_detail = part1_detail
         self.part2 = part2
+        self.part2_detail = part2_detail
 
         return event_page_main
 
@@ -382,13 +411,40 @@ class Event(UI, Task):
         self.getPathByBack(path1, UI.current_page)
         path2 = []
         self.getPathByParent(path2, destination)
-        for a_index, a_value in enumerate(path1):
-            for b_index, b_value in enumerate(path2):
-                if a_value['destination'].name == b_value['destination'].name:
-                    path1 = path1[b_index:a_index + 1]
-                    path2 = path2[b_index + 1:]
+
+        flag = False
+        for i1, value1 in enumerate(path1):
+            _destination1 = \
+                list(filter(lambda x: x[1]['id'] == value1['button']['id'], path1[i1]['page'].links.items()))[0][0].name
+
+            for i2, value2 in enumerate(path2):
+                _destination2 = \
+                    list(filter(lambda x: x[1]['id'] == value2['button']['id'], path2[i2]['page'].links.items()))[0][
+                        0].name
+
+                if _destination1 == _destination2:
+                    path1 = path1[:i1 + 1]
+                    path2 = path2[i2 + 1:]
+                    flag = True
+                    break
+
+            if flag:
+                break
 
         path = path1 + path2
+
+        for index, value in enumerate(path):
+            if value['destination'] is page_main:
+                path = path[index + 1:]
+                key = list(filter(lambda k: k is page_main, UI.current_page.links.keys()))
+                if key:
+                    path.insert(0, self.getPath(value['page'], page_main, UI.current_page.links[key[0]]))
+
+            if value['page'] is UI.current_page and value['destination'] is destination:
+                path = path[index:]
+
+        for i in path:
+            print(i)
 
         timeout = Timer(30).start()
         confirm_timer = Timer(limit=0, count=len(path)).start()
@@ -406,9 +462,7 @@ class Event(UI, Task):
                     timeout.reset()
                     click_timer.reset()
 
-                if click_timer.reached() \
-                        and self.device.appear_then_click(self.assets.skip) \
-                        or self.device.appear_then_click(self.assets.skip_2):
+                if click_timer.reached() and self.device.clickTextLocation(text='SKIP', asset=self.assets.skip_area):
                     timeout.reset()
                     click_timer.reset()
 
@@ -416,6 +470,7 @@ class Event(UI, Task):
                     path = path[index + 1:]
                     confirm_timer.count = len(path)
                     if confirm_timer.reached():
+                        UI.current_page = destination
                         return
 
                     break

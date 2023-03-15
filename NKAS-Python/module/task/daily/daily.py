@@ -1,11 +1,10 @@
 import glo
-from common.enum.enum import *
 from common.exception import Timeout
 from module.base.task import Task
-from module.tools.timer import Timer, getTaskResetTime
+from module.task.daily.daily_assets import *
+from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI
-from module.task.daily.daily_assets import *
 
 
 class Daily(UI, Task):
@@ -16,6 +15,7 @@ class Daily(UI, Task):
 
     def run(self):
         self.LINE('Daily')
+        self.to_mail()
         if self.equipmentUpgrade:
             self.improve_equipment()
         self.go(destination=page_daily)
@@ -197,6 +197,34 @@ class Daily(UI, Task):
             if click_timer.reached() and self.device.appear_then_click(pass_reward):
                 timeout.reset()
                 click_timer.reset()
+
+            if confirm_timer.reached():
+                return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
+
+    def to_mail(self):
+        self.go(page_mail)
+
+        timeout = Timer(20).start()
+        confirm_timer = Timer(1, count=5).start()
+        click_timer = Timer(1.2)
+
+        while 1:
+            self.device.screenshot()
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(mail_get):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if confirm_timer.reached():
                 return

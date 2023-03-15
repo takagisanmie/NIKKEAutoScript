@@ -1,10 +1,8 @@
-
-from common.enum.enum import *
+import glo
 from assets import *
 from common.exception import Timeout
-from module.task.simulation.simulation_assets import *
 from module.task.simulation.base.event_base import BaseEvent
-from module.tools.match import match
+from module.task.simulation.simulation_assets import *
 from module.tools.timer import Timer
 
 
@@ -15,7 +13,11 @@ class RandomEvent(BaseEvent):
 
         timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()
+        reset_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
+
+        glo.set_value('RandomEvent', [])
+        mask_id = 'RandomEvent'
 
         while 1:
             self.device.screenshot()
@@ -26,7 +28,8 @@ class RandomEvent(BaseEvent):
                 continue
 
             # 在选择具体事件
-            if click_timer.reached() and self.device.appear_then_click(random_option):
+            if self.device.appear_then_click(random_option, mask_id=mask_id, once=True):
+                self.device.sleep(1)
                 timeout.reset()
                 confirm_timer.reset()
 
@@ -54,7 +57,7 @@ class RandomEvent(BaseEvent):
                 confirm_timer.reset()
                 return
 
-            if self.device.appear(no_condition):
+            if self.device.appear(no_condition) and self.device.appear(cancel):
                 self.parent.skip()
                 timeout.reset()
                 click_timer.reset()
@@ -74,3 +77,7 @@ class RandomEvent(BaseEvent):
             if timeout.reached():
                 self.ERROR('wait too long')
                 raise Timeout
+
+            if reset_timer.reached():
+                reset_timer.reset()
+                glo.set_value(mask_id, [])

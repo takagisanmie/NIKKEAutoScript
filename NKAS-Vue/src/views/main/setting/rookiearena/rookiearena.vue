@@ -20,10 +20,10 @@
       <br>
       <br>
       <div>
-        战力低于X
+        战力X
         <el-input style="width: auto;float: right;font-size: 17px;height: 43px"
                   @input="_under" v-model="under"/>
-        <p>填0，则选择目标对象</p>
+        <p>选择的目标战力 &lt; 自身战斗力 - 战力X，填0，则选择目标对象</p>
       </div>
       <div>
         刷新次数

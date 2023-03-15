@@ -1,11 +1,8 @@
-
-from common.enum.enum import *
-from common.exception import Timeout
-
-from module.task.simulation.base.event_base import BaseEvent
-from module.tools.timer import Timer
 from assets import *
+from common.exception import Timeout
+from module.task.simulation.base.event_base import BaseEvent
 from module.task.simulation.simulation_assets import *
+from module.tools.timer import Timer
 
 
 class ImprovementEvent(BaseEvent):

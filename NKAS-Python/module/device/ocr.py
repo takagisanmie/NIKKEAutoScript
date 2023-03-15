@@ -1,7 +1,6 @@
-import cv2
 from cnocr import CnOcr
 
-from common.enum.enum import OcrResult, Path
+from common.enum.enum import OcrResult
 
 cnOcr = CnOcr()
 
@@ -17,6 +16,7 @@ class Ocr:
                 return None
         elif line:
             res = cnOcr.ocr_for_single_line(img)
+            print(res)
             if res is not None:
                 return res['text']
             else:
@@ -29,7 +29,7 @@ class Ocr:
 
         if not line:
             res = cnOcr.ocr(img, **kwargs)
-            result = self.filterText(text, res, _result)
+            result = self.filterText(text, res, _result, asset)
             if result is not None:
                 return result
             else:
@@ -41,7 +41,7 @@ class Ocr:
             else:
                 return None
 
-    def filterText(self, text, res, _result):
+    def filterText(self, text, res, _result, asset=None):
         if text is None:
             text = 'None'
 
@@ -50,7 +50,8 @@ class Ocr:
                 text = text.split('_')[1]
                 for t in filter(lambda r: text == r['text'], res):
                     text = t['text']
-                    lc = self.getLocation(t)
+
+                    lc = self.getLocation(t, asset)
                     if _result is OcrResult.LOCATION:
                         return lc
                     if _result is OcrResult.TEXT:
@@ -64,7 +65,7 @@ class Ocr:
             else:
                 for t in filter(lambda r: text in r['text'], res):
                     text = t['text']
-                    lc = self.getLocation(t)
+                    lc = self.getLocation(t, asset)
                     if _result is OcrResult.LOCATION:
                         return lc
                     if _result is OcrResult.TEXT:
@@ -92,8 +93,24 @@ class Ocr:
 
         return None
 
-    def getLocation(self, t):
+    def getLocation(self, t, asset):
         upper_left, bottom_right = t['position'][0], t['position'][2]
-        position = (upper_left[0], upper_left[1], bottom_right[0], bottom_right[1])
-        lc = (((position[2] - position[0]) / 2 + position[0]), ((position[3] - position[1]) / 2 + position[1]))
+
+        left = upper_left[0]
+        right = bottom_right[0]
+        top = upper_left[1]
+        bottom = bottom_right[1]
+
+        if asset:
+            template_left = asset['area'][0]
+            template_top = asset['area'][1]
+
+            left += template_left
+            right += template_left
+            top += template_top
+            bottom += template_top
+
+        # position = (left, right, top, bottom)
+
+        lc = (((right - left) / 2 + left), ((bottom - top) / 2 + top))
         return lc
