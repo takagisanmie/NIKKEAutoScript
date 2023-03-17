@@ -14,6 +14,7 @@ class Destroy(UI, Task):
         self.INFO('Destroy has no free chance')
         self.finish(self.config, 'Destroy')
         self.INFO('Destroy is finished')
+        self.go(page_main)
 
     def destroy(self):
 

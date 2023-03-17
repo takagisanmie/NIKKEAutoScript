@@ -107,13 +107,10 @@ const _refresh_chance = _.debounce((val) => {
 socket.on('setRookieArenaOption', (result) => {
   _.forEach(result.result, function (option, index) {
     if (option.key === 'Task.RookieArena.target') {
-      console.log(option.value)
       target.value = option.value
     } else if (option.key === 'Task.RookieArena.under') {
-      console.log(option.value)
       under.value = option.value
     } else if (option.key === 'Task.RookieArena.refresh_chance') {
-      console.log(option.value)
       refresh_chance.value = option.value
     }
   })

@@ -216,3 +216,4 @@ class TribeTower(UI, Task):
     def _finish(self):
         self.finish(self.config, 'TribeTower')
         self.INFO('Tribe Tower is finished')
+        self.go(page_main)

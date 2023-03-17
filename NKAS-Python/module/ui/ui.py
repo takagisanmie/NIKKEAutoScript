@@ -299,3 +299,28 @@ class UI(BaseModule):
             if timeout.reached():
                 self.ERROR('wait too long')
                 raise Timeout
+
+    def stop_until_reset_time(self):
+        import time
+
+        midnight = time.mktime(time.localtime(int(time.time() - int(time.time() - time.timezone) % 86400)))
+        now = time.time()
+
+        reset_time = round(midnight + 14400)
+        reset_time2 = round(midnight + 14340)
+
+        if reset_time > now >= reset_time2:
+            server = int(self.config.get('Server', self.config.dict))
+
+            package_name = None
+
+            if server == NIKKEServer.JP and self.device.jp_package in self.device.u2.app_list():
+                package_name = self.device.jp_package
+
+            elif server == NIKKEServer.TW and self.device.tw_package in self.device.u2.app_list():
+                package_name = self.device.tw_package
+
+            if package_name in self.device.u2.app_list_running():
+                self.device.u2.app_stop(package_name)
+                self.INFO('停止NIKKE，直到4:00AM')
+                self.device.sleep(40)

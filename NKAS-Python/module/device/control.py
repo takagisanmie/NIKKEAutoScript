@@ -51,7 +51,7 @@ class Control(DroidCast, Ocr):
         else:
             return False
 
-    def multiClickLocation(self, location, count=3, delay=0.15):
+    def multiClickLocation(self, location, count=2, delay=0.15):
         for i in range(count):
             self.uiautomator_click(location[0], location[1])
             self.sleep(delay)

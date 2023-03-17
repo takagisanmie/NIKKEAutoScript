@@ -27,14 +27,15 @@ class Reward(UI, Task):
         self.INFO('Reward is finished')
 
     def _finish(self):
-        import time
-        if time.time() >= self.recordTwiceTime:
-            self.when(self.config, 'Reward', 300)
-        else:
-            self.finish(self.config, 'Reward')
-
-        key = 'Task.Reward.recordTwiceTime'
-        self.config.update(key, getTaskResetTime(), self.config.Task_Dict, Path.TASK)
+        # import time
+        # if time.time() >= self.recordTwiceTime:
+        #     self.when(self.config, 'Reward', 150)
+        # else:
+        #     self.finish(self.config, 'Reward')
+        # key = 'Task.Reward.recordTwiceTime'
+        # self.config.update(key, getTaskResetTime(), self.config.Task_Dict, Path.TASK)
+        self.when(self.config, 'Reward', 14400)
+        self.go(page_main)
 
     def send_and_receive_social_point(self):
         self.device.sleep(3)

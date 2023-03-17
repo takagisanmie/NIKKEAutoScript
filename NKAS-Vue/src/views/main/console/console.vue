@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import {inject, onUpdated, ref, watch, nextTick} from "vue";
+import {inject, onMounted, ref, watch, nextTick} from "vue";
 
 const NKASLog = inject('NKASLog')
 
@@ -20,6 +20,12 @@ watch(() => NKASLog.Logs.length, async (newValue, oldValue) => {
     scrollbarRef.value.setScrollTop(scrollbarRef.value.wrapRef.scrollHeight)
   }
 });
+
+onMounted(async () => {
+  await nextTick()
+  scrollbarRef.value.setScrollTop(scrollbarRef.value.wrapRef.scrollHeight)
+})
+
 </script>
 
 <style lang="stylus" scoped>

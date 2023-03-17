@@ -29,9 +29,9 @@ class SimulationRoom(UI, Task, EffectControl):
             if self.is_finished:
                 break
 
-        self.device.appear_then_click(home)
         self.finish(self.config, 'SimulationRoom')
         self.INFO('Simulation Room is finished')
+        self.go(page_main)
 
     def check_level_and_area(self):
         self.device.screenshot()

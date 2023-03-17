@@ -17,7 +17,7 @@
       <br>
       <div style="line-height: 38px">
         优先购买
-        <el-input style="width: 1000px;height: 38px;float: right;font-size: 17px"
+        <el-input style="width: calc(85% - 57px);height: 38px;font-size: 17px;position:relative;float:right"
                   @input="_arena_product_list" v-model="arena_product_list"/>
         <p>例如: ‘electric > fire > selection_box > water > wind > iron’，不填写则不购买</p>
       </div>

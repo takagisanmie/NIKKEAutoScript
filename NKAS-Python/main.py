@@ -88,24 +88,32 @@ class NikkeAutoScript:
             if not self.checkResolution():
                 return
 
-            if not self.start():
-                self.state = False
-                self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
-                return
-
             self.state = True
             self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
-            while 1:
-                for task in self.config.Task_List:
-                    if Task.isActivated(self.config, task):
-                        now = time.time()
-                        if Task.getNextExecutionTime(self.config, task) < now:
-                            if not self.start():
-                                self.state = False
-                                self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
-                                return
 
-                            self.run(str.lower(task))
+            while 1:
+                self.ui.stop_until_reset_time()
+                all_task = self.config.get('Task')
+                task_list = [self.config.get('Task.' + x) for x in all_task if self.config.get('Task.' + x)['activate']]
+                task_list.sort(key=lambda x: x['nextExecutionTime'])
+                task = task_list[0]['name']
+                now = time.time()
+                if Task.getNextExecutionTime(self.config, task) < now:
+
+                    if not self.start():
+                        self.state = False
+                        self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
+                        return
+
+                    self.socket.getAllTaskStates()
+                    self.run(str.lower(task))
+
+                _task_list = list(filter(lambda x: x['nextExecutionTime'] <= time.time(), task_list))
+                if not _task_list:
+                    idle = self.config.get('Idle', self.config.dict)
+                    if idle:
+                        self.device.app_stop()
+
 
         except Exception as e:
             e = str(e)
@@ -198,8 +206,19 @@ class NikkeAutoScript:
 
 
 if __name__ == '__main__':
-    # TODO 处理弹窗礼包（在使用非加速器，升级时，或通过企业塔）待测试
+    # TODO 升级NIKKE
+
     # TODO 竞技场商店货币不足时 没示例
+    # TODO 凌晨3:59重启，等待到4:00再启动 待测试
+    # TODO 领取活动每日登录奖励 待测试
+
+    # TODO 23.03.17
+    # TODO 竞技场商店选项过长
+    # TODO 在切换到调度器时，日志滚动到最下方
+    # TODO 任务执行完后回到主菜单或者关闭游戏
+    # TODO 收获固定设置为调用时间的4个小时后
+    # TODO 任务队列排序显示
+    # TODO 新人竞技场战力对比，在比较双方队伍时
 
     nkas = NikkeAutoScript()
     nkas.socket.run()

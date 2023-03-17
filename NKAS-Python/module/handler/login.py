@@ -25,6 +25,8 @@ class LoginHandler(UI):
         if UI.current_page is not None and UI.current_page is not page_login:
             return
 
+        self.LINE('Login')
+
         while 1:
 
             self.device.screenshot()
@@ -61,6 +63,7 @@ class LoginHandler(UI):
             # 系统错误
             if click_timer.reached() and self.device.appear(system_error) and self.device.appear_then_click(
                     small_confirm):
+                self.device.sleep(10)
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
@@ -69,6 +72,7 @@ class LoginHandler(UI):
             # 更新NIKKE
             if click_timer.reached() and self.device.appear(download_sign) and self.device.appear_then_click(
                     small_confirm):
+                self.device.sleep(10)
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
@@ -92,6 +96,17 @@ class LoginHandler(UI):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(get_daily_login_reward):
+                timeout.reset()
+                self.device.sleep(3)
+                self.device.screenshot()
+                if click_timer.reached() and self.device.appear_then_click(reward):
+                    timeout.reset()
+                    click_timer.reset()
+                    continue
+
                 continue
 
             if click_timer.reached() and self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):

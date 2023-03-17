@@ -14,13 +14,15 @@ class Task:
         return config.get('Task.' + name + '.nextExecutionTime', config.Task_Dict)
 
     @staticmethod
-    def finish(config, name):
+    def finish(config, name, second=0):
         key = 'Task.' + name + '.nextExecutionTime'
-        config.update(key, getTaskResetTime(), config.Task_Dict, Path.TASK)
-        glo.getSocket().emitSingleParameter('checkAllTaskStates', 'data', config.Task_Dict)
+        config.update(key, getTaskResetTime() + second, config.Task_Dict, Path.TASK)
+        # glo.getSocket().emitSingleParameter('checkAllTaskStates', 'data', config.Task_Dict)
+        glo.getSocket().getAllTaskStates()
 
     @staticmethod
     def when(config, name, second):
         key = 'Task.' + name + '.nextExecutionTime'
         config.update(key, after(second), config.Task_Dict, Path.TASK)
-        glo.getSocket().emitSingleParameter('checkAllTaskStates', 'data', config.Task_Dict)
+        # glo.getSocket().emitSingleParameter('checkAllTaskStates', 'data', config.Task_Dict)
+        glo.getSocket().getAllTaskStates()

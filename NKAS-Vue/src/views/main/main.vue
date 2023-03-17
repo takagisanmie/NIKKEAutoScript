@@ -77,7 +77,7 @@ socket.on('checkSchedulerState', (result) => {
 })
 
 socket.on('checkAllTaskStates', (result) => {
-  _.forEach(result.data.Task, function (value, task) {
+  _.forEach(result.data.Task, function (value) {
     value.displayDate = dayjs.unix(value.nextExecutionTime).format('YYYY-MM-DD HH:mm:ss')
   });
   TaskListStates.update(result.data.Task)

@@ -24,23 +24,89 @@ class RookieArena(UI, Task):
         if self.device._hide(free_chance):
             self._finish()
             return
-        self.choose_target()
+
+        self.execute()
         self._finish()
 
     def _finish(self):
         self.finish(self.config, 'RookieArena')
         self.INFO('Rookie Arena is finished')
+        self.go(page_main)
 
-    def choose_target(self):
+    def execute(self):
         timeout = Timer(90).start()
-        confirm_timer = Timer(1, count=5).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
 
-            if self.device.appear(free_chance) and self.device.appear(refresh) and self.under and self.index == -1:
-                self.refresh()
+            if click_timer.reached() and self.device.appear(free_chance, once=True):
+                self.choose_target()
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+
+            if self.device.appear(rookie_arena_sign) and confirm_timer.reached():
+                self.INFO('Rookie Arena has no free chance')
+                return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
+
+    def choose_target(self):
+        timeout = Timer(90).start()
+        confirm_timer = Timer(1, count=3).start()
+        click_timer = Timer(1.2)
+
+        refresh_chance = self.refresh_chance
+
+        if self.under:
+            while 1:
+                self.device.screenshot()
+                self.compare()
+                if self.device.appear_then_click(into_battle):
+                    timeout.reset()
+                    confirm_timer.reset()
+                    click_timer.reset()
+
+                    while 1:
+                        self.device.screenshot()
+
+                        if self.device.appear_then_click(into_battle):
+                            timeout.reset()
+                            confirm_timer.reset()
+                            click_timer.reset()
+                            continue
+
+                        if click_timer.reached() \
+                                and self.device.appear(end_battle) \
+                                and self.device.uiautomator_click(300, 300):
+                            timeout.reset()
+                            confirm_timer.reset()
+                            click_timer.reset()
+                            self.device.sleep(8)
+                            continue
+
+                        if self.device.appear(rookie_arena_sign) and confirm_timer.reached():
+                            return
+
+                self.device.sleep(1.2)
+                self.device.screenshot()
+                self.device.appear_then_click(refresh)
+                self.device.sleep(1.2)
+                refresh_chance -= 1
+                self.INFO(f'rest refresh chance: {refresh_chance}')
+                if not refresh_chance:
+                    break
+
+        timeout.reset()
+        confirm_timer.reset()
+        click_timer.reset()
+
+        while 1:
+            self.device.screenshot()
 
             if click_timer.reached() and self.device.appear_then_click(save_formation):
                 timeout.reset()
@@ -48,8 +114,7 @@ class RookieArena(UI, Task):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(free_chance,
-                                                                       index=self.target - 1 if self.index == -1 else self.index):
+            if click_timer.reached() and self.device.appear_then_click(free_chance, index=self.target - 1):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -64,7 +129,6 @@ class RookieArena(UI, Task):
             if click_timer.reached() \
                     and self.device.appear(end_battle) \
                     and self.device.uiautomator_click(300, 300):
-                self.index = -1
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -72,68 +136,55 @@ class RookieArena(UI, Task):
                 continue
 
             if self.device.appear(rookie_arena_sign) and confirm_timer.reached():
-                self.INFO('Rookie Arena has no free chance')
                 return
 
-            if timeout.reached():
-                self.ERROR('wait too long')
-                raise Timeout
+    def compare(self, target_list=None):
 
-    def refresh(self):
-        import re
-        import cv2
-
-        timeout = Timer(30).start()
+        timeout = Timer(90).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
-        lcs = self.device.appear(own_power_sign, _result=ImgResult.ALL_RESULT)
-        for index, i in enumerate(lcs):
-            left, right, top, bottom = i['left'], i['right'], i['top'], i['bottom']
-            left += 20
-            right += 72
-            top -= 5
-            bottom += 2
+        if not target_list:
+            target_list = self.device.appear(free_chance, _result=ImgResult.ALL_RESULT)
 
-            own_power_area = self.device.image[top:bottom, left:right]
+        target = target_list[0]['location']
 
-            img = resize(own_power_area, fx=1.3, fy=0.9, interpolation=cv2.INTER_NEAREST)
-            self.own_power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT, line=True)))
-
-            break
-
-        self.INFO(f'rest chance: {self.refresh_chance}')
+        already_compared = False
 
         while 1:
             self.device.screenshot()
 
-            lcs = self.device.appear(power_sign, _result=ImgResult.ALL_RESULT)
-            for index, i in enumerate(lcs):
-                left, right, top, bottom = i['left'], i['right'], i['top'], i['bottom']
-                left += 20
-                right += 72
-                top -= 5
-                bottom += 2
+            if click_timer.reached() and self.device.hide(formation_sign) and self.device.multiClickLocation(target, 1):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
-                _img = self.device.image[top:bottom, left:right]
-                img = resize(_img, fx=1.3, fy=0.9, interpolation=cv2.INTER_NEAREST)
-                power = int(re.sub(r'\D+', '', self.device._ocr(img, _result=OcrResult.TEXT, line=True)))
-
-                if self.own_power - self.under > power:
-                    self.INFO(f'own power: {self.own_power}')
-                    self.INFO(f'target power: {power}')
-                    self.INFO(f'target index: {index + 1}')
-                    self.index = index
+            if click_timer.reached() and self.device.appear(formation_sign):
+                self.device.sleep(1.2)
+                self.device.screenshot()
+                own_power = int(self.device.textStrategy(None, own_power_area, OcrResult.TEXT, line=True))
+                target_tower = int(self.device.textStrategy(None, target_power_area, OcrResult.TEXT, line=True))
+                self.INFO(f'own power: {own_power}')
+                self.INFO(f'target power: {target_tower}')
+                self.INFO(f'target index: {3 - len(target_list) + 1}')
+                if own_power - self.under > target_tower:
                     return
 
-            if click_timer.reached() and self.device.appear_then_click(refresh):
-                self.refresh_chance -= 1
-                self.INFO(f'rest chance: {self.refresh_chance}')
-                self.device.sleep(2)
-                timeout.reset()
-                click_timer.reset()
+                already_compared = True
 
-            if not self.refresh_chance:
-                return
+            if already_compared and self.device.appear_then_click(close_formation):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if already_compared and self.device.hide(close_formation):
+                target_list = target_list[1:]
+                if target_list:
+                    return self.compare(target_list)
+                else:
+                    return
 
             if timeout.reached():
                 self.ERROR('wait too long')

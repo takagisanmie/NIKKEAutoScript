@@ -18,9 +18,9 @@ class FreeStore(UI, Task):
         self.into_general_store()
         if self.activate_arena_store:
             self.into_arena_store()
-        self.device.appear_then_click(home)
         self.finish(self.config, 'FreeStore')
         self.INFO('Free Store is finished')
+        self.go(page_main)
 
     def into_general_store(self):
         self.go(destination=page_free_store)

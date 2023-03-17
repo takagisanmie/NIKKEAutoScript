@@ -2,7 +2,7 @@
   <div style="margin:10px;color: #c0c0c0;">
     <div>
       <taskState :socket='socket' :activate="activate" :time="nextExecutionTime"/>
-      <h3>咨询列表</h3>
+      <h3>咨询列表（请选择收藏的NIKKE）</h3>
       <hr>
       <div>
         <p style="text-align: center; margin: 0 0 20px">

@@ -47,6 +47,9 @@ class GeneralConfig:
                 self.__dict__[varName] = result
 
     def get(self, key=None, data=None):
+        if not data:
+            data = self.Task_Dict
+
         keyList = key.split('.')
         for index, key in enumerate(keyList):
             if isinstance(data, dict):

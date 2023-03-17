@@ -13,6 +13,7 @@ class Commission(UI, Task):
         self.getReward()
         self.finish(self.config, 'Commission')
         self.INFO('Commission is finished')
+        self.go(page_main)
 
     def getReward(self, restart=True):
         self.device.sleep(4)

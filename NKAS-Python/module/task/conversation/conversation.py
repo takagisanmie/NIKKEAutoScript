@@ -26,9 +26,9 @@ class Conversation(UI, Task):
         self._finish()
 
     def _finish(self):
-        self.device.appear_then_click(home)
         self.finish(self.config, 'Conversation')
         self.INFO('Conversation is finished')
+        self.go(page_main)
 
     def checkRestChance(self):
         self.device.sleep(0.3)

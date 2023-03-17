@@ -48,3 +48,14 @@ class Uiautomator2(Connection):
 
         glo.getNKAS().socket.emit('insertLog', glo.getNKAS().socket.getLog('ERROR', '没有找到NIKKE'))
         return True
+
+    def app_stop_uiautomator2(self, package_name=None):
+        server = int(self.config.get('Server', self.config.dict))
+        if not package_name:
+            if server == NIKKEServer.JP and self.jp_package in self.u2.app_list():
+                package_name = self.jp_package
+
+            elif server == NIKKEServer.TW and self.tw_package in self.u2.app_list():
+                package_name = self.tw_package
+
+        self.u2.app_stop(package_name)

@@ -76,7 +76,12 @@ class Socket(BaseModule):
     @staticmethod
     @socketio.on('checkAllTaskStates', namespace=config.Socket_NameSpace)
     def getAllTaskStates():
-        glo.getSocket().emitSingleParameter('checkAllTaskStates', 'data', Socket.config.Task_Dict)
+
+        all_task = Socket.config.get('Task')
+        task_list = [Socket.config.get('Task.' + x) for x in all_task if Socket.config.get('Task.' + x)['activate']]
+        task_list.sort(key=lambda x: x['nextExecutionTime'])
+
+        glo.getSocket().emitSingleParameter('checkAllTaskStates', 'data', {'Task': task_list})
 
     @staticmethod
     @socketio.on('updateConfigByKey', namespace=config.Socket_NameSpace)

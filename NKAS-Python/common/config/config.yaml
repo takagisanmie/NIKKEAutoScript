@@ -7,6 +7,7 @@ Accelerators:
   value: ACGP
 - label: 和家亲
   value: Universal
+Idle: 0
 Server: 1
 Servers:
 - label: 国际服
@@ -14,10 +15,10 @@ Servers:
 - label: 港澳台
   value: 2
 Simulator:
-  Accelerator: None
+  Accelerator: Universal
   Serial: emulator-5554
 Socket:
   HideWindow: true
   NameSpace: /nkas
   Port: 5000
-Version: v0.0.4
+Version: v0.0.5

@@ -24,6 +24,16 @@ def getStrfTime(_time):
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(_time))
 
 
+if __name__ == '__main__':
+    midnight = time.mktime(time.localtime(int(time.time() - int(time.time() - time.timezone) % 86400)))
+    # 现在
+    now = time.time()
+    reset_time = round(midnight + 14400)
+    reset_time2 = round(midnight + 14340)
+    if reset_time > now >= reset_time2:
+        print(111)
+
+
 class Timer:
     def __init__(self, limit, count=0):
         """
@@ -113,45 +123,3 @@ class Timer:
         return f'Timer(limit={round(self.current(), 3)}/{self.limit}, count={self._reach_count}/{self.count})'
 
     __repr__ = __str__
-
-
-class TimeoutException(Exception):
-    pass
-
-
-def func():
-    # do some operation that may take too long time
-    time.sleep(2)
-    print('fun')
-
-
-if __name__ == '__main__':
-
-    timer = Timer(1).start()  # set limit to 3 seconds
-
-    func()
-
-    if timer.reached():
-        print(1)
-    else:
-        print(2)
-
-    # # Example usage
-    # timeout = 5.0  # wait for user input for up to 5 seconds
-    # timer = Timer(timeout).start()
-    #
-    # print(f'Please enter something within {timeout} seconds...')
-    #
-    # while not timer.reached():
-    #     user_input = input('> ')
-    #
-    #     if user_input:
-    #         print(f'You entered: {user_input}')
-    #         break
-    #
-    #     time.sleep(0.1)
-    #
-    # if timer.reached():
-    #     print(f'Timeout: {timeout} seconds elapsed without any input.')
-    # else:
-    #     print(f'Successfully input within {timeout} seconds.')

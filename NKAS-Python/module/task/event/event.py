@@ -99,23 +99,15 @@ class Event(UI, Task):
                 click_timer.reset()
                 continue
 
-            if self.rest_chance and self.device.appear_then_click(self.assets.restart):
+            if self.rest_chance and click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(self.assets.restart) or self.device.appear_then_click(self.assets.end_battle):
                 self.rest_chance -= 1
                 self.INFO(f'rest chance: {self.rest_chance}')
-                timeout.reset()
-                click_timer.reset()
-                confirm_timer.reset()
-                continue
-
-            if self.rest_chance and click_timer.reached() and self.device.appear_then_click(self.assets.into_battle):
-                self.rest_chance -= 1
-                timeout.reset()
-                confirm_timer.reset()
-                click_timer.reset()
-                continue
-
-            # 没机会时
-            if self.device.appear_then_click(self.assets.end_battle):
                 timeout.reset()
                 confirm_timer.reset()
                 click_timer.reset()
@@ -130,11 +122,12 @@ class Event(UI, Task):
         self.INFO('Event has no chance')
         self.finish(self.config, 'Event')
         self.INFO('Event is finished')
+        self.go(page_main)
 
     def finishAllEvent(self):
         self.sroll_to_top()
         timeout = Timer(60).start()
-        confirm_timer = Timer(1, count=5).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
         while 1:
@@ -159,7 +152,8 @@ class Event(UI, Task):
                 self.device.sleep(5)
                 continue
 
-            if self.device.appear_then_click(self.assets.end_battle):
+            if click_timer.reached() and (lc := self.device.appear(self.assets.end_battle)):
+                self.device.multiClickLocation(lc)
                 self.rest_chance -= 1
                 self.INFO(f'rest chance: {self.rest_chance}')
                 timeout.reset()

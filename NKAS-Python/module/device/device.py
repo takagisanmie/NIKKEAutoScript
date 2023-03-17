@@ -7,6 +7,8 @@ class Device(Control):
         super().__init__(*args, **kwargs)
         glo.set_value('device', self)
 
-
     def app_start(self, package_name=None):
         return self.app_start_uiautomator2(package_name)
+
+    def app_stop(self, package_name=None):
+        return self.app_stop_uiautomator2(package_name)

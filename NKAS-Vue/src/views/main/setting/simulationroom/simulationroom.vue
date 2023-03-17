@@ -118,15 +118,12 @@ function setOptions() {
 socket.on('setSimulationOption', (result) => {
   _.forEach(result.result, function (option, index) {
     if (option.key === 'Task.SimulationRoom.difficulty') {
-      console.log(option.value)
       difficulty.value = String(option.value)
     }
     else if (option.key === 'Task.SimulationRoom.area') {
-      console.log(option.value)
       area.value = String(option.value)
     }
     else if (option.key === 'Task.SimulationRoom.end_area') {
-      console.log(option.value)
       end_area.value = String(option.value)
     }
   })

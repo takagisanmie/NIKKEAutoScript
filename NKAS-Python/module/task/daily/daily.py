@@ -22,8 +22,9 @@ class Daily(UI, Task):
         self.getReward()
         self.to_pass()
         self.to_liberation()
-        self.finish(self.config, 'Daily')
+        self.finish(self.config, 'Daily', second=60)
         self.INFO('Daily is finished')
+        self.go(page_main)
 
     def getReward(self):
         timeout = Timer(20).start()
@@ -94,7 +95,7 @@ class Daily(UI, Task):
             if not is_finished \
                     and click_timer.reached() \
                     and self.device.appear(inventory_sign) \
-                    and self.device.appear_then_click(Level_0):
+                    and self.device.appear_then_click(Level_0, once=True, img_template=inventory_area):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
