@@ -45,6 +45,17 @@ class UI(BaseModule):
                 self.device.sleep(5)
                 continue
 
+            # 礼包
+            if click_timer.reached() and self.device.appear(gift) and self.device.appear_then_click(confirm):
+                timeout.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(gift):
+                timeout.reset()
+                click_timer.reset()
+                continue
+
             if self.device.appear(system_error) or self.device.appear(download_sign):
                 UI.current_page = page_login
                 from module.handler.login import LoginHandler

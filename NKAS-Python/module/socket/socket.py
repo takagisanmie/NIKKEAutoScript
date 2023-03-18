@@ -55,18 +55,13 @@ class Socket(BaseModule):
     @socketio.on('stopNKAS', namespace=config.Socket_NameSpace)
     def stopNKAS():
         import os
-        from module.base.decorator import del_cached_property
+        import signal
 
-        for thread in threading.enumerate():
-            if 'NKAS' in thread.name:
-                threadManager.stopThread(thread)
-                continue
-
-        del_cached_property(glo.getNKAS(), 'config')
-        del_cached_property(glo.getNKAS(), 'socket')
-        del_cached_property(glo.getNKAS(), 'device')
-        del_cached_property(glo.getNKAS(), 'ui')
+        print('stop NKAS')
         os._exit(0)
+        pid = os.getpid()
+        os.kill(pid, signal.SIGTERM)
+        os.system('taskkill /PID %d /F' % pid)
 
     @staticmethod
     @socketio.on('checkSchedulerState', namespace=config.Socket_NameSpace)
@@ -142,6 +137,30 @@ class Socket(BaseModule):
         from module.base.decorator import del_cached_property
         del_cached_property(glo.getNKAS().device, 'u2')
         del_cached_property(glo.getNKAS().device, 'adb')
+
+    # Setting-General
+    @staticmethod
+    @socketio.on('notification_test', namespace=config.Socket_NameSpace)
+    def notification_test():
+        from winotify import Notification
+        from win10toast import ToastNotifier
+
+        notification = Socket.config.get('Notification', Socket.config.dict)
+
+        if notification == 1:
+            toast = ToastNotifier()
+            toast.show_toast(title="NKAS", msg="我是样式一",
+                             icon_path=r"./common/ico/Helm-Circle.ico", duration=10)
+
+        elif notification == 2:
+            ico_path = __file__
+            ico_path = ico_path.replace('module\\socket\\socket.py', '')
+            toast = Notification(app_id="NKAS",
+                                 title="NKAS",
+                                 msg="我是样式二",
+                                 icon=f'{ico_path}common\ico\Helm-Circle.ico', duration='long')
+
+            toast.show()
 
     @staticmethod
     @socketio.on('checkVersion', namespace=config.Socket_NameSpace)

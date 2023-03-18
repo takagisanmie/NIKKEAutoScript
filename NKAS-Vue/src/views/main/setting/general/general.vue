@@ -25,6 +25,21 @@
             />
           </el-select>
         </div>
+        <br>
+        <br>
+        <div>
+          每日任务完成时，进行通知
+          <el-select @change="_notification" effect="dark" style="float:right;width: 210px;" v-model="notification"
+                     class="m-2" placeholder=" "
+                     size="large">
+            <el-option
+                v-for="item in when_daily_task_finished"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +52,7 @@ import _ from 'lodash'
 
 const hideWindow = ref(false)
 const idle = ref()
+const notification = ref()
 const socket = Socket.getSocket()
 
 const _hideWindow = _.debounce(async () => {
@@ -51,6 +67,20 @@ const _hideWindow = _.debounce(async () => {
       'update_success'
   )
   socket.emit('hideWindow')
+}, 127)
+
+const _notification = _.debounce(async () => {
+  await Socket.updateConfigByKey(
+      [
+        'Notification'
+      ],
+      [
+        notification.value
+      ],
+      'config',
+      'update_success'
+  )
+  socket.emit('notification_test')
 }, 127)
 
 const _idle = _.debounce(async () => {
@@ -70,7 +100,8 @@ function setOptions() {
   Socket.getConfigByKey(
       [
         'Socket.HideWindow',
-        'Idle'
+        'Idle',
+        'Notification'
       ],
       'config',
       'setGeneralOption'
@@ -83,6 +114,8 @@ socket.on('setGeneralOption', (result) => {
       hideWindow.value = option.value
     } else if (option.key === 'Idle') {
       idle.value = option.value
+    } else if (option.key === 'Notification') {
+      notification.value = option.value
     }
   });
 })
@@ -103,6 +136,21 @@ const when_all_task_finished = [
   {
     value: 1,
     label: '关闭游戏',
+  }
+]
+
+const when_daily_task_finished = [
+  {
+    value: 0,
+    label: '不通知',
+  },
+  {
+    value: 1,
+    label: '样式一',
+  },
+  {
+    value: 2,
+    label: '样式二',
   }
 ]
 

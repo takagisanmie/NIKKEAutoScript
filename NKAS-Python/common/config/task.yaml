@@ -3,33 +3,34 @@ Task:
     activate: true
     displayName: 委托
     name: Commission
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600
   Conversation:
     activate: true
     displayName: 咨询
     name: Conversation
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600
     nikkeList:
-    - Admi
-    - Brid
-    - Drake
-    - Noise
-    - Neve
-    - Jackal
-    - Novel
-    - Liter
+    - Snow_White
+    - Centi
+    - Guillotine
+    - Anis
+    - Sugar
+    - Pepper
+    - Volume
+    - Isabel
+    - Maxwell
   Daily:
     activate: true
     displayName: 每日任务
-    equipmentUpgrade: true
+    equipmentUpgrade: false
     name: Daily
-    nextExecutionTime: 1679083260
+    nextExecutionTime: 1679169660
     nikkeUpgrade: true
   Destroy:
     activate: true
     displayName: 一举歼灭
     name: Destroy
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600
   Event:
     activate: true
     currentEvent: 2
@@ -47,7 +48,7 @@ Task:
       type: 1
       value: 1
     name: Event
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600
     part: 2
   FreeStore:
     activate: true
@@ -55,30 +56,30 @@ Task:
     arena_product_list: fire > selection_box
     displayName: 商店
     name: FreeStore
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600
   Reward:
     activate: true
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1679060021
+    nextExecutionTime: 1679137218
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true
     displayName: 新人竞技场
     name: RookieArena
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600
     refresh_chance: '2'
     target: 3
-    under: '1000'
+    under: '0'
   SimulationRoom:
     activate: true
-    area: '2'
+    area: '3'
     difficulty: '5'
     displayName: 模拟室
-    end_area: '2'
+    end_area: '3'
     name: SimulationRoom
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600
   TribeTower:
     Elysion: true
     Missilis: true
@@ -88,4 +89,4 @@ Task:
     daily: true
     displayName: 企业塔
     name: TribeTower
-    nextExecutionTime: 1679083200
+    nextExecutionTime: 1679169600

@@ -209,16 +209,7 @@ if __name__ == '__main__':
     # TODO 升级NIKKE
 
     # TODO 竞技场商店货币不足时 没示例
-    # TODO 凌晨3:59重启，等待到4:00再启动 待测试
-    # TODO 领取活动每日登录奖励 待测试
 
-    # TODO 23.03.17
-    # TODO 竞技场商店选项过长
-    # TODO 在切换到调度器时，日志滚动到最下方
-    # TODO 任务执行完后回到主菜单或者关闭游戏
-    # TODO 收获固定设置为调用时间的4个小时后
-    # TODO 任务队列排序显示
-    # TODO 新人竞技场战力对比，在比较双方队伍时
 
     nkas = NikkeAutoScript()
     nkas.socket.run()

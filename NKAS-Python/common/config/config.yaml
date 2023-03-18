@@ -8,6 +8,7 @@ Accelerators:
 - label: 和家亲
   value: Universal
 Idle: 0
+Notification: 2
 Server: 1
 Servers:
 - label: 国际服

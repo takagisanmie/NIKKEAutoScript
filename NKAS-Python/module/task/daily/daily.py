@@ -12,19 +12,42 @@ class Daily(UI, Task):
         super().__init__(*args, **kwargs)
         self.equipmentUpgrade = int(self.config.get('Task.Daily.equipmentUpgrade', self.config.Task_Dict))
         self.nikkeUpgrade = int(self.config.get('Task.Daily.nikkeUpgrade', self.config.Task_Dict))
+        self.notification = int(self.config.get('Notification', self.config.dict))
 
     def run(self):
+
         self.LINE('Daily')
         self.to_mail()
         if self.equipmentUpgrade:
             self.improve_equipment()
+        glo.getNKAS().reward()
         self.go(destination=page_daily)
         self.getReward()
         self.to_pass()
         self.to_liberation()
         self.finish(self.config, 'Daily', second=60)
         self.INFO('Daily is finished')
+        self.notice()
         self.go(page_main)
+
+    def notice(self):
+        from winotify import Notification
+        from win10toast import ToastNotifier
+
+        if self.notification == 1:
+            toast = ToastNotifier()
+            toast.show_toast(title="NKAS", msg="任务已全部完成！",
+                             icon_path=r"./common/ico/Helm-Circle.ico", duration=10)
+
+        elif self.notification == 2:
+            ico_path = __file__
+            ico_path = ico_path.replace('module\\task\\daily\\daily.py', '')
+            toast = Notification(app_id="NKAS",
+                                 title="NKAS",
+                                 msg="任务已全部完成！",
+                                 icon=f'{ico_path}common\ico\Helm-Circle.ico', duration='long')
+
+            toast.show()
 
     def getReward(self):
         timeout = Timer(20).start()

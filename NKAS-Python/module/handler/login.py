@@ -14,7 +14,7 @@ class LoginHandler(UI):
 
     def handle_app_login(self, where=True):
         timeout = Timer(180).start()
-        click_timer = Timer(0.3)
+        click_timer = Timer(1.2)
         confirm_timer = Timer(1, count=8).start()
 
         if where:
@@ -36,6 +36,19 @@ class LoginHandler(UI):
 
             elif self.server == NIKKEServer.TW and self.config.Emulator_TW_PackageName not in self.device.u2.app_list_running():
                 self.device.u2.app_start(self.config.Emulator_TW_PackageName)
+
+            # 礼包
+            if click_timer.reached() and self.device.appear(gift) and self.device.appear_then_click(confirm):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(gift):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
 
             # 在登录页
             if self.device.appear(login_sign):

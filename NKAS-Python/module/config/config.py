@@ -34,7 +34,6 @@ class GeneralConfig:
 
     def __init__(self):
         self.initConfig()
-        pass
 
     def initConfig(self):
         self.dict = read(Path.CONFIG)

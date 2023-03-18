@@ -44,8 +44,8 @@ const ToFullScreen = () => {
   window.WindowStrategyAPI.WindowToFullScreen()
 }
 
-const ToClose = () => {
-  socket.emit('stopNKAS')
+const ToClose = async () => {
+  await socket.emit('stopNKAS')
   window.WindowStrategyAPI.WindowToClose()
 }
 
