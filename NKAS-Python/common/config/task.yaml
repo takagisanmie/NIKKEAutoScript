@@ -22,7 +22,7 @@ Task:
   Daily:
     activate: true
     displayName: 每日任务
-    equipmentUpgrade: false
+    equipmentUpgrade: true
     name: Daily
     nextExecutionTime: 1679169660
     nikkeUpgrade: true
@@ -62,7 +62,7 @@ Task:
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1679137218
+    nextExecutionTime: 1678541749
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true

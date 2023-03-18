@@ -5,7 +5,7 @@
         <el-menu
             class="el-menu-vertical-demo"
             :router="true"
-            default-active="1-1"
+            default-active="1"
         >
           <el-sub-menu index="1">
             <template #title>
@@ -14,16 +14,37 @@
             <el-menu-item-group>
               <el-menu-item route="general_setting" index="1-1">NKAS设置</el-menu-item>
               <el-menu-item route="simulator_setting" index="1-2">模拟器设置</el-menu-item>
-              <el-menu-item route="reward_setting" index="1-3">收获</el-menu-item>
-              <el-menu-item route="destroy_setting" index="1-4">歼灭</el-menu-item>
-              <el-menu-item route="store_setting" index="1-5">商店</el-menu-item>
-              <el-menu-item route="commission_setting" index="1-6">委托</el-menu-item>
-              <el-menu-item route="conversation_setting" index="1-7">咨询</el-menu-item>
-              <el-menu-item route="rookie_arena" index="1-8">新人竞技场</el-menu-item>
-              <el-menu-item route="simulation_room" index="1-9">模拟室</el-menu-item>
-              <el-menu-item route="tribe_tower" index="1-10">企业塔</el-menu-item>
-              <el-menu-item route="daily" index="1-11">每日任务</el-menu-item>
-              <el-menu-item route="event_setting" index="1-12">活动</el-menu-item>
+            </el-menu-item-group>
+          </el-sub-menu>
+          <el-sub-menu index="2">
+            <template #title>
+              <span>收获</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item route="reward_setting" index="2-1">收获</el-menu-item>
+              <el-menu-item route="destroy_setting" index="2-2">歼灭</el-menu-item>
+              <el-menu-item route="commission_setting" index="2-3">委托</el-menu-item>
+              <el-menu-item route="store_setting" index="2-4">商店</el-menu-item>
+              <el-menu-item route="conversation_setting" index="2-5">咨询</el-menu-item>
+            </el-menu-item-group>
+          </el-sub-menu>
+          <el-sub-menu index="3">
+            <template #title>
+              <span>每日任务</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item route="simulation_room" index="3-1">模拟室</el-menu-item>
+              <el-menu-item route="tribe_tower" index="3-2">企业塔</el-menu-item>
+              <el-menu-item route="rookie_arena" index="3-3">新人竞技场</el-menu-item>
+              <el-menu-item route="daily" index="3-4">每日任务</el-menu-item>
+            </el-menu-item-group>
+          </el-sub-menu>
+          <el-sub-menu index="4">
+            <template #title>
+              <span>活动</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item route="event_setting" index="4-1">活动</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>

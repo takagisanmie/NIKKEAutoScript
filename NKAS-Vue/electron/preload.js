@@ -1,4 +1,5 @@
-const {contextBridge, ipcRenderer} = require('electron')
+const {contextBridge, ipcRenderer, webFrame} = require('electron')
+
 //WindowStrategyAPI
 contextBridge.exposeInMainWorld('WindowStrategyAPI',
     {
@@ -17,9 +18,11 @@ contextBridge.exposeInMainWorld('WindowStrategyAPI',
 contextBridge.exposeInMainWorld('FlaskAPI',
     {
         testFlask: async (options) => {
-            const result = await ipcRenderer.invoke('testFlask',options)
+            const result = await ipcRenderer.invoke('testFlask', options)
             return result
         }
     })
 
-
+ipcRenderer.on('transform', (event, factor) => {
+    // webFrame.setZoomFactor(factor);
+})
