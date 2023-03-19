@@ -19,7 +19,7 @@ Simulator:
   Accelerator: Universal
   Serial: emulator-5554
 Socket:
-  HideWindow: false
+  HideWindow: true
   NameSpace: /nkas
   Port: 5000
 Version: v0.0.5

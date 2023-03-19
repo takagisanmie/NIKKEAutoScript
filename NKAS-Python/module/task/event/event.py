@@ -105,7 +105,12 @@ class Event(UI, Task):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(self.assets.restart) or self.device.appear_then_click(self.assets.end_battle):
+            if click_timer.reached() and self.device.appear(self.assets.end_battle):
+                if lc := self.device.appear(self.assets.restart):
+                    self.device.multiClickLocation(lc, count=3)
+                elif lc := self.device.appear(self.assets.end_battle):
+                    self.device.multiClickLocation(lc, count=3)
+
                 self.rest_chance -= 1
                 self.INFO(f'rest chance: {self.rest_chance}')
                 timeout.reset()
@@ -153,7 +158,7 @@ class Event(UI, Task):
                 continue
 
             if click_timer.reached() and (lc := self.device.appear(self.assets.end_battle)):
-                self.device.multiClickLocation(lc)
+                self.device.multiClickLocation(lc, count=3)
                 self.rest_chance -= 1
                 self.INFO(f'rest chance: {self.rest_chance}')
                 timeout.reset()

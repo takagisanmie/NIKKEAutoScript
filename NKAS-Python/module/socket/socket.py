@@ -58,7 +58,7 @@ class Socket(BaseModule):
         import signal
 
         print('stop NKAS')
-        os._exit(0)
+        # os._exit(0)
         pid = os.getpid()
         os.kill(pid, signal.SIGTERM)
         os.system('taskkill /PID %d /F' % pid)
