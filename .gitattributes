@@ -1,1 +1,3 @@
-*.py linguist-language=Python
+*.js linguist-detectable=false
+*.py linguist-detectable=true
+*.vue linguist-detectable=true
