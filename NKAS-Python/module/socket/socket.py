@@ -57,6 +57,9 @@ class Socket(BaseModule):
         import os
         import signal
         print('stop NKAS')
+        glo.getSocket().emit('insertLog', glo.getSocket().getLog('INFO', '正在关闭NKAS'))
+        glo.getSocket().emit('_stopNKAS', None)
+        glo.getNKAS().device.sleep(0.5)
         pid = os.getpid()
         # os._exit(0)
         os.kill(pid, signal.SIGTERM)

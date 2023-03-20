@@ -62,7 +62,7 @@ Task:
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1679303123
+    nextExecutionTime: 1679318298
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true
@@ -77,7 +77,7 @@ Task:
     area: '1'
     difficulty: '1'
     displayName: 模拟室
-    end_area: '1'
+    end_area: '2'
     name: SimulationRoom
     nextExecutionTime: 1679342400
   TribeTower:

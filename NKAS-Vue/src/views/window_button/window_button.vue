@@ -46,10 +46,15 @@ const ToFullScreen = () => {
 
 const ToClose = () => {
   socket.emit('stopNKAS')
-  setTimeout(function () {
+  if (!props.isConnected) {
     window.WindowStrategyAPI.WindowToClose()
-  }, 10)
+  }
 }
+
+socket.on('_stopNKAS', () => {
+  window.WindowStrategyAPI.WindowToClose()
+})
+
 
 </script>
 
