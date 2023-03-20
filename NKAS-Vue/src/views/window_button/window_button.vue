@@ -44,9 +44,11 @@ const ToFullScreen = () => {
   window.WindowStrategyAPI.WindowToFullScreen()
 }
 
-const ToClose = async () => {
-  await socket.emit('stopNKAS')
-  window.WindowStrategyAPI.WindowToClose()
+const ToClose = () => {
+  socket.emit('stopNKAS')
+  setTimeout(function () {
+    window.WindowStrategyAPI.WindowToClose()
+  }, 10)
 }
 
 </script>

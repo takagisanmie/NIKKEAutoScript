@@ -188,6 +188,12 @@ class LoginHandler(UI):
             if package not in self.device.u2.app_list_running():
                 self.device.app_start(package)
 
+            if click_timer.reached() and self.device.appear(not_found):
+                self.device.app_stop(package)
+                timeout.reset()
+                click_timer.reset()
+                continue
+
             if click_timer.reached() and self.device.appear_then_click(scene):
                 timeout.reset()
                 click_timer.reset()

@@ -56,7 +56,6 @@ app.whenReady().then(() => {
         // 计算窗口宽度和高度的缩放比例
         const scaleX = width / 1280;
         const scaleY = height / 720;
-        console.log(Math.min(scaleX, scaleY))
         win.webContents.send('transform', Math.min(scaleX, scaleY))
     });
 

@@ -114,7 +114,6 @@ class NikkeAutoScript:
                     if idle:
                         self.device.app_stop()
 
-
         except Exception as e:
             e = str(e)
             print(e)
@@ -162,7 +161,6 @@ class NikkeAutoScript:
             self.device.sleep(6)
             return self.checkService(restart=True)
 
-
         except RuntimeError as e:
             e = str(e)
             print(e)
@@ -209,7 +207,6 @@ if __name__ == '__main__':
     # TODO 升级NIKKE
 
     # TODO 竞技场商店货币不足时 没示例
-
 
     nkas = NikkeAutoScript()
     nkas.socket.run()

@@ -56,16 +56,15 @@ class Socket(BaseModule):
     def stopNKAS():
         import os
         import signal
-
         print('stop NKAS')
-        # os._exit(0)
         pid = os.getpid()
+        # os._exit(0)
         os.kill(pid, signal.SIGTERM)
         os.system('taskkill /PID %d /F' % pid)
 
     @staticmethod
     @socketio.on('checkSchedulerState', namespace=config.Socket_NameSpace)
-    def checkSchedulerStare():
+    def checkSchedulerState():
         glo.getSocket().emitSingleParameter('checkSchedulerState', 'state', glo.getNKAS().state)
 
     @staticmethod
