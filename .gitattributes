@@ -1,3 +1,5 @@
 *.js linguist-detectable=false
+*.ts linguist-detectable=false
+*.json linguist-detectable=false
 *.py linguist-detectable=true
 *.vue linguist-detectable=true
