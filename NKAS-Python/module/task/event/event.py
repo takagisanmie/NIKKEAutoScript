@@ -123,7 +123,6 @@ class Event(UI, Task):
                 raise Timeout
 
     def _finish(self):
-        self.device.appear_then_click(home)
         self.INFO('Event has no chance')
         self.finish(self.config, 'Event')
         self.INFO('Event is finished')
@@ -201,12 +200,10 @@ class Event(UI, Task):
         if self.rest_chance == 0:
             return
 
-        if self.type == EP.SMALL and self.part == EP.PART_1:
+        if (self.type == EP.SMALL or self.type == EP.LARGE) and self.part == EP.PART_1:
             self._go(destination=self.part1_detail)
         elif self.type == EP.LARGE and self.part == EP.PART_2:
             self._go(destination=self.part2_detail)
-        else:
-            self._go(destination=self.part1_detail)
 
         self.device.sleep(2)
 
@@ -235,7 +232,7 @@ class Event(UI, Task):
             self.area_2 = self.assets.part1_normal_area_2
 
         # 小活动 Part1 困难
-        if self.type == EP.SMALL \
+        elif self.type == EP.SMALL \
                 and self.part == EP.PART_1 \
                 and self.difficulty == EP.HARD:
             self.device.multiClick(self.assets.hard, 2)
@@ -256,7 +253,7 @@ class Event(UI, Task):
             self.area_2 = self.assets.part1_hard_area_2
 
         # 大活动 Part2 普通
-        if self.type == EP.LARGE \
+        elif self.type == EP.LARGE \
                 and self.part == EP.PART_2 \
                 and self.difficulty == EP.NORMAL:
             self.device.multiClick(self.assets.normal, 2)
@@ -278,7 +275,7 @@ class Event(UI, Task):
             self.area_2 = self.assets.part2_normal_area_2
 
         # 大活动 Part2 困难
-        if self.type == EP.LARGE \
+        elif self.type == EP.LARGE \
                 and self.part == EP.PART_2 \
                 and self.difficulty == EP.HARD:
             self.device.multiClick(self.assets.hard, 2)
@@ -441,9 +438,6 @@ class Event(UI, Task):
 
             if value['page'] is UI.current_page and value['destination'] is destination:
                 path = path[index:]
-
-        for i in path:
-            print(i)
 
         timeout = Timer(30).start()
         confirm_timer = Timer(limit=0, count=len(path)).start()

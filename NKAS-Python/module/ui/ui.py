@@ -157,9 +157,6 @@ class UI(BaseModule):
             if value['page'] is UI.current_page and value['destination'] is destination:
                 path = path[index:]
 
-        for i in path:
-            print(i['button'])
-
         self.go_to_destination(path)
 
     def getPathByParent(self, array, page):

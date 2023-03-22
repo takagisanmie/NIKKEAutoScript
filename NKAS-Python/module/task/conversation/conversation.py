@@ -119,7 +119,7 @@ class Conversation(UI, Task):
                     return
 
             if timeout.reached():
-                print('wait too long')
+                self.ERROR('wait too long')
                 raise Timeout
 
     def communicate(self, key, name):
@@ -184,7 +184,7 @@ class Conversation(UI, Task):
                     return
 
             if timeout.reached():
-                print('wait too long')
+                self.ERROR('wait too long')
                 raise Timeout
 
     def chooseAnswer(self, key, name):
@@ -268,7 +268,7 @@ class Conversation(UI, Task):
                     return
 
             if timeout.reached():
-                print('wait too long')
+                self.ERROR('wait too long')
                 raise Timeout
 
     def removePunctuation(self, text):

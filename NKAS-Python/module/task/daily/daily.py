@@ -166,11 +166,23 @@ class Daily(UI, Task):
         self.go(page_liberation)
 
         timeout = Timer(20).start()
-        confirm_timer = Timer(3, count=5).start()
+        confirm_timer = Timer(3, count=3).start()
         click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.clickTextLocation(text='SKIP', asset=skip_area):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if click_timer.reached() and self.device.clickTextLocation('完成'):
                 timeout.reset()

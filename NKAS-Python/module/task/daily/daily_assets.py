@@ -12,6 +12,7 @@ Level_0 = { 'area' : (121, 342, 137, 363) , 'path' : './module/task/daily/templa
 liberation_finished_sign = { 'area' : (503, 910, 529, 923) , 'path' : './module/task/daily/templates/ui/liberation_finished_sign.png' , 'id' : 'liberation_finished_sign' }
 normal_materials = { 'area' : (97, 609, 154, 670) , 'path' : './module/task/daily/templates/ui/normal_materials.png' , 'id' : 'normal_materials' }
 nothing = { 'area' : (340, 712, 451, 729) , 'path' : './module/task/daily/templates/ui/nothing.png' , 'id' : 'nothing' }
+skip_area = { 'area' : (605, 14, 690, 50) , 'path' : './module/task/daily/templates/ui/skip_area.png' , 'id' : 'skip_area' }
 mail_get = { 'area' : (441, 1068, 592, 1102) , 'path' : './module/task/daily/templates/ui/mail/mail_get.png' , 'id' : 'mail_get' }
 pass_area = { 'area' : (47, 382, 678, 438) , 'path' : './module/task/daily/templates/ui/pass/pass_area.png' , 'id' : 'pass_area' }
 pass_get = { 'area' : (309, 1177, 412, 1211) , 'path' : './module/task/daily/templates/ui/pass/pass_get.png' , 'id' : 'pass_get' }
