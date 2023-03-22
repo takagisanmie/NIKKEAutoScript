@@ -7,7 +7,7 @@ Accelerators:
   value: ACGP
 - label: 和家亲
   value: Universal
-Idle: 0
+Idle: 1
 Notification: 2
 Server: 1
 Servers:

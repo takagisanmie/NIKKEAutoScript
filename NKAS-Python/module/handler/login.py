@@ -183,6 +183,8 @@ class LoginHandler(UI):
         timeout = Timer(30).start()
         click_timer = Timer(1.2)
 
+        swipe_to_right = True
+
         while 1:
             self.device.screenshot()
             if package not in self.device.u2.app_list_running():
@@ -208,6 +210,21 @@ class LoginHandler(UI):
                 timeout.reset()
                 click_timer.reset()
                 continue
+
+            if self.device.appear(far_right):
+                swipe_to_right = False
+
+            if swipe_to_right \
+                    and click_timer.reached() \
+                    and self.device.swipe(340, 540, 100, 540, 0.2):
+                timeout.reset()
+                click_timer.reset()
+                continue
+            else:
+                if click_timer.reached() and self.device.swipe(100, 540, 340, 540, 0.2):
+                    timeout.reset()
+                    click_timer.reset()
+                    continue
 
             if click_timer.reached() and self.device.appear(AD):
                 self.device.u2.press(key='back')

@@ -62,7 +62,7 @@ Task:
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1679463176
+    nextExecutionTime: 1679482911
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true
