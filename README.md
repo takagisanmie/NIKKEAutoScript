@@ -8,7 +8,7 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 虽然现在写的NKAS依旧是shit😅😅😅    
 
 ### 下载
-[123网盘下载](https://www.123pan.com/s/1HLA-1udVh.html)（不限速，不登录的）     
+[123网盘下载](https://www.123pan.com/s/1HLA-PZdVh.html)（不限速，不登录的）     
 或者在Releases下载
 
 ### 使用
@@ -21,8 +21,9 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 5.运行调度器  
 
 ### 其他
-由于用到的依赖文件过大，所以分为Completed版和普通版  
-如果是第一次使用，请下载Completed版，不然没有依赖  
+由于用到的依赖文件过大，所以将依赖和本体分开   
+如果是第一次使用，请下载python-3.9.13-embed-amd64.7z   
+并且解压在与checkDevices.bat的同一级，保持文件夹名称为‘python-3.9.13-embed-amd64’
 
 ### 预览
 
