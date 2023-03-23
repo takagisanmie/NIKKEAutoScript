@@ -11,15 +11,15 @@ from common.enum.enum import EP, ImgResult, OcrResult, Path
 class Event(UI, Task):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        history = self.config.get('Task.Event.historyEvent', self.config.Task_Dict)
-        currentEvent = self.config.get('Task.Event.currentEvent', self.config.Task_Dict)
+        history = self.config.get('Task.Event.historyEvent', self.config.task_dict)
+        currentEvent = self.config.get('Task.Event.currentEvent', self.config.task_dict)
         e = list(filter(lambda x: x["value"] == currentEvent, history))[0]
         self.type = e['type']
         self.path = e['path']
-        self.part = self.config.get('Task.Event.part', self.config.Task_Dict)
-        self.step = int(self.config.get('Task.Event.event', self.config.Task_Dict).split('-')[1])
-        self.difficulty = self.config.get('Task.Event.difficulty', self.config.Task_Dict)
-        self._finishAllEvent = self.config.get('Task.Event.finishAllEvent', self.config.Task_Dict)
+        self.part = self.config.get('Task.Event.part', self.config.task_dict)
+        self.step = int(self.config.get('Task.Event.event', self.config.task_dict).split('-')[1])
+        self.difficulty = self.config.get('Task.Event.difficulty', self.config.task_dict)
+        self._finishAllEvent = self.config.get('Task.Event.finishAllEvent', self.config.task_dict)
         if self.type == EP.SMALL:
             self.part = EP.PART_1
 
@@ -184,7 +184,7 @@ class Event(UI, Task):
             if self.device.appear(home) and self.device.swipe(360, 1000, 360, 800, 0.4):
                 self.device.sleep(1)
                 if confirm_timer.reached():
-                    self.config.update('Task.Event.finishAllEvent', False, self.config.Task_Dict, Path.TASK)
+                    self.config.update('Task.Event.finishAllEvent', False, self.config.task_dict, Path.TASK)
                     return
 
             if timeout.reached():

@@ -16,23 +16,24 @@
           <Setting/>
         </el-icon>
       </el-menu-item>
-<!--      <el-menu-item @click="test" route="main" index="3">-->
-<!--        <el-icon>-->
-<!--          <Link/>-->
-<!--        </el-icon>-->
-<!--      </el-menu-item>-->
+      <el-menu-item @click="checkVersion" route="main" index="3">
+        <el-icon>
+          <Link/>
+        </el-icon>
+      </el-menu-item>
     </el-menu>
   </el-aside>
 </template>
 
 <script setup>
-import {ref, inject} from 'vue'
+import {ref, inject, onMounted} from 'vue'
 import {
   Menu as IconMenu,
   Setting, Link
 } from '@element-plus/icons-vue'
 import {ElNotification, ElMessage} from 'element-plus'
 import Socket from "@/assets/js/socket";
+import _ from "lodash";
 import dayjs from "dayjs";
 
 const socket = Socket.getSocket()
@@ -95,6 +96,43 @@ socket.on('checkSimulator', (result) => {
   const height = result.info.displayHeight
   Log.INFO('当前模拟器width为' + width, NKASLog)
   Log.INFO('当前模拟器height为' + height, NKASLog)
+})
+
+socket.on('checkVersion', (result) => {
+  let check_version_when_startup = false
+  let already_check_version = false
+
+  _.forEach(result.result, function (option, index) {
+    if (option.key === 'already_check_version') {
+      already_check_version = option.value
+    } else if (option.key === 'check_version_when_startup') {
+      check_version_when_startup = option.value
+    }
+  });
+  if (check_version_when_startup && !already_check_version) {
+    socket.emit('checkVersion')
+    Socket.updateConfigByKey(
+        [
+          'already_check_version'
+        ],
+        [
+          true
+        ],
+        'config',
+        'None'
+    )
+  }
+})
+
+onMounted(() => {
+  Socket.getConfigByKey(
+      [
+        'check_version_when_startup',
+        'already_check_version'
+      ],
+      'config',
+      'checkVersion'
+  )
 })
 
 </script>

@@ -28,7 +28,7 @@ class Uiautomator2(Connection):
         return True
 
     def app_start_uiautomator2(self, package_name=None):
-        server = int(self.config.get('Server', self.config.dict))
+        server = int(self.config.get('Server', self.config.config_dict))
 
         if not package_name:
             if server == NIKKEServer.JP and self.jp_package in self.u2.app_list():
@@ -50,7 +50,7 @@ class Uiautomator2(Connection):
         return True
 
     def app_stop_uiautomator2(self, package_name=None):
-        server = int(self.config.get('Server', self.config.dict))
+        server = int(self.config.get('Server', self.config.config_dict))
         if not package_name:
             if server == NIKKEServer.JP and self.jp_package in self.u2.app_list():
                 package_name = self.jp_package

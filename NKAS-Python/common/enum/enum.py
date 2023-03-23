@@ -63,6 +63,8 @@ class EP:
 
 
 class Path:
+    CONFIG_TEMPLATE = './common/config/config-template.yaml'
     CONFIG = './common/config/config.yaml'
+    TASK_TEMPLATE = './common/config/task-template.yaml'
     TASK = './common/config/task.yaml'
     SCREENSHOT_PATH = './pic/img.png'

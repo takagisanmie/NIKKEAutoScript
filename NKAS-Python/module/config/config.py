@@ -6,8 +6,8 @@ class GeneralConfig:
     Version: str = ''
     New_Version: str = ''
 
-    dict: dict = {}
-    Task_Dict: dict = {}
+    config_dict: dict = {}
+    task_dict: dict = {}
     Simulator_Serial: str = ''
     Simulator_Accelerator: str = ''
     Emulator_JP_PackageName: str = 'com.proximabeta.nikke'
@@ -29,25 +29,41 @@ class GeneralConfig:
 
     # DroidCast
     Droid_Cast_APK_Path = './apk/DroidCast-debug-1.1.0.apk'
-
     # Droid_Cast_APK_Path = './DroidCastS-release-1.1.5.apk'
+
+    exception = ['Version', 'Accelerators', 'historyEvent']
 
     def __init__(self):
         self.initConfig()
 
     def initConfig(self):
-        self.dict = read(Path.CONFIG)
-        self.Task_Dict = read(Path.TASK)
+        self.config_temp_dict = read(Path.CONFIG_TEMPLATE)
+        self.config_dict = read(Path.CONFIG)
+        self.find_difference(self.config_temp_dict, self.config_dict)
+
+        self.task_temp_dict = read(Path.TASK_TEMPLATE)
+        self.task_dict = read(Path.TASK)
+        self.find_difference(self.task_temp_dict, self.task_dict)
+
+        with open(Path.CONFIG, "w", encoding="utf-8") as f:
+            yaml.dump(self.config_dict, f, allow_unicode=True)
+            f.close()
+
+        with open(Path.TASK, "w", encoding="utf-8") as f:
+            yaml.dump(self.task_dict, f, allow_unicode=True)
+            f.close()
+
+        self.config_dict['already_check_version'] = False
         self.initDict()
 
     def initDict(self):
         for varName in self.__class__.__dict__:
-            if result := get(varName, self.dict):
+            if result := get(varName, self.config_dict):
                 self.__dict__[varName] = result
 
     def get(self, key=None, data=None):
         if not data:
-            data = self.Task_Dict
+            data = self.task_dict
 
         keyList = key.split('.')
         for index, key in enumerate(keyList):
@@ -89,3 +105,21 @@ class GeneralConfig:
                     root[root_key] = result
 
         return root
+
+    def find_difference(self, ct, c):
+        # 共有的键
+        common_keys = set(ct.keys()) & set(c.keys())
+        # 新增的键
+        new_keys = set(ct.keys()) - set(c.keys())
+
+        for key in common_keys:
+            # 如果是该键是另一个键值对，就进行递归
+            if isinstance(ct.get(key), dict) and isinstance(c.get(key), dict):
+                self.find_difference(ct.get(key), c.get(key))
+
+            elif key in self.exception:
+                c[key] = ct.get(key)
+
+        # 将新增的键值对添加进已有配置中
+        for key in new_keys:
+            c[key] = ct.get(key)

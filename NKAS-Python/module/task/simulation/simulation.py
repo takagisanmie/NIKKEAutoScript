@@ -16,7 +16,7 @@ from module.ui.ui import UI
 class SimulationRoom(UI, Task, EffectControl):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.end_area = int(self.config.get('Task.SimulationRoom.end_area', self.config.Task_Dict))
+        self.end_area = int(self.config.get('Task.SimulationRoom.end_area', self.config.task_dict))
         self.is_finished = False
 
     def run(self):
@@ -76,8 +76,8 @@ class SimulationRoom(UI, Task, EffectControl):
             BattleEvent(EventType.HARD_BATTLE, self, self.config, self.device, self.socket).run()
 
     def choose_difficulty(self):
-        difficulty = int(self.config.get('Task.SimulationRoom.difficulty', self.config.Task_Dict))
-        area = int(self.config.get('Task.SimulationRoom.area', self.config.Task_Dict))
+        difficulty = int(self.config.get('Task.SimulationRoom.difficulty', self.config.task_dict))
+        area = int(self.config.get('Task.SimulationRoom.area', self.config.task_dict))
 
         timeout = Timer(20).start()
         confirm_timer = Timer(1, count=3).start()

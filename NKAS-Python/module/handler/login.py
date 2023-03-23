@@ -9,7 +9,7 @@ from module.handler.login_assets import *
 class LoginHandler(UI):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.server = int(self.config.get('Server', self.config.dict))
+        self.server = int(self.config.get('Server', self.config.config_dict))
         self.is_finished = False
 
     def handle_app_login(self, where=True):

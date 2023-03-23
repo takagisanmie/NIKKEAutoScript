@@ -10,7 +10,7 @@ from module.task.tribe_tower.tribe_tower_assets import *
 class TribeTower(UI, Task):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.daily = int(self.config.get('Task.TribeTower.daily', self.config.Task_Dict))
+        self.daily = int(self.config.get('Task.TribeTower.daily', self.config.task_dict))
         self.is_finished = False
 
     def run(self):

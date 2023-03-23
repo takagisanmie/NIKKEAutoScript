@@ -40,7 +40,7 @@ socket.on('new_version_available', async (result) => {
     type: 'warning',
   })
   await nextTick()
-  updateDialogVisible.value = true
+  // updateDialogVisible.value = true
 
 })
 

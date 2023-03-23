@@ -87,9 +87,9 @@ class Socket(BaseModule):
         callback = data['callback']
         for index, key in enumerate(data['keys']):
             if type == 'task':
-                Socket.config.update(key, data['values'][index], Socket.config.Task_Dict, Path.TASK)
+                Socket.config.update(key, data['values'][index], Socket.config.task_dict, Path.TASK)
             elif type == 'config':
-                Socket.config.update(key, data['values'][index], Socket.config.dict, Path.CONFIG)
+                Socket.config.update(key, data['values'][index], Socket.config.config_dict, Path.CONFIG)
 
         glo.getSocket().emit(callback, None)
 
@@ -102,10 +102,10 @@ class Socket(BaseModule):
         for index, key in enumerate(data['keys']):
             if type == 'task':
                 result.append({'key': key,
-                               'value': Socket.config.get(key, Socket.config.Task_Dict)})
+                               'value': Socket.config.get(key, Socket.config.task_dict)})
             elif type == 'config':
                 result.append({'key': key,
-                               'value': Socket.config.get(key, Socket.config.dict)})
+                               'value': Socket.config.get(key, Socket.config.config_dict)})
 
         glo.getSocket().emit(callback, {'result': result})
 
@@ -113,7 +113,7 @@ class Socket(BaseModule):
     @staticmethod
     @socketio.on('hideWindow', namespace=config.Socket_NameSpace)
     def _hideWindow():
-        isHidden = Socket.config.get('Socket.HideWindow', Socket.config.dict)
+        isHidden = Socket.config.get('Socket.HideWindow', Socket.config.config_dict)
         if isHidden:
             Socket.hideWindow()
         else:
@@ -128,7 +128,7 @@ class Socket(BaseModule):
             # 在所有可选的nikke中过滤出已选的
             if k['key'] == 'Task.Conversation.nikkeList':
                 k['Nikke_list'] = Nikke_list
-                k['Nikke_list_selected'] = Socket.config.get(k['key'], Socket.config.Task_Dict)
+                k['Nikke_list_selected'] = Socket.config.get(k['key'], Socket.config.task_dict)
 
         glo.getSocket().emitSingleParameter('getConfigByKeyInConversation', 'data', data)
 
@@ -147,7 +147,7 @@ class Socket(BaseModule):
         from winotify import Notification
         from win10toast import ToastNotifier
 
-        notification = Socket.config.get('Notification', Socket.config.dict)
+        notification = Socket.config.get('Notification', Socket.config.config_dict)
 
         if notification == 1:
             toast = ToastNotifier()
@@ -178,26 +178,27 @@ class Socket(BaseModule):
         if code == 200:
             content = json.loads(request.content.decode())
             version = get('tag_name', content, False)
-
-            version = version[1:].split('.')
+            glo.getSocket().emit('insertLog', glo.getSocket().getLog('INFO', f'Github仓库版本: {version}'))
+            _version = version[1:].split('.')
             sum1 = 0
-            for n in version:
+            for n in _version:
                 sum1 += int(n)
 
-            version2 = Socket.config.Version[1:].split('.')
+            _version2 = Socket.config.Version[1:].split('.')
             sum2 = 0
-            for n in version2:
+            for n in _version2:
                 sum2 += int(n)
 
-            if sum1 == sum2:
-                glo.getSocket().emit('is_current_version', None)
-            elif sum1 > sum2:
-                Socket.config.New_Version = version
+            glo.getSocket().emit('insertLog', glo.getSocket().getLog('INFO', f'当前版本: {Socket.config.Version}'))
+
+            if sum1 > sum2:
                 glo.getSocket().emitSingleParameter('new_version_available', 'data', version)
-                assets = get('assets', content)
-                data = list(filter(lambda x: 'NKAS-Update-Vue' in x['name'], assets))
-                if len(data) > 0:
-                    glo.getSocket().emitSingleParameter('new_nkas_version_available', 'data', version)
+                # Socket.config.New_Version = version
+                # glo.getSocket().emitSingleParameter('new_version_available', 'data', version)
+                # assets = get('assets', content)
+                # data = list(filter(lambda x: 'NKAS-Update-Vue' in x['name'], assets))
+                # if len(data) > 0:
+                #     glo.getSocket().emitSingleParameter('new_nkas_version_available', 'data', version)
             else:
                 glo.getSocket().emit('is_current_version', None)
 

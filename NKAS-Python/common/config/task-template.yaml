@@ -9,16 +9,7 @@ Task:
     displayName: 咨询
     name: Conversation
     nextExecutionTime: 1679601600
-    nikkeList:
-    - Snow_White
-    - Centi
-    - Guillotine
-    - Anis
-    - Sugar
-    - Pepper
-    - Volume
-    - Isabel
-    - Maxwell
+    nikkeList: [ ]
   Daily:
     activate: true
     displayName: 每日任务
@@ -39,14 +30,14 @@ Task:
     event: 1-11
     finishAllEvent: true
     historyEvent:
-    - label: BOW-WOW PARADISE
-      path: /event_2
-      type: 0
-      value: 2
-    - label: Chainsaw Man
-      path: /event_1
-      type: 1
-      value: 1
+      - label: BOW-WOW PARADISE
+        path: /event_2
+        type: 0
+        value: 2
+      - label: Chainsaw Man
+        path: /event_1
+        type: 1
+        value: 1
     name: Event
     nextExecutionTime: 1679601600
     part: 2
@@ -54,7 +45,7 @@ Task:
     activate: true
     activate_arena_store: true
     activate_rubbish_store: true
-    arena_product_list: fire > selection_box
+    arena_product_list: ''
     displayName: 商店
     name: FreeStore
     nextExecutionTime: 1679601600

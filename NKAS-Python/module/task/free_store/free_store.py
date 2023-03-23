@@ -10,8 +10,8 @@ from module.ui.ui import UI
 class FreeStore(UI, Task):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.activate_arena_store = self.config.get('Task.FreeStore.activate_arena_store', self.config.Task_Dict)
-        self.arena_product_list = self.config.get('Task.FreeStore.arena_product_list', self.config.Task_Dict)
+        self.activate_arena_store = self.config.get('Task.FreeStore.activate_arena_store', self.config.task_dict)
+        self.arena_product_list = self.config.get('Task.FreeStore.arena_product_list', self.config.task_dict)
 
     def run(self):
         self.LINE('Free Store')

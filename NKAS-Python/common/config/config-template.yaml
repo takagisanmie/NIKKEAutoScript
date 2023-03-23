@@ -1,0 +1,26 @@
+Accelerators:
+  - label: 不选择
+    value: None
+  - label: UU(未完成)
+    value: UU
+  - label: ACGP(未完成)
+    value: ACGP
+  - label: 和家亲
+    value: Universal
+Idle: 0
+Notification: 0
+Server: 1
+check_version_when_startup: true
+Servers:
+  - label: 国际服
+    value: 1
+  - label: 港澳台
+    value: 2
+Simulator:
+  Accelerator: None
+  Serial: ''
+Socket:
+  HideWindow: true
+  NameSpace: /nkas
+  Port: 5000
+Version: v0.0.6

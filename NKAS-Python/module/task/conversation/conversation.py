@@ -15,7 +15,7 @@ class Conversation(UI, Task):
         # 选择的中nikke列表
         self.go(page_conversation_list)
         self.checkRestChance()
-        selected_list = self.config.get('Task.Conversation.nikkeList', self.config.Task_Dict)
+        selected_list = self.config.get('Task.Conversation.nikkeList', self.config.task_dict)
         _Nikke_list = list(filter(lambda x: x["key"] in selected_list, Nikke_list))
         company_list = [Elysion, Missilis, Tetra, Pilgrim, Abnormal]
         if self.rest_chance == 0:

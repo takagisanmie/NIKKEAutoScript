@@ -127,12 +127,6 @@ class UI(BaseModule):
         path2 = []
         self.getPathByParent(path2, destination)
 
-        # for i in path1:
-        #     print(i)
-        #
-        # for i in path2:
-        #     print(i)
-
         flag = False
         for i1, value1 in enumerate(path1):
             _destination1 = \
@@ -325,7 +319,7 @@ class UI(BaseModule):
         reset_time2 = round(midnight + 14340)
 
         if reset_time > now >= reset_time2:
-            server = int(self.config.get('Server', self.config.dict))
+            server = int(self.config.get('Server', self.config.config_dict))
 
             package_name = None
 

@@ -10,9 +10,9 @@ from module.ui.ui import UI
 class Daily(UI, Task):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.equipmentUpgrade = int(self.config.get('Task.Daily.equipmentUpgrade', self.config.Task_Dict))
-        self.nikkeUpgrade = int(self.config.get('Task.Daily.nikkeUpgrade', self.config.Task_Dict))
-        self.notification = int(self.config.get('Notification', self.config.dict))
+        self.equipmentUpgrade = int(self.config.get('Task.Daily.equipmentUpgrade', self.config.task_dict))
+        self.nikkeUpgrade = int(self.config.get('Task.Daily.nikkeUpgrade', self.config.task_dict))
+        self.notification = int(self.config.get('Notification', self.config.config_dict))
 
     def run(self):
         self.LINE('Daily')

@@ -11,10 +11,10 @@ from module.ui.ui import UI
 class RookieArena(UI, Task):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.target = self.config.get('Task.RookieArena.target', self.config.Task_Dict)
-        under = self.config.get('Task.RookieArena.under', self.config.Task_Dict)
+        self.target = self.config.get('Task.RookieArena.target', self.config.task_dict)
+        under = self.config.get('Task.RookieArena.under', self.config.task_dict)
         self.under = int(under) if under else 0
-        refresh_chance = self.config.get('Task.RookieArena.refresh_chance', self.config.Task_Dict)
+        refresh_chance = self.config.get('Task.RookieArena.refresh_chance', self.config.task_dict)
         self.refresh_chance = int(refresh_chance) if refresh_chance else 1
         self.index = -1
 

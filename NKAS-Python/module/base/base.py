@@ -32,7 +32,7 @@ class BaseModule(Log):
     @staticmethod
     def changeWindow():
         import glo
-        isHidden = glo.getNKAS().config.get('Socket.HideWindow', glo.getNKAS().config.dict)
+        isHidden = glo.getNKAS().config.get('Socket.HideWindow', glo.getNKAS().config.config_dict)
         if isHidden:
             BaseModule.hideWindow()
         else:

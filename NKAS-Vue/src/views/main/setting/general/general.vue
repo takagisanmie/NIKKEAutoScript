@@ -5,6 +5,14 @@
       <hr>
       <div>
         <div>
+          启动时检查更新
+          <el-switch inline-prompt active-text="检查" size="large" width="60px"
+                     style="--el-switch-on-color: #626aef; --el-switch-off-color: #ff4949;float: right;"
+                     @change="_check_version_when_startup" v-model="check_version_when_startup"/>
+        </div>
+        <br>
+        <br>
+        <div>
           控制台窗口显示
           <el-switch inline-prompt active-text="隐藏" inactive-text="显示" size="large" width="60px"
                      style="--el-switch-on-color: #626aef; --el-switch-off-color: #ff4949;float: right;"
@@ -50,10 +58,24 @@ import {ref, onMounted, onBeforeUnmount} from 'vue'
 import Socket from "@/assets/js/socket"
 import _ from 'lodash'
 
+const check_version_when_startup = ref(false)
 const hideWindow = ref(false)
 const idle = ref()
 const notification = ref()
 const socket = Socket.getSocket()
+
+const _check_version_when_startup = _.debounce(async () => {
+  await Socket.updateConfigByKey(
+      [
+        'check_version_when_startup'
+      ],
+      [
+        check_version_when_startup.value
+      ],
+      'config',
+      'update_success'
+  )
+}, 127)
 
 const _hideWindow = _.debounce(async () => {
   await Socket.updateConfigByKey(
@@ -99,6 +121,7 @@ const _idle = _.debounce(async () => {
 function setOptions() {
   Socket.getConfigByKey(
       [
+        'check_version_when_startup',
         'Socket.HideWindow',
         'Idle',
         'Notification'
@@ -116,6 +139,8 @@ socket.on('setGeneralOption', (result) => {
       idle.value = option.value
     } else if (option.key === 'Notification') {
       notification.value = option.value
+    } else if (option.key === 'check_version_when_startup') {
+      check_version_when_startup.value = option.value
     }
   });
 })

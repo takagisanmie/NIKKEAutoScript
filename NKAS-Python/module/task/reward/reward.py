@@ -10,9 +10,9 @@ from module.task.reward.reward_assets import *
 class Reward(UI, Task):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.recordTwiceTime = int(self.config.get('Task.Reward.recordTwiceTime', self.config.Task_Dict))
-        self.nextExecutionTime = int(self.config.get('Task.Reward.nextExecutionTime', self.config.Task_Dict))
-        self.arena = int(self.config.get('Task.Reward.arena', self.config.Task_Dict))
+        self.recordTwiceTime = int(self.config.get('Task.Reward.recordTwiceTime', self.config.task_dict))
+        self.nextExecutionTime = int(self.config.get('Task.Reward.nextExecutionTime', self.config.task_dict))
+        self.arena = int(self.config.get('Task.Reward.arena', self.config.task_dict))
 
     def run(self):
         self.LINE('Reward')
@@ -27,13 +27,6 @@ class Reward(UI, Task):
         self.INFO('Reward is finished')
 
     def _finish(self):
-        # import time
-        # if time.time() >= self.recordTwiceTime:
-        #     self.when(self.config, 'Reward', 150)
-        # else:
-        #     self.finish(self.config, 'Reward')
-        # key = 'Task.Reward.recordTwiceTime'
-        # self.config.update(key, getTaskResetTime(), self.config.Task_Dict, Path.TASK)
         self.when(self.config, 'Reward', 14400)
         self.go(page_main)
 
