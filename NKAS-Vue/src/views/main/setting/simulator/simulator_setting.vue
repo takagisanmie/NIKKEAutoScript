@@ -6,7 +6,7 @@
       <div>
         模拟器 Serial
         <el-input style="width: 200px;float: right" @input="changeSerial"
-                  v-model="Settings.simulator_settings.current_simulator"/>
+                  v-model="serial"/>
       </div>
       <div>
         <br>
@@ -52,12 +52,10 @@
 <script setup>
 import {ref, onMounted, computed} from 'vue'
 import Socket from "@/assets/js/socket"
-import useSettings from "@/assets/store/settingStore";
 import _ from 'lodash'
-import dayjs from "dayjs";
 
 const socket = Socket.getSocket()
-const Settings = useSettings()
+const serial = ref('')
 const accelerator = ref('')
 const server = ref('')
 
@@ -68,7 +66,7 @@ const changeSerial = _.debounce(() => {
         'Simulator.Serial'
       ],
       [
-        Settings.simulator_settings.current_simulator
+        serial.value
       ],
       'config',
       'serial_update_success'
@@ -106,24 +104,28 @@ function setOptions() {
       [
         'Accelerators',
         'Simulator.Accelerator',
+        'Simulator.Serial',
         'Servers',
         'Server',
       ],
       'config',
-      'setAccelerator'
+      'setSimulatorOption'
   )
 }
 
 const accelerators = ref([])
 const servers = ref([])
 
-socket.on('setAccelerator', (result) => {
+socket.on('setSimulatorOption', (result) => {
   _.forEach(result.result, function (option, index) {
     if (option.key === 'Accelerators') {
       accelerators.value = option.value
     }
     else if (option.key === 'Simulator.Accelerator') {
       accelerator.value = option.value
+    }
+     else if (option.key === 'Simulator.Serial') {
+      serial.value = option.value
     }
     else if (option.key === 'Servers') {
       servers.value = option.value

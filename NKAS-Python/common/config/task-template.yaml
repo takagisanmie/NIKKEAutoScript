@@ -3,31 +3,31 @@ Task:
     activate: true
     displayName: 委托
     name: Commission
-    nextExecutionTime: 1679601600
+    nextExecutionTime: 946656000
   Conversation:
     activate: true
     displayName: 咨询
     name: Conversation
-    nextExecutionTime: 1679601600
+    nextExecutionTime: 946656000
     nikkeList: [ ]
   Daily:
     activate: true
     displayName: 每日任务
     equipmentUpgrade: false
     name: Daily
-    nextExecutionTime: 1679601660
+    nextExecutionTime: 946656060
     nikkeUpgrade: true
   Destroy:
     activate: true
     displayName: 一举歼灭
     name: Destroy
-    nextExecutionTime: 1679601600
+    nextExecutionTime: 946656000
   Event:
     activate: true
     currentEvent: 2
     difficulty: 1
     displayName: 活动
-    event: 1-11
+    event: 1-1
     finishAllEvent: true
     historyEvent:
       - label: BOW-WOW PARADISE
@@ -39,7 +39,7 @@ Task:
         type: 1
         value: 1
     name: Event
-    nextExecutionTime: 1679601600
+    nextExecutionTime: 946656000
     part: 2
   FreeStore:
     activate: true
@@ -48,30 +48,30 @@ Task:
     arena_product_list: ''
     displayName: 商店
     name: FreeStore
-    nextExecutionTime: 1679601600
+    nextExecutionTime: 946656000
   Reward:
     activate: true
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1679557226
-    recordTwiceTime: 1679083200
+    nextExecutionTime: 946656000
+    recordTwiceTime: 946656000
   RookieArena:
     activate: true
     displayName: 新人竞技场
     name: RookieArena
-    nextExecutionTime: 1679601600
-    refresh_chance: '2'
-    target: 3
+    nextExecutionTime: 946656000
+    refresh_chance: '1'
+    target: 1
     under: '0'
   SimulationRoom:
     activate: true
-    area: '3'
-    difficulty: '5'
+    area: '1'
+    difficulty: '1'
     displayName: 模拟室
-    end_area: '3'
+    end_area: '1'
     name: SimulationRoom
-    nextExecutionTime: 1679601600
+    nextExecutionTime: 946656000
   TribeTower:
     Elysion: true
     Missilis: true
@@ -81,4 +81,4 @@ Task:
     daily: true
     displayName: 企业塔
     name: TribeTower
-    nextExecutionTime: 1679601600
+    nextExecutionTime: 946656000

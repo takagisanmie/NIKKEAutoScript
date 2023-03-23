@@ -1,3 +1,4 @@
+import os
 from common.enum.enum import *
 from module.tools.yamlStrategy import *
 
@@ -38,12 +39,18 @@ class GeneralConfig:
 
     def initConfig(self):
         self.config_temp_dict = read(Path.CONFIG_TEMPLATE)
-        self.config_dict = read(Path.CONFIG)
-        self.find_difference(self.config_temp_dict, self.config_dict)
+        if os.path.exists(Path.CONFIG):
+            self.config_dict = read(Path.CONFIG)
+            self.find_difference(self.config_temp_dict, self.config_dict)
+        else:
+            self.config_dict = self.config_temp_dict
 
         self.task_temp_dict = read(Path.TASK_TEMPLATE)
-        self.task_dict = read(Path.TASK)
-        self.find_difference(self.task_temp_dict, self.task_dict)
+        if os.path.exists(Path.TASK):
+            self.task_dict = read(Path.TASK)
+            self.find_difference(self.task_temp_dict, self.task_dict)
+        else:
+            self.task_dict = self.task_temp_dict
 
         with open(Path.CONFIG, "w", encoding="utf-8") as f:
             yaml.dump(self.config_dict, f, allow_unicode=True)
