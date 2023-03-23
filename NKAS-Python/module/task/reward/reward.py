@@ -68,18 +68,23 @@ class Reward(UI, Task):
 
     def get_special_arena_reward(self):
         timeout = Timer(20).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1.2)
 
         while 1:
             self.device.screenshot()
 
-            if self.device.appear(no_special_arena_point) or self.device.appear(no_special_arena_point_2):
-                return
-
             if click_timer.reached() and self.device.appear_then_click(reward):
                 timeout.reset()
+                confirm_timer.reset()
                 click_timer.reset()
                 continue
+
+            if click_timer.reached() \
+                    and self.device.appear(no_special_arena_point) \
+                    or self.device.appear(no_special_arena_point_2):
+                if confirm_timer.reached():
+                    return
 
             if click_timer.reached() and self.device.appear_then_click(get_arean_reward):
                 timeout.reset()

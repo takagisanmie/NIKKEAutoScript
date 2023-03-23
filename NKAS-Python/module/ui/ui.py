@@ -51,6 +51,13 @@ class UI(BaseModule):
                 click_timer.reset()
                 continue
 
+            # 月卡
+            if click_timer.reached() and self.device.textStrategy('补给品每日奖励', None, OcrResult.TEXT):
+                self.device.multiClickLocation((360, 850))
+                timeout.reset()
+                click_timer.reset()
+                continue
+
             if click_timer.reached() and self.device.appear_then_click(gift):
                 timeout.reset()
                 click_timer.reset()

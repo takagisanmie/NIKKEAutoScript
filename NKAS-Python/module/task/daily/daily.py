@@ -15,7 +15,6 @@ class Daily(UI, Task):
         self.notification = int(self.config.get('Notification', self.config.dict))
 
     def run(self):
-
         self.LINE('Daily')
         self.to_mail()
         if self.equipmentUpgrade:

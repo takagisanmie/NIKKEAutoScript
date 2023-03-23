@@ -111,15 +111,21 @@ class LoginHandler(UI):
                 confirm_timer.reset()
                 continue
 
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                click_timer.reset()
+                continue
+
             if click_timer.reached() and self.device.appear_then_click(get_daily_login_reward):
                 timeout.reset()
-                self.device.sleep(3)
-                self.device.screenshot()
-                if click_timer.reached() and self.device.appear_then_click(reward):
-                    timeout.reset()
-                    click_timer.reset()
-                    continue
+                click_timer.reset()
+                continue
 
+            # 月卡
+            if click_timer.reached() and self.device.textStrategy('补给品每日奖励', None, OcrResult.TEXT):
+                self.device.multiClickLocation((360, 850))
+                timeout.reset()
+                click_timer.reset()
                 continue
 
             if click_timer.reached() and self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):
@@ -183,6 +189,7 @@ class LoginHandler(UI):
         timeout = Timer(30).start()
         click_timer = Timer(1.2)
 
+        swipe = True
         swipe_to_right = True
 
         while 1:
@@ -204,27 +211,15 @@ class LoginHandler(UI):
             if click_timer.reached() and self.device.appear_then_click(game):
                 timeout.reset()
                 click_timer.reset()
+                self.device.sleep(3)
                 continue
 
-            if click_timer.reached() and self.device.appear(selected_sign) and self.device.appear_then_click(start):
+            if click_timer.reached() and self.device.appear(selected_sign) and (lc := self.device.appear(start)):
+                self.device.multiClickLocation(lc, count=3)
+                swipe = False
                 timeout.reset()
                 click_timer.reset()
                 continue
-
-            if self.device.appear(far_right):
-                swipe_to_right = False
-
-            if swipe_to_right \
-                    and click_timer.reached() \
-                    and self.device.swipe(340, 540, 100, 540, 0.2):
-                timeout.reset()
-                click_timer.reset()
-                continue
-            else:
-                if click_timer.reached() and self.device.swipe(100, 540, 340, 540, 0.2):
-                    timeout.reset()
-                    click_timer.reset()
-                    continue
 
             if click_timer.reached() and self.device.appear(AD):
                 self.device.u2.press(key='back')
@@ -232,8 +227,29 @@ class LoginHandler(UI):
                 click_timer.reset()
                 continue
 
+            if click_timer.reached() and self.device.appear_then_click(close_grade):
+                timeout.reset()
+                click_timer.reset()
+                continue
+
             if self.device.appear(successful_sign):
                 return
+
+            if self.device.appear(far_right):
+                swipe_to_right = False
+
+            if swipe and self.device.textStrategy('手机游戏加速', None, OcrResult.TEXT):
+                if swipe_to_right \
+                        and click_timer.reached() \
+                        and self.device.swipe(340, 540, 100, 540, 0.2):
+                    timeout.reset()
+                    click_timer.reset()
+                    continue
+                else:
+                    if click_timer.reached() and self.device.swipe(100, 540, 340, 540, 0.2):
+                        timeout.reset()
+                        click_timer.reset()
+                        continue
 
             if timeout.reached():
                 self.ERROR('wait too long')

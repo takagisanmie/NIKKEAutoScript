@@ -208,7 +208,12 @@ if __name__ == '__main__':
 
     # TODO 废土商店内容按照优先顺序购买 没示例
     # TODO 竞技场商店货币不足时 没示例
-    # TODO 每日登录时领取月卡 没示例
+    # TODO 每日登录时领取月卡 待测试
+
+    # TODO 计算活动的困难模式开启时间，在前一天或执行前跳过活动任务
+    # TODO 将设置改为读取config-template.yaml
+    # TODO 然后在读取config.yaml，并且覆盖已经有的值
+    # TODO 单独检查更新
 
     nkas = NikkeAutoScript()
     nkas.socket.run()
