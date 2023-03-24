@@ -149,9 +149,7 @@ class Control(DroidCast, Ocr):
         # import cv2
         # import time
         # cv2.imwrite(f'./pic/img-{template["id"]}{time.time()}.png', img)
-
         sl = match(img, template, value, ImgResult.SIMILARITY)
-
         # print(index, templates['id'], sl)
         if sl and _result == ImgResult.SIMILARITY:
             return sl

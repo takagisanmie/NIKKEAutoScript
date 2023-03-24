@@ -46,6 +46,7 @@ Task:
     activate_arena_store: true
     activate_rubbish_store: true
     arena_product_list: ''
+    rubbish_store_product_list: ''
     displayName: 商店
     name: FreeStore
     nextExecutionTime: 946656000

@@ -205,10 +205,7 @@ class NikkeAutoScript:
 if __name__ == '__main__':
     # TODO 升级NIKKE
 
-    # TODO 废土商店内容按照优先顺序购买 没示例
-    # TODO 竞技场商店货币不足时 没示例
-    # TODO 每日登录时领取月卡 待测试
-
+    # TODO 废铁商店效率过慢
     # TODO 计算活动的困难模式开启时间，在前一天或执行前跳过活动任务
 
     nkas = NikkeAutoScript()

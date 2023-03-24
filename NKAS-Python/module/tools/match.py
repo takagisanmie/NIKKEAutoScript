@@ -16,7 +16,6 @@ def matchTemplate(img=None, img_terminal=None, value=0.8, _result=None, gray=Fal
     position = (upper_left[0], upper_left[1], bottom_right[0], bottom_right[1])
     lc = (((position[2] - position[0]) / 2 + position[0]), ((position[3] - position[1]) / 2 + position[1]))
     sl = round(sl, 2)
-
     res = returnResult(value, sl, lc, _result)
     if res is not None:
         return res
@@ -112,8 +111,8 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
 
                 lc = (((right - left) / 2 + left), ((bottom - top) / 2 + top))
                 x, y = int(lc[0]), int(lc[1])
-                id = id.replace('_2', '')
-                id = id.replace('_3', '')
+                # id = id.replace('_2', '')
+                # id = id.replace('_3', '')
                 info = {
                     'id': id,
                     'location': (x, y),
@@ -134,6 +133,9 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
 
         if once:
             if sort_by:
+                if sort_by == 'bottom':
+                    return relative_locations.sort(key=lambda x: x[sort_by], reverse=True)
+
                 return relative_locations.sort(key=lambda x: x[sort_by])
             else:
                 # 添加顺序
@@ -143,6 +145,9 @@ def matchAllTemplate(img: cv2.imdecode = None, templates: list = None, img_templ
             continue
 
         if sort_by:
+            if sort_by == 'bottom':
+                return relative_locations.sort(key=lambda x: x[sort_by], reverse=True)
+
             return relative_locations.sort(key=lambda x: x[sort_by])
         else:
             # 添加顺序

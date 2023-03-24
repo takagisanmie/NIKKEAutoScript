@@ -24,4 +24,4 @@ Socket:
   Port: 5000
 Version: v0.0.6
 already_check_version: true
-check_version_when_startup: false
+check_version_when_startup: true

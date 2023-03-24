@@ -61,7 +61,9 @@
       <!--      </el-card>-->
     </el-space>
     <div id="Setting">
-      <router-view/>
+      <el-scrollbar>
+        <router-view/>
+      </el-scrollbar>
     </div>
   </el-main>
 </template>

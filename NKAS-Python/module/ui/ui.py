@@ -67,6 +67,9 @@ class UI(BaseModule):
                 UI.current_page = page_login
                 from module.handler.login import LoginHandler
                 LoginHandler(self.config, device=self.device, socket=self.socket).handle_app_login(where=False)
+                timeout.reset()
+                click_timer.reset()
+                continue
 
             if self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):
                 self.device.multiClickLocation((20, 600))
