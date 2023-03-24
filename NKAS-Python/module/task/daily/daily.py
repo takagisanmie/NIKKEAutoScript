@@ -136,6 +136,12 @@ class Daily(UI, Task):
                 confirm_timer.reset()
                 continue
 
+            if self.device.appear(improvement_sign) \
+                    and not self.device.appear(normal_materials) \
+                    and not self.device.appear(advanced_materials):
+                is_finished = True
+                self.WARNING("The material doesn't meet the need")
+
             if not is_finished and click_timer.reached() \
                     and (self.device.appear_then_click(normal_materials)
                          or self.device.appear_then_click(advanced_materials)):

@@ -7,6 +7,7 @@ emphasis_area = { 'area' : (43, 190, 690, 263) , 'path' : './module/task/daily/t
 equipment = { 'area' : (373, 200, 428, 216) , 'path' : './module/task/daily/templates/ui/equipment.png' , 'id' : 'equipment' }
 get = { 'area' : (532, 1138, 618, 1162) , 'path' : './module/task/daily/templates/ui/get.png' , 'id' : 'get' }
 improve = { 'area' : (290, 973, 319, 1008) , 'path' : './module/task/daily/templates/ui/improve.png' , 'id' : 'improve' }
+improvement_sign = { 'area' : (342, 165, 435, 186) , 'path' : './module/task/daily/templates/ui/improvement_sign.png' , 'id' : 'improvement_sign' }
 inventory_area = { 'area' : (99, 259, 691, 1109) , 'path' : './module/task/daily/templates/ui/inventory_area.png' , 'id' : 'inventory_area' }
 Level_0 = { 'area' : (121, 342, 137, 363) , 'path' : './module/task/daily/templates/ui/Level_0.png' , 'id' : 'Level_0' }
 liberation_finished_sign = { 'area' : (503, 910, 529, 923) , 'path' : './module/task/daily/templates/ui/liberation_finished_sign.png' , 'id' : 'liberation_finished_sign' }
