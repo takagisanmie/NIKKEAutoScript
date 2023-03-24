@@ -206,6 +206,9 @@ if __name__ == '__main__':
     # TODO 升级NIKKE
 
     # TODO 废铁商店效率过慢
+    # TODO 改进或者增加定时功能，在每周二自动打开，并且记录运行时间
+    # TODO 在周二调用一次后就关闭，直到下周二
+
     # TODO 计算活动的困难模式开启时间，在前一天或执行前跳过活动任务
 
     nkas = NikkeAutoScript()
