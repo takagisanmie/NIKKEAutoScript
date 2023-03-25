@@ -1,5 +1,6 @@
 import re
-from common.enum.enum import ImgResult
+import time
+from common.enum.enum import ImgResult, Path
 from common.exception import Timeout
 from module.base.task import Task
 from module.task.free_store.free_store_assets import *
@@ -10,7 +11,7 @@ from module.task.free_store.free_store_assets import _1h_cdc, _1h_cc, _1h_bdsc
 from module.task.free_store.free_store_assets import _2h_cdc, _2h_cc, _2h_bdsc
 from module.task.free_store.free_store_assets import _Abnormal, _Tetra, _Pilgrim, _Missilis, _Elysion, _general_ticket
 
-from module.tools.timer import Timer
+from module.tools.timer import Timer, getNextTuesday
 from module.ui.page import *
 from module.ui.ui import UI
 
@@ -23,6 +24,8 @@ class FreeStore(UI, Task):
         self.arena_product_list = self.config.get('Task.FreeStore.arena_product_list', self.config.task_dict)
         self.rubbish_store_product_list = self.config.get('Task.FreeStore.rubbish_store_product_list',
                                                           self.config.task_dict)
+        self.rubbishStoreNextExecutionTime = self.config.get('Task.FreeStore.rubbishStoreNextExecutionTime',
+                                                             self.config.task_dict)
 
     def run(self):
         self.LINE('Free Store')
@@ -30,7 +33,15 @@ class FreeStore(UI, Task):
         if self.activate_arena_store:
             self.into_arena_store()
         if self.activate_rubbish_store:
-            self.into_rubbish_store()
+            now = time.time()
+            if now > self.rubbishStoreNextExecutionTime:
+                self.into_rubbish_store()
+                next_tuesday = getNextTuesday()
+                self.config.update('Task.FreeStore.rubbishStoreNextExecutionTime', next_tuesday[1],
+                                   self.config.task_dict,
+                                   Path.TASK)
+                self.INFO(f'NKAS will go to the rubbish store again on {next_tuesday[0]}')
+
         self.finish(self.config, 'FreeStore')
         self.INFO('Free Store is finished')
         self.go(page_main)
@@ -111,6 +122,8 @@ class FreeStore(UI, Task):
         if not self.rubbish_store_product_list:
             return
 
+        self.INFO('go to the arena store')
+
         pl = re.sub(r'\s+', '', self.arena_product_list)
         pl = pl.split('>')
 
@@ -178,7 +191,7 @@ class FreeStore(UI, Task):
             if self.device.appear(product_sign):
                 # 货币不足
                 if self.device.appear(inadequate, img_template=cost_area, once=True):
-                    # TODO 日志
+                    self.WARNING("Own currency is not enough")
                     selected_list.clear()
                     self.device.appear_then_click(close_product)
                     continue
@@ -212,6 +225,8 @@ class FreeStore(UI, Task):
     def into_rubbish_store(self):
         if not self.rubbish_store_product_list:
             return
+
+        self.INFO('go to the rubbish store')
 
         pl = re.sub(r'\s+', '', self.rubbish_store_product_list)
         pl = pl.split('>')
@@ -298,7 +313,7 @@ class FreeStore(UI, Task):
 
                 # 货币不足
                 if self.device.appear(inadequate, img_template=cost_area, once=True):
-                    # TODO 日志
+                    self.WARNING("Own currency is not enough")
                     pl.clear()
                     return pl
 

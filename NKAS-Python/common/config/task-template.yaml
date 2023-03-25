@@ -50,6 +50,7 @@ Task:
     displayName: 商店
     name: FreeStore
     nextExecutionTime: 946656000
+    rubbishStoreNextExecutionTime: 946656000
   Reward:
     activate: true
     arena: true

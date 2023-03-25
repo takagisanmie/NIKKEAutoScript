@@ -1,4 +1,14 @@
 import time
+import datetime
+
+
+def getNextTuesday():
+    today = datetime.date.today()
+    days = (1 - today.weekday()) % 7
+    days = 7 if not days else days
+    next_tuesday = today + datetime.timedelta(days=days)
+    date_obj = datetime.datetime.strptime(str(next_tuesday), "%Y-%m-%d")
+    return [str(next_tuesday), int(date_obj.timestamp())]
 
 
 def getTaskResetTime():

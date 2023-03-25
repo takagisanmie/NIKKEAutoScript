@@ -3,12 +3,12 @@ Task:
     activate: true
     displayName: 委托
     name: Commission
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
   Conversation:
     activate: true
     displayName: 咨询
     name: Conversation
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
     nikkeList:
     - Snow_White
     - Centi
@@ -24,13 +24,13 @@ Task:
     displayName: 每日任务
     equipmentUpgrade: true
     name: Daily
-    nextExecutionTime: 1679688060
+    nextExecutionTime: 1679774460
     nikkeUpgrade: true
   Destroy:
     activate: true
     displayName: 一举歼灭
     name: Destroy
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
   Event:
     activate: true
     currentEvent: 2
@@ -48,7 +48,7 @@ Task:
       type: 1
       value: 1
     name: Event
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
     part: 2
   FreeStore:
     activate: true
@@ -57,20 +57,21 @@ Task:
     arena_product_list: fire > selection_box
     displayName: 商店
     name: FreeStore
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
+    rubbishStoreNextExecutionTime: 1679932800
     rubbish_store_product_list: gem > 2h_cdc > 1h_cdc
   Reward:
     activate: true
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1679682554
+    nextExecutionTime: 1679729913
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true
     displayName: 新人竞技场
     name: RookieArena
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
     refresh_chance: '2'
     target: 1
     under: '0'
@@ -81,7 +82,7 @@ Task:
     displayName: 模拟室
     end_area: '3'
     name: SimulationRoom
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
   TribeTower:
     Elysion: true
     Missilis: true
@@ -91,4 +92,4 @@ Task:
     daily: true
     displayName: 企业塔
     name: TribeTower
-    nextExecutionTime: 1679688000
+    nextExecutionTime: 1679774400
