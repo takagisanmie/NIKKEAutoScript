@@ -202,10 +202,10 @@ class NikkeAutoScript:
             self.socket.emitSingleParameter('checkSchedulerState', 'state', self.state)
         return False
 
+
 if __name__ == '__main__':
     # TODO 升级NIKKE
 
     # TODO 计算活动的困难模式开启时间，在前一天或执行前跳过活动任务
-
     nkas = NikkeAutoScript()
     nkas.socket.run()

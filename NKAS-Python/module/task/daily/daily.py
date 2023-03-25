@@ -136,7 +136,7 @@ class Daily(UI, Task):
                 confirm_timer.reset()
                 continue
 
-            if self.device.appear(improvement_sign) \
+            if click_timer.reached() and self.device.appear(improvement_sign) \
                     and not self.device.appear(normal_materials) \
                     and not self.device.appear(advanced_materials):
                 is_finished = True
