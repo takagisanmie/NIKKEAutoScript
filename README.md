@@ -8,7 +8,7 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 虽然现在写的NKAS依旧是shit😅😅😅    
 
 ### 下载
-[123网盘下载](https://www.123pan.com/s/1HLA-PZdVh.html)（不限速，不登录的）     
+[123网盘下载](https://www.123pan.com/s/1HLA-ledVh.html)（不限速，不登录的）     
 或者在Releases下载
 
 ### 使用
