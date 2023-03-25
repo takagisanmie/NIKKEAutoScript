@@ -1,6 +1,5 @@
 AD = { 'area' : (276, 445, 456, 626) , 'path' : './module/handler/templates/universalapp/AD.png' , 'id' : 'AD' }
 close_grade = { 'area' : (671, 678, 696, 703) , 'path' : './module/handler/templates/universalapp/close_grade.png' , 'id' : 'close_grade' }
-far_left = { 'area' : (0, 176, 236, 713) , 'path' : './module/handler/templates/universalapp/far_left.png' , 'id' : 'far_left' }
 far_right = { 'area' : (294, 271, 417, 676) , 'path' : './module/handler/templates/universalapp/far_right.png' , 'id' : 'far_right' }
 game = { 'area' : (71, 514, 179, 597) , 'path' : './module/handler/templates/universalapp/game.png' , 'id' : 'game' }
 not_found = { 'area' : (142, 474, 440, 508) , 'path' : './module/handler/templates/universalapp/not_found.png' , 'id' : 'not_found' }

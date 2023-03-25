@@ -2,7 +2,6 @@ from common.enum.enum import *
 from common.exception import Timeout
 from module.base.task import Task
 from module.task.rookie_arena.rookie_arena_assets import *
-from module.tools.match import resize
 from module.tools.timer import Timer
 from module.ui.page import *
 from module.ui.ui import UI

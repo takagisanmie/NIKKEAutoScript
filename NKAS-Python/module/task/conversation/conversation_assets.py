@@ -1,5 +1,4 @@
 auto = { 'area' : (400, 22, 459, 37) , 'path' : './module/task/conversation/templates/ui/auto.png' , 'id' : 'auto' }
-cancel_conversation = { 'area' : (580, 22, 676, 40) , 'path' : './module/task/conversation/templates/ui/cancel_conversation.png' , 'id' : 'cancel_conversation' }
 conversation_deatil_sign_2 = { 'area' : (6, 66, 144, 149) , 'path' : './module/task/conversation/templates/ui/conversation_deatil_sign_2.png' , 'id' : 'conversation_deatil_sign_2' }
 favourite = { 'area' : (26, 377, 44, 510) , 'path' : './module/task/conversation/templates/ui/favourite.png' , 'id' : 'favourite' }
 level_max = { 'area' : (608, 870, 630, 885) , 'path' : './module/task/conversation/templates/ui/level_max.png' , 'id' : 'level_max' }
@@ -11,7 +10,6 @@ start_conversation = { 'area' : (391, 1029, 481, 1100) , 'path' : './module/task
 answer_area_1 = { 'area' : (63, 814, 655, 897) , 'path' : './module/task/conversation/templates/ui/area/answer_area_1.png' , 'id' : 'answer_area_1' }
 answer_area_2 = { 'area' : (62, 916, 656, 997) , 'path' : './module/task/conversation/templates/ui/area/answer_area_2.png' , 'id' : 'answer_area_2' }
 case_closed = { 'area' : (569, 486, 626, 505) , 'path' : './module/task/conversation/templates/ui/area/case_closed.png' , 'id' : 'case_closed' }
-name_area = { 'area' : (43, 439, 260, 493) , 'path' : './module/task/conversation/templates/ui/area/name_area.png' , 'id' : 'name_area' }
 name_list = { 'area' : (24, 373, 160, 1153) , 'path' : './module/task/conversation/templates/ui/area/name_list.png' , 'id' : 'name_list' }
 Abnormal = { 'area' : (610, 227, 637, 254) , 'path' : './module/task/conversation/templates/ui/company/Abnormal.png' , 'id' : 'Abnormal' }
 Elysion = { 'area' : (188, 227, 214, 254) , 'path' : './module/task/conversation/templates/ui/company/Elysion.png' , 'id' : 'Elysion' }
