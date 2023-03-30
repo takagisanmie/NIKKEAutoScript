@@ -273,3 +273,64 @@ class Daily(UI, Task):
             if timeout.reached():
                 self.ERROR('wait too long')
                 raise Timeout
+
+    def to_paid_store(self):
+        self.go(page_main)
+
+        timeout = Timer(20).start()
+        confirm_timer = Timer(3, count=5).start()
+        click_timer = Timer(1.2)
+        reset_timer = Timer(1, count=8).start()
+
+        failed = False
+
+        glo.set_value('paid_store', [])
+        mask_id = 'paid_store'
+
+        while 1:
+            self.device.screenshot()
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(notice_close):
+                failed = True
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if not failed:
+
+                if click_timer.reached() and self.device.appear_then_click(paid_store):
+                    timeout.reset()
+                    confirm_timer.reset()
+                    click_timer.reset()
+                    continue
+
+                if click_timer.reached() and self.device.clickTextLocation('免费'):
+                    timeout.reset()
+                    click_timer.reset()
+                    confirm_timer.reset()
+                    continue
+
+                if click_timer.reached() and self.device.appear_then_click(store_emphasis,
+                                                                           img_template=store_emphasis_area,
+                                                                           mask_id=mask_id):
+                    timeout.reset()
+                    confirm_timer.reset()
+                    click_timer.reset()
+                    continue
+
+            if confirm_timer.reached():
+                return
+
+            if reset_timer.reached():
+                reset_timer.reset()
+                glo.set_value(mask_id, [])
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout

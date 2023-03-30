@@ -52,7 +52,7 @@ Task:
       type: 1
       value: 1
     name: Event
-    nextExecutionTime: 1678478400
+    nextExecutionTime: 1680206400
     part: 2
   FreeStore:
     activate: true
@@ -66,13 +66,13 @@ Task:
     rubbish_store_product_list: gem > 2h_cdc > 1h_cdc
   Reward:
     activate: true
-    arena: false
+    arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1678462295
+    nextExecutionTime: 1680276695
     recordTwiceTime: 1679083200
   RookieArena:
-    activate: false
+    activate: true
     displayName: 新人竞技场
     name: RookieArena
     nextExecutionTime: 1680206400
