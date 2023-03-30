@@ -1,6 +1,7 @@
 from cached_property import cached_property
 
 from module.base.task import *
+from module.ui.page import page_liberation
 
 
 class NikkeAutoScript:
@@ -212,6 +213,9 @@ if __name__ == '__main__':
     # TODO 森，不能进入咨询
     # TODO 艾德米，回答有问题
     # TODO 德雷克，回答有问题
-    
+
     nkas = NikkeAutoScript()
-    nkas.socket.run()
+    # nkas.socket.run()
+    from module.task.daily.daily import Daily
+    self = nkas
+    Daily(config=self.config, device=self.device, socket=self.socket).run()

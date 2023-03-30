@@ -63,7 +63,7 @@ page_conversation_list.link(button=back, destination=page_nikke_list)
 page_nikke_list.link(button=to_conversation_list, destination=page_conversation_list)
 
 # 解放
-page_liberation = Page(signs=[liberation_sign], name='page_liberation', parent=page_nikke_list)
+page_liberation = Page(signs=[liberation_sign, liberation_sign2], name='page_liberation', parent=page_nikke_list)
 page_liberation.link(button=home, destination=page_main)
 page_liberation.link(button=back, destination=page_nikke_list)
 

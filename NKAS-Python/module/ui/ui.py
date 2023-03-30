@@ -310,12 +310,13 @@ class UI(BaseModule):
             for index, value in enumerate(path):
                 self.device.screenshot()
 
-                if self.device.appear(value['destination'].signs[0]):
-                    path = path[index + 1:]
-                    confirm_timer.count = len(path)
-                    if confirm_timer.reached():
-                        return
-                    break
+                for i in value['destination'].signs:
+                    if self.device.appear(i):
+                        path = path[index + 1:]
+                        confirm_timer.count = len(path)
+                        if confirm_timer.reached():
+                            return
+                        break
 
                 if click_timer.reached() and self.device.appear_then_click(value['button']):
                     click_timer.reset()

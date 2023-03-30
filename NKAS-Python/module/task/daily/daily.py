@@ -24,6 +24,7 @@ class Daily(UI, Task):
         self.getReward()
         self.to_pass()
         self.to_liberation()
+        self.to_paid_store()
         self.finish(self.config, 'Daily', second=60)
         self.INFO('Daily is finished')
         self.notice()
@@ -278,9 +279,9 @@ class Daily(UI, Task):
         self.go(page_main)
 
         timeout = Timer(20).start()
-        confirm_timer = Timer(3, count=5).start()
+        confirm_timer = Timer(3, count=8).start()
         click_timer = Timer(1.2)
-        reset_timer = Timer(1, count=8).start()
+        reset_timer = Timer(1, count=6).start()
 
         failed = False
 
@@ -304,7 +305,7 @@ class Daily(UI, Task):
 
             if not failed:
 
-                if click_timer.reached() and self.device.appear_then_click(paid_store):
+                if click_timer.reached() and self.device.appear_then_click(paid_store, mask_id=mask_id):
                     timeout.reset()
                     confirm_timer.reset()
                     click_timer.reset()

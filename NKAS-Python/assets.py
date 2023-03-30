@@ -23,6 +23,7 @@ friend_sign = { 'area' : (312, 146, 413, 174) , 'path' : './templates/ui/page/fr
 infinite_tower_sign = { 'area' : (283, 1071, 435, 1133) , 'path' : './templates/ui/page/infinite_tower/infinite_tower_sign.png' , 'id' : 'infinite_tower_sign' }
 inventory_sign = { 'area' : (45, 112, 254, 141) , 'path' : './templates/ui/page/inventory/inventory_sign.png' , 'id' : 'inventory_sign' }
 liberation_sign = { 'area' : (394, 754, 482, 776) , 'path' : './templates/ui/page/liberation/liberation_sign.png' , 'id' : 'liberation_sign' }
+liberation_sign2 = { 'area' : (119, 141, 260, 156) , 'path' : './templates/ui/page/liberation/liberation_sign2.png' , 'id' : 'liberation_sign2' }
 login_confirm = { 'area' : (266, 920, 293, 940) , 'path' : './templates/ui/page/login/login_confirm.png' , 'id' : 'login_confirm' }
 login_sign = { 'area' : (229, 1247, 494, 1258) , 'path' : './templates/ui/page/login/login_sign.png' , 'id' : 'login_sign' }
 touch_to_continue = { 'area' : (225, 1047, 495, 1067) , 'path' : './templates/ui/page/login/touch_to_continue.png' , 'id' : 'touch_to_continue' }
