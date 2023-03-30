@@ -30,6 +30,10 @@ Task:
     event: 1-1
     finishAllEvent: true
     historyEvent:
+      - label: Cherry Blossom
+        path: /event_3
+        type: 0
+        value: 3
       - label: BOW-WOW PARADISE
         path: /event_2
         type: 0

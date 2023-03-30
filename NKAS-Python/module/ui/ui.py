@@ -13,6 +13,7 @@ class UI(BaseModule):
 
         timeout = Timer(180).start()
         click_timer = Timer(1.2)
+        confirm_timer = Timer(1, count=5).start()
 
         while 1:
             if skip_first_screenshot:
@@ -27,7 +28,8 @@ class UI(BaseModule):
                 for sign in page.signs:
                     if match(img=self.device.image, template=sign, _result=ImgResult.SIMILARITY) is not None:
                         UI.current_page = page
-                        return page
+                        if click_timer.reached():
+                            return page
                     else:
                         continue
 
@@ -36,7 +38,8 @@ class UI(BaseModule):
             if result is not None:
                 UI.current_page = result
                 # self.closeChildPage()
-                return result
+                if click_timer.reached():
+                    return result
 
             # 在未知页面,但是有主页面按钮
             if click_timer.reached() and self.device.appear_then_click(home, screenshot=True):
@@ -49,6 +52,17 @@ class UI(BaseModule):
             if click_timer.reached() and self.device.appear(gift) and self.device.appear_then_click(confirm):
                 timeout.reset()
                 click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.clickTextLocation('领取奖励'):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
                 continue
 
             # 月卡
@@ -73,12 +87,14 @@ class UI(BaseModule):
 
             if self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):
                 self.device.multiClickLocation((20, 600))
+                self.device.sleep(5)
                 timeout.reset()
                 click_timer.reset()
                 continue
 
             if click_timer.reached() and self.device.textStrategy('剩余时间', None, OcrResult.TEXT):
                 self.device.multiClickLocation((20, 600))
+                self.device.sleep(5)
                 timeout.reset()
                 click_timer.reset()
                 continue

@@ -15,7 +15,7 @@ class LoginHandler(UI):
     def handle_app_login(self, where=True):
         timeout = Timer(180).start()
         click_timer = Timer(1.2)
-        confirm_timer = Timer(1, count=8).start()
+        confirm_timer = Timer(1, count=12).start()
 
         if where:
             self.where()
@@ -30,6 +30,11 @@ class LoginHandler(UI):
         while 1:
 
             self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(reward):
+                timeout.reset()
+                click_timer.reset()
+                continue
 
             if self.server == NIKKEServer.JP and self.config.Emulator_JP_PackageName not in self.device.u2.app_list_running():
                 self.device.u2.app_start(self.config.Emulator_JP_PackageName)
@@ -82,6 +87,12 @@ class LoginHandler(UI):
                 confirm_timer.reset()
                 continue
 
+            if click_timer.reached() and self.device.clickTextLocation('领取奖励'):
+                timeout.reset()
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
             # 更新NIKKE
             if click_timer.reached() and self.device.appear(download_sign) and self.device.appear_then_click(
                     small_confirm):
@@ -111,11 +122,6 @@ class LoginHandler(UI):
                 confirm_timer.reset()
                 continue
 
-            if click_timer.reached() and self.device.appear_then_click(reward):
-                timeout.reset()
-                click_timer.reset()
-                continue
-
             if click_timer.reached() and self.device.appear_then_click(get_daily_login_reward):
                 timeout.reset()
                 click_timer.reset()
@@ -130,12 +136,14 @@ class LoginHandler(UI):
 
             if click_timer.reached() and self.device.textStrategy('根据累积登入天数', None, OcrResult.TEXT):
                 self.device.multiClickLocation((20, 600))
+                self.device.sleep(5)
                 timeout.reset()
                 click_timer.reset()
                 continue
 
             if click_timer.reached() and self.device.textStrategy('剩余时间', None, OcrResult.TEXT):
                 self.device.multiClickLocation((20, 600))
+                self.device.sleep(5)
                 timeout.reset()
                 click_timer.reset()
                 continue
