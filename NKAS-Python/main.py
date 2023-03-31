@@ -210,12 +210,8 @@ if __name__ == '__main__':
     # TODO 计算活动的困难模式开启时间，在前一天或执行前跳过活动任务
     # TODO 模拟室Improvement事件不会选选项
     # TODO 与其他脚本共同运行时，若其他脚本关闭，这边会断开连接
-    # TODO 森，不能进入咨询
     # TODO 艾德米，回答有问题
     # TODO 德雷克，回答有问题
 
     nkas = NikkeAutoScript()
-    # nkas.socket.run()
-    from module.task.conversation.conversation import Conversation
-    self = nkas
-    Conversation(config=self.config, device=self.device, socket=self.socket).run()
+    nkas.socket.run()

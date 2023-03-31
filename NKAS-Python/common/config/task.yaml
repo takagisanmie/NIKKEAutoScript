@@ -8,7 +8,7 @@ Task:
     activate: true
     displayName: 咨询
     name: Conversation
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
     nikkeList:
     - Snow_White
     - Sakura
@@ -30,14 +30,14 @@ Task:
     activate: true
     displayName: 一举歼灭
     name: Destroy
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
   Event:
     activate: true
     currentEvent: 3
     difficulty: 0
     displayName: 活动
     event: 1-11
-    finishAllEvent: true
+    finishAllEvent: false
     historyEvent:
     - label: Cherry Blossom
       path: /event_3
@@ -52,7 +52,7 @@ Task:
       type: 1
       value: 1
     name: Event
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
     part: 2
   FreeStore:
     activate: true
@@ -61,7 +61,7 @@ Task:
     arena_product_list: fire > selection_box
     displayName: 商店
     name: FreeStore
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
     rubbishStoreNextExecutionTime: 1680537600
     rubbish_store_product_list: gem > 2h_cdc > 1h_cdc
   Reward:
@@ -75,7 +75,7 @@ Task:
     activate: true
     displayName: 新人竞技场
     name: RookieArena
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
     refresh_chance: '2'
     target: 1
     under: '0'
