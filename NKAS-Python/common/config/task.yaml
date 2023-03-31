@@ -3,7 +3,7 @@ Task:
     activate: true
     displayName: 委托
     name: Commission
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
   Conversation:
     activate: true
     displayName: 咨询
@@ -11,14 +11,14 @@ Task:
     nextExecutionTime: 1680292800
     nikkeList:
     - Snow_White
-    - Centi
+    - Sakura
     - Guillotine
     - Anis
     - Sugar
-    - Pepper
     - Volume
     - Isabel
     - Maxwell
+    - Sin
   Daily:
     activate: true
     displayName: 每日任务
@@ -69,7 +69,7 @@ Task:
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1680223995
+    nextExecutionTime: 1680307698
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true

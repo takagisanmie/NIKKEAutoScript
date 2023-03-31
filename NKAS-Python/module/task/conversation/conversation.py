@@ -80,10 +80,15 @@ class Conversation(UI, Task):
                     # upper_left, bottom_right = p[0], p[2]
                     # left top right bottom
 
+                    left += 500
+                    right = left + 630
+                    top += 15
+                    bottom += 40
+
                     position = [left, top, right, bottom]
 
                     sl = self.device.matchRelative(position, 500, 520, 15, 40, case_closed, 0.8,
-                                                   ImgResult.SIMILARITY)
+                                                   ImgResult.SIMILARITY, add=False)
 
                     if not sl:
                         self.INFO(f'wait to communicate: {value["label"]}')

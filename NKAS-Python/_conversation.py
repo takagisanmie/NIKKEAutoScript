@@ -1319,6 +1319,10 @@ Biscuit = [
     ''
 ]
 
+Sakura = {
+    ''
+}
+
 Nikke_dialog = {
     'Alice': Alice,
     'Scarlet': Scarlet,
@@ -1331,6 +1335,7 @@ Nikke_dialog = {
     'Helm': Helm,
     'Harran': Harran,
     'Noah': Noah,
+    'Sakura': Sakura,
     'Ludmilla': Ludmilla,
     'Crow': Harran,
     'Brid': Brid,
@@ -1432,6 +1437,10 @@ Nikke_list = [
     {
         'key': 'Noah',
         'label': '诺雅',
+    },
+    {
+        'key': 'Sakura',
+        'label': '樱花',
     },
     {
         'key': 'Crow',

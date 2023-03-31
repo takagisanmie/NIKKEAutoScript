@@ -216,6 +216,6 @@ if __name__ == '__main__':
 
     nkas = NikkeAutoScript()
     # nkas.socket.run()
-    from module.task.daily.daily import Daily
+    from module.task.conversation.conversation import Conversation
     self = nkas
-    Daily(config=self.config, device=self.device, socket=self.socket).run()
+    Conversation(config=self.config, device=self.device, socket=self.socket).run()

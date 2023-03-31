@@ -135,15 +135,16 @@ class Control(DroidCast, Ocr):
 
     def matchRelative(self, position, left=0, right=0, top=0, bottom=0, template=None, value=0.8,
                       _result=ImgResult.SIMILARITY,
-                      index=None):
+                      index=None, add=True):
         x, y, x2, y2 = int(position[0]), int(position[1]), int(position[2]), int(position[3])
         # left,top,right,bottom
         # x, y, x2, y2 = position[0], position[1], position[2], position[3]
+        if add:
+            x += left
+            x2 += right
+            y += top
+            y2 += bottom
 
-        x += left
-        x2 += right
-        y += top
-        y2 += bottom
         img = self.image[y:y2, x:x2]
         # img = cv2.imread(Path.SCREENSHOT_PATH)[y:y2, x:x2]
         # import cv2
