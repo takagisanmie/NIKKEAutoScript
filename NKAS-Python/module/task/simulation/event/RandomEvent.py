@@ -111,7 +111,7 @@ class RandomEvent(BaseEvent):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached():
+            if confirm_timer.reached():
                 return
 
             if timeout.reached():
