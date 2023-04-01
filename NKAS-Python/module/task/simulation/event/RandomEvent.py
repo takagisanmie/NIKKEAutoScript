@@ -34,6 +34,11 @@ class RandomEvent(BaseEvent):
                 confirm_timer.reset()
 
             # 在替换相同效果
+            if self.device.appear(limited) and self.device.appear(cancel):
+                self.parent._skip()
+                return
+
+            # 在替换相同效果
             if self.device.appear(replacement):
                 self.parent.skip()
                 timeout.reset()
@@ -73,6 +78,38 @@ class RandomEvent(BaseEvent):
             if self.device.appear(reset_time):
                 if confirm_timer.reached():
                     return
+
+            if timeout.reached():
+                self.ERROR('wait too long')
+                raise Timeout
+
+            if reset_timer.reached():
+                reset_timer.reset()
+                glo.set_value(mask_id, [])
+
+    def _skip(self):
+        timeout = Timer(20).start()
+        confirm_timer = Timer(1, count=3).start()
+        reset_timer = Timer(2, count=6).start()
+        click_timer = Timer(1.2)
+
+        glo.set_value('_skip', [])
+        mask_id = '_skip'
+
+        while 1:
+            self.device.screenshot()
+
+            if click_timer.reached() and self.device.appear_then_click(cancel, mask_id=mask_id):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.device.appear_then_click(confirm, mask_id=mask_id):
+                timeout.reset()
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if timeout.reached():
                 self.ERROR('wait too long')

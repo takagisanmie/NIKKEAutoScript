@@ -24,7 +24,7 @@ Task:
     displayName: 每日任务
     equipmentUpgrade: true
     name: Daily
-    nextExecutionTime: 1680292860
+    nextExecutionTime: 1680379260
     nikkeUpgrade: true
   Destroy:
     activate: true
@@ -69,7 +69,7 @@ Task:
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1680307698
+    nextExecutionTime: 1680351892
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true
@@ -86,7 +86,7 @@ Task:
     displayName: 模拟室
     end_area: '3'
     name: SimulationRoom
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
   TribeTower:
     Elysion: true
     Missilis: true
@@ -96,4 +96,4 @@ Task:
     daily: false
     displayName: 企业塔
     name: TribeTower
-    nextExecutionTime: 1680292800
+    nextExecutionTime: 1680379200
