@@ -89,7 +89,7 @@ class RandomEvent(BaseEvent):
 
     def _skip(self):
         timeout = Timer(20).start()
-        confirm_timer = Timer(1, count=3).start()
+        confirm_timer = Timer(1, count=4).start()
         reset_timer = Timer(2, count=6).start()
         click_timer = Timer(1.2)
 
@@ -110,6 +110,9 @@ class RandomEvent(BaseEvent):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
+
+            if click_timer.reached():
+                return
 
             if timeout.reached():
                 self.ERROR('wait too long')
