@@ -13,7 +13,7 @@ class Control(DroidCast, Ocr):
         return True
 
     def appear_then_click(self, button, value=0.8, screenshot=False, gray=False, img=None, img_template=None,
-                          mask_id=None, index=0, once=False):
+                          mask_id=None, index=0, once=False, sort_by='top'):
 
         # if 'button' in button.keys():
         #     _button: Button = button['button']
@@ -29,7 +29,7 @@ class Control(DroidCast, Ocr):
 
         if lc := self.appear(button, value, screenshot=screenshot, _result=ImgResult.LOCATION, gray=gray, img=img,
 
-                             img_template=img_template, mask_id=mask_id, index=index, once=once):
+                             img_template=img_template, mask_id=mask_id, index=index, once=once, sort_by=sort_by):
 
             # x, y = random_rectangle_point(button['area'])
 

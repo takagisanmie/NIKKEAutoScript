@@ -1,4 +1,5 @@
 import glo
+from common.enum.enum import OcrResult
 from common.exception import Timeout
 from module.base.task import Task
 from module.task.daily.daily_assets import *
@@ -304,6 +305,21 @@ class Daily(UI, Task):
                 continue
 
             if not failed:
+                if click_timer.reached() \
+                        and not self.device.textStrategy('_每日', None, OcrResult.TEXT) \
+                        and self.device.appear_then_click(paid_store_gift):
+                    timeout.reset()
+                    confirm_timer.reset()
+                    click_timer.reset()
+                    continue
+
+                if click_timer.reached() and self.device.textStrategy('新人特别支援', None, OcrResult.TEXT):
+                    self.device.swipe(640, 370, 200, 370)
+                    self.device.sleep(2)
+                    timeout.reset()
+                    confirm_timer.reset()
+                    click_timer.reset()
+                    continue
 
                 if click_timer.reached() and self.device.appear_then_click(paid_store, mask_id=mask_id):
                     timeout.reset()
@@ -311,21 +327,25 @@ class Daily(UI, Task):
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() and self.device.clickTextLocation('免费'):
+                if click_timer.reached() and self.device.appear_then_click(free):
+                    self.INFO('get free gift')
+                    self.device.sleep(2)
+                    self.device.screenshot()
+                    self.device.appear_then_click(reward)
+                    self.device.sleep(2)
+                    self.device.screenshot()
                     timeout.reset()
-                    click_timer.reset()
                     confirm_timer.reset()
-                    continue
 
                 if click_timer.reached() and self.device.appear_then_click(store_emphasis,
                                                                            img_template=store_emphasis_area,
-                                                                           mask_id=mask_id):
+                                                                           mask_id=mask_id, sort_by='left'):
                     timeout.reset()
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
 
-            if confirm_timer.reached():
+            if (self.device.appear(home) or self.device.appear(main_sign)) and confirm_timer.reached():
                 return
 
             if reset_timer.reached():

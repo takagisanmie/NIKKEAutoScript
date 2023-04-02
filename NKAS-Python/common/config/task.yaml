@@ -3,12 +3,12 @@ Task:
     activate: true
     displayName: 委托
     name: Commission
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
   Conversation:
     activate: true
     displayName: 咨询
     name: Conversation
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
     nikkeList:
     - Snow_White
     - Sakura
@@ -24,13 +24,13 @@ Task:
     displayName: 每日任务
     equipmentUpgrade: true
     name: Daily
-    nextExecutionTime: 1680379260
+    nextExecutionTime: 1680465660
     nikkeUpgrade: true
   Destroy:
     activate: true
     displayName: 一举歼灭
     name: Destroy
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
   Event:
     activate: true
     currentEvent: 3
@@ -52,7 +52,7 @@ Task:
       type: 1
       value: 1
     name: Event
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
     part: 2
   FreeStore:
     activate: true
@@ -61,7 +61,7 @@ Task:
     arena_product_list: fire > selection_box
     displayName: 商店
     name: FreeStore
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
     rubbishStoreNextExecutionTime: 1680537600
     rubbish_store_product_list: gem > 2h_cdc > 1h_cdc
   Reward:
@@ -69,13 +69,13 @@ Task:
     arena: true
     displayName: 收获
     name: Reward
-    nextExecutionTime: 1680351892
+    nextExecutionTime: 1680421237
     recordTwiceTime: 1679083200
   RookieArena:
     activate: true
     displayName: 新人竞技场
     name: RookieArena
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
     refresh_chance: '2'
     target: 1
     under: '0'
@@ -86,7 +86,7 @@ Task:
     displayName: 模拟室
     end_area: '3'
     name: SimulationRoom
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
   TribeTower:
     Elysion: true
     Missilis: true
@@ -96,4 +96,4 @@ Task:
     daily: false
     displayName: 企业塔
     name: TribeTower
-    nextExecutionTime: 1680379200
+    nextExecutionTime: 1680465600
