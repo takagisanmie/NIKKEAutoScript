@@ -1,3 +1,5 @@
+auto_burst = { 'area' : (81, 36, 148, 47) , 'path' : './templates/ui/common/auto_burst.png' , 'id' : 'auto_burst' }
+auto_shoot = { 'area' : (21, 27, 52, 59) , 'path' : './templates/ui/common/auto_shoot.png' , 'id' : 'auto_shoot' }
 back = { 'area' : (30, 1194, 52, 1221) , 'path' : './templates/ui/common/back.png' , 'id' : 'back' }
 download_sign = { 'area' : (335, 527, 386, 549) , 'path' : './templates/ui/common/download_sign.png' , 'id' : 'download_sign' }
 get_daily_login_reward = { 'area' : (489, 689, 570, 708) , 'path' : './templates/ui/common/get_daily_login_reward.png' , 'id' : 'get_daily_login_reward' }
