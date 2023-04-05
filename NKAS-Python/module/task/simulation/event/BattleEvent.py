@@ -75,13 +75,13 @@ class BattleEvent(BaseEvent):
                 self.device.sleep(15)
                 continue
 
-            if not failed and click_timer.reached() and self.device.appear_then_click(auto_shoot):
+            if not failed and click_timer.reached() and self.device.appear_then_click(auto_shoot, value=0.9):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
 
-            if not failed and click_timer.reached() and self.device.appear_then_click(auto_burst):
+            if not failed and click_timer.reached() and self.device.appear_then_click(auto_burst, value=0.9):
                 timeout.reset()
                 click_timer.reset()
                 confirm_timer.reset()
