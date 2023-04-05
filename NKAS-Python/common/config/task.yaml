@@ -86,7 +86,7 @@ Task:
     displayName: 模拟室
     end_area: '3'
     name: SimulationRoom
-    nextExecutionTime: 1680811200
+    nextExecutionTime: 1680292800
   TribeTower:
     Elysion: true
     Missilis: true
