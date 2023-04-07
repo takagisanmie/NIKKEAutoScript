@@ -36,7 +36,7 @@ class Updater(GitManager):
         """
         ph = "h" if short_sha1 else "H"
 
-        # log '' --pretty=format:"h---%an---%ad---%s" --date=iso -1
+        # git log ..origin/master --pretty=format:"h---%an---%ad---%s" --date=iso -1
 
         log = self.execute_output(
             f'"{self.git}" log {revision} --pretty=format:"%{ph}---%an---%ad---%s" --date=iso -{n}'
@@ -47,9 +47,6 @@ class Updater(GitManager):
 
         logs = log.split("\n")
         logs = list(map(lambda log: tuple(log.split("---")), logs))
-
-        for l in logs:
-            logger.info(l)
 
         if n == 1:
             return logs[0]
@@ -118,7 +115,7 @@ class Updater(GitManager):
         if self.state == "cancel":
             self.state = 1
         self.state = "wait"
-        self.event.set()
+        # self.event.set()
         _instances = instances.copy()
         start_time = time.time()
         while _instances:
@@ -130,7 +127,7 @@ class Updater(GitManager):
             if self.state == "cancel":
                 self.state = 1
                 self.event.clear()
-                ProcessManager.restart_processes(instances, self.event)
+                ProcessManager.restart_processes(instances, None)
                 return
             time.sleep(0.25)
             if time.time() - start_time > 60 * 10:
