@@ -51,7 +51,7 @@ class NikkeAutoScript:
 
 
 if __name__ == '__main__':
-#    test1
+    # new version
     nkas = NikkeAutoScript()
     self = nkas
     from module.handler.login import LoginHandler
