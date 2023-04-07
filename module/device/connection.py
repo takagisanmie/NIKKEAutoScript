@@ -305,6 +305,7 @@ class Connection(ConnectionAttr):
             port = random_port(self.config.FORWARD_PORT_RANGE)
             forward = ForwardItem(self.serial, f'tcp:{port}', remote)
             logger.info(f'Create forward: {forward}')
+            logger.info(f'{forward.local} --> {forward.remote}')
             self.adb.forward(forward.local, forward.remote)
             return port
 
@@ -467,6 +468,8 @@ class Connection(ConnectionAttr):
                 """
                     好像和 adb devices / adb get-serialno 差不多
                     output: emulator-5554	device
+                    
+                    https://cs.android.com/android/platform/superproject/+/master:packages/modules/adb/SERVICES.TXT
                 """
                 c.send_command("host:devices")
                 c.check_okay()

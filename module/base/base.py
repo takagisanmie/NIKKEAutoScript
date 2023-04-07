@@ -84,7 +84,7 @@ class ModuleBase:
 
         return appear
 
-    def appear_text(self, text, interval=0) -> bool:
+    def appear_text(self, text, interval=0) -> bool or tuple:
         if interval:
             if text in self.interval_timer:
                 if self.interval_timer[text].limit != interval:

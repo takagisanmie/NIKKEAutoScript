@@ -77,6 +77,15 @@ footer {
     max-height: 100px;
 }
 
+#pywebio-scope-update {
+    background-color: #333333;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    width: 210px;
+    max-height: 100px;
+}
+
 #pywebio-scope-running {
     background-color: #333333;
     margin: 8px;
@@ -217,6 +226,10 @@ button[type="button"] {
 .icon_button:hover {
     cursor: pointer;
     color: #b5dbff;
+}
+
+#pywebio-scope-content > * tr {
+    background-color: #4c4c4c;
 }
 
 ::-webkit-scrollbar {

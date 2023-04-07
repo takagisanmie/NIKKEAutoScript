@@ -6,7 +6,7 @@ from typing import List, Optional, Dict
 
 from pywebio.io_ctrl import Output
 from pywebio.output import use_scope, put_text, put_row, put_scope, put_scrollable, put_button, toast, put_html, \
-    put_column, clear, put_buttons, put_collapse
+    put_column, clear, put_buttons, put_collapse, put_table, put_loading
 from pywebio.pin import pin_on_change, pin
 from pywebio.platform.fastapi import webio_routes
 from pywebio.session import local, set_env, run_js, register_thread
@@ -20,7 +20,9 @@ from module.webui.base import Frame
 from module.webui.lang import t
 from module.webui.process_manager import ProcessManager
 from module.webui.setting import State
-from module.webui.utils import get_localstorage, add_css, get_nkas_config_listen_path, parse_pin_value, re_fullmatch
+from module.webui.updater import updater
+from module.webui.utils import get_localstorage, add_css, get_nkas_config_listen_path, parse_pin_value, re_fullmatch, \
+    Switch
 from module.webui.widgets import RichLog, put_icon_buttons, BinarySwitchButton, T_Output_Kwargs, put_output
 
 
@@ -41,6 +43,7 @@ class NikkeAutoScriptGUI(Frame):
     def set_aside(self) -> None:
         put_icon_buttons(ICON.Menu, onclick=self.ui_dashboard, id='Dashboard'),
         put_icon_buttons(ICON.Setting, onclick=self.ui_setting, id='Setting'),
+        put_icon_buttons(ICON.Link, onclick=self.ui_link, id='Link'),
 
     def show(self):
         self._show()
@@ -57,6 +60,69 @@ class NikkeAutoScriptGUI(Frame):
         self.init_aside(name='Dashboard')
         self.dashboard_set_menu()
         self.dashboard_set_content()
+
+    @use_scope("menu", clear=True)
+    def dashboard_set_menu(self) -> None:
+        task = 'nkas'
+
+        '''
+            ProcessManager.start(func, ev)
+            ev: 停止事件
+            func: 通过创建的线程的执行的方法，在Alas中，默认为执行
+            AzurLaneAutoScript(config_name='alas').loop()
+
+        '''
+        put_scope("scheduler"),
+        with use_scope('scheduler'):
+            put_row([put_text(t('Gui.Menu.Scheduler')), put_scope("scheduler_btn")])
+            with use_scope('scheduler_btn'):
+                switch_scheduler = BinarySwitchButton(
+                    label_on=t("Gui.Button.Stop"),
+                    label_off=t("Gui.Button.Start"),
+                    onclick_on=lambda: self.nkas.stop(),
+                    onclick_off=lambda: self.nkas.start(None),
+                    get_state=lambda: self.nkas.alive,
+                    color_on="off",
+                    color_off="on",
+                    scope="scheduler_btn",
+                )
+
+                self.task_handler.add(switch_scheduler.g(), 1, True)
+
+        # 显示任务队列
+        with use_scope('running'):
+            put_row([put_text(t('Gui.Overview.Running'))])
+            put_scrollable([put_scope('running_list')], height=220, keep_bottom=False)
+
+        put_scope("pending"),
+        with use_scope('pending'):
+            put_row([put_text(t('Gui.Overview.Pending'))])
+            put_scrollable([put_scope('pending_list')], height=220, keep_bottom=False)
+
+        put_scope("waiting"),
+        with use_scope('waiting'):
+            put_row([put_text(t('Gui.Overview.Waiting'))])
+            put_scrollable([put_scope('waiting_list')], height=220, keep_bottom=False)
+
+    @use_scope("content", clear=True)
+    def dashboard_set_content(self):
+        log = RichLog("log")
+        put_scrollable([put_scope("log", [put_html("")])], height=(200, 750), keep_bottom=True).style(
+            '--log-scrollable--')
+
+        '''
+            task_handler: 子任务处理器
+            通过task_handler.add添加的func
+            会被带有yield的生成器循环执行，直到该任务被移除
+
+            log.put_log(ProcessManager): 向web渲染通过logger输出的日志
+        '''
+        self.task_handler.add(log.put_log(self.nkas), delay=0.25, pending_delete=True)
+
+        """
+            更新任务队列状态
+        """
+        self.task_handler.add(self.nkas_update_overview_task, 10, True)
 
     def ui_setting(self) -> None:
         self.init_aside(name='Setting')
@@ -192,68 +258,181 @@ class NikkeAutoScriptGUI(Frame):
             color="navigator",
         )
 
+    def ui_link(self) -> None:
+        self.init_aside(name='Link')
+        self.link_set_menu()
+        self.link_set_content()
+
     @use_scope("menu", clear=True)
-    def dashboard_set_menu(self) -> None:
-        task = 'nkas'
+    def link_set_menu(self) -> None:
+        put_scope("update"),
+        with use_scope('update'):
+            put_row([put_text(t('Gui.Menu.Update')).onclick(self.link_set_content)])
 
-        '''
-            ProcessManager.start(func, ev)
-            ev: 停止事件
-            func: 通过创建的线程的执行的方法，在Alas中，默认为执行
-            AzurLaneAutoScript(config_name='alas').loop()
-            
-        '''
-        put_scope("scheduler"),
-        with use_scope('scheduler'):
-            put_row([put_text(t('Gui.Menu.Scheduler')), put_scope("scheduler_btn")])
-            with use_scope('scheduler_btn'):
-                switch_scheduler = BinarySwitchButton(
-                    label_on=t("Gui.Button.Stop"),
-                    label_off=t("Gui.Button.Start"),
-                    onclick_on=lambda: self.nkas.stop(),
-                    onclick_off=lambda: self.nkas.start(None),
-                    get_state=lambda: self.nkas.alive,
-                    color_on="off",
-                    color_off="on",
-                    scope="scheduler_btn",
-                )
-
-                self.task_handler.add(switch_scheduler.g(), 1, True)
-
-        # 显示任务队列
-        with use_scope('running'):
-            put_row([put_text(t('Gui.Overview.Running'))])
-            put_scrollable([put_scope('running_list')], height=220, keep_bottom=False)
-
-        put_scope("pending"),
-        with use_scope('pending'):
-            put_row([put_text(t('Gui.Overview.Pending'))])
-            put_scrollable([put_scope('pending_list')], height=220, keep_bottom=False)
-
-        put_scope("waiting"),
-        with use_scope('waiting'):
-            put_row([put_text(t('Gui.Overview.Waiting'))])
-            put_scrollable([put_scope('waiting_list')], height=220, keep_bottom=False)
+        self.link_set_content()
 
     @use_scope("content", clear=True)
-    def dashboard_set_content(self):
-        log = RichLog("log")
-        put_scrollable([put_scope("log", [put_html("")])], height=(200, 750), keep_bottom=True).style(
-            '--log-scrollable--')
+    def link_set_content(self) -> None:
+        put_row(
+            content=[put_scope("updater_loading"), None, put_scope("updater_state")],
+            size="auto .25rem 1fr",
+        )
 
-        '''
-            task_handler: 子任务处理器
-            通过task_handler.add添加的func
-            会被带有yield的生成器循环执行，直到该任务被移除
-            
-            log.put_log(ProcessManager): 向web渲染通过logger输出的日志
-        '''
-        self.task_handler.add(log.put_log(self.nkas), delay=0.25, pending_delete=True)
+        put_scope("updater_btn")
+        put_scope("updater_info")
+        put_scope("updater_detail")
 
-        """
-            更新任务队列状态
-        """
-        self.task_handler.add(self.nkas_update_overview_task, 10, True)
+        def update_table():
+            with use_scope("updater_info", clear=True):
+                local_commit = updater.get_commit(short_sha1=True)
+                upstream_commit = updater.get_commit(
+                    f"origin/{updater.Branch}", short_sha1=True
+                )
+                put_table(
+                    [
+                        [t("Gui.Update.Local"), *local_commit],
+                        [t("Gui.Update.Upstream"), *upstream_commit],
+                    ],
+                    header=[
+                        "",
+                        "SHA1",
+                        t("Gui.Update.Author"),
+                        t("Gui.Update.Time"),
+                        t("Gui.Update.Message"),
+                    ],
+                )
+            with use_scope("updater_detail", clear=True):
+                put_text(t("Gui.Update.DetailedHistory"))
+                history = updater.get_commit(
+                    f"origin/{updater.Branch}", n=20, short_sha1=True
+                )
+                put_table(
+                    [commit for commit in history],
+                    header=[
+                        "SHA1",
+                        t("Gui.Update.Author"),
+                        t("Gui.Update.Time"),
+                        t("Gui.Update.Message"),
+                    ],
+                )
+
+        def u(state):
+            if state == -1:
+                return
+            clear("updater_loading")
+            clear("updater_state")
+            clear("updater_btn")
+            if state == 0:
+                put_loading("border", "secondary", "updater_loading").style(
+                    "--loading-border-fill--"
+                )
+                put_text(t("Gui.Update.UpToDate"), scope="updater_state")
+                put_button(
+                    t("Gui.Button.CheckUpdate"),
+                    onclick=updater.check_update,
+                    color="info",
+                    scope="updater_btn",
+                )
+                update_table()
+            elif state == 1:
+                put_loading("grow", "success", "updater_loading").style(
+                    "--loading-grow--"
+                )
+                put_text(t("Gui.Update.HaveUpdate"), scope="updater_state")
+                put_button(
+                    t("Gui.Button.ClickToUpdate"),
+                    onclick=updater.run_update,
+                    color="success",
+                    scope="updater_btn",
+                )
+                update_table()
+            elif state == "checking":
+                put_loading("border", "primary", "updater_loading").style(
+                    "--loading-border--"
+                )
+                put_text(t("Gui.Update.UpdateChecking"), scope="updater_state")
+            elif state == "failed":
+                put_loading("grow", "danger", "updater_loading").style(
+                    "--loading-grow--"
+                )
+                put_text(t("Gui.Update.UpdateFailed"), scope="updater_state")
+                put_button(
+                    t("Gui.Button.RetryUpdate"),
+                    onclick=updater.run_update,
+                    color="primary",
+                    scope="updater_btn",
+                )
+            elif state == "start":
+                put_loading("border", "primary", "updater_loading").style(
+                    "--loading-border--"
+                )
+                put_text(t("Gui.Update.UpdateStart"), scope="updater_state")
+                put_button(
+                    t("Gui.Button.CancelUpdate"),
+                    onclick=updater.cancel,
+                    color="danger",
+                    scope="updater_btn",
+                )
+            elif state == "wait":
+                put_loading("border", "primary", "updater_loading").style(
+                    "--loading-border--"
+                )
+                put_text(t("Gui.Update.UpdateWait"), scope="updater_state")
+                put_button(
+                    t("Gui.Button.CancelUpdate"),
+                    onclick=updater.cancel,
+                    color="danger",
+                    scope="updater_btn",
+                )
+            elif state == "run update":
+                put_loading("border", "primary", "updater_loading").style(
+                    "--loading-border--"
+                )
+                put_text(t("Gui.Update.UpdateRun"), scope="updater_state")
+                put_button(
+                    t("Gui.Button.CancelUpdate"),
+                    onclick=updater.cancel,
+                    color="danger",
+                    scope="updater_btn",
+                    disabled=True,
+                )
+            elif state == "reload":
+                put_loading("grow", "success", "updater_loading").style(
+                    "--loading-grow--"
+                )
+                put_text(t("Gui.Update.UpdateSuccess"), scope="updater_state")
+                update_table()
+            elif state == "finish":
+                put_loading("grow", "success", "updater_loading").style(
+                    "--loading-grow--"
+                )
+                put_text(t("Gui.Update.UpdateFinish"), scope="updater_state")
+                update_table()
+            elif state == "cancel":
+                put_loading("border", "danger", "updater_loading").style(
+                    "--loading-border--"
+                )
+                put_text(t("Gui.Update.UpdateCancel"), scope="updater_state")
+                put_button(
+                    t("Gui.Button.CancelUpdate"),
+                    onclick=updater.cancel,
+                    color="danger",
+                    scope="updater_btn",
+                    disabled=True,
+                )
+            else:
+                put_text(
+                    "Something went wrong, please contact develops",
+                    scope="updater_state",
+                )
+                put_text(f"state: {state}", scope="updater_state")
+
+        updater_switch = Switch(
+            status=u, get_state=lambda: updater.state, name="updater"
+        )
+        self.task_handler.add(updater_switch.g(), delay=0.5, pending_delete=True)
+
+        updater.check_update()
 
     def nkas_update_overview_task(self):
         self.nkas_config.load()
@@ -424,6 +603,12 @@ def startup():
 
 
 def clearup():
+    """
+    Notice: Ensure run it before uvicorn reload app,
+    all process will NOT EXIT after close electron app.
+    """
+
+    logger.info("Start clearup")
     for nkas in ProcessManager._processes.values():
         nkas.stop()
     State.clearup()

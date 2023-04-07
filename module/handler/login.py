@@ -74,6 +74,10 @@ class LoginHandler(UI):
                 self.device.click_minitouch(20, 600)
                 continue
 
+            # 回到主页
+            # if self.appear_then_click(GOTO_MAIN, offset=(30, 30), interval=5):
+            #     continue
+
     def handle_app_login(self) -> bool:
         """
             Returns:

@@ -28,7 +28,7 @@ class Control(Minitouch):
             self.handle_control_check(button)
 
         # x, y = random_rectangle_point(button.button)
-        x, y = rectangle_point(button.button)
+        x, y = button.location
 
         x, y = ensure_int(x, y)
         logger.info(

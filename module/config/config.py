@@ -45,8 +45,6 @@ def name_to_function(name):
 
 class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
     def __init__(self, config_name, task=None):
-        logger.attr("Server", self.SERVER)
-
         self.config_name = config_name
         self.data = {}
         self.modified = {}
@@ -76,6 +74,9 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
             self.bind(task)
             self.task = task
             self.save()
+
+        # logger.attr("Server", self.SERVER)
+        logger.attr("Server", 'intl' if 'proximabeta' in self.Emulator_PackageName else 'tw')
 
     def load(self):
         self.data = self.read_file(self.config_name)
@@ -110,6 +111,9 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
                     path = f"{group}.{arg}"
                     if path in visited:
                         continue
+                    """
+                        将 func_set 任务组 / 选项组 的 属性覆盖到 GeneratedConfig 的类变量
+                    """
                     arg = path_to_arg(path)
                     super().__setattr__(arg, value)
                     self.bound[arg] = f"{func}.{path}"
@@ -170,7 +174,7 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
 
             func = Function(func)
             '''
-                跳过没有Scheduler.Enable属性的配置
+                跳过Scheduler.Enable为False的任务
             '''
             if not func.enable:
                 continue

@@ -77,6 +77,12 @@ class Button(Resource):
         else:
             return self._button_offset
 
+    @property
+    def location(self):
+        x = (self.button[0] + self.button[2]) / 2
+        y = (self.button[1] + self.button[3]) / 2
+        return x, y
+
     @cached_property
     def is_gif(self):
         if self.file:

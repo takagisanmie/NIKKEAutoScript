@@ -1,7 +1,8 @@
+import os
 import queue
 import threading
 from multiprocessing import Process
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from filelock import FileLock
 from rich.console import ConsoleRenderable
@@ -9,6 +10,7 @@ from rich.console import ConsoleRenderable
 from main import NikkeAutoScript
 from module.config.utils import filepath_config
 from module.logger import set_file_logger, set_func_logger, logger
+from module.submodule.utils import mod_instance, get_config_mod
 from module.webui.setting import State
 
 
@@ -112,6 +114,56 @@ class ProcessManager:
             if len(self.renderables) > self.renderables_max_length:
                 self.renderables = self.renderables[self.renderables_reduce_length:]
         logger.info("End of log queue handler loop")
+
+    @classmethod
+    def running_instances(cls) -> List["ProcessManager"]:
+        l = []
+        for process in cls._processes.values():
+            if process.alive:
+                l.append(process)
+        return l
+
+    @staticmethod
+    def restart_processes(
+            instances: List[Union["ProcessManager", str]] = None, ev: threading.Event = None
+    ):
+        """
+        After update and reload, or failed to perform an update,
+        restart all alas that running before update
+        """
+        logger.hr("Restart nkas")
+
+        # Load MOD_CONFIG_DICT
+        mod_instance()
+
+        if instances is None:
+            instances = []
+
+        _instances = set()
+
+        for instance in instances:
+            if isinstance(instance, str):
+                _instances.add(ProcessManager.get_manager(instance))
+            elif isinstance(instance, ProcessManager):
+                _instances.add(instance)
+
+        try:
+            with open("./config/reloadnkas", mode="r") as f:
+                for line in f.readlines():
+                    line = line.strip()
+                    _instances.add(ProcessManager.get_manager(line))
+        except FileNotFoundError:
+            pass
+
+        for process in _instances:
+            logger.info(f"Starting [{process.config_name}]")
+            process.start(func=get_config_mod(process.config_name), ev=ev)
+
+        try:
+            os.remove("./config/reloadnkas")
+        except:
+            pass
+        logger.info("Start nkas complete")
 
     @property
     def alive(self) -> bool:

@@ -267,7 +267,7 @@ class Minitouch(Connection):
         max_pressure = 50
         self.get_orientation()
         """
-            启动minitouch
+            通过socket操作minitouch
         """
         self._minitouch_port = self.adb_forward("localabstract:minitouch")
 

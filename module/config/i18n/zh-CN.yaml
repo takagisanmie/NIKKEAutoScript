@@ -1,9 +1,14 @@
 Gui:
   Menu:
     Scheduler: 调度器
+    Update: 更新
   Button:
     Start: 开始
     Stop: 停止
+    CheckUpdate: 检查更新
+    ClickToUpdate: 进行更新
+    RetryUpdate: 重试更新
+    CancelUpdate: 取消更新
   Overview:
     Running: 运行中
     Pending: 队列中
@@ -13,6 +18,24 @@ Gui:
   Text:
     clear: 清除
     InvalidFeedBack: 格式错误。 示例：{0}
+  Update:
+    Local: 本地
+    Upstream: 上游仓库
+    Author: 作者
+    Time: 提交时间
+    Message: 提交信息
+    DetailedHistory: 详细提交历史
+    UpToDate: 已是最新版本
+    HaveUpdate: 有新版本可用
+    UpdateStart: 开始更新
+    UpdateChecking: 检查更新中
+    UpdateFailed: 更新失败，可在./log/*_gui.txt中找到错误日志
+    UpdateWait: 等待 NKAS 完成当前任务
+    UpdateRun: 更新中
+    UpdateSuccess: 更新成功，正在重启
+    UpdateFinish: 更新成功，请手动重启
+    UpdateCancel: 取消更新，重启 NKAS 中
+
 # 选项组/任务组
 Menu:
   NKAS:
