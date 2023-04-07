@@ -1,8 +1,8 @@
 *.js linguist-detectable=false
-*.ts linguist-detectable=false
-*.css linguist-detectable=false
-*.html linguist-detectable=false
+*.ts linguist-detectable=true
+*.css linguist-detectable=true
+*.html linguist-detectable=true
 *.md linguist-detectable=false
-*.json linguist-detectable=false
+*.json linguist-detectable=true
 *.py linguist-detectable=true
 *.vue linguist-detectable=true
