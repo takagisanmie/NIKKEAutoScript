@@ -48,6 +48,9 @@ class Updater(GitManager):
         logs = log.split("\n")
         logs = list(map(lambda log: tuple(log.split("---")), logs))
 
+        for l in logs:
+            logger.info(l)
+
         if n == 1:
             return logs[0]
         else:
