@@ -1,0 +1,7 @@
+# ==================== Reward ====================
+
+Reward:
+  Scheduler:
+    Enable:
+      value: true
+      type: lock

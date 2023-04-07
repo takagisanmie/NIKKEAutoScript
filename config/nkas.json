@@ -1,0 +1,41 @@
+{
+  "NKAS": {
+    "Emulator": {
+      "Serial": "auto",
+      "PackageName": "com_proximabeta_nikke",
+      "ScreenshotMethod": "DroidCast",
+      "AdbRestart": true
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Reward": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "1989-12-27 00:00:00",
+      "Command": "Reward",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "00:00"
+    },
+    "Reward": {
+      "test": 1
+    },
+    "Reward1": {
+      "test": 1
+    },
+    "Reward2": {
+      "test": 1
+    },
+    "Reward3": {
+      "test": 111
+    },
+    "Reward4": {
+      "test": 1
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  }
+}

@@ -1,0 +1,121 @@
+Gui:
+  Menu:
+    Scheduler: 调度器
+  Button:
+    Start: 开始
+    Stop: 停止
+  Overview:
+    Running: 运行中
+    Pending: 队列中
+    Waiting: 等待中
+  Toast:
+    ConfigSaved: 设置已保存
+  Text:
+    clear: 清除
+    InvalidFeedBack: 格式错误。 示例：{0}
+# 选项组/任务组
+Menu:
+  NKAS:
+    name: NKAS
+    help: ''
+  Reward:
+    name: 收获
+    help: ''
+Task:
+  NKAS:
+    name: NKAS设置
+    help: ''
+  Reward:
+    name: 收获
+    help: ''
+Emulator:
+  _info:
+    name: 模拟器设置
+    help: ''
+  Serial:
+    name: 模拟器 Serial
+    help: '常见的模拟器 Serial 可以查询下方列表，填 "auto" 自动检测模拟器，多个模拟器正在运行或使用不支持自动检测的模拟器时无法使用 "auto"，必须手动填写'
+  PackageName:
+    name: 游戏服务器
+    help: 模拟器上装有多个游戏客户端时，需要手动选择服务器
+    com_proximabeta_nikke: 国际服
+    com_gamamobi_nikke: 港澳台
+  ScreenshotMethod:
+    name: 模拟器截图方案
+    help: ''
+    DroidCast: DroidCast
+  ControlMethod:
+    name: 模拟器控制方案
+    help: ''
+    minitouch: minitouch
+  AdbRestart:
+    name: 在检测不到设备的时候尝试重启adb
+    help: ''
+Scheduler:
+  _info:
+    name: 任务设置
+    help: ''
+  Enable:
+    name: 启用该功能
+    help: ''
+  NextRun:
+    name: 下一次运行时间
+    help: ''
+  Command:
+    name: 内部任务名称
+    help: ''
+  SuccessInterval:
+    name: 运行成功后，推迟下一次运行 X 分钟
+    help: ''
+  FailureInterval:
+    name: 运行失败后，推迟下一次运行 X 分钟
+    help: ''
+  ServerUpdate:
+    name: 服务器刷新时间
+    help: ''
+Storage:
+  _info:
+    name: 任务状态
+    help: 存放任务内部状态，任务异常时可以手动清除
+  Storage:
+    name: Storage.Storage.name
+    help: Storage.Storage.help
+Reward:
+  _info:
+    name: Reward
+    help: ''
+  test:
+    name: '1'
+    help: ''
+Reward1:
+  _info:
+    name: Reward1
+    help: ''
+  test:
+    name: '1'
+    help: ''
+Reward2:
+  _info:
+    name: Reward2
+    help: ''
+  test:
+    name: '1'
+    help: ''
+Reward3:
+  _info:
+    name: Reward3
+    help: ''
+  test:
+    name: '1'
+    help: ''
+Reward4:
+  _info:
+    name: Reward4
+    help: ''
+  test:
+    name: '1'
+    help: ''
+
+
+
+

@@ -1,0 +1,12 @@
+uvicorn==0.21.1
+starlette==0.26.1
+pywebio==1.7.1
+websockets==10.4
+pyyaml==6.0
+torch==1.12.1
+cnocr==2.2.2.2
+uiautomator2==2.16.22
+opencv-python==4.6.0.66
+adbutils==1.2.2
+rich==13.3.3
+imageio==2.27.0

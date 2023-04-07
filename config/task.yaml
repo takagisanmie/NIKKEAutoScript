@@ -1,0 +1,95 @@
+Task:
+  Commission:
+    activate: true
+    displayName: 委托
+    name: Commission
+    nextExecutionTime: 1680033600
+  Conversation:
+    activate: true
+    displayName: 咨询
+    name: Conversation
+    nextExecutionTime: 1680033600
+    nikkeList:
+      - Snow_White
+      - Centi
+      - Guillotine
+      - Anis
+      - Sugar
+      - Pepper
+      - Volume
+      - Isabel
+      - Maxwell
+  Daily:
+    activate: true
+    displayName: 每日任务
+    equipmentUpgrade: true
+    name: Daily
+    nextExecutionTime: 1680033660
+    nikkeUpgrade: true
+  Destroy:
+    activate: true
+    displayName: 一举歼灭
+    name: Destroy
+    nextExecutionTime: 1680033600
+  Event:
+    activate: true
+    currentEvent: 2
+    difficulty: 1
+    displayName: 活动
+    event: 1-11
+    finishAllEvent: false
+    historyEvent:
+      - label: BOW-WOW PARADISE
+        path: /event_2
+        type: 0
+        value: 2
+      - label: Chainsaw Man
+        path: /event_1
+        type: 1
+        value: 1
+    name: Event
+    nextExecutionTime: 1680033600
+    part: 2
+  FreeStore:
+    activate: true
+    activate_arena_store: true
+    activate_rubbish_store: true
+    arena_product_list: fire > selection_box
+    displayName: 商店
+    name: FreeStore
+    nextExecutionTime: 1680033600
+    rubbishStoreNextExecutionTime: 1680537600
+    rubbish_store_product_list: gem > 2h_cdc > 1h_cdc
+  Reward:
+    activate: true
+    arena: true
+    displayName: 收获
+    name: Reward
+    nextExecutionTime: 1679998394
+    recordTwiceTime: 1679083200
+  RookieArena:
+    activate: true
+    displayName: 新人竞技场
+    name: RookieArena
+    nextExecutionTime: 1680033600
+    refresh_chance: '2'
+    target: 1
+    under: '0'
+  SimulationRoom:
+    activate: true
+    area: '3'
+    difficulty: '5'
+    displayName: 模拟室
+    end_area: '3'
+    name: SimulationRoom
+    nextExecutionTime: 1680033600
+  TribeTower:
+    Elysion: true
+    Missilis: true
+    Pilgrim: true
+    Tetra: true
+    activate: true
+    daily: true
+    displayName: 企业塔
+    name: TribeTower
+    nextExecutionTime: 1680033600

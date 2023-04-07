@@ -1,0 +1,117 @@
+{
+  "NKAS": {
+    "Emulator": {
+      "Serial": {
+        "type": "input",
+        "value": "auto",
+        "valuetype": "str"
+      },
+      "PackageName": {
+        "type": "select",
+        "value": "com_proximabeta_nikke",
+        "option": [
+          "com_proximabeta_nikke",
+          "com_gamamobi_nikke"
+        ]
+      },
+      "ScreenshotMethod": {
+        "type": "select",
+        "value": "DroidCast",
+        "option": [
+          "DroidCast"
+        ]
+      },
+      "ControlMethod": {
+        "type": "select",
+        "value": "minitouch",
+        "option": [
+          "minitouch"
+        ]
+      },
+      "AdbRestart": {
+        "type": "checkbox",
+        "value": false
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
+  "Reward": {
+    "Scheduler": {
+      "Enable": {
+        "type": "lock",
+        "value": true,
+        "display": "disabled"
+      },
+      "NextRun": {
+        "type": "datetime",
+        "value": "1989-12-27 00:00:00",
+        "validate": "datetime"
+      },
+      "Command": {
+        "type": "input",
+        "value": "Reward",
+        "display": "hide"
+      },
+      "SuccessInterval": {
+        "type": "input",
+        "value": 0,
+        "display": "hide"
+      },
+      "FailureInterval": {
+        "type": "input",
+        "value": 120,
+        "display": "hide"
+      },
+      "ServerUpdate": {
+        "type": "input",
+        "value": "00:00",
+        "display": "hide"
+      }
+    },
+    "Reward": {
+      "test": {
+        "type": "input",
+        "value": 1
+      }
+    },
+    "Reward1": {
+      "test": {
+        "type": "input",
+        "value": 1
+      }
+    },
+    "Reward2": {
+      "test": {
+        "type": "input",
+        "value": 1
+      }
+    },
+    "Reward3": {
+      "test": {
+        "type": "input",
+        "value": 1
+      }
+    },
+    "Reward4": {
+      "test": {
+        "type": "input",
+        "value": 1
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  }
+}

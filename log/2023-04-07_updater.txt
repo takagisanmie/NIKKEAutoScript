@@ -1,0 +1,488 @@
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:01:50.505 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:01:50.507 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:01:50.508 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:01:50.524 | INFO | GIT INIT                                                                              
+2023-04-07 09:01:50.526 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:01:50.573 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:01:50.575 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:01:50.577 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:01:50.616 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:01:50.619 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:01:50.621 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:01:52.424 | INFO | [ success ]                                                                           
+2023-04-07 09:01:52.427 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" reset 
+--hard origin/master                                                                                                   
+2023-04-07 09:01:52.841 | INFO | [ success ]                                                                           
+2023-04-07 09:01:52.843 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" pull  
+--ff-only origin master                                                                                                
+2023-04-07 09:01:54.083 | INFO | [ success ]                                                                           
+════════════════════════════════════════════════════ SHOW VERSION ═════════════════════════════════════════════════════
+2023-04-07 09:01:54.087 | INFO | SHOW VERSION                                                                          
+2023-04-07 09:01:54.089 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe"       
+--no-pager log --no-merges -1                                                                                          
+2023-04-07 09:01:54.127 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:02:18.384 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:02:18.386 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:02:18.388 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:02:18.392 | INFO | GIT INIT                                                                              
+2023-04-07 09:02:18.394 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:02:18.437 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:02:18.440 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:02:18.442 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:02:18.482 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:02:18.485 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:02:18.487 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:02:55.572 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:02:55.577 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:02:55.579 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:02:55.580 | INFO |                                                                                       
+2023-04-07 09:02:55.581 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:02:55.583 | INFO | Please check your deploy settings in config/deploy.yaml and re-open Alas.exe          
+2023-04-07 09:02:55.585 | INFO | Take the screenshot of entire window if you need help                                 
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:03:00.614 | INFO | GIT INIT                                                                              
+2023-04-07 09:03:00.616 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:03:00.658 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:03:00.661 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:03:00.662 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:03:00.700 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:03:00.704 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:03:00.705 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:03:31.385 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:03:31.386 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:03:31.388 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:03:31.392 | INFO | GIT INIT                                                                              
+2023-04-07 09:03:31.395 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:03:31.437 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:03:31.441 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:03:31.442 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:03:31.483 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:03:31.486 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:03:31.487 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:04:05.349 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:04:05.351 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:04:05.353 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:04:05.358 | INFO | GIT INIT                                                                              
+2023-04-07 09:04:05.359 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:04:05.401 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:04:05.405 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:04:05.406 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:04:05.447 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:04:05.450 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:04:05.451 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:04:07.605 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:04:07.610 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:04:07.611 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:04:07.613 | INFO |                                                                                       
+2023-04-07 09:04:07.615 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:04:07.617 | INFO | Please check your deploy settings in config/deploy.yaml and re-open Alas.exe          
+2023-04-07 09:04:07.619 | INFO | Take the screenshot of entire window if you need help                                 
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:04:12.630 | INFO | GIT INIT                                                                              
+2023-04-07 09:04:12.632 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:04:12.671 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:04:12.674 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:04:12.675 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:04:12.718 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:04:12.721 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:04:12.722 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:04:14.879 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:04:14.884 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:04:14.885 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:04:14.887 | INFO |                                                                                       
+2023-04-07 09:04:14.888 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:04:14.890 | INFO | Please check your deploy settings in config/deploy.yaml and re-open Alas.exe          
+2023-04-07 09:04:14.892 | INFO | Take the screenshot of entire window if you need help                                 
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:04:19.901 | INFO | GIT INIT                                                                              
+2023-04-07 09:04:19.903 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:04:19.942 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:04:19.946 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:04:19.947 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:04:19.984 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:04:19.987 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:04:19.988 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:04:22.150 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:04:22.155 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:04:22.156 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:04:22.159 | INFO |                                                                                       
+2023-04-07 09:04:22.160 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:04:22.162 | INFO | Please check your deploy settings in config/deploy.yaml and re-open Alas.exe          
+2023-04-07 09:04:22.163 | INFO | Take the screenshot of entire window if you need help                                 
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:08:20.285 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:08:20.287 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:08:20.288 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:08:20.293 | INFO | GIT INIT                                                                              
+2023-04-07 09:08:20.294 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:08:20.343 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:08:20.346 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:08:20.348 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:08:20.387 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:08:20.390 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:08:20.392 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:08:22.509 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:08:22.513 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:08:22.515 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:08:22.517 | INFO |                                                                                       
+2023-04-07 09:08:22.519 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:08:22.521 | INFO | Please check your deploy settings in config/deploy.yaml                               
+2023-04-07 09:08:22.522 | INFO | Take the screenshot of entire window if you need help                                 
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:08:27.536 | INFO | GIT INIT                                                                              
+2023-04-07 09:08:27.538 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:08:27.593 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:08:27.598 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:08:27.601 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:08:27.642 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:08:27.645 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:08:27.646 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:08:29.785 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:08:29.790 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:08:29.791 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:08:29.793 | INFO |                                                                                       
+2023-04-07 09:08:29.795 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:08:29.797 | INFO | Please check your deploy settings in config/deploy.yaml                               
+2023-04-07 09:08:29.798 | INFO | Take the screenshot of entire window if you need help                                 
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:08:34.806 | INFO | GIT INIT                                                                              
+2023-04-07 09:08:34.809 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:08:34.853 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:08:34.859 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:08:34.861 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:08:34.902 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:08:34.907 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:08:34.910 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:08:37.061 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:08:37.066 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:08:37.068 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:08:37.071 | INFO |                                                                                       
+2023-04-07 09:08:37.072 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:08:37.074 | INFO | Please check your deploy settings in config/deploy.yaml                               
+2023-04-07 09:08:37.076 | INFO | Take the screenshot of entire window if you need help                                 
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:08:45.374 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:08:45.376 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:08:45.378 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:08:45.382 | INFO | GIT INIT                                                                              
+2023-04-07 09:08:45.384 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:08:45.425 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:08:45.428 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:08:45.430 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:08:45.468 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:08:45.471 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:08:45.472 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:08:47.626 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:08:47.629 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:08:47.631 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:08:47.634 | INFO |                                                                                       
+2023-04-07 09:08:47.635 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:08:47.637 | INFO | Please check your deploy settings in config/deploy.yaml                               
+2023-04-07 09:08:47.639 | INFO | Take the screenshot of entire window if you need help                                 
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:08:52.650 | INFO | GIT INIT                                                                              
+2023-04-07 09:08:52.652 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:08:52.696 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:08:52.698 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:08:52.699 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:08:52.739 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:08:52.742 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:08:52.744 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:08:54.887 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:08:54.891 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:08:54.893 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:08:54.895 | INFO |                                                                                       
+2023-04-07 09:08:54.897 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:08:54.898 | INFO | Please check your deploy settings in config/deploy.yaml                               
+2023-04-07 09:08:54.900 | INFO | Take the screenshot of entire window if you need help                                 
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:08:59.909 | INFO | GIT INIT                                                                              
+2023-04-07 09:08:59.912 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:08:59.956 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:08:59.962 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:08:59.965 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:09:00.006 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:09:00.013 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:09:00.016 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:09:02.159 | INFO | [ failure ], error_code: 128                                                          
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                     UPDATE FAILED                                                     
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:09:02.167 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:09:02.170 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:09:02.173 | INFO |                                                                                       
+2023-04-07 09:09:02.175 | INFO | Last command:                                                                         
+"E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch origin master                    
+2023-04-07 09:09:02.178 | INFO | Please check your deploy settings in config/deploy.yaml                               
+2023-04-07 09:09:02.181 | INFO | Take the screenshot of entire window if you need help                                 
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:09:05.576 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:09:05.578 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:09:05.579 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:09:05.583 | INFO | GIT INIT                                                                              
+2023-04-07 09:09:05.585 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:09:05.629 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:09:05.632 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:09:05.633 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:09:05.671 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:09:05.675 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:09:05.676 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:09:30.331 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:09:30.333 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:09:30.334 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:09:30.339 | INFO | GIT INIT                                                                              
+2023-04-07 09:09:30.341 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:09:30.386 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:09:30.389 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:09:30.391 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:09:30.429 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:09:30.432 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:09:30.434 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:11:36.378 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:11:36.379 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:11:36.381 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:11:36.387 | INFO | GIT INIT                                                                              
+2023-04-07 09:11:36.389 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:11:36.435 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:11:36.438 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:11:36.440 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:11:36.477 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:11:36.480 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:11:36.482 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:11:52.471 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:11:52.473 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:11:52.474 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:11:52.479 | INFO | GIT INIT                                                                              
+2023-04-07 09:11:52.480 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:11:52.523 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:11:52.526 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:11:52.527 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:11:52.568 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:11:52.572 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:11:52.573 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:12:09.199 | INFO | [ success ]                                                                           
+2023-04-07 09:12:09.202 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" reset 
+--hard origin/master                                                                                                   
+2023-04-07 09:12:09.290 | INFO | [ success ]                                                                           
+2023-04-07 09:12:09.292 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" pull  
+--ff-only origin master                                                                                                
+2023-04-07 09:12:10.545 | INFO | [ success ]                                                                           
+════════════════════════════════════════════════════ SHOW VERSION ═════════════════════════════════════════════════════
+2023-04-07 09:12:10.548 | INFO | SHOW VERSION                                                                          
+2023-04-07 09:12:10.550 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe"       
+--no-pager log --no-merges -1                                                                                          
+2023-04-07 09:12:10.595 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SHOW DEPLOY CONFIG ══════════════════════════════════════════════════
+2023-04-07 09:12:56.402 | INFO | SHOW DEPLOY CONFIG                                                                    
+2023-04-07 09:12:56.404 | INFO | Rest of the configs are the same as default                                           
+2023-04-07 09:12:56.405 | INFO | <<< RUN UPDATE >>>                                                                    
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+                                                        UPDATE                                                         
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════ GIT INIT ═══════════════════════════════════════════════════════
+2023-04-07 09:12:56.410 | INFO | GIT INIT                                                                              
+2023-04-07 09:12:56.413 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" init  
+2023-04-07 09:12:56.453 | INFO | [ success ]                                                                           
+═════════════════════════════════════════════════ SET GIT REPOSITORY ══════════════════════════════════════════════════
+2023-04-07 09:12:56.456 | INFO | SET GIT REPOSITORY                                                                    
+2023-04-07 09:12:56.457 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" remote
+set-url origin https://github.com/takagisanmie/update_test                                                             
+2023-04-07 09:12:56.496 | INFO | [ success ]                                                                           
+═══════════════════════════════════════════════ FETCH REPOSITORY BRANCH ═══════════════════════════════════════════════
+2023-04-07 09:12:56.499 | INFO | FETCH REPOSITORY BRANCH                                                               
+2023-04-07 09:12:56.500 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" fetch 
+origin master                                                                                                          
+2023-04-07 09:12:57.629 | INFO | [ success ]                                                                           
+2023-04-07 09:12:57.632 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" reset 
+--hard origin/master                                                                                                   
+2023-04-07 09:12:57.681 | INFO | [ success ]                                                                           
+2023-04-07 09:12:57.683 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe" pull  
+--ff-only origin master                                                                                                
+2023-04-07 09:12:58.836 | INFO | [ success ]                                                                           
+════════════════════════════════════════════════════ SHOW VERSION ═════════════════════════════════════════════════════
+2023-04-07 09:12:58.839 | INFO | SHOW VERSION                                                                          
+2023-04-07 09:12:58.840 | INFO | "E:/software/electron/new/NKAS/NikkeAutoScript/toolkit/Git/mingw64/bin/git.exe"       
+--no-pager log --no-merges -1                                                                                          
+2023-04-07 09:12:58.877 | INFO | [ success ]                                                                           

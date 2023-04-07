@@ -1,0 +1,237 @@
+* {
+    /*overflow: hidden;*/
+}
+
+.pywebio {
+    padding: 0;
+}
+
+footer {
+    display: none;
+}
+
+#input-container {
+    margin-bottom: 0;
+}
+
+#output-container {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 0;
+    max-width: initial
+}
+
+#pywebio-scope-contents {
+    background-color: #3a3939;
+    height: fit-content;
+    overflow: hidden;
+}
+
+#pywebio-scope-aside {
+    color: #e8e8e8;
+    display: inline-block;
+    width: fit-content;
+    height: 100vh;
+    background-color: #333333;
+    padding: 10px;
+    float: left;
+}
+
+#pywebio-scope-menu {
+    color: #e8e8e8;
+    display: inline-block;
+    width: fit-content;
+}
+
+#pywebio-scope-content {
+    color: #e8e8e8;
+    display: inline-block;
+    position: relative;
+    background-color: #333333;
+    margin: 8px 8px 8px 0;
+    padding: 10px;
+    border-radius: 4px;
+    width: calc(99% - 270px);
+    height: 98vh;
+    float: right;
+}
+
+/*#pywebio-scope-content {*/
+/*    color: #e8e8e8;*/
+/*    display: inline-block;*/
+/*    position: absolute;*/
+/*    background-color: #333333;*/
+/*    margin: 8px 8px 8px 0;*/
+/*    padding: 10px;*/
+/*    border-radius: 4px;*/
+/*    width: calc(99% - 270px);*/
+/*    height: calc(100% - 73px);*/
+/*}*/
+
+#pywebio-scope-scheduler {
+    background-color: #333333;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    width: 210px;
+    max-height: 100px;
+}
+
+#pywebio-scope-running {
+    background-color: #333333;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    width: 210px;
+    max-height: 120px;
+}
+
+#pywebio-scope-pending, #pywebio-scope-waiting {
+    background-color: #333333;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    width: 210px;
+    max-height: 33vh;
+    height: 50vh;
+}
+
+#pywebio-scope-log {
+    position: relative;
+    white-space: pre;
+    line-height: 14px;
+    font-size: 18px;
+}
+
+#pywebio-scope-menu_list {
+    margin: 8px;
+    width: 210px;
+    background-color: #333333;
+}
+
+#pywebio-scope-groups, #pywebio-scope-navigator {
+    display: inline-block;
+    margin: 8px;
+}
+
+#pywebio-scope-groups {
+    color: #e8e8e8;
+    position: relative;
+    width: 90vh;
+    height: fit-content;
+}
+
+input[type="text"] {
+    color: #e8e8e8;
+    background-color: #3F3F3F;
+}
+
+button[type="button"] {
+    color: #e8e8e8;
+    background-color: #3F3F3F;
+}
+
+.form-control:focus, .form-control:disabled {
+    color: #e8e8e8;
+    background-color: #3F3F3F;
+}
+
+.dropdown-menu {
+    color: #e8e8e8;
+    background-color: #3F3F3F;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: #3F3F3F;
+    color: #b5dbff;
+}
+
+.dropdown-menu > * a[class*="selected"] {
+    background-color: #3F3F3F;
+    color: #b5dbff;
+}
+
+* p[style*="--arg-title--"] {
+    display: inline-block;
+}
+
+* p[style*="--arg-title--"] + div[class*="form-group"] {
+    display: inline;
+}
+
+* div[class*="form-check"] {
+    margin-top: -10px;
+    float: right;
+}
+
+.dropdown-menu > * a:hover {
+    background-color: #797979;
+}
+
+#pywebio-scope-navigator {
+    float: right;
+    width: 120px;
+}
+
+.form-control {
+    width: fit-content;
+}
+
+.groups-scrollable {
+    overflow: visible;
+    display: inline-block;
+}
+
+.btn, .btn-menu {
+    color: #e8e8e8;
+}
+
+.btn-off, .btn-on {
+    color: #e8e8e8;
+    float: right;
+}
+
+.btn-off {
+    background-color: #3e3e3e;
+    border: 1px solid #202225;
+}
+
+.btn-on {
+    background-color: #6dabea;
+    border: 1px solid #202225;
+}
+
+
+.icon_button {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 21px;
+    color: #b5b5b5;
+    transition: color .3s ease-in-out;
+}
+
+.active {
+    color: #b5dbff;
+}
+
+.icon_button:hover {
+    cursor: pointer;
+    color: #b5dbff;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    background-color: #333333;
+}
+
+
+::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    background-color: #484848;
+}
