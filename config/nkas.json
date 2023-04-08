@@ -4,6 +4,7 @@
       "Serial": "auto",
       "PackageName": "com_proximabeta_nikke",
       "ScreenshotMethod": "DroidCast",
+      "ControlMethod": "minitouch",
       "AdbRestart": true
     },
     "Storage": {

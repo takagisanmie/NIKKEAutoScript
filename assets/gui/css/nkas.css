@@ -229,7 +229,17 @@ button[type="button"] {
 }
 
 #pywebio-scope-content > * tr {
-    background-color: #4c4c4c;
+    background-color: #3a3939;
+}
+
+*[style*="--loading-border-fill--"] {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.2em solid currentColor;
+}
+
+*[style*="--commit-history-scrollable--"] {
+    max-height: 61vh;
 }
 
 ::-webkit-scrollbar {

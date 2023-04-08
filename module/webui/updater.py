@@ -36,8 +36,6 @@ class Updater(GitManager):
         """
         ph = "h" if short_sha1 else "H"
 
-        # git log ..origin/master --pretty=format:"h---%an---%ad---%s" --date=iso -1
-
         log = self.execute_output(
             f'"{self.git}" log {revision} --pretty=format:"%{ph}---%an---%ad---%s" --date=iso -{n}'
         )
@@ -65,9 +63,10 @@ class Updater(GitManager):
         self.state = "checking"
         source = "origin"
         for _ in range(3):
-            if self.execute(
-                    f'"{self.git}" fetch {source} {self.Branch}', allow_failure=True
-            ):
+            '''
+                从上游仓库拉取最新的数据，但不进行合并
+            '''
+            if self.execute(f'"{self.git}" fetch {source} {self.Branch}', allow_failure=True):
                 break
         else:
             logger.warning("Git fetch failed")
@@ -147,7 +146,6 @@ class Updater(GitManager):
     def _run_update(self, instances, names):
         self.state = "run update"
         logger.info("nkas stopped, start updating")
-
         if self.update():
             if State.restart_event is not None:
                 self.state = "reload"

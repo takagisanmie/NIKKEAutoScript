@@ -1,6 +1,7 @@
 import copy
 import os
 from functools import cached_property
+from typing import Optional
 
 from deploy.utils import DEPLOY_CONFIG, poor_yaml_read, DEPLOY_TEMPLATE, poor_yaml_write
 from module.logger import logger
@@ -14,6 +15,7 @@ class ConfigModel:
     Repository: str = "https://github.com/takagisanmie/NIKKEAutoScript"
     Branch: str = "master"
     GitExecutable: str = "./toolkit/Git/mingw64/bin/git.exe"
+    GitProxy: Optional[str] = None
 
     PythonExecutable: str = "./python-3.9.13-embed-amd64/python.exe"
     RequirementsFile: str = "requirements.txt"
@@ -48,6 +50,9 @@ class DeployConfig(ConfigModel):
         self.config_template = copy.deepcopy(self.config)
         self.config.update(poor_yaml_read(self.file))
 
+        '''
+            将配置写入类变量
+        '''
         for key, value in self.config.items():
             if hasattr(self, key):
                 super().__setattr__(key, value)
@@ -60,7 +65,6 @@ class DeployConfig(ConfigModel):
         for k, v in self.config.items():
             if self.config_template[k] == v:
                 continue
-            logger.info(f"{k}: {v}")
 
         logger.info(f"Rest of the configs are the same as default")
 

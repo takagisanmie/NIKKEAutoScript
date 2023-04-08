@@ -131,11 +131,26 @@ class ProcessManager:
         After update and reload, or failed to perform an update,
         restart all alas that running before update
         """
+
+        """
+            在Alas中，启动uvicorn时，会调用restart_processes
+        """
+
         logger.hr("Restart nkas")
 
         # Load MOD_CONFIG_DICT
+
+        """
+            加载非模板的实例名称(配置名称)
+        """
         mod_instance()
 
+        """
+            instances在更新失败或取消时，为开始更新前运行的Alas实例，类型为ProcessManager
+            
+            当instances存储的类型为str时，在Alas启动uvicorn时
+            为从deploy.yaml读取Deploy.Webui.Run的实例名称(配置名称)，类型为tuple
+        """
         if instances is None:
             instances = []
 
@@ -147,6 +162,10 @@ class ProcessManager:
             elif isinstance(instance, ProcessManager):
                 _instances.add(instance)
 
+        """
+            instances在热更新成功后，重新启动uvicorn时
+            为开始更新前保存到 ./config/reloadalas 中的实例名称(配置名称)
+        """
         try:
             with open("./config/reloadnkas", mode="r") as f:
                 for line in f.readlines():
@@ -155,6 +174,9 @@ class ProcessManager:
         except FileNotFoundError:
             pass
 
+        """
+            通过实例名称(配置名称)，读取若干实例执行的方法
+        """
         for process in _instances:
             logger.info(f"Starting [{process.config_name}]")
             process.start(func=get_config_mod(process.config_name), ev=ev)

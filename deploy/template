@@ -3,6 +3,7 @@ Deploy:
     Repository: 'https://github.com/takagisanmie/NIKKEAutoScript'
     Branch: 'master'
     GitExecutable: './toolkit/Git/mingw64/bin/git.exe'
+    GitProxy: null
     AutoUpdate: true
 
   Python:

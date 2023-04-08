@@ -27,7 +27,7 @@ class LoginHandler(UI):
 
             self.device.screenshot()
 
-            # 当 MAIN_CHECK 累计出现5次，并且保持在6秒以上
+            # 当 MAIN_CHECK 累计出现6次，并且保持在5秒以上
             if self.appear(MAIN_CHECK, offset=(30, 30)):
                 if confirm_timer.reached():
                     logger.info('Login to main confirm')

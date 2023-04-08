@@ -44,6 +44,19 @@ class NikkeAutoScriptGUI(Frame):
         put_icon_buttons(ICON.Menu, onclick=self.ui_dashboard, id='Dashboard'),
         put_icon_buttons(ICON.Setting, onclick=self.ui_setting, id='Setting'),
         put_icon_buttons(ICON.Link, onclick=self.ui_link, id='Link'),
+        put_icon_buttons(ICON.Link, onclick=self.test, id='Link2'),
+
+    def test(self):
+        def trigger():
+            # with open("./config/reloadflag", mode="w"):
+            #     # app ended here and uvicorn will restart whole app
+            #     pass
+            State.restart_event.set()
+
+        toast('restart uvicorn', position='right', color='#2188ff', duration=1)
+        timer = threading.Timer(1, trigger)
+        timer.start()
+        clearup()
 
     def show(self):
         self._show()
@@ -306,7 +319,7 @@ class NikkeAutoScriptGUI(Frame):
                 history = updater.get_commit(
                     f"origin/{updater.Branch}", n=20, short_sha1=True
                 )
-                put_table(
+                put_scrollable([put_table(
                     [commit for commit in history],
                     header=[
                         "SHA1",
@@ -314,6 +327,12 @@ class NikkeAutoScriptGUI(Frame):
                         t("Gui.Update.Time"),
                         t("Gui.Update.Message"),
                     ],
+                )], height=220, keep_bottom=False).style(
+                    '--commit-history-scrollable--')
+                run_js(
+                    '''
+                        $("div[style*='--commit-history-scrollable--']").children("div").css({"max-height": "61vh"});
+                    '''
                 )
 
         def u(state):
@@ -322,8 +341,11 @@ class NikkeAutoScriptGUI(Frame):
             clear("updater_loading")
             clear("updater_state")
             clear("updater_btn")
+            '''
+                已是最新版本
+            '''
             if state == 0:
-                put_loading("border", "secondary", "updater_loading").style(
+                put_loading("border", "secondary", scope="updater_loading").style(
                     "--loading-border-fill--"
                 )
                 put_text(t("Gui.Update.UpToDate"), scope="updater_state")
@@ -432,7 +454,7 @@ class NikkeAutoScriptGUI(Frame):
         )
         self.task_handler.add(updater_switch.g(), delay=0.5, pending_delete=True)
 
-        updater.check_update()
+        u('checking')
 
     def nkas_update_overview_task(self):
         self.nkas_config.load()
@@ -486,7 +508,7 @@ class NikkeAutoScriptGUI(Frame):
         for path in get_nkas_config_listen_path(self.NKAS_ARGS):
             """
                 pin_on_change会监听name属性为"_".join(path)的输入组件的值
-                在127行，通过 output_kwargs["name"] = f"{task}_{group_name}_{arg_name} 定义
+                在200行，通过 output_kwargs["name"] = f"{task}_{group_name}_{arg_name} 定义
             """
             pin_on_change(
                 name="_".join(path), onchange=partial(put_queue, ".".join(path))
