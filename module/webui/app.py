@@ -53,7 +53,7 @@ class NikkeAutoScriptGUI(Frame):
             #     pass
             State.restart_event.set()
 
-        toast('restart uvicorn', position='right', color='#2188ff', duration=1)
+        toast('restart uvicorn', position='right', color='#b59dff', duration=1)
         timer = threading.Timer(1, trigger)
         timer.start()
         clearup()
