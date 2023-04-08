@@ -15,7 +15,9 @@ from module.webui.setting import State
 class Updater(GitManager):
     def __init__(self, file=DEPLOY_CONFIG):
         super().__init__(file=file)
+        # 更新器状态
         self.state = 0
+        # 进程同步标识
         self.event: threading.Event = None
 
     @retry(ExecutionError, tries=3, delay=5, logger=None)
@@ -132,7 +134,7 @@ class Updater(GitManager):
                     logger.info(f"Remains: {[nkas.config_name for nkas in _instances]}")
             if self.state == "cancel":
                 self.state = 1
-                self.event.clear()
+                # self.event.clear()
                 ProcessManager.restart_processes(instances, None)
                 return
             time.sleep(0.25)
@@ -160,7 +162,7 @@ class Updater(GitManager):
         else:
             self.state = "failed"
             logger.warning("Update failed")
-            self.event.clear()
+            # self.event.clear()
             ProcessManager.restart_processes(instances, self.event)
             return False
 
