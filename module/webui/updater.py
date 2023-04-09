@@ -5,6 +5,7 @@ from typing import Tuple, List
 
 from deploy.config import ExecutionError
 from deploy.git import GitManager
+from deploy.pip import PipManager
 from deploy.utils import DEPLOY_CONFIG
 from module.base.retry import retry
 from module.logger import logger
@@ -12,7 +13,7 @@ from module.webui.process_manager import ProcessManager
 from module.webui.setting import State
 
 
-class Updater(GitManager):
+class Updater(GitManager, PipManager):
     def __init__(self, file=DEPLOY_CONFIG):
         super().__init__(file=file)
         # 更新器状态
@@ -23,6 +24,10 @@ class Updater(GitManager):
     @retry(ExecutionError, tries=3, delay=5, logger=None)
     def git_install(self):
         return super().git_install()
+
+    @retry(ExecutionError, tries=3, delay=5, logger=None)
+    def pip_install(self):
+        return super().pip_install()
 
     def execute_output(self, command) -> str:
         command = command.replace(r"\\", "/").replace("\\", "/").replace('"', '"')
@@ -57,6 +62,7 @@ class Updater(GitManager):
         logger.hr("Run update")
         try:
             self.git_install()
+            self.pip_install()
         except ExecutionError:
             return False
         return True
