@@ -40,24 +40,31 @@ Gui:
 Menu:
   NKAS:
     name: NKAS
-    help: ''
+    help: ""
   Reward:
     name: 收获
-    help: ''
+    help: ""
 Task:
   NKAS:
     name: NKAS设置
-    help: ''
+    help: ""
   Reward:
     name: 收获
-    help: ''
+    help: ""
 Emulator:
   _info:
     name: 模拟器设置
-    help: ''
+    help: ""
   Serial:
     name: 模拟器 Serial
-    help: '常见的模拟器 Serial 可以查询下方列表，填 "auto" 自动检测模拟器，多个模拟器正在运行或使用不支持自动检测的模拟器时无法使用 "auto"，必须手动填写'
+    help: "常见的模拟器 Serial 可以查询下方列表，填 \"auto\" 自动检测模拟器，多个模拟器正在运行或使用不支持自动检测的模拟器时无法使用 \"auto\"，必须手动填写 \n 
+    模拟器默认 Serial：\n
+  - 蓝叠模拟器 127.0.0.1:5555 \n
+  - 夜神模拟器 127.0.0.1:62001 \n
+  - 夜神模拟器64位 127.0.0.1:59865 \n
+  - MuMu模拟器/MuMu模拟器X 127.0.0.1:7555 \n
+  - 逍遥模拟器 127.0.0.1:21503 \n
+  - 雷电模拟器 emulator-5554 或 127.0.0.1:5555"
   PackageName:
     name: 游戏服务器
     help: 模拟器上装有多个游戏客户端时，需要手动选择服务器
@@ -65,37 +72,37 @@ Emulator:
     com_gamamobi_nikke: 港澳台
   ScreenshotMethod:
     name: 模拟器截图方案
-    help: ''
+    help: ""
     DroidCast: DroidCast
   ControlMethod:
     name: 模拟器控制方案
-    help: ''
+    help: ""
     minitouch: minitouch
   AdbRestart:
     name: 在检测不到设备的时候尝试重启adb
-    help: ''
+    help: ""
 Scheduler:
   _info:
     name: 任务设置
-    help: ''
+    help: ""
   Enable:
     name: 启用该功能
-    help: ''
+    help: ""
   NextRun:
     name: 下一次运行时间
-    help: ''
+    help: ""
   Command:
     name: 内部任务名称
-    help: ''
+    help: ""
   SuccessInterval:
     name: 运行成功后，推迟下一次运行 X 分钟
-    help: ''
+    help: ""
   FailureInterval:
     name: 运行失败后，推迟下一次运行 X 分钟
-    help: ''
+    help: ""
   ServerUpdate:
     name: 服务器刷新时间
-    help: ''
+    help: ""
 Storage:
   _info:
     name: 任务状态
@@ -106,38 +113,38 @@ Storage:
 Reward:
   _info:
     name: Reward
-    help: ''
+    help: ""
   test:
-    name: '1'
-    help: ''
+    name: "1"
+    help: ""
 Reward1:
   _info:
     name: Reward1
-    help: ''
+    help: ""
   test:
-    name: '1'
-    help: ''
+    name: "1"
+    help: ""
 Reward2:
   _info:
     name: Reward2
-    help: ''
+    help: ""
   test:
-    name: '1'
-    help: ''
+    name: "1"
+    help: ""
 Reward3:
   _info:
     name: Reward3
-    help: ''
+    help: ""
   test:
-    name: '1'
-    help: ''
+    name: "1"
+    help: ""
 Reward4:
   _info:
     name: Reward4
-    help: ''
+    help: ""
   test:
-    name: '1'
-    help: ''
+    name: "1"
+    help: ""
 
 
 
