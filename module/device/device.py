@@ -71,8 +71,10 @@ class Device(Screenshot, Control, AppControl, Ocr):
                     
                 round 2:                ↓
                     count['button'] = count.get('button', default=0) => 1 + 1
+                    
+                count[key] = count.get(key, default=0) + 1 会 raise TypeError: dict.get() takes no keyword arguments
             """
-            count[key] = count.get(key, default=0) + 1
+            count[key] = count.get(key, 0) + 1
         count = sorted(count.items(), key=lambda item: item[1])
         if count[0][1] >= 12:
             logger.warning(f'Too many click for a button: {count[0][0]}')
