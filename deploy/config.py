@@ -48,6 +48,9 @@ class DeployConfig(ConfigModel):
     def read(self):
         self.config = poor_yaml_read(DEPLOY_TEMPLATE)
         self.config_template = copy.deepcopy(self.config)
+        '''
+            现有配置 ./config/deploy.yaml
+        '''
         self.config.update(poor_yaml_read(self.file))
 
         '''

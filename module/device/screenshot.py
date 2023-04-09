@@ -17,8 +17,10 @@ class Screenshot(DroidCast):
 
     def screenshot(self):
         """
-        Returns:
-            np.ndarray:
+            截图
+
+            Returns:
+                np.ndarray:
         """
         self._screenshot_interval.wait()
         self._screenshot_interval.reset()
@@ -32,11 +34,11 @@ class Screenshot(DroidCast):
 
     def _handle_orientated_image(self, image):
         """
-        Args:
-            image (np.ndarray):
+            Args:
+                image (np.ndarray):
 
-        Returns:
-            np.ndarray:
+            Returns:
+                np.ndarray:
         """
         width, height = image_size(self.image)
         if width == 720 and height == 1280:

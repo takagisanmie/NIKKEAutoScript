@@ -59,8 +59,8 @@ class ProcessManager:
             '''
              run_process(config_name, func: str, q: queue.Queue, e: threading.Event = None)
                 q: State.manager.Queue() 进程共享渲染队列
-                e: 停止事件
-                func: 创建进程执行的方法，在Alas中，默认为执行
+                e: 进程同步标识
+                func(mod_name): 创建进程执行的方法，在Alas中，默认为执行
                 AzurLaneAutoScript(config_name='alas').loop()
             '''
             self._process = Process(

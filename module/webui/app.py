@@ -343,7 +343,7 @@ class NikkeAutoScriptGUI(Frame):
             clear("updater_btn")
             if state == 0:
                 '''
-                    已是最新版本
+                    状态：已是最新版本，按钮：检查更新
                 '''
                 put_loading("border", "secondary", scope="updater_loading").style(
                     "--loading-border-fill--"
@@ -358,7 +358,7 @@ class NikkeAutoScriptGUI(Frame):
                 update_table()
             elif state == 1:
                 '''
-                    有新版本可用
+                    状态：非最新版本，按钮：开始更新
                 '''
                 put_loading("grow", "success", "updater_loading").style(
                     "--loading-grow--"
@@ -373,7 +373,7 @@ class NikkeAutoScriptGUI(Frame):
                 update_table()
             elif state == "checking":
                 '''
-                    正在检查更新
+                    状态：检查更新中，按钮：无
                 '''
                 put_loading("border", "primary", "updater_loading").style(
                     "--loading-border--"
@@ -381,7 +381,7 @@ class NikkeAutoScriptGUI(Frame):
                 put_text(t("Gui.Update.UpdateChecking"), scope="updater_state")
             elif state == "failed":
                 '''
-                    更新失败，按钮:尝试重新更新
+                    状态：更新失败，按钮：尝试重新更新
                 '''
                 put_loading("grow", "danger", "updater_loading").style(
                     "--loading-grow--"
@@ -395,7 +395,7 @@ class NikkeAutoScriptGUI(Frame):
                 )
             elif state == "start":
                 '''
-                    开始更新，按钮:取消更新
+                    状态：开始更新，按钮：取消更新
                 '''
                 put_loading("border", "primary", "updater_loading").style(
                     "--loading-border--"
@@ -409,7 +409,7 @@ class NikkeAutoScriptGUI(Frame):
                 )
             elif state == "wait":
                 '''
-                    等待任务结束，按钮:取消更新
+                    状态：等待任务结束，按钮：取消更新
                 '''
                 put_loading("border", "primary", "updater_loading").style(
                     "--loading-border--"
@@ -422,6 +422,9 @@ class NikkeAutoScriptGUI(Frame):
                     scope="updater_btn",
                 )
             elif state == "run update":
+                '''
+                    状态：更新中，按钮：取消更新(禁用)
+                '''
                 put_loading("border", "primary", "updater_loading").style(
                     "--loading-border--"
                 )
@@ -434,18 +437,27 @@ class NikkeAutoScriptGUI(Frame):
                     disabled=True,
                 )
             elif state == "reload":
+                '''
+                    状态：更新成功，即将热重启，按钮：无
+                '''
                 put_loading("grow", "success", "updater_loading").style(
                     "--loading-grow--"
                 )
                 put_text(t("Gui.Update.UpdateSuccess"), scope="updater_state")
                 update_table()
             elif state == "finish":
+                '''
+                    状态：更新成功，需要手动重启，按钮：无
+                '''
                 put_loading("grow", "success", "updater_loading").style(
                     "--loading-grow--"
                 )
                 put_text(t("Gui.Update.UpdateFinish"), scope="updater_state")
                 update_table()
             elif state == "cancel":
+                '''
+                    状态：取消更新，重启调度器，按钮：取消更新(禁用)
+                '''
                 put_loading("border", "danger", "updater_loading").style(
                     "--loading-border--"
                 )
@@ -458,6 +470,9 @@ class NikkeAutoScriptGUI(Frame):
                     disabled=True,
                 )
             else:
+                '''
+                    状态：发生错误，按钮：无
+                '''
                 put_text(
                     "Something went wrong, please contact develops",
                     scope="updater_state",
@@ -598,7 +613,7 @@ class NikkeAutoScriptGUI(Frame):
             logger.exception(e)
 
     def run(self) -> None:
-        # 标签标题，渲染动画
+        # 标签标题，加载时显示渲染动画
         set_env(title="NKAS", output_animation=False)
         add_css(CssPath.NKAS)
 

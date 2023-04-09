@@ -35,7 +35,7 @@ if __name__ == '__main__':
         https://blog.csdn.net/HAH_HAH/article/details/105276221
     
         通过进程启动uvicorn，然后持续调用event.wait()，检查event是否调用过set()
-        在通过 git pull 更新成功后，调用uvicorn进程调用event.set()，这时主线程的event.wait(1)会返回True
+        在通过 git pull 更新成功后，uvicorn进程调用event.set()，这时主线程的event.wait(1)会返回True
         在杀掉uvicorn进程后，重新启动，完成在不重新编译gui.py的情况下热更新
     '''
     should_exit = False

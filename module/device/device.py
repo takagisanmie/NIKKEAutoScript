@@ -1,5 +1,6 @@
 from collections import deque
 
+from module.base.button import Button
 from module.base.timer import Timer
 from module.device.app_control import AppControl
 from module.device.control import Control
@@ -10,11 +11,11 @@ from module.ocr.ocr import Ocr
 
 
 class Device(Screenshot, Control, AppControl, Ocr):
-    # 检测的 Button 集合
+    # 尝试检测的 Button 集合
     detect_record = set()
     # 点击过的 Button 队列
     click_record = deque(maxlen=15)
-    # 操作时间计时器
+    # 操作计时器
     stuck_timer = Timer(60, count=60).start()
     stuck_timer_long = Timer(180, count=180).start()
     """ 
@@ -31,26 +32,47 @@ class Device(Screenshot, Control, AppControl, Ocr):
 
     def screenshot(self):
         """
-        Returns:
-            np.ndarray:
+            截图
+
+            Returns:
+                np.ndarray:
         """
         self.stuck_record_check()
         super().screenshot()
         return self.image
 
-    def handle_control_check(self, button):
+    def handle_control_check(self, button: Button):
+        """
+            当点击(匹配到)Button时，清空尝试匹配过的按钮，重置操作计时器，并记录此Button，再检查点击过的Buttons
+
+            Args:
+                button: Button
+        """
         self.stuck_record_clear()
         self.click_record_add(button)
         self.click_record_check()
 
     def click_record_check(self):
         """
-        Raises:
-            GameTooManyClickError:
+            检查点击过的Buttons
+
+            Raises:
+                GameTooManyClickError:
         """
         count = {}
         for key in self.click_record:
-            count[key] = count.get(key, 0) + 1
+            """
+                当click_record为 ['button','button'] 时
+                
+                round 1:
+                    count['button'] = count.get('button', default=0) + 1
+                                        ↓
+                    count['button'] = count.get('button', default=0) => 0 + 1
+                    
+                round 2:                ↓
+                    count['button'] = count.get('button', default=0) => 1 + 1
+            """
+            count[key] = count.get(key, default=0) + 1
         count = sorted(count.items(), key=lambda item: item[1])
         if count[0][1] >= 12:
             logger.warning(f'Too many click for a button: {count[0][0]}')
@@ -63,16 +85,31 @@ class Device(Screenshot, Control, AppControl, Ocr):
             self.click_record_clear()
             raise GameTooManyClickError(f'Too many click between 2 buttons: {count[0][0]}, {count[1][0]}')
 
-    def click_record_add(self, button):
+    def click_record_add(self, button: Button):
+        """
+            记录点击过的button
+
+            Args:
+                button: Button
+                str(button): 值默认为asset名称
+        """
         self.click_record.append(str(button))
 
     def click_record_clear(self):
+        """
+            清空点击过的button
+        """
         self.click_record.clear()
 
     def stuck_record_check(self):
         """
-        Raises:
-            GameStuckError:
+            当操作计时器: stuck_timer，stuck_timer_long 到达限制时间时 raise exception
+
+            如果 detect_record 含有 stuck_long_wait_list 的 Button，则不 raise exception
+            detect_record 值为 str(Button)，在 Button 类中，默认重写为该 asset 的名称
+
+            Raises:
+                GameStuckError:
         """
         reached = self.stuck_timer.reached()
         reached_long = self.stuck_timer_long.reached()
@@ -94,13 +131,17 @@ class Device(Screenshot, Control, AppControl, Ocr):
             raise GameNotRunningError('Game died')
 
     def stuck_record_clear(self):
+        """
+            清空尝试匹配过的按钮，重置操作计时器
+        """
         self.detect_record = set()
         self.stuck_timer.reset()
         self.stuck_timer_long.reset()
 
     def disable_stuck_detection(self):
         """
-        Disable stuck detection and its handler. Usually uses in semi auto and debugging.
+            Alas: Disable stuck detection and its handler. Usually uses in semi auto and debugging.
+            禁用检查点击，操作计时器，这样在卡住时不会有任何响应
         """
         logger.info('Disable stuck detection')
 
@@ -110,15 +151,27 @@ class Device(Screenshot, Control, AppControl, Ocr):
         self.click_record_check = empty_function
         self.stuck_record_check = empty_function
 
-    def stuck_record_add(self, button):
+    def stuck_record_add(self, button: Button):
+        """
+            记录尝试匹配(未匹配)的button，click_record_add 为点击过(匹配到)的button
+
+            Args:
+                button: Button
+        """
         self.detect_record.add(str(button))
 
     def app_start(self):
+        """
+            启动NIKKE
+        """
         super().app_start()
         self.stuck_record_clear()
         self.click_record_clear()
 
     def app_stop(self):
+        """
+            停止NIKKE
+        """
         super().app_stop()
         self.stuck_record_clear()
         self.click_record_clear()

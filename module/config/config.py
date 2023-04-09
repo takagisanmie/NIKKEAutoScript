@@ -186,7 +186,7 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
 
             elif func.next_run < now:
                 '''
-                    当前时间大于任务的下次运行时间
+                    当前时间 > 该任务的下次运行时间
                 '''
                 pending.append(func)
             else:
