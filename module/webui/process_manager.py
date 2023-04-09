@@ -149,7 +149,7 @@ class ProcessManager:
             instances在更新失败或取消时，为开始更新前运行的Alas实例，类型为ProcessManager
             
             当instances存储的类型为str时，在Alas启动uvicorn时
-            为从deploy.yaml读取Deploy.Webui.Run的实例名称(配置名称)，类型为tuple
+            为从deploy.yaml读取Deploy.Webui.Run的实例名称(配置名称)，类型为list
         """
         if instances is None:
             instances = []
@@ -164,7 +164,7 @@ class ProcessManager:
 
         """
             instances在热更新成功后，重新启动uvicorn时
-            为开始更新前保存到 ./config/reloadalas 中的实例名称(配置名称)
+            在Alas中，为开始更新前保存到 ./config/reloadalas 中的实例名称(配置名称)
         """
         try:
             with open("./config/reloadnkas", mode="r") as f:
@@ -175,7 +175,14 @@ class ProcessManager:
             pass
 
         """
-            通过实例名称(配置名称)，读取若干实例执行的方法
+            当实例非alas实例时
+            通过实例名称(配置名称)，读取存储在./config的配置，也就是mod名称(实例种类)
+            mod_name应该为alas，Daemon，AzurLaneUncensored，Benchmark，GameManager，maa，MaaCopilot
+            例如: maa1.maa.json 
+            config_name为maa1，mod_name为maa
+            
+            当有多个alas实例时，读取为实例名称(配置名称).json
+            这样get_config_mod会因为KeyError，返回 'alas'， 然后该实例在运行时，配置为实例名称(配置名称).json
         """
         for process in _instances:
             logger.info(f"Starting [{process.config_name}]")
