@@ -69,8 +69,7 @@ class LoginHandler(UI):
                 continue
 
             # 出现登录奖励时，点击没有被覆盖的位置
-            if login_success and (
-                    self.appear_text('根据累积登入天数', interval=5) or self.appear_text('剩余时间', interval=5)):
+            if login_success and self.appear_text('根据累积登入天数', interval=5):
                 self.device.click_minitouch(20, 600)
                 continue
 
