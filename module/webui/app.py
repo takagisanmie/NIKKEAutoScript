@@ -53,7 +53,7 @@ class NikkeAutoScriptGUI(Frame):
             #     pass
             State.restart_event.set()
 
-        toast('restart uvicorn', position='right', color='#b59dff', duration=1)
+        toast('restart uvicorn', position='right', color='#64b2fb', duration=1)
         timer = threading.Timer(1, trigger)
         timer.start()
         clearup()
@@ -80,7 +80,7 @@ class NikkeAutoScriptGUI(Frame):
 
         '''
             ProcessManager.start(func, ev)
-            ev: 停止事件
+            ev: 进程同步标识
             func: 通过创建的线程的执行的方法，在Alas中，默认为执行
             AzurLaneAutoScript(config_name='alas').loop()
 
@@ -341,10 +341,10 @@ class NikkeAutoScriptGUI(Frame):
             clear("updater_loading")
             clear("updater_state")
             clear("updater_btn")
-            '''
-                已是最新版本
-            '''
             if state == 0:
+                '''
+                    已是最新版本
+                '''
                 put_loading("border", "secondary", scope="updater_loading").style(
                     "--loading-border-fill--"
                 )
@@ -357,6 +357,9 @@ class NikkeAutoScriptGUI(Frame):
                 )
                 update_table()
             elif state == 1:
+                '''
+                    有新版本可用
+                '''
                 put_loading("grow", "success", "updater_loading").style(
                     "--loading-grow--"
                 )
@@ -369,11 +372,17 @@ class NikkeAutoScriptGUI(Frame):
                 )
                 update_table()
             elif state == "checking":
+                '''
+                    正在检查更新
+                '''
                 put_loading("border", "primary", "updater_loading").style(
                     "--loading-border--"
                 )
                 put_text(t("Gui.Update.UpdateChecking"), scope="updater_state")
             elif state == "failed":
+                '''
+                    更新失败，按钮:尝试重新更新
+                '''
                 put_loading("grow", "danger", "updater_loading").style(
                     "--loading-grow--"
                 )
@@ -385,6 +394,9 @@ class NikkeAutoScriptGUI(Frame):
                     scope="updater_btn",
                 )
             elif state == "start":
+                '''
+                    开始更新，按钮:取消更新
+                '''
                 put_loading("border", "primary", "updater_loading").style(
                     "--loading-border--"
                 )
@@ -396,6 +408,9 @@ class NikkeAutoScriptGUI(Frame):
                     scope="updater_btn",
                 )
             elif state == "wait":
+                '''
+                    等待任务结束，按钮:取消更新
+                '''
                 put_loading("border", "primary", "updater_loading").style(
                     "--loading-border--"
                 )
