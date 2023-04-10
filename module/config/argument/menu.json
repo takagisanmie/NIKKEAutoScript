@@ -1,7 +1,8 @@
 {
   "Task": {
     "NKAS": [
-      "NKAS"
+      "NKAS",
+      "Restart"
     ],
     "Reward": [
       "Reward"

@@ -3,6 +3,9 @@
 NKAS:
   - Emulator
 
+Restart:
+  - Scheduler
+
 # ==================== Reward ====================
 
 Reward:

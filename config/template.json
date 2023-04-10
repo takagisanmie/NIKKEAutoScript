@@ -11,6 +11,19 @@
       "Storage": {}
     }
   },
+  "Restart": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "1989-12-27 00:00:00",
+      "Command": "Restart",
+      "SuccessInterval": 0,
+      "FailureInterval": 0,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "Reward": {
     "Scheduler": {
       "Enable": true,
@@ -18,7 +31,7 @@
       "Command": "Reward",
       "SuccessInterval": 0,
       "FailureInterval": 120,
-      "ServerUpdate": "00:00"
+      "ServerUpdate": "04:00"
     },
     "Reward": {
       "test": 1
