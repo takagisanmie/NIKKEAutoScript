@@ -235,9 +235,11 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
 
         if error:
             pending = error + pending
-
-        pending.sort(key=lambda x: x.next_run)
-        waiting.sort(key=lambda x: x.next_run)
+        '''
+            会影响Task call 'Restart'
+            pending.sort(key=lambda x: x.next_run)
+            waiting.sort(key=lambda x: x.next_run)
+        '''
         self.pending_task = pending
         self.waiting_task = waiting
 
