@@ -1,9 +1,13 @@
+import copy
 from datetime import datetime, timedelta
 
+from module.base.utils import ensure_time
 from module.config.config_generated import GeneratedConfig
 from module.config.config_updater import ConfigUpdater
 from module.config.manual_config import ManualConfig
-from module.config.utils import deep_get, DEFAULT_TIME, deep_set, filepath_config, path_to_arg, dict_to_kv
+from module.config.utils import deep_get, DEFAULT_TIME, deep_set, filepath_config, path_to_arg, dict_to_kv, \
+    get_server_next_update, nearest_future
+from module.exception import ScriptError, RequestHumanTakeover
 from module.logger import logger
 
 
@@ -49,6 +53,7 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
         self.data = {}
         self.modified = {}
         self.bound = {}
+        self.auto_update = True
         self.overridden = {}
         self.pending_task = []
         self.waiting_task = []
@@ -137,6 +142,12 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
         self.modified.clear()
         self.write_file(self.config_name, data=self.data)
 
+    def update(self):
+        self.load()
+        self.config_override()
+        self.bind(self.task)
+        self.save()
+
     def config_override(self):
         now = datetime.now().replace(microsecond=0)
         limited = set()
@@ -164,6 +175,36 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
         )
         limit_next_run(["Reward"], limit=now + timedelta(hours=12, seconds=-1))
         limit_next_run(self.args.keys(), limit=now + timedelta(hours=24, seconds=-1))
+
+    def get_next(self):
+        """
+        Returns:
+            Function: Command to run
+        """
+        self.get_next_task()
+
+        if self.pending_task:
+            NikkeConfig.is_hoarding_task = False
+            logger.info(f"Pending tasks: {[f.command for f in self.pending_task]}")
+            task = self.pending_task[0]
+            logger.attr("Task", task)
+            return task
+        else:
+            NikkeConfig.is_hoarding_task = True
+
+        if self.waiting_task:
+            logger.info("No task pending")
+            task = copy.deepcopy(self.waiting_task[0])
+            '''
+                Alas：囤积任务，延迟X分钟执行
+                task.next_run = (task.next_run + self.hoarding).replace(microsecond=0)
+            '''
+            logger.attr("Task", task)
+            return task
+        else:
+            logger.critical("No task waiting or pending")
+            logger.critical("Please enable at least one task")
+            raise RequestHumanTakeover
 
     def get_next_task(self):
         pending = []
@@ -195,6 +236,8 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
         if error:
             pending = error + pending
 
+        pending.sort(key=lambda x: x.next_run)
+        waiting.sort(key=lambda x: x.next_run)
         self.pending_task = pending
         self.waiting_task = waiting
 
@@ -213,6 +256,70 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
             Any:
         """
         return deep_get(self.data, keys=keys, default=default)
+
+    def task_delay(self, success=None, server_update=None, target=None, minute=None, task=None):
+        def ensure_delta(delay):
+            return timedelta(seconds=int(ensure_time(delay, precision=3) * 60))
+
+        run = []
+        if success is not None:
+            interval = (
+                self.Scheduler_SuccessInterval
+                if success
+                else self.Scheduler_FailureInterval
+            )
+            run.append(datetime.now() + ensure_delta(interval))
+        '''
+            服务器更新
+        '''
+        if server_update is not None:
+            if server_update is True:
+                server_update = self.Scheduler_ServerUpdate
+            run.append(get_server_next_update(server_update))
+        if target is not None:
+            target = [target] if not isinstance(target, list) else target
+            target = nearest_future(target)
+            run.append(target)
+        if minute is not None:
+            run.append(datetime.now() + ensure_delta(minute))
+
+        if len(run):
+            run = min(run).replace(microsecond=0)
+            kv = dict_to_kv(
+                {
+                    "success": success,
+                    "server_update": server_update,
+                    "target": target,
+                    "minute": minute,
+                },
+                allow_none=False,
+            )
+            if task is None:
+                task = self.task.command
+            logger.info(f"Delay task `{task}` to {run} ({kv})")
+            self.modified[f'{task}.Scheduler.NextRun'] = run
+            self.update()
+        else:
+            raise ScriptError(
+                "Missing argument in delay_next_run, should set at least one"
+            )
+
+    def task_call(self, task, force_call=True):
+        if not deep_get(self.data, keys=f"{task}.Scheduler.NextRun", default=None):
+            raise ScriptError(f"Task to call: `{task}` does not exist in user config")
+
+        if force_call or self.is_task_enabled(task):
+            logger.info(f"Task call: {task}")
+            self.modified[f"{task}.Scheduler.NextRun"] = datetime.now().replace(
+                microsecond=0
+            )
+            self.modified[f"{task}.Scheduler.Enable"] = True
+            if self.auto_update:
+                self.update()
+            return True
+        else:
+            logger.info(f"Task call: {task} (skipped because disabled by user)")
+            return False
 
     def override(self, **kwargs):
         """

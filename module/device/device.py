@@ -72,7 +72,7 @@ class Device(Screenshot, Control, AppControl, Ocr):
                 round 2:                ↓
                     count['button'] = count.get('button', default=0) => 1 + 1
                     
-                count[key] = count.get(key, default=0) + 1 会 raise TypeError: dict.get() takes no keyword arguments
+                count[key] = count.get(key, default=0) + 1 添加参数名 'default' 会 raise TypeError: dict.get() takes no keyword arguments
             """
             count[key] = count.get(key, 0) + 1
         count = sorted(count.items(), key=lambda item: item[1])

@@ -111,3 +111,14 @@ class ModuleBase:
             return True
         else:
             return False
+
+    def interval_reset(self, button):
+        if isinstance(button, (list, tuple)):
+            for b in button:
+                self.interval_reset(b)
+            return
+
+        if button.name in self.interval_timer:
+            self.interval_timer[button.name].reset()
+        else:
+            self.interval_timer[button.name] = Timer(3).reset()

@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import yaml
 from filelock import FileLock
@@ -10,6 +10,10 @@ from module.config.atomicwrites import atomic_write
 LANGUAGES = ['zh-CN']
 
 DEFAULT_TIME = datetime(1989, 12, 27, 0, 0)
+
+SERVER_TO_TIMEZONE = {
+    'cn': timedelta(hours=8),
+}
 
 
 def deep_get(d, keys, default=None):
@@ -271,3 +275,71 @@ def data_to_type(data, **kwargs):
 
 def filepath_code():
     return './module/config/config_generated.py'
+
+
+def server_timezone() -> timedelta:
+    return SERVER_TO_TIMEZONE.get('cn', SERVER_TO_TIMEZONE['cn'])
+
+
+def server_time_offset() -> timedelta:
+    """
+    To convert local time to server time:
+        server_time = local_time + server_time_offset()
+    To convert server time to local time:
+        local_time = server_time - server_time_offset()
+    """
+
+    return datetime.now(timezone.utc).astimezone().utcoffset() - server_timezone()
+
+
+def get_server_next_update(daily_trigger):
+    """
+    Args:
+        daily_trigger (list[str], str): [ "00:00", "12:00", "18:00",]
+
+    Returns:
+        datetime.datetime
+    """
+    if isinstance(daily_trigger, str):
+        daily_trigger = daily_trigger.replace(' ', '').split(',')
+
+    '''
+        用户时区差异
+    '''
+    # diff = server_time_offset()
+    local_now = datetime.now()
+    trigger = []
+
+    for t in daily_trigger:
+        # 延迟时间
+        h, m = [int(x) for x in t.split(':')]
+        future = local_now.replace(hour=h, minute=m, second=0, microsecond=0)
+        '''
+            距离下次运行时间
+        '''
+        s = (future - local_now).total_seconds() % 86400
+        future = local_now + timedelta(seconds=s)
+        trigger.append(future)
+    update = sorted(trigger)[0]
+    return update
+
+def nearest_future(future, interval=120):
+    """
+    Get the neatest future time.
+    Return the last one if two things will finish within `interval`.
+
+    Args:
+        future (list[datetime.datetime]):
+        interval (int): Seconds
+
+    Returns:
+        datetime.datetime:
+    """
+    future = [datetime.fromisoformat(f) if isinstance(f, str) else f for f in future]
+    future = sorted(future)
+    next_run = future[0]
+    for finish in future:
+        if finish - next_run < timedelta(seconds=interval):
+            next_run = finish
+
+    return next_run

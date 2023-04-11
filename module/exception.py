@@ -23,3 +23,7 @@ class GameStuckError(Exception):
 
 class GameNotRunningError(Exception):
     pass
+
+
+class GamePageUnknownError(Exception):
+    pass

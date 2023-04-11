@@ -16,3 +16,6 @@ Reward:
     Enable:
       value: true
       type: lock
+    SuccessInterval: 120-240
+    FailureInterval: 120-240
+    ServerUpdate: 00:00

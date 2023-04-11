@@ -11,13 +11,26 @@
       "Storage": {}
     }
   },
+  "Restart": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2023-04-12 04:00:00",
+      "Command": "Restart",
+      "SuccessInterval": 0,
+      "FailureInterval": 0,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "Reward": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "1989-12-27 00:00:00",
+      "NextRun": "2023-04-11 16:36:07",
       "Command": "Reward",
-      "SuccessInterval": 0,
-      "FailureInterval": 120,
+      "SuccessInterval": "120-240",
+      "FailureInterval": "120-240",
       "ServerUpdate": "00:00"
     },
     "Reward": {

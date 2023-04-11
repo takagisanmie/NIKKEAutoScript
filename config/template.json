@@ -29,9 +29,9 @@
       "Enable": true,
       "NextRun": "1989-12-27 00:00:00",
       "Command": "Reward",
-      "SuccessInterval": 0,
-      "FailureInterval": 120,
-      "ServerUpdate": "04:00"
+      "SuccessInterval": "120-240",
+      "FailureInterval": "120-240",
+      "ServerUpdate": "00:00"
     },
     "Reward": {
       "test": 1

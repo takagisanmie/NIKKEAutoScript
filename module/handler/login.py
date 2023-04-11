@@ -109,3 +109,10 @@ class LoginHandler(UI):
     def app_stop(self):
         logger.hr('App stop')
         self.device.app_stop()
+
+    def app_restart(self):
+        logger.hr('App restart')
+        self.device.app_stop()
+        self.device.app_start()
+        self.handle_app_login()
+        self.config.task_delay(server_update=True)
