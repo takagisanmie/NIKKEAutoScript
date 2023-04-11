@@ -8,7 +8,7 @@ from module.ui.ui import UI
 class Reward(UI):
     def receive_reward(self, skip_first_screenshot=True):
         logger.hr('Reward receive')
-        confirm_timer = Timer(2, count=3).start()
+        confirm_timer = Timer(3, count=3).start()
         # Set click interval to 0.3, because game can't respond that fast.
         click_timer = Timer(0.3)
         while 1:
@@ -22,7 +22,7 @@ class Reward(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(REWARD, interval=1):
+            if click_timer.reached() and self.appear_then_click(REWARD, interval=0.5):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue

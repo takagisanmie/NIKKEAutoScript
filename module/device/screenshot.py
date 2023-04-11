@@ -7,7 +7,7 @@ from module.exception import RequestHumanTakeover
 
 
 class Screenshot(DroidCast):
-    _screenshot_interval = Timer(1.3)
+    _screenshot_interval = Timer(0.8)
 
     @cached_property
     def screenshot_methods(self):

@@ -76,10 +76,14 @@ class NikkeAutoScript:
                 bool: True if wait finished, False if config changed.
         """
         future = future + timedelta(seconds=1)
-        # self.config.start_watching()
+        '''
+            记录开始等待任务时，配置文件的最后更改时间
+        '''
+        self.config.start_watching()
         while 1:
             if datetime.now() > future:
                 return True
+
             # if self.stop_event is not None:
             #     if self.stop_event.is_set():
             #         logger.info("Update event detected")
@@ -87,8 +91,11 @@ class NikkeAutoScript:
             #         exit(0)
 
             time.sleep(5)
-            # if self.config.should_reload():
-            #     return False
+            '''
+                在等待过程中持续对比配置文件的最后更改时间
+            '''
+            if self.config.should_reload():
+                return False
 
     def get_next_task(self):
         """
@@ -114,11 +121,10 @@ class NikkeAutoScript:
             if task.next_run > datetime.now():
                 logger.info(f'Wait until {task.next_run} for task `{task.command}`')
                 release_resources()
+                '''
+                    在等待任务的过程中可能会被人为修改运行时间
+                '''
                 if not self.wait_until(task.next_run):
-                    '''
-                        在等待任务的过程中可能会被人为修改运行时间
-                    '''
-                    # 当 self.config.should_reload() 为 True 时 wait_until 会返回 False
                     del self.__dict__['config']
                     continue
 

@@ -9,6 +9,7 @@ from module.config.config_updater import ConfigUpdater
 from module.config.manual_config import ManualConfig
 from module.config.utils import deep_get, DEFAULT_TIME, deep_set, filepath_config, path_to_arg, dict_to_kv, \
     get_server_next_update, nearest_future
+from module.config.watcher import ConfigWatcher
 from module.exception import ScriptError, RequestHumanTakeover
 from module.logger import logger
 
@@ -49,7 +50,7 @@ def name_to_function(name):
     return function
 
 
-class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
+class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher):
     def __init__(self, config_name, task=None):
         self.config_name = config_name
         self.data = {}
@@ -235,6 +236,9 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
             else:
                 waiting.append(func)
 
+        '''
+            任务优先级
+        '''
         f = Filter(regex=r"(.*)", attr=["command"])
         f.load(self.SCHEDULER_PRIORITY)
         if pending:
