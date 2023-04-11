@@ -1,6 +1,8 @@
 import copy
+import operator
 from datetime import datetime, timedelta
 
+from module.base.filter import Filter
 from module.base.utils import ensure_time
 from module.config.config_generated import GeneratedConfig
 from module.config.config_updater import ConfigUpdater
@@ -233,13 +235,22 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig):
             else:
                 waiting.append(func)
 
+        f = Filter(regex=r"(.*)", attr=["command"])
+        f.load(self.SCHEDULER_PRIORITY)
+        if pending:
+            '''
+                待执行队列不进行排序，因为会影响到重启任务
+            '''
+            pending = f.apply(pending)
+        if waiting:
+            '''
+                等待队列按运行时间排序显示
+            '''
+            waiting = f.apply(waiting)
+            waiting = sorted(waiting, key=operator.attrgetter("next_run"))
         if error:
             pending = error + pending
-        '''
-            会影响Task call 'Restart'
-            pending.sort(key=lambda x: x.next_run)
-            waiting.sort(key=lambda x: x.next_run)
-        '''
+
         self.pending_task = pending
         self.waiting_task = waiting
 

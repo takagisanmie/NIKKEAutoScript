@@ -1,4 +1,9 @@
 class ManualConfig:
+    SCHEDULER_PRIORITY = """
+       Restart
+       > Reward
+       """
+
     FORWARD_PORT_RANGE = (20000, 21000)
 
     BUTTON_OFFSET = 30
