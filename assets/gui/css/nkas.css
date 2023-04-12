@@ -242,6 +242,15 @@ button[type="button"] {
     max-height: 61vh;
 }
 
+input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.btn-menu:hover, .btn-navigator:hover {
+    color: #b5dbff;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
