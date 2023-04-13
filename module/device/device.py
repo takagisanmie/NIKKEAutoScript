@@ -123,6 +123,11 @@ class Device(Screenshot, Control, AppControl, Ocr):
                 if button in self.detect_record:
                     return False
 
+        from module.ui.ui import UI
+        ui = UI(self.config, device=self)
+        if ui.ui_additional():
+            return False
+
         logger.warning('Wait too long')
         logger.warning(f'Waiting for {self.detect_record}')
         self.stuck_record_clear()

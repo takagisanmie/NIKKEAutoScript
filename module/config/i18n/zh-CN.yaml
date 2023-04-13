@@ -115,40 +115,13 @@ Storage:
     help: Storage.Storage.help
 Reward:
   _info:
-    name: Reward
+    name: 收获
     help: ""
-  test:
-    name: "1"
+  CollectSocialPoint:
+    name: 收获友情点
     help: ""
-Reward1:
-  _info:
-    name: Reward1
+  CollectSpecialArenaPoint:
+    name: 收获特殊竞技场点数
     help: ""
-  test:
-    name: "1"
-    help: ""
-Reward2:
-  _info:
-    name: Reward2
-    help: ""
-  test:
-    name: "1"
-    help: ""
-Reward3:
-  _info:
-    name: Reward3
-    help: ""
-  test:
-    name: "1"
-    help: ""
-Reward4:
-  _info:
-    name: Reward4
-    help: ""
-  test:
-    name: "1"
-    help: ""
-
-
 
 

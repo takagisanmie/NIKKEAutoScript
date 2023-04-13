@@ -1,16 +1,23 @@
 from module.base.decorator import run_once
 from module.base.timer import Timer
-from module.exception import GameNotRunningError, GamePageUnknownError
+from module.exception import GameNotRunningError, GamePageUnknownError, GameStart
+from module.handler.assets import *
 from module.handler.info_handle import InfoHandler
 from module.logger import logger
 from module.ui.assets import GOTO_MAIN
-from module.ui.page import (Page, page_unknown, page_main, page_reward)
+from module.ui.page import (Page, page_unknown, page_main, page_reward, page_friend, page_ark, page_arena,
+                            page_special_arena)
 
 
 class UI(InfoHandler):
     ui_pages = [page_unknown,
                 page_main,
-                page_reward]
+                page_reward,
+                page_friend,
+                page_ark,
+                page_arena,
+                page_special_arena,
+                ]
 
     def ui_page_appear(self, page: Page):
         """
@@ -67,7 +74,7 @@ class UI(InfoHandler):
         logger.warning("Unknown ui page")
         logger.attr("EMULATOR__SCREENSHOT_METHOD", self.config.Emulator_ScreenshotMethod)
         logger.attr("EMULATOR__CONTROL_METHOD", self.config.Emulator_ControlMethod)
-        logger.attr("SERVER", self.config.SERVER)
+        logger.attr("SERVER", 'intl' if 'proximabeta' in self.config.Emulator_PackageName else 'tw')
         logger.warning("Starting from current page is not supported")
         logger.warning(f"Supported page: {[str(page) for page in self.ui_pages]}")
         logger.warning('Supported page: Any page with a "HOME" button on the bottom-left')
@@ -139,7 +146,7 @@ class UI(InfoHandler):
                 if not page.parent or not page.check_button:
                     continue
 
-                if self.appear(page.check_button, offset=offset, interval=5):
+                if self.appear(page.check_button, offset=offset, interval=8):
                     logger.info(f'Page switch: {page} -> {page.parent}')
                     button = page.links[page.parent]
                     self.device.click(button)
@@ -163,13 +170,59 @@ class UI(InfoHandler):
             return True
 
     def ui_additional(self):
-        # TODO SKIP，战斗，REWARD etc.
-        pass
+        # TODO SKIP, 战斗, 公告, etc.
 
-    # def ui_button_interval_reset(self, button):
-    #     """
-    #         Reset interval of some button to avoid mistaken clicks
-    #
-    #         Args:
-    #             button (Button):
-    #     """
+        # 指挥官等级升级
+        if self.appear(LEVEL_UP_CHECK, offset=(30, 30), interval=3):
+            self.device.click_minitouch(360, 920)
+            return True
+
+        # ----- REWARD -----
+        if self.appear_then_click(REWARD, offset=(30, 30), interval=3, static=False):
+            return True
+
+        # 礼包
+        if self.handle_paid_gift():
+            return True
+
+        # Daily Login, Memories Spring, Monthly Card, etc.
+        if self.handle_login_reward():
+            return True
+
+        if self.handle_server():
+            raise GameStart
+
+        if self.handle_download():
+            raise GameStart
+
+        # 系统错误
+        if self.handle_system_error():
+            return True
+
+        if self.handle_system_maintenance():
+            return True
+
+        if self.appear_then_click(LOGIN_CHECK, offset=(30, 30), interval=3):
+            raise GameStart
+
+        '''
+            CONFRIM_A 按钮为平面或立体，'确认'没有阴影
+            CONFRIM_B 按钮为立体，'确认'有阴影
+            CONFRIM_B 和 CONFRIM_C 相似
+        '''
+
+        # 未知弹窗的确认
+        if self.appear(CONFRIM_A, offset=(30, 30), interval=3, static=False):
+            # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_A.png')
+            self.device.click(CONFRIM_A)
+            return True
+
+        if self.appear(CONFRIM_B, offset=(30, 30), interval=3, static=False):
+            # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_B.png')
+            self.device.click(CONFRIM_B)
+            return True
+
+        if self.appear(CONFRIM_C, offset=(30, 30), interval=3, static=False):
+            # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_C.png')
+            self.device.click(CONFRIM_C)
+            return True

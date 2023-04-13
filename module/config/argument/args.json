@@ -118,33 +118,13 @@
       }
     },
     "Reward": {
-      "test": {
-        "type": "input",
-        "value": 1
-      }
-    },
-    "Reward1": {
-      "test": {
-        "type": "input",
-        "value": 1
-      }
-    },
-    "Reward2": {
-      "test": {
-        "type": "input",
-        "value": 1
-      }
-    },
-    "Reward3": {
-      "test": {
-        "type": "input",
-        "value": 1
-      }
-    },
-    "Reward4": {
-      "test": {
-        "type": "input",
-        "value": 1
+      "CollectSocialPoint": {
+        "type": "checkbox",
+        "value": true
+      },
+      "CollectSpecialArenaPoint": {
+        "type": "checkbox",
+        "value": true
       }
     },
     "Storage": {

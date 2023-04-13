@@ -5,9 +5,10 @@ from functools import cached_property
 import inflection
 
 import glo
-from module.config.config import NikkeConfig
+from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
-from module.exception import RequestHumanTakeover, GameNotRunningError
+from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
+    GameServerUnderMaintenance, GameStart
 from module.logger import logger
 
 
@@ -48,10 +49,46 @@ class NikkeAutoScript:
             self.device.screenshot()
             self.__getattribute__(command)()
             return True
+
+        except TaskEnd:
+            return True
+
+        except GameStart:
+            self.start()
+            return True
+
         except GameNotRunningError as e:
             logger.warning(e)
             self.config.task_call('Restart')
             return True
+
+        except (GameStuckError, GameTooManyClickError) as e:
+            '''
+                当一直没有进行操作时或点击同一目标过多时，尝试重启游戏
+            '''
+            logger.error(e)
+            '''
+                self.save_error_log()
+                在 Alas 中会将在raise前最后的截图和log写入./log/error 
+            '''
+            logger.warning(f'Game stuck, {self.device.package} will be restarted in 10 seconds')
+            logger.warning('If you are playing by hand, please stop NKAS')
+            self.config.task_call('Restart')
+            self.device.sleep(10)
+            return False
+
+        except GameServerUnderMaintenance as e:
+            logger.error(e)
+            self.device.app_stop()
+            exit(1)
+
+        except RequestHumanTakeover:
+            logger.critical('Request human takeover')
+            exit(1)
+
+        except Exception as e:
+            logger.exception(e)
+            exit(1)
 
     def restart(self):
         from module.handler.login import LoginHandler
@@ -167,7 +204,9 @@ class NikkeAutoScript:
             logger.info(f'Scheduler: End task `{task}`')
             is_first = False
 
-            # Check failures
+            '''
+                记录某个任务出错的次数
+            '''
             failed = deep_get(failure_record, keys=task, default=0)
             failed = 0 if success else failed + 1
             deep_set(failure_record, keys=task, value=failed)
@@ -183,22 +222,42 @@ class NikkeAutoScript:
             if success:
                 del self.__dict__['config']
                 continue
+            # 出现错误时
             else:
-                break
+                del self.__dict__['config']
+                continue
 
+
+from module.ui.page import *
 
 if __name__ == '__main__':
     nkas = NikkeAutoScript()
     self = nkas
-    # from module.handler.login import LoginHandler
+    from module.handler.login import LoginHandler
 
-    # e = LoginHandler(self.config, device=self.device)
-    # self.device.screenshot()
-    # self.start()
+    e = LoginHandler(self.config, device=self.device)
+    e.device.screenshot()
+    e.ui_ensure(page_ark)
 
-    # from module.task.reward.reward import Reward
+    # img = cv2.imread('./pic/Screenshot_20230405-233919.png')
+    # img = cv2.imread('./pic/Screenshot_20230405-233936.png')
+    # img = cv2.imread('./pic/Screenshot_20230411-120724.png')
+    # img = cv2.imread('./pic/confirm1.png')
+    # img = cv2.imread('./pic/confirm2.png')
+    # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    # e.device.image = img
+    # CONFRIM_A 按钮为平面或立体，'确认'没有阴影
+    # CONFRIM_B 按钮为立体，'确认'有阴影
+    # e.device.screenshot()
+    # e.handle_server()
+    # if e.appear(CONFRIM_A, offset=(30, 30), static=False):
+    #     print(1)
+    # if e.appear(CONFRIM_B, offset=(30, 30), static=False):
+    #     print(2)
+    # if e.appear(CONFRIM_C, offset=(30, 30), static=False):
+    #     print(3)
     #
-    # Reward(config=self.config, device=self.device).run()
-    # e.ui_goto(destination=page_reward)
+    # if e.appear_text('点击关闭画面'):
+    #     logger.info('2')
 
-    # self
+    # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_A.png')

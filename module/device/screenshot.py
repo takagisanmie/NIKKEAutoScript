@@ -7,7 +7,7 @@ from module.exception import RequestHumanTakeover
 
 
 class Screenshot(DroidCast):
-    _screenshot_interval = Timer(0.8)
+    _screenshot_interval = Timer(0.5)
 
     @cached_property
     def screenshot_methods(self):
@@ -22,6 +22,8 @@ class Screenshot(DroidCast):
             Returns:
                 np.ndarray:
         """
+
+        # 每次两次截图间隔时间
         self._screenshot_interval.wait()
         self._screenshot_interval.reset()
 

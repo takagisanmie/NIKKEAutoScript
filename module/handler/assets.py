@@ -4,4 +4,15 @@ from module.base.button import Button
 # Don't modify it manually.
 
 ANNOUNCEMENT = Button(area={'cn': (631, 111, 675, 152)}, color={'cn': (48, 143, 231)}, button={'cn': (631, 111, 675, 152)}, file={'cn': './assets/cn/handler/ANNOUNCEMENT.png'})
+CONFRIM_A = Button(area={'cn': (354, 819, 393, 844)}, color={'cn': (136, 217, 255)}, button={'cn': (354, 819, 393, 844)}, file={'cn': './assets/cn/handler/CONFRIM_A.png'})
+CONFRIM_B = Button(area={'cn': (507, 790, 555, 813)}, color={'cn': (110, 197, 241)}, button={'cn': (507, 790, 555, 813)}, file={'cn': './assets/cn/handler/CONFRIM_B.png'})
+CONFRIM_C = Button(area={'cn': (334, 1012, 385, 1036)}, color={'cn': (115, 206, 248)}, button={'cn': (334, 1012, 385, 1036)}, file={'cn': './assets/cn/handler/CONFRIM_C.png'})
+DAILY_LOGIN_REWARD = Button(area={'cn': (541, 588, 639, 648)}, color={'cn': (72, 28, 17)}, button={'cn': (541, 588, 639, 648)}, file={'cn': './assets/cn/handler/DAILY_LOGIN_REWARD.png'})
+DOWNLOAD_CHECK = Button(area={'cn': (115, 618, 356, 639)}, color={'cn': (201, 197, 201)}, button={'cn': (115, 618, 356, 639)}, file={'cn': './assets/cn/handler/DOWNLOAD_CHECK.png'})
+LEVEL_UP_CHECK = Button(area={'cn': (312, 601, 408, 618)}, color={'cn': (0, 68, 129)}, button={'cn': (312, 601, 408, 618)}, file={'cn': './assets/cn/handler/LEVEL_UP_CHECK.png'})
 LOGIN_CHECK = Button(area={'cn': (225, 1047, 496, 1068)}, color={'cn': (58, 58, 57)}, button={'cn': (225, 1047, 496, 1068)}, file={'cn': './assets/cn/handler/LOGIN_CHECK.png'})
+PAID_GIFT_CHECK = Button(area={'cn': (158, 93, 478, 282)}, color={'cn': (130, 112, 89)}, button={'cn': (158, 93, 478, 282)}, file={'cn': './assets/cn/handler/PAID_GIFT_CHECK.png'})
+REWARD = Button(area={'cn': (306, 408, 416, 449)}, color={'cn': (153, 154, 153)}, button={'cn': (306, 408, 416, 449)}, file={'cn': './assets/cn/handler/REWARD.png'})
+SERVER_CHECK = Button(area={'cn': (297, 298, 422, 321)}, color={'cn': (164, 203, 247)}, button={'cn': (297, 298, 422, 321)}, file={'cn': './assets/cn/handler/SERVER_CHECK.png'})
+SYSTEM_ERROR_CHECK = Button(area={'cn': (311, 567, 389, 585)}, color={'cn': (151, 151, 151)}, button={'cn': (311, 567, 389, 585)}, file={'cn': './assets/cn/handler/SYSTEM_ERROR_CHECK.png'})
+SYSTEM_MAINTENANCE_CHECK = Button(area={'cn': (241, 589, 458, 604)}, color={'cn': (194, 193, 194)}, button={'cn': (241, 589, 458, 604)}, file={'cn': './assets/cn/handler/SYSTEM_MAINTENANCE_CHECK.png'})

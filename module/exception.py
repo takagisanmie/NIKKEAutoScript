@@ -21,7 +21,15 @@ class GameStuckError(Exception):
     pass
 
 
+class GameServerUnderMaintenance(Exception):
+    pass
+
+
 class GameNotRunningError(Exception):
+    pass
+
+
+class GameStart(Exception):
     pass
 
 

@@ -25,19 +25,8 @@ class GeneratedConfig:
     Emulator_AdbRestart = False
 
     # Group `Reward`
-    Reward_test = 1
-
-    # Group `Reward1`
-    Reward1_test = 1
-
-    # Group `Reward2`
-    Reward2_test = 1
-
-    # Group `Reward3`
-    Reward3_test = 1
-
-    # Group `Reward4`
-    Reward4_test = 1
+    Reward_CollectSocialPoint = True
+    Reward_CollectSpecialArenaPoint = True
 
     # Group `Storage`
     Storage_Storage = {}

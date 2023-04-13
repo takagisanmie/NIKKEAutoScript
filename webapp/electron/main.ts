@@ -5,13 +5,6 @@ import {PyShell} from '../src/config/pyshell';
 import {webuiArgs} from '../src/config/config';
 import './ipc/WindowStrategy'
 
-
-export const nkas = new PyShell('gui.py', webuiArgs);
-
-nkas.end(function (err: string) {
-    console.log(err)
-});
-
 const WinState = require('electron-win-state').default
 
 let win: BrowserWindow | null = null;
@@ -64,3 +57,9 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit();
 })
+
+export const nkas = new PyShell('gui.py', webuiArgs);
+
+nkas.end(function (err: string) {
+    console.log(err)
+});

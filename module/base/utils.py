@@ -239,3 +239,15 @@ def color_similar(color1, color2, threshold=10):
     diff = np.array(color1).astype(int) - np.array(color2).astype(int)
     diff = np.max(np.maximum(diff, 0)) - np.min(np.minimum(diff, 0))
     return diff <= threshold
+
+def save_image(image, file):
+    """
+    Save an image like pillow.
+
+    Args:
+        image (np.ndarray):
+        file (str):
+    """
+    # image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    # cv2.imwrite(file, image)
+    Image.fromarray(image).save(file)

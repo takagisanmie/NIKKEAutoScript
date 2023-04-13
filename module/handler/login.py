@@ -38,11 +38,11 @@ class LoginHandler(UI):
             if self.appear_text('正在下载'):
                 self.device.stuck_record_clear()
                 self.device.click_record_clear()
-                self.device.sleep(10)
+                self.device.sleep(20)
                 continue
 
             # TOUCH TO CONTINUE
-            if self.appear(LOGIN_CHECK, offset=(30, 30), interval=5) and LOGIN_CHECK.match_appear_on(self.device.image):
+            if self.appear(LOGIN_CHECK, offset=(30, 30), interval=5):
                 self.device.click(LOGIN_CHECK)
                 if not login_success:
                     logger.info('Login success')
@@ -56,26 +56,29 @@ class LoginHandler(UI):
             if self.appear_then_click(REWARD, offset=(30, 30), interval=5, static=False):
                 continue
 
-            # 确认
-            if self.appear_then_click(CONFRIM_A, offset=(30, 30), interval=5, static=False):
+            if self.handle_server():
                 continue
 
-            # Daily Login, Memories Spring, Monthly Card  etc.
-            if login_success and self.appear_then_click_text('领取奖励', interval=5):
+            if self.handle_download():
+                continue
+
+            if self.handle_system_error():
+                continue
+
+            if self.handle_system_maintenance():
                 continue
 
             # 礼包
-            if login_success and self.appear_then_click_text('点击关闭画面', interval=5):
+            if login_success and self.handle_paid_gift():
                 continue
 
-            # 出现登录奖励时，点击没有被覆盖的位置
-            if login_success and self.appear_text('根据累积登入天数', interval=5):
-                self.device.click_minitouch(20, 600)
+            # Daily Login, Memories Spring, Monthly Card, etc.
+            if login_success and self.handle_login_reward():
                 continue
 
             # 回到主页
-            # if self.appear_then_click(GOTO_MAIN, offset=(30, 30), interval=5):
-            #     continue
+            if self.appear_then_click(GOTO_MAIN, offset=(30, 30), interval=5):
+                continue
 
     def handle_app_login(self) -> bool:
         """

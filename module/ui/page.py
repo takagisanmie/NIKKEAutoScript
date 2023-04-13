@@ -36,3 +36,26 @@ page_unknown.link(button=GOTO_MAIN, destination=page_main)
 page_reward = Page(REWARD_CHECK)
 page_reward.link(button=REWARD_GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_REWARD, destination=page_reward)
+
+# friend
+page_friend = Page(FRIEND_CHECK)
+page_friend.link(button=FRIEND_GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_FRIEND, destination=page_friend)
+
+# ark
+page_ark = Page(ARK_CHECK)
+page_ark.link(button=GOTO_BACK, destination=page_main)
+# page_ark.link(button=GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_ARK, destination=page_ark)
+
+# arena
+page_arena = Page(ARENA_CHECK)
+page_arena.link(button=GOTO_BACK, destination=page_ark)
+page_arena.link(button=GOTO_MAIN, destination=page_main)
+page_ark.link(button=ARK_GOTO_ARENA, destination=page_arena)
+
+# special arena
+page_special_arena = Page(SPECIAL_ARENA_CHECK)
+page_special_arena.link(button=GOTO_BACK, destination=page_arena)
+page_special_arena.link(button=GOTO_MAIN, destination=page_main)
+page_arena.link(button=ARENA_GOTO_SPECIAL_ARENA, destination=page_special_arena)

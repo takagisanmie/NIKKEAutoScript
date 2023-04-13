@@ -14,6 +14,10 @@ from module.exception import ScriptError, RequestHumanTakeover
 from module.logger import logger
 
 
+class TaskEnd(Exception):
+    pass
+
+
 class Function:
     def __init__(self, data):
         self.enable = deep_get(data, keys="Scheduler.Enable", default=False)
