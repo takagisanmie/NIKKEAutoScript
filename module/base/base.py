@@ -1,5 +1,8 @@
+import time
+
 from module.base.button import Button
 from module.base.timer import Timer
+from module.base.utils import float2str, point2str
 from module.config.config import NikkeConfig
 from module.device.device import Device
 from module.logger import logger
@@ -84,7 +87,7 @@ class ModuleBase:
 
         return appear
 
-    def appear_text(self, text, interval=0) -> bool or tuple:
+    def appear_text(self, text, interval=0, area=None) -> bool or tuple:
         if interval:
             if text in self.interval_timer:
                 if self.interval_timer[text].limit != interval:
@@ -94,8 +97,7 @@ class ModuleBase:
             if not self.interval_timer[text].reached():
                 return False
 
-        res = self.device.ocr(self.device.image)
-        res = self.device.filter(res)
+        res = self.device.ocr(self.device.image, area=area)
         location = self.device.get_location(text, res)
         if location:
             if interval:
@@ -104,10 +106,28 @@ class ModuleBase:
         else:
             return False
 
-    def appear_then_click_text(self, text, interval=0) -> bool:
-        location = self.appear_text(text, interval)
+    def appear_text_then_click(self, text, interval=0, area=None) -> bool:
+        start_time = time.time()
+        location = self.appear_text(text, interval, area)
         if location:
             self.device.click_minitouch(location[0], location[1])
+            logger.info(
+                'Click %s @ %s %ss' % (
+                    point2str(location[0], location[1]), f"'{text.strip('_')}'", float2str(time.time() - start_time))
+            )
+            return True
+        else:
+            return False
+
+    def _appear_text_then_click(self, text, location, label, interval=0, area=None) -> bool:
+        start_time = time.time()
+        _ = self.appear_text(text, interval, area)
+        if _:
+            self.device.click_minitouch(location[0], location[1])
+            logger.info(
+                'Click %s @ %s %ss' % (
+                    point2str(location[0], location[1]), f"{label}", float2str(time.time() - start_time))
+            )
             return True
         else:
             return False

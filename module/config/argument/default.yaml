@@ -3,3 +3,15 @@
 Reward:
   Scheduler:
     Enable: true
+
+Destroy:
+  Scheduler:
+    Enable: true
+
+Commission:
+  Scheduler:
+    Enable: true
+
+RookieArena:
+  Scheduler:
+    Enable: true

@@ -247,10 +247,19 @@ class ConfigUpdater:
         new = {}
 
         def deep_load(keys):
+            # 配置模板
             data = deep_get(self.args, keys=keys, default={})
+            # 用户配置
             value = deep_get(old, keys=keys, default=data['value'])
+            '''
+                当读取模式为模板、用户配置没有值、任务的type字段为lock、display字段为hide时
+                将读取模板的值
+            '''
             if is_template or value is None or value == '' or data['type'] == 'lock' or data.get('display') == 'hide':
                 value = data['value']
+            '''
+                将值转为不同类型
+            '''
             value = parse_value(value, data=data)
             deep_set(new, keys=keys, value=value)
 
@@ -327,11 +336,14 @@ if __name__ == '__main__':
         
         override.yaml 和 default.yaml 相似，定义了每个任务属性值
         
-            override.yaml可以为每个任务添加type字段
-            如果定义了type字段，那么type的字段的值只能为lock
-            在生成时，会生成type字段，其值为lock，并且会生成display字段，其值为disabled
-            如果不定义，在生成时，会生成type字段，其值为该属性原来的任务属性【input】【select】【checkbox】【textarea】
-        
+            override.yaml可以为每个任务的Enable属性添加type和display字段
+                如果人为定义了type字段，那么type的字段的值只能为lock
+                如果不定义，在生成时，会生成type字段，其值为该属性原来的任务属性【input】【select】【checkbox】【textarea】
+                
+                如果定义了display字段，那么display的字段的值只能为 disabled 或者 hide
+                
+                如果定义了Enable属性的value字段，在默认生成display字段，其值为 hide
+            
         ConfigGenerator().generate()
         生成config_generated.py，args.json，menu.json
         

@@ -5,7 +5,12 @@
       "Restart"
     ],
     "Reward": [
-      "Reward"
+      "Reward",
+      "Destroy",
+      "Commission"
+    ],
+    "Daily": [
+      "RookieArena"
     ]
   }
 }

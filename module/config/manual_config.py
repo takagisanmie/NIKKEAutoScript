@@ -1,7 +1,7 @@
 class ManualConfig:
     SCHEDULER_PRIORITY = """
        Restart
-       > Reward
+       > Reward > Destroy > Commission > RookieArena
        """
 
     FORWARD_PORT_RANGE = (20000, 21000)

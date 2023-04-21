@@ -222,6 +222,20 @@ def area_offset(area, offset):
     return tuple(np.array(area) + np.append(offset, offset))
 
 
+def _area_offset(area, offset):
+    """
+
+    Args:
+        area: (upper_left_x, upper_left_y, bottom_right_x, bottom_right_y).
+        offset: (upper_left_x, upper_left_y, bottom_right_x, bottom_right_y).
+
+    Returns:
+        tuple: (upper_left_x, upper_left_y, bottom_right_x, bottom_right_y).
+    """
+
+    return tuple(np.array([i + x for i, x in zip(area, offset)]))
+
+
 def color_similar(color1, color2, threshold=10):
     """Consider two colors are similar, if tolerance lesser or equal threshold.
     Tolerance = Max(Positive(difference_rgb)) + Max(- Negative(difference_rgb))
@@ -240,6 +254,7 @@ def color_similar(color1, color2, threshold=10):
     diff = np.max(np.maximum(diff, 0)) - np.min(np.minimum(diff, 0))
     return diff <= threshold
 
+
 def save_image(image, file):
     """
     Save an image like pillow.
@@ -251,3 +266,69 @@ def save_image(image, file):
     # image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     # cv2.imwrite(file, image)
     Image.fromarray(image).save(file)
+
+
+def extract_letters(image, letter=(255, 255, 255), threshold=128):
+    """Set letter color to black, set background color to white.
+
+    Args:
+        image: Shape (height, width, channel)
+        letter (tuple): Letter RGB.
+        threshold (int):
+
+    Returns:
+        np.ndarray: Shape (height, width)
+    """
+    r, g, b = cv2.split(cv2.subtract(image, (*letter, 0)))
+    positive = cv2.max(cv2.max(r, g), b)
+    r, g, b = cv2.split(cv2.subtract((*letter, 0), image))
+    negative = cv2.max(cv2.max(r, g), b)
+    return cv2.multiply(cv2.add(positive, negative), 255.0 / threshold)
+
+
+def float2str(n, decimal=3):
+    """
+    Args:
+        n (float):
+        decimal (int):
+
+    Returns:
+        str:
+    """
+    return str(round(n, decimal)).ljust(decimal + 2, "0")
+
+
+def mask_area(image, area):
+    """
+
+    Args:
+        image: np.ndarray
+        area: (upper_left_x, upper_left_y, bottom_right_x, bottom_right_y).
+
+    Returns:
+        image: np.ndarray
+    """
+
+    mask = np.zeros(image.shape[:2], np.uint8)
+    mask[area[1]:area[3], area[0]:area[2]] = 255
+    image = cv2.bitwise_and(image, image, mask=cv2.bitwise_not(mask))
+    return image
+
+
+def find_letter_area(condition):
+    pixels = np.where(condition)
+    min_row, min_col = np.min(pixels, axis=1)
+    max_row, max_col = np.max(pixels, axis=1)
+    return min_col, min_row, max_col, max_row
+
+
+def show_image(image, title='image', delay=0):
+    """
+    Args:
+        image: np.ndarray
+        title: str
+        delay: int
+    """
+
+    cv2.imshow(title, image)
+    cv2.waitKey(delay)

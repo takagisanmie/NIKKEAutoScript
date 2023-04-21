@@ -44,15 +44,28 @@ Menu:
   Reward:
     name: 收获
     help: ""
+  Daily:
+    name: 日常
+    help: ""
+# 任务
 Task:
   NKAS:
     name: NKAS设置
     help: ""
+  Restart:
+    name: 重启设置
+    help: ""
   Reward:
     name: 收获
     help: ""
-  Restart:
-    name: 重启设置
+  Destroy:
+    name: 歼灭
+    help: ""
+  Commission:
+    name: 委托
+    help: ""
+  RookieArena:
+    name: 新人竞技场
     help: ""
 Emulator:
   _info:
@@ -106,6 +119,16 @@ Scheduler:
   ServerUpdate:
     name: 服务器刷新时间
     help: ""
+Optimization:
+  _info:
+    name: 优化设置
+    help: ""
+  WhenTaskQueueEmpty:
+    name: 当任务队列清空时
+    help: ""
+    goto_main: 前往主界面
+    stay_there: 停在原处
+    close_game: 关闭游戏
 Storage:
   _info:
     name: 任务状态

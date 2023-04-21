@@ -24,6 +24,9 @@ class GeneratedConfig:
     Emulator_ControlMethod = 'minitouch'  # minitouch
     Emulator_AdbRestart = False
 
+    # Group `Optimization`
+    Optimization_WhenTaskQueueEmpty = 'goto_main'  # stay_there, goto_main, close_game
+
     # Group `Reward`
     Reward_CollectSocialPoint = True
     Reward_CollectSpecialArenaPoint = True

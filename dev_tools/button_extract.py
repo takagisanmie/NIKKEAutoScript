@@ -206,8 +206,7 @@ class AssetExtractor:
     def __init__(self):
         logger.info('Assets extract')
 
-        modules = [m for m in os.listdir(NikkeConfig.ASSETS_FOLDER + '/cn')
-                   if os.path.isdir(os.path.join(NikkeConfig.ASSETS_FOLDER + '/cn', m))]
+        modules = [m for m in os.listdir(NikkeConfig.ASSETS_FOLDER + '/cn') if os.path.isdir(os.path.join(NikkeConfig.ASSETS_FOLDER + '/cn', m))]
 
         process_map(worker, modules)
 

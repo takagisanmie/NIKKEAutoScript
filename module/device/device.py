@@ -7,20 +7,22 @@ from module.device.control import Control
 from module.device.screenshot import Screenshot
 from module.exception import GameTooManyClickError, GameStuckError, GameNotRunningError
 from module.logger import logger
-from module.ocr.ocr import Ocr
+from module.ocr.models import OCR_MODEL
 
 
-class Device(Screenshot, Control, AppControl, Ocr):
+class Device(Screenshot, Control, AppControl):
+    ocr = OCR_MODEL.nikke.ocr
+    get_location = OCR_MODEL.get_location
+
     # 尝试检测的 Button 集合
     detect_record = set()
     # 点击过的 Button 队列
     click_record = deque(maxlen=15)
     # 操作计时器
     stuck_timer = Timer(60, count=60).start()
-    stuck_timer_long = Timer(180, count=180).start()
+    stuck_timer_long = Timer(240, count=180).start()
     """ 
-        当 stuck_timer_long 到达上限时
-        如果 detect_record 含有 stuck_long_wait_list 的 Button，则不 raise exception
+        如果 detect_record 含有在 stuck_long_wait_list 中的 Button，在 stuck_timer_long 到达上限前不会 raise exception
         detect_record 值为 str(Button)，在 Button 类中，重写为该 asset 的名称
     """
     stuck_long_wait_list = ['LOGIN_CHECK']
@@ -107,7 +109,7 @@ class Device(Screenshot, Control, AppControl, Ocr):
         """
             当操作计时器: stuck_timer，stuck_timer_long 到达限制时间时 raise exception
 
-            如果 detect_record 含有 stuck_long_wait_list 的 Button，则不 raise exception
+            如果 detect_record 含有在 stuck_long_wait_list 中的 Button，在 stuck_timer_long 到达上限前不会 raise exception
             detect_record 值为 str(Button)，在 Button 类中，默认重写为该 asset 的名称
 
             Raises:

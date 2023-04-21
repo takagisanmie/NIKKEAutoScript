@@ -5,18 +5,23 @@ from module.handler.assets import *
 from module.handler.info_handle import InfoHandler
 from module.logger import logger
 from module.ui.assets import GOTO_MAIN
-from module.ui.page import (Page, page_unknown, page_main, page_reward, page_friend, page_ark, page_arena,
-                            page_special_arena)
+from module.ui.page import (Page, page_unknown, page_main, page_reward, page_destroy, page_friend, page_ark, page_arena,
+                            page_rookie_arena,
+                            page_special_arena, page_outpost, page_commission)
 
 
 class UI(InfoHandler):
     ui_pages = [page_unknown,
                 page_main,
                 page_reward,
+                page_destroy,
                 page_friend,
                 page_ark,
                 page_arena,
+                page_rookie_arena,
                 page_special_arena,
+                page_outpost,
+                page_commission,
                 ]
 
     def ui_page_appear(self, page: Page):
@@ -39,6 +44,7 @@ class UI(InfoHandler):
             self.device.get_orientation()
 
         timeout = Timer(10, count=20).start()
+        click_timer = Timer(0.3)
 
         while 1:
             if skip_first_screenshot:
@@ -63,8 +69,10 @@ class UI(InfoHandler):
 
             # Unknown page but able to handle
             logger.info("Unknown ui page")
-            if self.appear_then_click(GOTO_MAIN, offset=(30, 30), interval=2) or self.ui_additional():
+            if click_timer.reached() and (
+                    self.appear_then_click(GOTO_MAIN, offset=(30, 30), interval=2) or self.ui_additional()):
                 timeout.reset()
+                click_timer.reset()
                 continue
 
             app_check()
@@ -146,7 +154,7 @@ class UI(InfoHandler):
                 if not page.parent or not page.check_button:
                     continue
 
-                if self.appear(page.check_button, offset=offset, interval=8):
+                if self.appear(page.check_button, offset=offset, interval=10):
                     logger.info(f'Page switch: {page} -> {page.parent}')
                     button = page.links[page.parent]
                     self.device.click(button)
@@ -173,12 +181,11 @@ class UI(InfoHandler):
         # TODO SKIP, 战斗, 公告, etc.
 
         # 指挥官等级升级
-        if self.appear(LEVEL_UP_CHECK, offset=(30, 30), interval=3):
-            self.device.click_minitouch(360, 920)
+        if self.handle_level_up():
             return True
 
         # ----- REWARD -----
-        if self.appear_then_click(REWARD, offset=(30, 30), interval=3, static=False):
+        if self.handle_reward():
             return True
 
         # 礼包
@@ -187,6 +194,9 @@ class UI(InfoHandler):
 
         # Daily Login, Memories Spring, Monthly Card, etc.
         if self.handle_login_reward():
+            return True
+
+        if self.handle_announcement():
             return True
 
         if self.handle_server():
@@ -202,7 +212,7 @@ class UI(InfoHandler):
         if self.handle_system_maintenance():
             return True
 
-        if self.appear_then_click(LOGIN_CHECK, offset=(30, 30), interval=3):
+        if self.appear(LOGIN_PAGE_CHECK, offset=(30, 30), interval=3):
             raise GameStart
 
         '''
@@ -226,3 +236,6 @@ class UI(InfoHandler):
             # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_C.png')
             self.device.click(CONFRIM_C)
             return True
+
+    def ui_goto_main(self):
+        return self.ui_ensure(destination=page_main)

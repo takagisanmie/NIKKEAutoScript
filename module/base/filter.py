@@ -13,8 +13,11 @@ class Filter:
         """
         if isinstance(regex, str):
             regex = re.compile(regex)
+        # 避免load的内容有误
         self.regex = regex
+        # apply的对象需要满足的属性
         self.attr = attr
+        # 预设，在preset的内容会直接添加到过滤结果
         self.preset = tuple(list(p.lower() for p in preset))
         self.filter_raw = []
         self.filter = []
@@ -39,6 +42,9 @@ class Filter:
             list: A list of objects and preset strings, such as [object, object, object, 'reset']
         """
         out = []
+        '''
+            self.filter: 需要满足的字符串元组
+        '''
         for raw, filter in zip(self.filter_raw, self.filter):
             if self.is_preset(raw):
                 raw = raw.lower()
@@ -46,9 +52,13 @@ class Filter:
                     out.append(raw)
             else:
                 for index, obj in enumerate(objs):
+                    '''
+                        排序objs，obj在self.attr中的属性满足filter的会添加到out中
+                    '''
                     if self.apply_filter_to_obj(obj=obj, filter=filter) and obj not in out:
                         out.append(obj)
 
+        # 再次过滤
         if func is not None:
             objs, out = out, []
             for obj in objs:
@@ -71,7 +81,6 @@ class Filter:
         Returns:
             bool: If an object satisfy a filter.
         """
-
         for attr, value in zip(self.attr, filter):
             if not value:
                 continue
@@ -90,7 +99,6 @@ class Filter:
         """
         string = string.replace(' ', '').lower()
         result = re.search(self.regex, string)
-
         if self.is_preset(string):
             return [string]
 

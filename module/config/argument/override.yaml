@@ -18,4 +18,8 @@ Reward:
       type: lock
     SuccessInterval: 120-240
     FailureInterval: 120-240
-    ServerUpdate: 00:00
+
+Commission:
+  Scheduler:
+    SuccessInterval: 240-240
+    FailureInterval: 120-240

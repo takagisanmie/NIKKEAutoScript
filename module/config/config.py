@@ -218,6 +218,27 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher):
         waiting = []
         error = []
         now = datetime.now()
+
+        # func 为json中的任务属性
+        '''
+        {
+            'Scheduler': 
+                {
+                    'Enable': True, 
+                    'NextRun': datetime.datetime(1989, 12, 27, 0, 0),
+                    'Command': 'Restart',         
+                    'SuccessInterval': 0,
+                    'FailureInterval': 0, 
+                    'ServerUpdate': '04:00'
+                 },  
+            'Storage': 
+                {
+                    'Storage': {}
+                }
+        } 
+        
+        Reward (Enable, 1989-12-27 00:00:00)
+        '''
         for func in self.data.values():
 
             func = Function(func)
@@ -291,7 +312,7 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher):
             )
             run.append(datetime.now() + ensure_delta(interval))
         '''
-            服务器更新
+            服务器更新时
         '''
         if server_update is not None:
             if server_update is True:

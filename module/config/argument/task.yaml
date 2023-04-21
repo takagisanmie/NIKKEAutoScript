@@ -2,6 +2,7 @@
 
 NKAS:
   - Emulator
+  - Optimization
 
 Restart:
   - Scheduler
@@ -11,7 +12,14 @@ Restart:
 Reward:
   - Scheduler
   - Reward
-  - Reward1
-  - Reward2
-  - Reward3
-  - Reward4
+
+Destroy:
+  - Scheduler
+
+Commission:
+  - Scheduler
+
+# ==================== Daily ====================
+
+RookieArena:
+  - Scheduler

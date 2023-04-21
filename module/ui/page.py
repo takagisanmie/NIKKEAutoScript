@@ -37,6 +37,11 @@ page_reward = Page(REWARD_CHECK)
 page_reward.link(button=REWARD_GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_REWARD, destination=page_reward)
 
+# Destroy
+page_destroy = Page(DESTROY_CHECK)
+page_destroy.link(button=DESTROY_GOTO_REWARD, destination=page_reward)
+page_reward.link(button=REWARD_GOTO_DESTROY, destination=page_destroy)
+
 # friend
 page_friend = Page(FRIEND_CHECK)
 page_friend.link(button=FRIEND_GOTO_MAIN, destination=page_main)
@@ -54,8 +59,26 @@ page_arena.link(button=GOTO_BACK, destination=page_ark)
 page_arena.link(button=GOTO_MAIN, destination=page_main)
 page_ark.link(button=ARK_GOTO_ARENA, destination=page_arena)
 
+# rookie arena
+page_rookie_arena = Page(ROOKIE_ARENA_CHECK)
+page_rookie_arena.link(button=GOTO_BACK, destination=page_arena)
+page_rookie_arena.link(button=GOTO_MAIN, destination=page_main)
+page_arena.link(button=ARENA_GOTO_ROOKIE_ARENA, destination=page_rookie_arena)
+
 # special arena
 page_special_arena = Page(SPECIAL_ARENA_CHECK)
 page_special_arena.link(button=GOTO_BACK, destination=page_arena)
 page_special_arena.link(button=GOTO_MAIN, destination=page_main)
 page_arena.link(button=ARENA_GOTO_SPECIAL_ARENA, destination=page_special_arena)
+
+# outpost
+page_outpost = Page(OUTPOST_CHECK)
+page_outpost.link(button=GOTO_BACK, destination=page_main)
+# page_outpost.link(button=GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_OUTPOST, destination=page_outpost)
+
+# commission
+page_commission = Page(COMMISSION_CHECK)
+page_commission.link(button=COMMISSION_GOTO_OUTPOST, destination=page_outpost)
+# page_outpost.link(button=GOTO_MAIN, destination=page_main)
+page_outpost.link(button=OUTPOST_GOTO_COMMISSION, destination=page_commission)

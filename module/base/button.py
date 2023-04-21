@@ -6,7 +6,7 @@ import imageio
 import numpy as np
 
 from module.base.resource import Resource
-from module.base.utils import crop, load_image, area_offset, color_similar, get_color
+from module.base.utils import crop, load_image, area_offset, color_similar, get_color, mask_area
 
 
 class Button(Resource):
@@ -34,6 +34,7 @@ class Button(Resource):
         self.raw_file = file
         self.raw_name = name
 
+        # 非模板位置，例如'确认'并不是固定的
         self._button_offset = None
         self._match_init = False
         self._match_binary_init = False
@@ -145,6 +146,16 @@ class Button(Resource):
         #             return True
         #     return False
         # else:
+
+    def match_several(self, image, offset=30, threshold=0.85, static=True):
+        # areas = set()
+        areas = []
+        while 1:
+            if self.match(image, offset=offset, threshold=threshold, static=static):
+                areas.append(self._button_offset)
+                image = mask_area(image, self._button_offset)
+            else:
+                return areas
 
     def appear_on(self, image, threshold=10) -> bool:
         """Check if the button appears on the image.

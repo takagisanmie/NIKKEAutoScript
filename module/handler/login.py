@@ -16,6 +16,7 @@ class LoginHandler(UI):
         logger.hr('App login')
 
         confirm_timer = Timer(5, count=6).start()
+        click_timer = Timer(0.3)
         orientation_timer = Timer(10)
         login_success = False
 
@@ -49,35 +50,44 @@ class LoginHandler(UI):
                     login_success = True
 
             # 公告
-            if self.appear_then_click(ANNOUNCEMENT, offset=(30, 30), interval=5, static=False):
+            if click_timer.reached() and self.handle_announcement():
+                click_timer.reset()
                 continue
 
             # ———— REWARD ————
-            if self.appear_then_click(REWARD, offset=(30, 30), interval=5, static=False):
+            if click_timer.reached() and self.handle_reward(interval=1):
+                click_timer.reset()
                 continue
 
-            if self.handle_server():
+            if click_timer.reached() and self.handle_server():
+                click_timer.reset()
                 continue
 
-            if self.handle_download():
+            if click_timer.reached() and self.handle_download():
+                click_timer.reset()
                 continue
 
-            if self.handle_system_error():
+            if click_timer.reached() and self.handle_system_error():
+                click_timer.reset()
                 continue
 
-            if self.handle_system_maintenance():
+            if click_timer.reached() and self.handle_system_maintenance():
+                click_timer.reset()
                 continue
 
             # 礼包
-            if login_success and self.handle_paid_gift():
+            if click_timer.reached() and self.handle_paid_gift():
+                click_timer.reset()
                 continue
 
             # Daily Login, Memories Spring, Monthly Card, etc.
-            if login_success and self.handle_login_reward():
+            if click_timer.reached() and self.handle_login_reward():
+                click_timer.reset()
                 continue
 
             # 回到主页
-            if self.appear_then_click(GOTO_MAIN, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear_then_click(GOTO_MAIN, offset=(30, 30), interval=5):
+                click_timer.reset()
                 continue
 
     def handle_app_login(self) -> bool:

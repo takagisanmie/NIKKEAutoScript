@@ -10,6 +10,7 @@ from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
+from module.ocr.models import OCR_MODEL
 
 
 class NikkeAutoScript:
@@ -98,9 +99,32 @@ class NikkeAutoScript:
         from module.handler.login import LoginHandler
         LoginHandler(self.config, device=self.device).app_start()
 
+    def goto_main(self):
+        from module.handler.login import LoginHandler
+        from module.ui.ui import UI
+        if self.device.app_is_running():
+            logger.info('App is already running, goto main page')
+            UI(self.config, device=self.device).ui_goto_main()
+        else:
+            logger.info('App is not running, start app and goto main page')
+            LoginHandler(self.config, device=self.device).app_start()
+            UI(self.config, device=self.device).ui_goto_main()
+
     def reward(self):
         from module.reward.reward import Reward
         Reward(config=self.config, device=self.device).run()
+
+    def destroy(self):
+        from module.destroy.destroy import Destroy
+        Destroy(config=self.config, device=self.device).run()
+
+    def commission(self):
+        from module.commission.commission import Commission
+        Commission(config=self.config, device=self.device).run()
+
+    def rookie_arena(self):
+        from module.rookie_arena.rookie_arena import RookieArena
+        RookieArena(config=self.config, device=self.device).run()
 
     def wait_until(self, future):
         """
@@ -154,19 +178,44 @@ class NikkeAutoScript:
             '''
             self.config.bind(task)
             from module.base.resource import release_resources
+            if self.config.task.command != 'NKAS':
+                release_resources(next_task=task.command)
 
             if task.next_run > datetime.now():
                 logger.info(f'Wait until {task.next_run} for task `{task.command}`')
-                release_resources()
+                method = self.config.Optimization_WhenTaskQueueEmpty
+
                 '''
                     在等待任务的过程中可能会被人为修改运行时间
+                    if not self.wait_until(task.next_run):
+                        del self.__dict__['config']
+                        continue
+                        
+                    Returns:
+                        bool: True if wait finished, False if config changed.
                 '''
-                if not self.wait_until(task.next_run):
-                    del self.__dict__['config']
-                    continue
 
-            if self.config.task.command != 'NKAS':
-                release_resources(next_task=task.command)
+                if method == 'close_game':
+                    logger.info('Close game during wait')
+                    self.device.app_stop()
+                    release_resources()
+                    if not self.wait_until(task.next_run):
+                        del self.__dict__['config']
+                        continue
+                    self.run('start')
+                elif method == 'goto_main':
+                    logger.info('Goto main page during wait')
+                    self.run('goto_main')
+                    release_resources()
+                    if not self.wait_until(task.next_run):
+                        del self.__dict__['config']
+                        continue
+                elif method == 'stay_there':
+                    logger.info('Stay there during wait')
+                    release_resources()
+                    if not self.wait_until(task.next_run):
+                        del self.__dict__['config']
+                        continue
             break
 
         return task.command
@@ -215,7 +264,7 @@ class NikkeAutoScript:
                 logger.critical("Possible reason #1: You haven't used it correctly. "
                                 "Please read the help text of the options.")
                 logger.critical("Possible reason #2: There is a problem with this task. "
-                                "Please contact developers or try to fix it yourself.")
+                                "Please contact developer or try to fix it yourself.")
                 logger.critical('Request human takeover')
                 exit(1)
 
@@ -228,16 +277,26 @@ class NikkeAutoScript:
                 continue
 
 
-from module.ui.page import *
-
 if __name__ == '__main__':
     nkas = NikkeAutoScript()
     self = nkas
-    from module.handler.login import LoginHandler
+    # from module.handler.login import LoginHandler
+    #
+    # e = LoginHandler(self.config, device=self.device)
+    # e.device.screenshot()
 
-    e = LoginHandler(self.config, device=self.device)
-    e.device.screenshot()
-    e.ui_ensure(page_ark)
+    self.device.screenshot()
+    ocr = OCR_MODEL.nikke.ocr
+    from module.rookie_arena.rookie_arena import RookieArena
+
+    e = RookieArena(config=self.config, device=self.device)
+    # _ = e.target_power_list
+    # _ = e.free_opportunity_remain
+    competitor = [index for index, i in enumerate(e.competitor_power_list) if i <= e.own_power]
+    print(competitor)
+    print(*e.button[competitor[0]])
+
+    # e.ui_ensure(page_ark)
 
     # img = cv2.imread('./pic/Screenshot_20230405-233919.png')
     # img = cv2.imread('./pic/Screenshot_20230405-233936.png')
@@ -257,7 +316,9 @@ if __name__ == '__main__':
     # if e.appear(CONFRIM_C, offset=(30, 30), static=False):
     #     print(3)
     #
-    # if e.appear_text('点击关闭画面'):
+    # res = self.device.ocr(self.device.image)
+    # print(res)
+    # if e.appear_text('领取奖励'):
     #     logger.info('2')
 
     # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_A.png')

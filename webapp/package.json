@@ -37,7 +37,7 @@
     "asar": "^3.2.0",
     "electron-win-state": "^1.1.22",
     "normalize.css": "^8.0.1",
-    "python-shell": "^3.0.0",
+    "python-shell": "^5.0.0",
     "tree-kill": "^1.2.2",
     "yaml": "^1.10.2"
   },
