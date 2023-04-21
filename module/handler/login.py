@@ -55,7 +55,7 @@ class LoginHandler(UI):
                 continue
 
             # ———— REWARD ————
-            if click_timer.reached() and self.handle_reward(interval=1):
+            if click_timer.reached() and self.handle_reward(interval=2):
                 click_timer.reset()
                 continue
 

@@ -16,11 +16,13 @@ class InfoHandler(ModuleBase):
         return False
 
     def handle_login_reward(self):
-        if self.appear_then_click(DAILY_LOGIN_REWARD, offset=(30, 30), interval=3, static=False):
+        if self.appear_then_click(DAILY_LOGIN_REWARD, offset=(30, 30), interval=5, static=False):
+            self.device.sleep(2)
             return True
 
         # Daily Login, Memories Spring, Monthly Card, etc.
-        if self.appear_text_then_click('_领取奖励', interval=3):
+        if self.appear_text_then_click('_领取奖励', interval=1):
+            self.device.sleep(2)
             return True
 
         '''
@@ -38,7 +40,7 @@ class InfoHandler(ModuleBase):
 
         return False
 
-    def handle_reward(self, interval=3):
+    def handle_reward(self, interval=5):
         if self.appear_then_click(REWARD, offset=(30, 30), interval=interval, static=False):
             return True
 

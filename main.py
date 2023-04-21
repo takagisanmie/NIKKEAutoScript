@@ -292,9 +292,10 @@ if __name__ == '__main__':
     e = RookieArena(config=self.config, device=self.device)
     # _ = e.target_power_list
     # _ = e.free_opportunity_remain
-    competitor = [index for index, i in enumerate(e.competitor_power_list) if i <= e.own_power]
-    print(competitor)
-    print(*e.button[competitor[0]])
+    # competitor = [index for index, i in enumerate(e.competitor_power_list) if i <= e.own_power]
+    # print(competitor)
+    # print(*e.button[competitor[0]])
+    print(e.free_opportunity_remain)
 
     # e.ui_ensure(page_ark)
 
