@@ -9,36 +9,30 @@ class OcrModel:
     @cached_property
     def nikke(self):
         """
-            t16
-            base: cnocr-v2.2-densenet_lite_136-gru.ckpt
-            training data: 2017
-            epochs: 20
-            mainly used for the rookie arena
-
-            t17
-            base: cnocr-v2.2-densenet_lite_136-gru.ckpt
-            training data: 2017
-            epochs: 10
-            mainly used for the rookie arena
-
             t18
             base: cnocr-v2.2-densenet_lite_136-gru.ckpt
             training data: 2156
             epochs: 15
             mainly used for the rookie arena
+
+            t20
+            base: cnocr-v2.2-densenet_lite_136-gru.ckpt
+            training data: 2642 + 56
+            epochs: 15
+            mainly used for the rookie arena
         """
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
-                        model_name='/t18.ckpt', name='nikke')
+                        model_name='/t20.ckpt', name='nikke')
 
     @cached_property
     def nikke_digit(self):
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
-                        model_name='/t18.ckpt', name='nikke_digit', cand_alphabet='0123456789')
+                        model_name='/t20.ckpt', name='nikke_digit', cand_alphabet='0123456789')
 
     @cached_property
     def nikke_counter(self):
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
-                        model_name='/t18.ckpt', name='nikke_counter', cand_alphabet='0123456789/IDS')
+                        model_name='/t20.ckpt', name='nikke_counter', cand_alphabet='0123456789/IDS')
 
     def get_location(self, text, result):
 
