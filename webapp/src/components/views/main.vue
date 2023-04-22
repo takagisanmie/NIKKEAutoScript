@@ -4,7 +4,6 @@
 
 <script setup>
 import {webuiUrl} from '@/config/config';</script>
-
 <style lang="stylus" scoped>
 *
   border-width 0
