@@ -89,7 +89,7 @@ class UI(InfoHandler):
         logger.critical("Please switch to a supported page before starting NKAS")
         raise GamePageUnknownError
 
-    def ui_goto(self, destination, offset=(30, 30), confirm_wait=1, skip_first_screenshot=True):
+    def ui_goto(self, destination, offset=(30, 30), confirm_wait=2, skip_first_screenshot=True):
         """
            Args:
                destination (Page):
