@@ -113,7 +113,7 @@ class Conversation(UI):
             self.answer()
 
     def ensure_in_detail(self, skip_first_screenshot=True):
-        logger.info('into detailed information')
+        logger.hr('into detailed information', 3)
         confirm_timer = Timer(1, count=1).start()
         click_timer = Timer(1.6)
         while 1:
@@ -158,7 +158,7 @@ class Conversation(UI):
         return True
 
     def ensure_wait_to_answer(self, skip_first_screenshot=True):
-        logger.hr(f'have a conversation with {self.current}')
+        logger.hr(f'have a conversation with {self.current}', 3)
         click_timer = Timer(0.3)
 
         while 1:
@@ -194,8 +194,6 @@ class Conversation(UI):
         answer_a_area = (82, 817, 640, 900)
         answer_b_area = (82, 920, 640, 1000)
 
-        # answer_a = self.ocr(crop(self.device.image, answer_a_area), 'OCR_ANSWER_A')
-        # answer_b = self.ocr(crop(self.device.image, answer_b_area), 'OCR_ANSWER_B')
         answer_a = self.ocr(extract_letters(crop(self.device.image, answer_a_area), letter=(247, 243, 247)),
                             label='OCR_ANSWER_A')
         answer_b = self.ocr(extract_letters(crop(self.device.image, answer_b_area), letter=(247, 243, 247)),
