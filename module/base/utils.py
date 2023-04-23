@@ -1,3 +1,5 @@
+from statistics import mean
+
 import cv2
 import numpy as np
 from PIL import Image
@@ -320,6 +322,19 @@ def find_letter_area(condition):
     min_row, min_col = np.min(pixels, axis=1)
     max_row, max_col = np.max(pixels, axis=1)
     return min_col, min_row, max_col, max_row
+
+
+def find_center(rect):
+    """
+    Args:
+        rect: tuple = (upper_left_x, upper_left_y, bottom_right_x, bottom_right_y).
+    Returns:
+        x, y: tuple
+    """
+    ul_x, ul_y, br_x, br_y = rect
+    x = mean([ul_x, br_x])
+    y = mean([ul_y, br_y])
+    return x, y
 
 
 def show_image(image, title='image', delay=0):

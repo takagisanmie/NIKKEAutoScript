@@ -31,5 +31,8 @@ class GeneratedConfig:
     Reward_CollectSocialPoint = True
     Reward_CollectSpecialArenaPoint = True
 
+    # Group `Conversation`
+    Conversation_WaitToCommunicate = None
+
     # Group `Storage`
     Storage_Storage = {}

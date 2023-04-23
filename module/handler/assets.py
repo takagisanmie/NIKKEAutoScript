@@ -5,6 +5,7 @@ from module.base.button import Button
 
 ANNOUNCEMENT = Button(area={'cn': (631, 111, 675, 152)}, color={'cn': (48, 143, 231)}, button={'cn': (631, 111, 675, 152)}, file={'cn': './assets/cn/handler/ANNOUNCEMENT.png'})
 ANNOUNCEMENT_CHECK = Button(area={'cn': (237, 267, 263, 301)}, color={'cn': (152, 195, 245)}, button={'cn': (237, 267, 263, 301)}, file={'cn': './assets/cn/handler/ANNOUNCEMENT_CHECK.png'})
+AUTO_CLICK_CHECK = Button(area={'cn': (359, 22, 423, 41)}, color={'cn': (125, 125, 125)}, button={'cn': (359, 22, 423, 41)}, file={'cn': './assets/cn/handler/AUTO_CLICK_CHECK.png'})
 CONFRIM_A = Button(area={'cn': (354, 819, 393, 844)}, color={'cn': (136, 217, 255)}, button={'cn': (354, 819, 393, 844)}, file={'cn': './assets/cn/handler/CONFRIM_A.png'})
 CONFRIM_B = Button(area={'cn': (507, 790, 555, 813)}, color={'cn': (110, 197, 241)}, button={'cn': (507, 790, 555, 813)}, file={'cn': './assets/cn/handler/CONFRIM_B.png'})
 CONFRIM_C = Button(area={'cn': (334, 1012, 385, 1036)}, color={'cn': (115, 206, 248)}, button={'cn': (334, 1012, 385, 1036)}, file={'cn': './assets/cn/handler/CONFRIM_C.png'})

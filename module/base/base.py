@@ -1,4 +1,5 @@
 import time
+from functools import cached_property
 
 from module.base.button import Button
 from module.base.timer import Timer
@@ -6,6 +7,7 @@ from module.base.utils import float2str, point2str
 from module.config.config import NikkeConfig
 from module.device.device import Device
 from module.logger import logger
+from module.ocr.models import OCR_MODEL
 
 
 class ModuleBase:
@@ -45,6 +47,13 @@ class ModuleBase:
             self.device = device
 
         self.interval_timer = {}
+
+    @cached_property
+    def ocr_models(self):
+        return {
+            'nikke': OCR_MODEL.nikke,
+            'cnocr': OCR_MODEL.cnocr,
+        }
 
     def appear(self, button: Button, offset=0, interval=0, threshold=None, static=True) -> bool:
 
@@ -87,7 +96,7 @@ class ModuleBase:
 
         return appear
 
-    def appear_text(self, text, interval=0, area=None) -> bool or tuple:
+    def appear_text(self, text, interval=0, area=None, model='cnocr') -> bool or tuple:
         if interval:
             if text in self.interval_timer:
                 if self.interval_timer[text].limit != interval:
@@ -97,7 +106,7 @@ class ModuleBase:
             if not self.interval_timer[text].reached():
                 return False
 
-        res = self.device.ocr(self.device.image, area=area)
+        res = self.ocr_models.get(model).ocr(self.device.image, area=area)
         location = self.device.get_location(text, res)
         if location:
             if interval:
@@ -131,6 +140,17 @@ class ModuleBase:
             return True
         else:
             return False
+
+    def ocr(self, image, label='', model='cnocr'):
+        start_time = time.time()
+        result = self.ocr_models.get(model).ocr(image)
+        if len(result):
+            text = result[0].get('text')
+            logger.attr(name='%s %ss' % (label, float2str(time.time() - start_time)),
+                        text=str(text))
+            return text
+        else:
+            return None
 
     def interval_reset(self, button):
         if isinstance(button, (list, tuple)):

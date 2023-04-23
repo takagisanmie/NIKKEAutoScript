@@ -15,3 +15,7 @@ Commission:
 RookieArena:
   Scheduler:
     Enable: true
+
+Conversation:
+  Scheduler:
+    Enable: true

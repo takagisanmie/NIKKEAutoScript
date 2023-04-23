@@ -47,6 +47,17 @@ page_friend = Page(FRIEND_CHECK)
 page_friend.link(button=FRIEND_GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_FRIEND, destination=page_friend)
 
+# team
+page_team = Page(TEAM_CHECK)
+page_team.link(button=TEAM_GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_TEAM, destination=page_team)
+
+# conversation
+page_conversation = Page(CONVERSATION_CHECK)
+page_conversation.link(button=GOTO_BACK, destination=page_team)
+page_conversation.link(button=GOTO_MAIN, destination=page_main)
+page_team.link(button=TEAM_GOTO_CONVERSATION, destination=page_conversation)
+
 # ark
 page_ark = Page(ARK_CHECK)
 page_ark.link(button=GOTO_BACK, destination=page_main)

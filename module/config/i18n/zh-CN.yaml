@@ -67,6 +67,9 @@ Task:
   RookieArena:
     name: 新人竞技场
     help: ""
+  Conversation:
+    name: 咨询
+    help: ""
 Emulator:
   _info:
     name: 模拟器设置
@@ -146,5 +149,14 @@ Reward:
   CollectSpecialArenaPoint:
     name: 收获特殊竞技场点数
     help: ""
+Conversation:
+  _info:
+    name: 咨询
+    help: ""
+  WaitToCommunicate:
+    name: 等待咨询的妮姬
+    help: "请收藏想要咨询的妮姬\n
+           例如: '红莲 爱丽丝'，用一个空格分开
+          "
 
 

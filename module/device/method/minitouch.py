@@ -4,6 +4,7 @@ import time
 from functools import cached_property, wraps
 from typing import List
 
+import numpy as np
 import websockets
 from adbutils import AdbError
 
@@ -11,7 +12,7 @@ from module.base.decorator import del_cached_property
 from module.base.timer import Timer
 from module.device.connection import Connection
 from module.device.method.utils import RETRY_TRIES, retry_sleep, handle_adb_error
-from module.exception import RequestHumanTakeover, ScriptError
+from module.exception import RequestHumanTakeover
 from module.logger import logger
 
 
@@ -93,6 +94,79 @@ def retry(func):
         raise RequestHumanTakeover
 
     return retry_wrapper
+
+
+def random_normal_distribution(a, b, n=5):
+    output = np.mean(np.random.uniform(a, b, size=n))
+    return output
+
+
+def random_theta():
+    theta = np.random.uniform(0, 2 * np.pi)
+    return np.array([np.sin(theta), np.cos(theta)])
+
+
+def random_rho(dis):
+    return random_normal_distribution(-dis, dis)
+
+
+def insert_swipe(p0, p3, speed=15, min_distance=10):
+    """
+    Insert way point from start to end.
+    First generate a cubic bézier curve
+
+    Args:
+        p0: Start point.
+        p3: End point.
+        speed: Average move speed, pixels per 10ms.
+        min_distance:
+
+    Returns:
+        list[list[int]]: List of points.
+
+    Examples:
+        > insert_swipe((400, 400), (600, 600), speed=20)
+        [[400, 400], [406, 406], [416, 415], [429, 428], [444, 442], [462, 459], [481, 478], [504, 500], [527, 522],
+        [545, 540], [560, 557], [573, 570], [584, 582], [592, 590], [597, 596], [600, 600]]
+    """
+    p0 = np.array(p0)
+    p3 = np.array(p3)
+
+    # Random control points in Bézier curve
+    distance = np.linalg.norm(p3 - p0)
+    p1 = 2 / 3 * p0 + 1 / 3 * p3 + random_theta() * random_rho(distance * 0.1)
+    p2 = 1 / 3 * p0 + 2 / 3 * p3 + random_theta() * random_rho(distance * 0.1)
+
+    # Random `t` on Bézier curve, sparse in the middle, dense at start and end
+    segments = max(int(distance / speed) + 1, 5)
+    lower = random_normal_distribution(-85, -60)
+    upper = random_normal_distribution(80, 90)
+    theta = np.arange(lower + 0., upper + 0.0001, (upper - lower) / segments)
+    ts = np.sin(theta / 180 * np.pi)
+    ts = np.sign(ts) * abs(ts) ** 0.9
+    ts = (ts - min(ts)) / (max(ts) - min(ts))
+
+    # Generate cubic Bézier curve
+    points = []
+    prev = (-100, -100)
+    for t in ts:
+        point = p0 * (1 - t) ** 3 + 3 * p1 * t * (1 - t) ** 2 + 3 * p2 * t ** 2 * (1 - t) + p3 * t ** 3
+        point = point.astype(int).tolist()
+        if np.linalg.norm(np.subtract(point, prev)) < min_distance:
+            continue
+
+        points.append(point)
+        prev = point
+
+    # Delete nearing points
+    if len(points[1:]):
+        distance = np.linalg.norm(np.subtract(points[1:], points[0]), axis=1)
+        mask = np.append(True, distance > min_distance)
+        points = np.array(points)[mask].tolist()
+    else:
+        points = [p0, p3]
+
+    return points
 
 
 class Command:
@@ -184,16 +258,16 @@ class CommandBuilder:
         orientation = self.device.orientation
         if orientation == 0:
             pass
-        elif orientation == 1:
-            x, y = 720 - y, x
-            max_x, max_y = max_y, max_x
-        elif orientation == 2:
-            x, y = 1280 - x, 720 - y
-        elif orientation == 3:
-            x, y = y, 1280 - x
-            max_x, max_y = max_y, max_x
-        else:
-            raise ScriptError(f'Invalid device orientation: {orientation}')
+        # elif orientation == 1:
+        #     x, y = 720 - y, x
+        #     max_x, max_y = max_y, max_x
+        # elif orientation == 2:
+        #     x, y = 1280 - x, 720 - y
+        # elif orientation == 3:
+        #     x, y = y, 1280 - x
+        #     max_x, max_y = max_y, max_x
+        # else:
+        #     raise ScriptError(f'Invalid device orientation: {orientation}')
 
         self.max_x, self.max_y = max_x, max_y
         x, y = int(x / 1280 * max_x), int(y / 720 * max_y)
@@ -347,3 +421,22 @@ class Minitouch(Connection):
         builder.down(int(x * 2 * 0.9), int(y / 2 * 1.12)).commit()
         builder.up().commit()
         self.minitouch_send()
+
+    @retry
+    def swipe_minitouch(self, p1, p2):
+        points = insert_swipe(p0=translate_tuple(p1), p3=translate_tuple(p2))
+        builder = self.minitouch_builder
+
+        builder.down(*points[0]).commit()
+        self.minitouch_send()
+
+        for point in points[1:]:
+            builder.move(*point).commit().wait(10)
+        self.minitouch_send()
+
+        builder.up().commit()
+        self.minitouch_send()
+
+
+def translate_tuple(p):
+    return p[0] * 2 * 0.9, p[1] / 2 * 1.12

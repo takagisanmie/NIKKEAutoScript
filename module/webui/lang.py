@@ -1,4 +1,4 @@
-from module.config.yamlStrategy import read, get
+from module.config.yaml_strategy import read, get
 
 LANG = "zh-CN"
 

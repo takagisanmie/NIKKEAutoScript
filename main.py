@@ -10,7 +10,6 @@ from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
-from module.ocr.models import OCR_MODEL
 
 
 class NikkeAutoScript:
@@ -121,6 +120,10 @@ class NikkeAutoScript:
     def commission(self):
         from module.commission.commission import Commission
         Commission(config=self.config, device=self.device).run()
+
+    def conversation(self):
+        from module.conversation.conversation import Conversation
+        Conversation(config=self.config, device=self.device).run()
 
     def rookie_arena(self):
         from module.rookie_arena.rookie_arena import RookieArena
@@ -286,16 +289,53 @@ if __name__ == '__main__':
     # e.device.screenshot()
 
     self.device.screenshot()
-    ocr = OCR_MODEL.nikke.ocr
-    from module.rookie_arena.rookie_arena import RookieArena
 
-    e = RookieArena(config=self.config, device=self.device)
-    # _ = e.target_power_list
-    # _ = e.free_opportunity_remain
-    # competitor = [index for index, i in enumerate(e.competitor_power_list) if i <= e.own_power]
-    # print(competitor)
-    # print(*e.button[competitor[0]])
-    print(e.free_opportunity_remain)
+    # OCR_OPPORTUNITY = DigitCounter(OCR_OPPORTUNITY, name='OCR_OPPORTUNITY', letter=(247, 247, 247), threshold=128)
+    # print(OCR_OPPORTUNITY.ocr(self.device.image)[0])
+
+    # ocr = OCR_MODEL.cnocr_gru.ocr
+    #
+    # answer_a_area = (82, 807, 640, 910)
+    # answer_b_area = (82, 910, 640, 1010)
+    #
+    # answer_a = ocr(extract_letters(crop(self.device.image, answer_a_area), letter=(247, 243, 247)))
+    # answer_b = ocr(extract_letters(crop(self.device.image, answer_b_area), letter=(247, 243, 247)))
+    #
+    # print(answer_a)
+    # print(answer_b)
+
+    from module.conversation.conversation import Conversation
+    #
+    # list = '樱花 阿妮斯 麦斯威尔 舒格 白雪公主 伊莎贝尔 艾德米 吉萝婷 森 沃伦姆'
+    # e = Conversation(config=self.config, device=self.device)
+    # print(e.ensure_opportunity_remain())
+
+    # r = [i.get('key') for i in Nikke_list if i.get('label') in '舒格']
+    # print(Nikke_dialog.get(r[0]))
+
+    # # print(e.config.Conversation_WaitToCommunicate)
+    # opportunity = 10
+    #
+    # self.config.bind('Conversation')
+    # e.run()
+    # e.answer(None)
+
+    # print(list.strip(' ').split(' '))
+    # FAVOURITE_CHECK.ensure_template()
+    # _ = FAVOURITE_CHECK.match(self.device.image, static=False)
+    # if _:
+    #     area = FAVOURITE_CHECK._button_offset
+    #     name_area = _area_offset(area, (18, 57, 220, -10))
+    #     check_area = _area_offset(area, (520, 57, 645, 12))
+    #     rank_area = _area_offset(area, (28, 21, 150, -56))
+    #
+    #     _img = crop(self.device.image, name_area)
+    #     _img = extract_letters(_img, letter=(74, 73, 74))
+    #     text_rect = find_letter_area(_img < 128)
+    #     text_rect = _area_offset(text_rect, (-2, -2, 3, 2))
+    #     name = e.ocr(crop(_img, text_rect), 'NIKKE_NAME')
+    #
+    #     r = [i.get('key') for i in Nikke_list if i.get('label') in name]
 
     # e.ui_ensure(page_ark)
 

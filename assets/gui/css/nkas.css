@@ -182,6 +182,10 @@ button[type="button"] {
     width: 120px;
 }
 
+* input[name*="Conversation_Conversation_WaitToCommunicate"] {
+    width: 725px;
+}
+
 .form-control {
     width: fit-content;
 }

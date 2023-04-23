@@ -32,5 +32,8 @@ Optimization:
 Reward:
   CollectSocialPoint: true
   CollectSpecialArenaPoint: true
+Conversation:
+  WaitToCommunicate:
+    value: ''
 
 

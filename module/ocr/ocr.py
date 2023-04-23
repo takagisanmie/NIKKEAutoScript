@@ -159,9 +159,7 @@ class DigitCounter(Ocr):
             return 0, 0, 0
 
 
-from module.reward.assets import OCR_CHANCE
 
-OCR_CHANCE = DigitCounter(OCR_CHANCE, name='OCR_CHANCE', letter=(247, 247, 247), threshold=128)
 
 import os
 import cv2

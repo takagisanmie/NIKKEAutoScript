@@ -5,7 +5,8 @@ from module.handler.assets import *
 from module.handler.info_handle import InfoHandler
 from module.logger import logger
 from module.ui.assets import GOTO_MAIN
-from module.ui.page import (Page, page_unknown, page_main, page_reward, page_destroy, page_friend, page_ark, page_arena,
+from module.ui.page import (Page, page_unknown, page_main, page_reward, page_destroy, page_friend, page_team,
+                            page_conversation, page_ark, page_arena,
                             page_rookie_arena,
                             page_special_arena, page_outpost, page_commission)
 
@@ -16,6 +17,8 @@ class UI(InfoHandler):
                 page_reward,
                 page_destroy,
                 page_friend,
+                page_team,
+                page_conversation,
                 page_ark,
                 page_arena,
                 page_rookie_arena,
@@ -89,7 +92,7 @@ class UI(InfoHandler):
         logger.critical("Please switch to a supported page before starting NKAS")
         raise GamePageUnknownError
 
-    def ui_goto(self, destination, offset=(30, 30), confirm_wait=2, skip_first_screenshot=True):
+    def ui_goto(self, destination, offset=(30, 30), confirm_wait=0, skip_first_screenshot=True):
         """
            Args:
                destination (Page):
@@ -166,7 +169,7 @@ class UI(InfoHandler):
             if clicked:
                 continue
 
-    def ui_ensure(self, destination, skip_first_screenshot=True):
+    def ui_ensure(self, destination, confirm_wait=0, skip_first_screenshot=True):
         logger.hr("UI ensure")
         self.ui_get_current_page(skip_first_screenshot=skip_first_screenshot)
         if self.ui_current == destination:
@@ -174,7 +177,7 @@ class UI(InfoHandler):
             return False
         else:
             logger.info("Goto %s" % destination)
-            self.ui_goto(destination, skip_first_screenshot=True)
+            self.ui_goto(destination, confirm_wait=confirm_wait, skip_first_screenshot=True)
             return True
 
     def ui_additional(self):

@@ -22,12 +22,12 @@ class RookieArena(UI):
     def competitor_power_list(self) -> list[int]:
         start_time = time.time()
         POWER_CHECK.ensure_template()
-        r = POWER_CHECK.match_several(self.device.image, threshold=0.66, static=False)
+        r = [i.get('area') for i in POWER_CHECK.match_several(self.device.image, threshold=0.66, static=False)]
         # 按照 upper 排序
         r.sort(key=lambda x: x[1])
         r = [_area_offset(i, (22, -10, 65, 8)) for i in r]
 
-        r = [self.device.ocr(crop(crop(self.device.image, i), _area_offset(
+        r = [self.ocr_models.get('nikke').ocr(crop(crop(self.device.image, i), _area_offset(
             find_letter_area(extract_letters(crop(self.device.image, i), letter=(90, 93, 99)) < 128), (-2, -2, 3, 2))))
              for i in r]
 
@@ -107,7 +107,7 @@ class RookieArena(UI):
             return self.start_competition()
 
     def run(self):
-        self.ui_ensure(page_rookie_arena)
+        self.ui_ensure(page_rookie_arena, confirm_wait=2)
         if self.free_opportunity_remain:
             self.start_competition()
         else:

@@ -6,7 +6,7 @@ import imageio
 import numpy as np
 
 from module.base.resource import Resource
-from module.base.utils import crop, load_image, area_offset, color_similar, get_color, mask_area
+from module.base.utils import crop, load_image, area_offset, color_similar, get_color, mask_area, find_center
 
 
 class Button(Resource):
@@ -80,9 +80,7 @@ class Button(Resource):
 
     @property
     def location(self):
-        x = (self.button[0] + self.button[2]) / 2
-        y = (self.button[1] + self.button[3]) / 2
-        return x, y
+        return find_center(self.button)
 
     @cached_property
     def is_gif(self):
@@ -147,12 +145,12 @@ class Button(Resource):
         #     return False
         # else:
 
-    def match_several(self, image, offset=30, threshold=0.85, static=True):
+    def match_several(self, image, offset=30, threshold=0.85, static=True) -> list[dict]:
         # areas = set()
         areas = []
         while 1:
             if self.match(image, offset=offset, threshold=threshold, static=static):
-                areas.append(self._button_offset)
+                areas.append({'area': self._button_offset, 'location': self.location})
                 image = mask_area(image, self._button_offset)
             else:
                 return areas

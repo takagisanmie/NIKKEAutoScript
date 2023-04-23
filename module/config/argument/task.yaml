@@ -21,5 +21,9 @@ Commission:
 
 # ==================== Daily ====================
 
+Conversation:
+  - Scheduler
+  - Conversation
+
 RookieArena:
   - Scheduler
