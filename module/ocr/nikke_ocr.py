@@ -13,7 +13,7 @@ class NikkeOcr(CnOcr):
     def __init__(self, rec_model_name='densenet_lite_136-gru', det_model_name='ch_PP-OCRv3_det', cand_alphabet=None,
                  context='cpu',
                  root='./bin/cnocr_models/nikke',
-                 model_name='/t20.ckpt', **kwargs):
+                 model_name='/t21.ckpt', **kwargs):
         model_fp = root + model_name
         super().__init__(rec_model_name=rec_model_name, det_model_name=det_model_name, rec_model_fp=model_fp,
                          cand_alphabet=cand_alphabet, context=context,

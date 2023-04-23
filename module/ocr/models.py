@@ -20,19 +20,25 @@ class OcrModel:
             training data: 2642 + 56
             epochs: 15
             mainly used for the rookie arena
+
+            t21
+            base: cnocr-v2.2-densenet_lite_136-gru.ckpt
+            training data: 3002 + 56
+            epochs: 15
+            mainly used for the rookie arena
         """
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
-                        model_name='/t20.ckpt', name='nikke')
+                        model_name='/t21.ckpt', name='nikke')
 
     @cached_property
     def nikke_digit(self):
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
-                        model_name='/t20.ckpt', name='nikke_digit', cand_alphabet='0123456789')
+                        model_name='/t21.ckpt', name='nikke_digit', cand_alphabet='0123456789')
 
     @cached_property
     def nikke_counter(self):
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
-                        model_name='/t20.ckpt', name='nikke_counter', cand_alphabet='0123456789/IDS')
+                        model_name='/t21.ckpt', name='nikke_counter', cand_alphabet='0123456789/IDS')
 
     # @cached_property
     # def rank(self):
@@ -43,6 +49,7 @@ class OcrModel:
     def cnocr(self):
         return NikkeOcr(rec_model_name='densenet_lite_136-fc', root='./bin/cnocr_models/cnocr',
                         model_name='/cnocr-v2.2-densenet_lite_136-fc.ckpt', name='cnocr')
+
     @cached_property
     def cnocr_gru(self):
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/cnocr',

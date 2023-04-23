@@ -159,8 +159,6 @@ class DigitCounter(Ocr):
             return 0, 0, 0
 
 
-
-
 import os
 import cv2
 
