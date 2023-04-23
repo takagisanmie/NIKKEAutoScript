@@ -13,7 +13,8 @@ from module.ui.assets import CONVERSATION_CHECK, GOTO_BACK
 from module.ui.page import page_conversation
 from module.ui.ui import UI
 
-OCR_OPPORTUNITY = DigitCounter(OCR_OPPORTUNITY, name='OCR_OPPORTUNITY', letter=(247, 247, 247), threshold=128)
+OCR_OPPORTUNITY = DigitCounter(OCR_OPPORTUNITY, lang='cnocr', name='OCR_OPPORTUNITY', letter=(247, 247, 247),
+                               threshold=128)
 
 
 class ChooseNextNIKKETooLong(Exception):
@@ -100,7 +101,7 @@ class Conversation(UI):
             logger.critical("Please switch current page into 'PAGE_CONVERSATION'")
             raise GamePageUnknownError
 
-        self.device.swipe((360, 1000), (360, 950), handle_control_check=False)
+        self.device.swipe((360, 1000), (360, 960), handle_control_check=False)
         self.device.sleep(1.2)
         self.device.screenshot()
         self.get_next_target()
