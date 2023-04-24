@@ -6,7 +6,6 @@ from module.ui.page import *
 from module.ui.ui import UI
 
 
-
 class Reward(UI):
     def receive_reward(self, skip_first_screenshot=True):
         logger.hr('Reward receive')
@@ -82,7 +81,7 @@ class Reward(UI):
                 self.device.screenshot()
 
             if click_timer.reached() and self.appear_then_click(RECEIVE_SPECIAL_ARENA_POINT, offset=(30, 30),
-                                                                interval=1):
+                                                                interval=1, static=False):
                 pass
 
             if self.handle_reward(interval=1):

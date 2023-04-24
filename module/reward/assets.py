@@ -4,5 +4,5 @@ from module.base.button import Button
 # Don't modify it manually.
 
 RECEIVE = Button(area={'cn': (426, 1047, 471, 1090)}, color={'cn': (67, 191, 249)}, button={'cn': (426, 1047, 471, 1090)}, file={'cn': './assets/cn/reward/RECEIVE.png'})
-RECEIVE_SPECIAL_ARENA_POINT = Button(area={'cn': (294, 309, 309, 334)}, color={'cn': (183, 205, 178)}, button={'cn': (294, 309, 309, 334)}, file={'cn': './assets/cn/reward/RECEIVE_SPECIAL_ARENA_POINT.png'})
+RECEIVE_SPECIAL_ARENA_POINT = Button(area={'cn': (306, 283, 417, 292)}, color={'cn': (155, 161, 164)}, button={'cn': (306, 283, 417, 292)}, file={'cn': './assets/cn/reward/RECEIVE_SPECIAL_ARENA_POINT.png'})
 SEND_AND_RECEIVE = Button(area={'cn': (508, 1075, 589, 1101)}, color={'cn': (129, 213, 251)}, button={'cn': (508, 1075, 589, 1101)}, file={'cn': './assets/cn/reward/SEND_AND_RECEIVE.png'})

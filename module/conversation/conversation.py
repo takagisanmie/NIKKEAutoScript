@@ -40,8 +40,7 @@ class Conversation(UI):
             _ = self.device.config.Conversation_WaitToCommunicate.strip(' ').split(' ')
             return _
         except AttributeError:
-            if _ is None:
-                logger.warning("There are no names included in the queue option")
+            logger.warning("There are no names included in the queue option")
             raise ConversationQueueIsEmpty
 
     def name_after_process(self, text):
@@ -231,7 +230,8 @@ class Conversation(UI):
             else:
                 self.device.screenshot()
 
-            if self.appear(DETAIL_CHECK) or self.appear(RANK_INCREASE_CHECK):
+            if self.appear(DETAIL_CHECK, offset=(30, 30), static=False) \
+                    or self.appear(RANK_INCREASE_CHECK, offset=(30, 30), static=False):
                 break
 
             # if click_timer.reached() and self.appear(AUTO_CLICK_CHECK, offset=(30, 30), interval=0.3):
