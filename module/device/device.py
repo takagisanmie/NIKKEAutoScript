@@ -11,7 +11,6 @@ from module.ocr.models import OCR_MODEL
 
 
 class Device(Screenshot, Control, AppControl):
-    ocr = OCR_MODEL.nikke.ocr
     get_location = OCR_MODEL.get_location
 
     # 尝试检测的 Button 集合

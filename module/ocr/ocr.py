@@ -107,7 +107,7 @@ class Digit(Ocr):
     Method ocr() returns int, or a list of int.
     """
 
-    def __init__(self, buttons, lang='nikke_digit', letter=(255, 255, 255), threshold=128, alphabet='0123456789IDS',
+    def __init__(self, buttons, lang='nikke', letter=(255, 255, 255), threshold=128, alphabet='0123456789IDS',
                  name=None):
         super().__init__(buttons, lang=lang, letter=letter, threshold=threshold, alphabet=alphabet, name=name)
 
@@ -124,7 +124,7 @@ class Digit(Ocr):
 
 
 class DigitCounter(Ocr):
-    def __init__(self, buttons, lang='nikke_counter', letter=(255, 255, 255), threshold=128, alphabet='0123456789/IDS',
+    def __init__(self, buttons, lang='nikke', letter=(255, 255, 255), threshold=128, alphabet='0123456789/IDS',
                  name=None):
         super().__init__(buttons, lang=lang, letter=letter, threshold=threshold, alphabet=alphabet, name=name)
 
