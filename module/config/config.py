@@ -93,7 +93,6 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher):
     def load(self):
         self.data = self.read_file(self.config_name)
         self.config_override()
-
         for path, value in self.modified.items():
             deep_set(self.data, keys=path, value=value)
 
@@ -180,7 +179,8 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher):
                 "Reward",
             ]
         )
-        limit_next_run(["Reward"], limit=now + timedelta(hours=12, seconds=-1))
+        # 当运行时间大于24小时之后时，设为现在运行
+        limit_next_run(["Reward"], limit=now + timedelta(hours=24, seconds=-1))
         limit_next_run(self.args.keys(), limit=now + timedelta(hours=24, seconds=-1))
 
     def get_next(self):
@@ -240,7 +240,6 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher):
         Reward (Enable, 1989-12-27 00:00:00)
         '''
         for func in self.data.values():
-
             func = Function(func)
             '''
                 跳过Scheduler.Enable为False的任务

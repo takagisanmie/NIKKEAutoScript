@@ -25,6 +25,10 @@ class NoOpportunityRemain(Exception):
     pass
 
 
+class ConversationQueueIsEmpty(Exception):
+    pass
+
+
 class Conversation(UI):
     visited = []
 
@@ -32,7 +36,13 @@ class Conversation(UI):
 
     @cached_property
     def nikke_list(self):
-        return self.device.config.Conversation_WaitToCommunicate.strip(' ').split(' ')
+        try:
+            _ = self.device.config.Conversation_WaitToCommunicate.strip(' ').split(' ')
+            return _
+        except AttributeError:
+            if _ is None:
+                logger.warning("There are no names included in the queue option")
+            raise ConversationQueueIsEmpty
 
     def name_after_process(self, text):
         if '购物狂' in text:
@@ -275,6 +285,8 @@ class Conversation(UI):
             except ChooseNextNIKKETooLong as e:
                 logger.error(e)
             except NoOpportunityRemain as e:
+                logger.error(e)
+            except ConversationQueueIsEmpty as e:
                 logger.error(e)
         else:
             logger.info('There are no opportunities remaining')

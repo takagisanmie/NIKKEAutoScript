@@ -237,6 +237,7 @@ class ConfigUpdater:
             dict:
         """
         old = read_file(filepath_config(config_name))
+        # 从模板更新
         new = self.config_update(old, is_template=is_template)
         # The updated config did not write into file, although it doesn't matters.
         # Commented for performance issue
