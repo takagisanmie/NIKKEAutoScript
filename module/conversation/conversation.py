@@ -37,7 +37,7 @@ class Conversation(UI):
     @cached_property
     def nikke_list(self):
         try:
-            _ = self.device.config.Conversation_WaitToCommunicate.strip(' ').split(' ')
+            _ = self.config.Conversation_WaitToCommunicate.strip(' ').split(' ')
             return _
         except AttributeError:
             logger.warning("There are no names included in the queue option")
@@ -60,7 +60,6 @@ class Conversation(UI):
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
 
-        FAVOURITE_CHECK.ensure_template()
         _ = FAVOURITE_CHECK.match(self.device.image, static=False)
         if _:
             area = FAVOURITE_CHECK._button_offset
@@ -145,7 +144,6 @@ class Conversation(UI):
         if RANK_MAX_CHECK.match(self.device.image):
             logger.warning('current nikke already achieved max rank')
             logger.warning("skip this nikke's conversation")
-            GOTO_BACK.ensure_template()
             confirm_timer.reset()
             click_timer.reset()
             skip_first_screenshot = True
