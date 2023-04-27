@@ -21,7 +21,7 @@ from module.webui.lang import t
 from module.webui.process_manager import ProcessManager
 from module.webui.setting import State
 from module.webui.updater import updater
-from module.webui.utils import get_localstorage, add_css, get_nkas_config_listen_path, parse_pin_value, re_fullmatch, \
+from module.webui.utils import add_css, get_nkas_config_listen_path, parse_pin_value, re_fullmatch, \
     Switch
 from module.webui.widgets import RichLog, put_icon_buttons, BinarySwitchButton, T_Output_Kwargs, put_output
 
@@ -53,7 +53,7 @@ class NikkeAutoScriptGUI(Frame):
             #     pass
             State.restart_event.set()
 
-        toast('restart uvicorn', position='right', color='#64b2fb', duration=1)
+        toast('restart uvicorn', position='right', color='#c082fb', duration=1)
         timer = threading.Timer(1, trigger)
         timer.start()
         clearup()
@@ -638,7 +638,7 @@ class NikkeAutoScriptGUI(Frame):
         register_thread(_thread_save_config)
         _thread_save_config.start()
 
-        aside = get_localstorage("aside")
+        # aside = get_localstorage("aside")
         self.show()
 
         '''
