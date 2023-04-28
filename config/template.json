@@ -46,7 +46,7 @@
   },
   "Destroy": {
     "Scheduler": {
-      "Enable": true,
+      "Enable": false,
       "NextRun": "1989-12-27 00:00:00",
       "Command": "Destroy",
       "SuccessInterval": 0,
@@ -59,7 +59,7 @@
   },
   "Commission": {
     "Scheduler": {
-      "Enable": true,
+      "Enable": false,
       "NextRun": "1989-12-27 00:00:00",
       "Command": "Commission",
       "SuccessInterval": "240-240",
@@ -72,7 +72,7 @@
   },
   "Conversation": {
     "Scheduler": {
-      "Enable": true,
+      "Enable": false,
       "NextRun": "1989-12-27 00:00:00",
       "Command": "Conversation",
       "SuccessInterval": 0,
@@ -86,9 +86,27 @@
       "Storage": {}
     }
   },
+  "SimulationRoom": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "1989-12-27 00:00:00",
+      "Command": "SimulationRoom",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Area": {
+      "Difficulty": "Level_1",
+      "OnsetArea": "A",
+      "EndingArea": "A"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "RookieArena": {
     "Scheduler": {
-      "Enable": true,
+      "Enable": false,
       "NextRun": "1989-12-27 00:00:00",
       "Command": "RookieArena",
       "SuccessInterval": 0,

@@ -25,5 +25,9 @@ Conversation:
   - Scheduler
   - Conversation
 
+SimulationRoom:
+  - Scheduler
+  - Area
+
 RookieArena:
   - Scheduler

@@ -24,7 +24,7 @@ class Device(Screenshot, Control, AppControl):
         如果 detect_record 含有在 stuck_long_wait_list 中的 Button，在 stuck_timer_long 到达上限前不会 raise exception
         detect_record 值为 str(Button)，在 Button 类中，重写为该 asset 的名称
     """
-    stuck_long_wait_list = ['LOGIN_CHECK']
+    stuck_long_wait_list = ['LOGIN_CHECK', 'PAUSE']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

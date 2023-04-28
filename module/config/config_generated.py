@@ -34,5 +34,10 @@ class GeneratedConfig:
     # Group `Conversation`
     Conversation_WaitToCommunicate = None
 
+    # Group `Area`
+    Area_Difficulty = 'Level_1'  # Level_1, Level_2, Level_3, Level_4, Level_5
+    Area_OnsetArea = 'A'  # A, B, C
+    Area_EndingArea = 'A'  # A, B, C
+
     # Group `Storage`
     Storage_Storage = {}

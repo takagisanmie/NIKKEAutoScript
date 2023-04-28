@@ -313,6 +313,7 @@ def show():
     logger.info(r'Brace { [ ( ) ] }')
     logger.info(r'True, False, None')
     logger.info(r'E:/path\\to/alas/alas.exe, /root/alas/, ./relative/path/log.txt')
+    logger.attr('attr', 'attr')
     local_var1 = 'This is local variable'
     # Line before exception
     try:

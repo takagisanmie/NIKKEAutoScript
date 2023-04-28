@@ -9,7 +9,7 @@ from module.ui.ui import UI
 class Commission(UI):
     def dispatch_and_claim(self, skip_first_screenshot=True):
         logger.hr('Dispatch and claim commission')
-        confirm_timer = Timer(5, count=3).start()
+        confirm_timer = Timer(8, count=3).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:

@@ -64,4 +64,4 @@ setTimeout(() => {
     app.on('window-all-closed', function () {
         if (process.platform !== 'darwin') app.quit();
     })
-}, 4000)
+}, 7000)

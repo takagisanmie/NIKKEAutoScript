@@ -9,6 +9,7 @@ from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
+from module.handler.assets import CONFRIM_B, CONFRIM_C
 from module.logger import logger
 
 
@@ -128,6 +129,10 @@ class NikkeAutoScript:
     def rookie_arena(self):
         from module.rookie_arena.rookie_arena import RookieArena
         RookieArena(config=self.config, device=self.device).run()
+
+    def simulation_room(self):
+        from module.simulation_room.simulation_room import SimulationRoom
+        SimulationRoom(config=self.config, device=self.device).run()
 
     def wait_until(self, future):
         """
@@ -280,15 +285,91 @@ class NikkeAutoScript:
                 continue
 
 
+from module.simulation_room.assets import *
+
 if __name__ == '__main__':
     nkas = NikkeAutoScript()
     self = nkas
-    # from module.handler.login import LoginHandler
-    #
-    # e = LoginHandler(self.config, device=self.device)
-    # e.device.screenshot()
-
     self.device.screenshot()
+    self.config.bind('Conversation')
+    from module.simulation_room.simulation_room import SimulationRoom
+
+    e = SimulationRoom(config=self.config, device=self.device)
+    # e.choose_effect()
+    # print(len(e.nikke_list))
+
+    # e = SimulationRoom(config=self.config, device=self.device)
+    #
+    # if e.appear(MAX_EFFECT_COUNT, offset=(10, 10), static=False, threshold=0.96):
+    #     print(111)
+
+    # import uiautomator2 as u2
+    # u2.connect_usb('')
+
+    # a = self
+    #
+    self = e
+
+    # _ = [(101, 122), (103, 123), (102, 121)]
+    # _.sort(key=lambda x: x[1])
+    # print(_[-1])
+    # if self.appear(RANDOM_EVENT_CHECK, offset=(30, 30), static=False):
+    #     from module.simulation_room.event import RandomEvent
+    #     RandomEvent(button=RANDOM_EVENT_CHECK.location, config=self.config, device=self.device).run()
+    from module.simulation_room.event import ImprovementEvent
+
+    # RandomEvent(button=RANDOM_EVENT_CHECK.location, config=self.config, device=self.device).run()
+    ImprovementEvent(button=IMPROVEMENT_EVENT_CHECK.location, config=self.config, device=self.device).run()
+    if e.appear(RANDOM_EVENT_CHOOSE_EFFECT, offset=(10, 10), static=False, threshold=0.96):
+        print(1)
+    if e.appear(CONFRIM_B, offset=(30, 30), static=False):
+        print(2)
+    if e.appear(CONFRIM_C, offset=(30, 30), static=False):
+        print(3)
+
+    #
+    # if e.appear(REPEATED_EFFECT_CHECK, offset=(5, 5), static=False):
+    #     logger.warning('The selected effect has been in the own effect list')
+    #     click_timer = Timer(0.3)
+    #     while 1:
+    #         self.device.screenshot()
+    #
+    #         if click_timer.reached() and e.appear_then_click(CANCEL, offset=(30, 30), interval=5,
+    #                                                          static=False):
+    #             click_timer.reset()
+    #             continue
+    #
+    #         if click_timer.reached() and e.appear_then_click(NOT_CHOOSE, offset=(30, 30), interval=5,
+    #                                                          static=False):
+    #             click_timer.reset()
+    #             continue
+    #
+    #         if click_timer.reached() and e.appear(SKIP_CHECK, offset=(30, 30), interval=5,
+    #                                                  static=False):
+    #             self.device.click_minitouch(530, 800)
+    #             logger.info('Click %s @ %s' % (point2str(530, 800), 'SKIP'))
+    #             click_timer.reset()
+    #             continue
+    #
+    #         if e.appear(RESET_TIME_IN, offset=(30, 30), static=False):
+    #             print(111)
+
+    # print(NORMAL_CHECK.location)
+
+    # self.device.screenshot()
+    # ocr = OCR_MODEL.nikke
+    # print(ocr.ocr(self.device.image))
+    # for i in ENEMY_EVENT_CHECK.match_several(self.device.image, static=False)[:3]:
+    #     area = i.get('area')
+    #     area = _area_offset(area, (-45, -100, -14, -90))
+    #     img = crop(self.device.image, area)
+    #     if NORMAL_CHECK.match(img, threshold=0.75, static=False):
+    #         print('normal', area)
+    #     elif HARD_CHECK.match(img, threshold=0.75, static=False):
+    #         print('hard', area)
+
+    # e.appear_then_click(AUTO_SHOOT, offset=(30, 30), interval=1)
+    # e.appear_then_click(AUTO_BURST, offset=(30, 30), interval=1)
 
     # OCR_OPPORTUNITY = DigitCounter(OCR_OPPORTUNITY, name='OCR_OPPORTUNITY', letter=(247, 247, 247), threshold=128)
     # print(OCR_OPPORTUNITY.ocr(self.device.image)[0])
@@ -304,7 +385,6 @@ if __name__ == '__main__':
     # print(answer_a)
     # print(answer_b)
 
-    from module.conversation.conversation import Conversation
     #
     # list = '樱花 阿妮斯 麦斯威尔 舒格 白雪公主 伊莎贝尔 艾德米 吉萝婷 森 沃伦姆'
     # e = Conversation(config=self.config, device=self.device)
@@ -350,12 +430,7 @@ if __name__ == '__main__':
     # CONFRIM_B 按钮为立体，'确认'有阴影
     # e.device.screenshot()
     # e.handle_server()
-    # if e.appear(CONFRIM_A, offset=(30, 30), static=False):
-    #     print(1)
-    # if e.appear(CONFRIM_B, offset=(30, 30), static=False):
-    #     print(2)
-    # if e.appear(CONFRIM_C, offset=(30, 30), static=False):
-    #     print(3)
+
     #
     # res = self.device.ocr(self.device.image)
     # print(res)

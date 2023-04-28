@@ -3,7 +3,10 @@ from functools import cached_property
 from module.base.timer import Timer
 from module.base.utils import image_size
 from module.device.method.droidcast import DroidCast
-from module.exception import RequestHumanTakeover
+
+
+class ScreenshotSizeError(Exception):
+    pass
 
 
 class Screenshot(DroidCast):
@@ -46,4 +49,4 @@ class Screenshot(DroidCast):
         if width == 720 and height == 1280:
             return image
 
-        raise RequestHumanTakeover
+        raise ScreenshotSizeError("The emulator's display size must be 720*1280")

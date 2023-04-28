@@ -151,7 +151,7 @@
     "Scheduler": {
       "Enable": {
         "type": "checkbox",
-        "value": true
+        "value": false
       },
       "NextRun": {
         "type": "datetime",
@@ -192,7 +192,7 @@
     "Scheduler": {
       "Enable": {
         "type": "checkbox",
-        "value": true
+        "value": false
       },
       "NextRun": {
         "type": "datetime",
@@ -233,7 +233,7 @@
     "Scheduler": {
       "Enable": {
         "type": "checkbox",
-        "value": true
+        "value": false
       },
       "NextRun": {
         "type": "datetime",
@@ -276,11 +276,83 @@
       }
     }
   },
+  "SimulationRoom": {
+    "Scheduler": {
+      "Enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "NextRun": {
+        "type": "datetime",
+        "value": "1989-12-27 00:00:00",
+        "validate": "datetime"
+      },
+      "Command": {
+        "type": "input",
+        "value": "SimulationRoom",
+        "display": "hide"
+      },
+      "SuccessInterval": {
+        "type": "input",
+        "value": 0,
+        "display": "hide"
+      },
+      "FailureInterval": {
+        "type": "input",
+        "value": 120,
+        "display": "hide"
+      },
+      "ServerUpdate": {
+        "type": "input",
+        "value": "04:00",
+        "display": "hide"
+      }
+    },
+    "Area": {
+      "Difficulty": {
+        "type": "select",
+        "value": "Level_1",
+        "option": [
+          "Level_1",
+          "Level_2",
+          "Level_3",
+          "Level_4",
+          "Level_5"
+        ]
+      },
+      "OnsetArea": {
+        "type": "select",
+        "value": "A",
+        "option": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "EndingArea": {
+        "type": "select",
+        "value": "A",
+        "option": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
   "RookieArena": {
     "Scheduler": {
       "Enable": {
         "type": "checkbox",
-        "value": true
+        "value": false
       },
       "NextRun": {
         "type": "datetime",

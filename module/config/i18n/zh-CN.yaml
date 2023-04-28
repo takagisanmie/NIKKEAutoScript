@@ -70,6 +70,9 @@ Task:
   Conversation:
     name: 咨询
     help: ""
+  SimulationRoom:
+    name: 模拟室
+    help: ""
 Emulator:
   _info:
     name: 模拟器设置
@@ -158,5 +161,27 @@ Conversation:
     help: "请收藏想要咨询的妮姬\n
            例如: '红莲 爱丽丝'，用一个空格分开
           "
-
-
+Area:
+  _info:
+    name: 地区设置
+    help: ""
+  Difficulty:
+    name: 难度
+    help: ""
+    Level_1: 'Level-1'
+    Level_2: 'Level-2'
+    Level_3: 'Level-3'
+    Level_4: 'Level-4'
+    Level_5: 'Level-5'
+  OnsetArea:
+    name: 起始地区
+    help: ""
+    A: 'A'
+    B: 'B'
+    C: 'C'
+  EndingArea:
+    name: 结束地区
+    help: ""
+    A: 'A'
+    B: 'B'
+    C: 'C'

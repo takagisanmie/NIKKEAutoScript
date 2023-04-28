@@ -30,7 +30,7 @@ class ConversationQueueIsEmpty(Exception):
 
 
 class Conversation(UI):
-    visited = []
+    visited = set()
 
     stuck_timer = Timer(60, count=0).start()
 
@@ -38,6 +38,7 @@ class Conversation(UI):
     def nikke_list(self):
         try:
             _ = self.config.Conversation_WaitToCommunicate.strip(' ').split(' ')
+            logger.attr('NIKKE LIST', _)
             return _
         except AttributeError:
             logger.warning("There are no names included in the queue option")
@@ -56,7 +57,12 @@ class Conversation(UI):
             logger.warning('There are no opportunities remaining')
             raise NoOpportunityRemain
 
-        if self.stuck_timer.reached():
+        elif self.stuck_timer.reached():
+            logger.attr('stuck timer reached', self.stuck_timer.reached())
+            logger.warning('Perhaps all selected NIKKE already had a conversation')
+            raise ChooseNextNIKKETooLong
+
+        elif len(self.visited) == len(self.nikke_list):
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
 
@@ -75,7 +81,7 @@ class Conversation(UI):
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
-            self.visited.append(name)
+            self.visited.add(name)
 
             # 咨询状态
             if CASE_CLOSED.match(crop(self.device.image, check_area), static=False):
@@ -207,10 +213,10 @@ class Conversation(UI):
         answer_b = self.ocr(extract_letters(crop(self.device.image, answer_b_area), letter=(247, 243, 247)),
                             label='OCR_ANSWER_B')
 
-        if len(list(filter(lambda x: x in answer_a, correct_answer))):
+        if len(list(filter(lambda x: list(x) and x in answer_a, correct_answer))):
             logger.info('Answer A seems to be the correct one')
             self.device.click_minitouch(*find_center(answer_a_area))
-        elif len(list(filter(lambda x: x in answer_b, correct_answer))):
+        elif len(list(filter(lambda x: list(x) and x in answer_b, correct_answer))):
             logger.info('Answer B seems to be the correct one')
             self.device.click_minitouch(*find_center(answer_b_area))
         else:

@@ -110,7 +110,6 @@ class Button(Resource):
 
     def match(self, image, offset=30, threshold=0.85, static=True) -> bool:
         self.ensure_template()
-
         if static:
             if isinstance(offset, tuple):
                 if len(offset) == 2:
@@ -126,12 +125,13 @@ class Button(Resource):
         _, similarity, _, upper_left = cv2.minMaxLoc(res)
         # print(self.name, similarity)
 
-        if static:
-            self._button_offset = area_offset(self._button, offset[:2] + np.array(upper_left))
-        else:
-            h, w = self.area[3] - self.area[1], self.area[2] - self.area[0]
-            bottom_right = (upper_left[0] + w, upper_left[1] + h)
-            self._button_offset = (upper_left[0], upper_left[1], bottom_right[0], bottom_right[1])
+        if similarity > threshold:
+            if static:
+                self._button_offset = area_offset(self._button, offset[:2] + np.array(upper_left))
+            else:
+                h, w = self.area[3] - self.area[1], self.area[2] - self.area[0]
+                bottom_right = (upper_left[0] + w, upper_left[1] + h)
+                self._button_offset = (upper_left[0], upper_left[1], bottom_right[0], bottom_right[1])
 
         return similarity > threshold
 

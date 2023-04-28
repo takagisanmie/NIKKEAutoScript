@@ -160,5 +160,5 @@ class ModuleBase:
 
         if button.name in self.interval_timer:
             self.interval_timer[button.name].reset()
-        else:
-            self.interval_timer[button.name] = Timer(3).reset()
+        # else:
+        #     self.interval_timer[button.name] = Timer(3).reset()

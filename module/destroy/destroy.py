@@ -17,7 +17,7 @@ class Destroy(UI):
             else:
                 self.device.screenshot()
 
-            if self.appear_then_click(DESTROY, offset=(30, 30), interval=3):
+            if self.appear_then_click(DESTROY, offset=(30, 30), interval=3, static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue

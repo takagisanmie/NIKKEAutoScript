@@ -6,16 +6,20 @@ Reward:
 
 Destroy:
   Scheduler:
-    Enable: true
+    Enable: false
 
 Commission:
   Scheduler:
-    Enable: true
+    Enable: false
 
 RookieArena:
   Scheduler:
-    Enable: true
+    Enable: false
 
 Conversation:
   Scheduler:
-    Enable: true
+    Enable: false
+
+SimulationRoom:
+  Scheduler:
+    Enable: false

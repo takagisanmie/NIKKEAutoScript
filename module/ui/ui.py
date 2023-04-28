@@ -6,7 +6,7 @@ from module.handler.info_handle import InfoHandler
 from module.logger import logger
 from module.ui.assets import GOTO_MAIN
 from module.ui.page import (Page, page_unknown, page_main, page_reward, page_destroy, page_friend, page_team,
-                            page_conversation, page_ark, page_arena,
+                            page_conversation, page_ark, page_simulation_room, page_arena,
                             page_rookie_arena,
                             page_special_arena, page_outpost, page_commission)
 
@@ -20,6 +20,7 @@ class UI(InfoHandler):
                 page_team,
                 page_conversation,
                 page_ark,
+                page_simulation_room,
                 page_arena,
                 page_rookie_arena,
                 page_special_arena,

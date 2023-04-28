@@ -64,6 +64,12 @@ page_ark.link(button=GOTO_BACK, destination=page_main)
 # page_ark.link(button=GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_ARK, destination=page_ark)
 
+# simulation_room
+page_simulation_room = Page(SIMULATION_ROOM_CHECK)
+page_simulation_room.link(button=GOTO_BACK, destination=page_ark)
+page_simulation_room.link(button=GOTO_MAIN, destination=page_main)
+page_ark.link(button=ARK_GOTO_SIMULATION_ROOM, destination=page_simulation_room)
+
 # arena
 page_arena = Page(ARENA_CHECK)
 page_arena.link(button=GOTO_BACK, destination=page_ark)

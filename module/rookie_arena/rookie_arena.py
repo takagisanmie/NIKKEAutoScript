@@ -21,7 +21,6 @@ class RookieArena(UI):
     @property
     def competitor_power_list(self) -> list[int]:
         start_time = time.time()
-        POWER_CHECK.ensure_template()
         r = [i.get('area') for i in POWER_CHECK.match_several(self.device.image, threshold=0.66, static=False)]
         # 按照 upper 排序
         r.sort(key=lambda x: x[1])

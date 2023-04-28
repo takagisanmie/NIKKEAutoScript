@@ -1319,9 +1319,13 @@ Biscuit = [
     ''
 ]
 
-Sakura = {
+Sakura = [
     ''
-}
+]
+
+Dorothy = [
+    ''
+]
 
 Nikke_dialog = {
     'Alice': Alice,
@@ -1329,6 +1333,7 @@ Nikke_dialog = {
     'Admi': Admi,
     'Epinel': Epinel,
     'Modernia': Modernia,
+    'Dorothy': Dorothy,
     'Snow_White': Snow_White,
     'Centi': Centi,
     'Rapunzel': Rapunzel,
@@ -1405,6 +1410,10 @@ Nikke_list = [
     {
         'key': 'Epinel',
         'label': '艾菲涅尔',
+    },
+    {
+        'key': 'Dorothy',
+        'label': '桃乐丝',
     },
     {
         'key': 'Snow_White',
