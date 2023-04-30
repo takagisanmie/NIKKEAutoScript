@@ -23,3 +23,7 @@ Conversation:
 SimulationRoom:
   Scheduler:
     Enable: false
+
+TribeTower:
+  Scheduler:
+    Enable: false

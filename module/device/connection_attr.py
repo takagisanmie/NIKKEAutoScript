@@ -37,7 +37,7 @@ class ConnectionAttr:
         # Cache adb_client
         _ = self.adb_client
         # Parse custom serial
-        self.serial = str(self.config.Emulator_Serial)
+        self.serial = str(self.config.Emulator_Serial).strip(' ').replace(' ', '')
         self.serial_check()
 
     def serial_check(self):

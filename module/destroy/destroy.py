@@ -37,7 +37,7 @@ class Destroy(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(DESTROY_CHECK) and confirm_timer.reached():
+            if self.appear(DESTROY_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
         logger.info('Destroy end')

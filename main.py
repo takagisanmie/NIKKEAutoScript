@@ -9,7 +9,6 @@ from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
-from module.handler.assets import CONFRIM_B, CONFRIM_C
 from module.logger import logger
 
 
@@ -133,6 +132,10 @@ class NikkeAutoScript:
     def simulation_room(self):
         from module.simulation_room.simulation_room import SimulationRoom
         SimulationRoom(config=self.config, device=self.device).run()
+
+    def tribe_tower(self):
+        from module.tribe_tower.tribe_tower import TribeTower
+        TribeTower(config=self.config, device=self.device).run()
 
     def wait_until(self, future):
         """
@@ -285,156 +288,28 @@ class NikkeAutoScript:
                 continue
 
 
-from module.simulation_room.assets import *
-
 if __name__ == '__main__':
+    # TODO 当新人竞技场战斗时间过长
     nkas = NikkeAutoScript()
     self = nkas
+    self.config.bind('TribeTower')
     self.device.screenshot()
-    self.config.bind('Conversation')
-    from module.simulation_room.simulation_room import SimulationRoom
+    from module.tribe_tower.tribe_tower import TribeTower
 
-    e = SimulationRoom(config=self.config, device=self.device)
-    # e.choose_effect()
-    # print(len(e.nikke_list))
-
-    # e = SimulationRoom(config=self.config, device=self.device)
-    #
-    # if e.appear(MAX_EFFECT_COUNT, offset=(10, 10), static=False, threshold=0.96):
-    #     print(111)
-
-    # import uiautomator2 as u2
-    # u2.connect_usb('')
-
-    # a = self
-    #
-    self = e
-
-    # _ = [(101, 122), (103, 123), (102, 121)]
-    # _.sort(key=lambda x: x[1])
-    # print(_[-1])
-    # if self.appear(RANDOM_EVENT_CHECK, offset=(30, 30), static=False):
-    #     from module.simulation_room.event import RandomEvent
-    #     RandomEvent(button=RANDOM_EVENT_CHECK.location, config=self.config, device=self.device).run()
-    from module.simulation_room.event import ImprovementEvent
-
-    # RandomEvent(button=RANDOM_EVENT_CHECK.location, config=self.config, device=self.device).run()
-    ImprovementEvent(button=IMPROVEMENT_EVENT_CHECK.location, config=self.config, device=self.device).run()
-    if e.appear(RANDOM_EVENT_CHOOSE_EFFECT, offset=(10, 10), static=False, threshold=0.96):
-        print(1)
-    if e.appear(CONFRIM_B, offset=(30, 30), static=False):
-        print(2)
-    if e.appear(CONFRIM_C, offset=(30, 30), static=False):
-        print(3)
-
-    #
-    # if e.appear(REPEATED_EFFECT_CHECK, offset=(5, 5), static=False):
-    #     logger.warning('The selected effect has been in the own effect list')
-    #     click_timer = Timer(0.3)
-    #     while 1:
-    #         self.device.screenshot()
-    #
-    #         if click_timer.reached() and e.appear_then_click(CANCEL, offset=(30, 30), interval=5,
-    #                                                          static=False):
-    #             click_timer.reset()
-    #             continue
-    #
-    #         if click_timer.reached() and e.appear_then_click(NOT_CHOOSE, offset=(30, 30), interval=5,
-    #                                                          static=False):
-    #             click_timer.reset()
-    #             continue
-    #
-    #         if click_timer.reached() and e.appear(SKIP_CHECK, offset=(30, 30), interval=5,
-    #                                                  static=False):
-    #             self.device.click_minitouch(530, 800)
-    #             logger.info('Click %s @ %s' % (point2str(530, 800), 'SKIP'))
-    #             click_timer.reset()
-    #             continue
-    #
-    #         if e.appear(RESET_TIME_IN, offset=(30, 30), static=False):
-    #             print(111)
-
-    # print(NORMAL_CHECK.location)
-
-    # self.device.screenshot()
-    # ocr = OCR_MODEL.nikke
-    # print(ocr.ocr(self.device.image))
-    # for i in ENEMY_EVENT_CHECK.match_several(self.device.image, static=False)[:3]:
-    #     area = i.get('area')
-    #     area = _area_offset(area, (-45, -100, -14, -90))
-    #     img = crop(self.device.image, area)
-    #     if NORMAL_CHECK.match(img, threshold=0.75, static=False):
-    #         print('normal', area)
-    #     elif HARD_CHECK.match(img, threshold=0.75, static=False):
-    #         print('hard', area)
-
-    # e.appear_then_click(AUTO_SHOOT, offset=(30, 30), interval=1)
-    # e.appear_then_click(AUTO_BURST, offset=(30, 30), interval=1)
-
-    # OCR_OPPORTUNITY = DigitCounter(OCR_OPPORTUNITY, name='OCR_OPPORTUNITY', letter=(247, 247, 247), threshold=128)
-    # print(OCR_OPPORTUNITY.ocr(self.device.image)[0])
-
-    # ocr = OCR_MODEL.cnocr_gru.ocr
-    #
-    # answer_a_area = (82, 807, 640, 910)
-    # answer_b_area = (82, 910, 640, 1010)
-    #
-    # answer_a = ocr(extract_letters(crop(self.device.image, answer_a_area), letter=(247, 243, 247)))
-    # answer_b = ocr(extract_letters(crop(self.device.image, answer_b_area), letter=(247, 243, 247)))
-    #
-    # print(answer_a)
-    # print(answer_b)
-
-    #
-    # list = '樱花 阿妮斯 麦斯威尔 舒格 白雪公主 伊莎贝尔 艾德米 吉萝婷 森 沃伦姆'
-    # e = Conversation(config=self.config, device=self.device)
-    # print(e.ensure_opportunity_remain())
-
-    # r = [i.get('key') for i in Nikke_list if i.get('label') in '舒格']
-    # print(Nikke_dialog.get(r[0]))
-
-    # # print(e.config.Conversation_WaitToCommunicate)
-    # opportunity = 10
-    #
-    # self.config.bind('Conversation')
-    # e.run()
-    # e.answer(None)
-
-    # print(list.strip(' ').split(' '))
-    # FAVOURITE_CHECK.ensure_template()
-    # _ = FAVOURITE_CHECK.match(self.device.image, static=False)
-    # if _:
-    #     area = FAVOURITE_CHECK._button_offset
-    #     name_area = _area_offset(area, (18, 57, 220, -10))
-    #     check_area = _area_offset(area, (520, 57, 645, 12))
-    #     rank_area = _area_offset(area, (28, 21, 150, -56))
-    #
-    #     _img = crop(self.device.image, name_area)
-    #     _img = extract_letters(_img, letter=(74, 73, 74))
-    #     text_rect = find_letter_area(_img < 128)
-    #     text_rect = _area_offset(text_rect, (-2, -2, 3, 2))
-    #     name = e.ocr(crop(_img, text_rect), 'NIKKE_NAME')
-    #
-    #     r = [i.get('key') for i in Nikke_list if i.get('label') in name]
-
-    # e.ui_ensure(page_ark)
-
-    # img = cv2.imread('./pic/Screenshot_20230405-233919.png')
-    # img = cv2.imread('./pic/Screenshot_20230405-233936.png')
-    # img = cv2.imread('./pic/Screenshot_20230411-120724.png')
-    # img = cv2.imread('./pic/confirm1.png')
-    # img = cv2.imread('./pic/confirm2.png')
-    # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    # e.device.image = img
-    # CONFRIM_A 按钮为平面或立体，'确认'没有阴影
-    # CONFRIM_B 按钮为立体，'确认'有阴影
-    # e.device.screenshot()
-    # e.handle_server()
-
-    #
-    # res = self.device.ocr(self.device.image)
-    # print(res)
-    # if e.appear_text('领取奖励'):
-    #     logger.info('2')
-
-    # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_A.png')
+    e = TribeTower(config=self.config, device=self.device)
+    # print(e.available_company)
+    # print(len(e.available_company))
+    # e._run()
+    a = e.available_company[0]
+    print(a)
+    print(e.available_company)
+    e.available_company.remove(a)
+    print(e.available_company)
+    # from module.simulation_room.event import ImprovementEvent
+    # ImprovementEvent(button=IMPROVEMENT_EVENT_CHECK.location, config=self.config, device=self.device).run()
+    # if e.appear(RANDOM_EVENT_CHOOSE_EFFECT, offset=(10, 10), static=False, threshold=0.96):
+    #     print(1)
+    # if e.appear(CONFRIM_B, offset=(30, 30), static=False):
+    #     print(2)
+    # if e.appear(CONFRIM_C, offset=(30, 30), static=False):
+    #     print(3)

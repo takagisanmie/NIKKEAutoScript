@@ -39,5 +39,8 @@ class GeneratedConfig:
     Area_OnsetArea = 'A'  # A, B, C
     Area_EndingArea = 'A'  # A, B, C
 
+    # Group `Overcome`
+    Overcome_OnlyToCompleteDailyMission = False
+
     # Group `Storage`
     Storage_Storage = {}

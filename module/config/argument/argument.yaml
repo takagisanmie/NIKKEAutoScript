@@ -44,4 +44,6 @@ Area:
     option: [ A, B, C ]
   EndingArea:
     value: A
-    option: [  A, B, C  ]
+    option: [ A, B, C ]
+Overcome:
+  OnlyToCompleteDailyMission: False

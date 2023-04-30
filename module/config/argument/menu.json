@@ -12,6 +12,7 @@
     "Daily": [
       "Conversation",
       "SimulationRoom",
+      "TribeTower",
       "RookieArena"
     ]
   }

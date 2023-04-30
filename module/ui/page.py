@@ -64,7 +64,13 @@ page_ark.link(button=GOTO_BACK, destination=page_main)
 # page_ark.link(button=GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_ARK, destination=page_ark)
 
-# simulation_room
+# tribe tower
+page_tribe_tower = Page(TRIBE_TOWER_CHECK)
+page_tribe_tower.link(button=GOTO_BACK, destination=page_ark)
+page_tribe_tower.link(button=GOTO_MAIN, destination=page_main)
+page_ark.link(button=ARK_GOTO_TRIBE_TOWER, destination=page_tribe_tower)
+
+# simulation room
 page_simulation_room = Page(SIMULATION_ROOM_CHECK)
 page_simulation_room.link(button=GOTO_BACK, destination=page_ark)
 page_simulation_room.link(button=GOTO_MAIN, destination=page_main)

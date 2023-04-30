@@ -38,7 +38,7 @@ class Reward(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(MAIN_CHECK) and confirm_timer.reached():
+            if self.appear(MAIN_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
         logger.info('Defence Reward receive end')

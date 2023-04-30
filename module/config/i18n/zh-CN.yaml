@@ -73,6 +73,9 @@ Task:
   SimulationRoom:
     name: 模拟室
     help: ""
+  TribeTower:
+    name: 企业塔
+    help: ""
 Emulator:
   _info:
     name: 模拟器设置
@@ -185,3 +188,10 @@ Area:
     A: 'A'
     B: 'B'
     C: 'C'
+Overcome:
+  _info:
+    name: 关卡设置
+    help: ""
+  OnlyToCompleteDailyMission:
+    name: 只完成每日任务，在进入后退出
+    help: ""

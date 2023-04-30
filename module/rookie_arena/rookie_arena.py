@@ -99,7 +99,7 @@ class RookieArena(UI):
                 click_timer.reset()
                 continue
 
-            if already_start and self.appear(ROOKIE_ARENA_CHECK) and confirm_timer.reached():
+            if already_start and self.appear(ROOKIE_ARENA_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
         if self.free_opportunity_remain:

@@ -2,11 +2,12 @@ from functools import cached_property
 
 from module.base.timer import Timer
 from module.base.utils import point2str, _area_offset, crop
-from module.exception import GamePageUnknownError
+from module.exception import GamePageUnknownError, OperationFailed
 from module.handler.assets import CONFRIM_B
 from module.logger import logger
 from module.simulation_room.assets import *
-from module.ui.assets import ARK_GOTO_SIMULATION_ROOM, SIMULATION_ROOM_CHECK
+from module.tribe_tower.assets import BACK
+from module.ui.assets import ARK_GOTO_SIMULATION_ROOM, SIMULATION_ROOM_CHECK, GOTO_BACK
 from module.ui.page import page_ark
 from module.ui.ui import UI
 
@@ -246,9 +247,35 @@ class SimulationRoom(UI):
                 self.ui_ensure(page_ark)
             self.ensure_into_simulation()
             self._run()
-        except GamePageUnknownError as e:
-            logger.error(e)
+        except GamePageUnknownError:
+            logger.error('The simulation has already been started')
+            logger.critical("Please end the current simulation and restart it")
+
+        except OperationFailed:
+            logger.warning('failed to overcome the current battle, will skip simulation task')
+            self.handle_failed()
         self.config.task_delay(server_update=True)
+
+    def handle_failed(self, skip_first_screenshot=True):
+        confirm_timer = Timer(1, count=2).start()
+        click_timer = Timer(0.3)
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            if click_timer.reached() and self.appear_then_click(BACK, offset=(5, 5), interval=5):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.appear(GOTO_BACK, offset=(30, 30)):
+                return
+
+            elif self.appear(RESET_TIME_IN, offset=(30, 30), interval=2):
+                self.device.click_minitouch(50, 200)
+                continue
 
     def ensure_into_simulation(self, skip_first_screenshot=True):
         confirm_timer = Timer(1, count=2).start()
@@ -268,8 +295,6 @@ class SimulationRoom(UI):
                 break
 
             if self.appear(SIMULATION_CHECK, offset=(30, 30)) or self.appear(RESET_TIME_IN, offset=(30, 30)):
-                logger.warning('The simulation has already been started')
-                logger.critical("Please end the current simulation and restart it")
                 raise GamePageUnknownError
 
         skip_first_screenshot = True

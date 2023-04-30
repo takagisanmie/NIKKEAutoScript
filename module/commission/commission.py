@@ -36,7 +36,7 @@ class Commission(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(COMMISSION_CHECK) and confirm_timer.reached():
+            if self.appear(COMMISSION_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
     def run(self):

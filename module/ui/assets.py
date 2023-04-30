@@ -9,6 +9,7 @@ ARENA_GOTO_SPECIAL_ARENA = Button(area={'cn': (399, 659, 500, 689)}, color={'cn'
 ARK_CHECK = Button(area={'cn': (59, 588, 71, 646)}, color={'cn': (106, 106, 105)}, button={'cn': (59, 588, 71, 646)}, file={'cn': './assets/cn/ui/ARK_CHECK.png'})
 ARK_GOTO_ARENA = Button(area={'cn': (445, 710, 457, 787)}, color={'cn': (107, 107, 106)}, button={'cn': (445, 710, 457, 787)}, file={'cn': './assets/cn/ui/ARK_GOTO_ARENA.png'})
 ARK_GOTO_SIMULATION_ROOM = Button(area={'cn': (98, 646, 190, 684)}, color={'cn': (93, 97, 96)}, button={'cn': (98, 646, 190, 684)}, file={'cn': './assets/cn/ui/ARK_GOTO_SIMULATION_ROOM.png'})
+ARK_GOTO_TRIBE_TOWER = Button(area={'cn': (485, 338, 502, 438)}, color={'cn': (79, 80, 78)}, button={'cn': (485, 338, 502, 438)}, file={'cn': './assets/cn/ui/ARK_GOTO_TRIBE_TOWER.png'})
 COMMISSION_CHECK = Button(area={'cn': (93, 183, 259, 213)}, color={'cn': (134, 134, 134)}, button={'cn': (93, 183, 259, 213)}, file={'cn': './assets/cn/ui/COMMISSION_CHECK.png'})
 COMMISSION_GOTO_OUTPOST = Button(area={'cn': (634, 152, 679, 197)}, color={'cn': (232, 228, 231)}, button={'cn': (634, 152, 679, 197)}, file={'cn': './assets/cn/ui/COMMISSION_GOTO_OUTPOST.png'})
 CONVERSATION_CHECK = Button(area={'cn': (262, 171, 452, 187)}, color={'cn': (138, 138, 136)}, button={'cn': (262, 171, 452, 187)}, file={'cn': './assets/cn/ui/CONVERSATION_CHECK.png'})
@@ -35,3 +36,4 @@ SPECIAL_ARENA_CHECK = Button(area={'cn': (204, 138, 524, 229)}, color={'cn': (87
 TEAM_CHECK = Button(area={'cn': (35, 305, 152, 320)}, color={'cn': (200, 198, 199)}, button={'cn': (35, 305, 152, 320)}, file={'cn': './assets/cn/ui/TEAM_CHECK.png'})
 TEAM_GOTO_CONVERSATION = Button(area={'cn': (393, 136, 456, 174)}, color={'cn': (72, 71, 69)}, button={'cn': (393, 136, 456, 174)}, file={'cn': './assets/cn/ui/TEAM_GOTO_CONVERSATION.png'})
 TEAM_GOTO_MAIN = Button(area={'cn': (340, 1225, 380, 1245)}, color={'cn': (76, 77, 73)}, button={'cn': (340, 1225, 380, 1245)}, file={'cn': './assets/cn/ui/TEAM_GOTO_MAIN.png'})
+TRIBE_TOWER_CHECK = Button(area={'cn': (196, 97, 536, 168)}, color={'cn': (130, 137, 141)}, button={'cn': (196, 97, 536, 168)}, file={'cn': './assets/cn/ui/TRIBE_TOWER_CHECK.png'})

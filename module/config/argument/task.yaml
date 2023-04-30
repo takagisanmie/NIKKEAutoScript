@@ -29,5 +29,9 @@ SimulationRoom:
   - Scheduler
   - Area
 
+TribeTower:
+  - Scheduler
+  - Overcome
+
 RookieArena:
   - Scheduler

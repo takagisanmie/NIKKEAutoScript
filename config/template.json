@@ -104,6 +104,22 @@
       "Storage": {}
     }
   },
+  "TribeTower": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "1989-12-27 00:00:00",
+      "Command": "TribeTower",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Overcome": {
+      "OnlyToCompleteDailyMission": false
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "RookieArena": {
     "Scheduler": {
       "Enable": false,

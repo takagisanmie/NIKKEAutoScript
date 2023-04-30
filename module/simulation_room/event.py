@@ -1,8 +1,10 @@
 from module.base.timer import Timer
 from module.base.utils import point2str
+from module.exception import OperationFailed
 from module.handler.assets import CONFRIM_B
 from module.logger import logger
 from module.simulation_room.assets import *
+from module.tribe_tower.assets import OPERATION_FAILED
 from module.ui.ui import UI
 
 
@@ -80,12 +82,15 @@ class EnemyEvent(EventBase):
                 click_timer.reset()
                 continue
 
+            if self.appear(OPERATION_FAILED, offset=(30, 30)):
+                raise OperationFailed
+
             if self.appear(END_SIMULATION, offset=(5, 5), static=False) \
                     or self.appear(SELECT_REWARD_EFFECT_CHECK, offset=(5, 5), static=False):
                 self.device.sleep(0.8)
                 break
 
-            if click_timer.reached() and self.appear(PAUSE, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear(PAUSE, offset=(30, 30)):
                 click_timer.reset()
                 self.device.sleep(5)
                 continue

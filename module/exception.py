@@ -35,3 +35,7 @@ class GameStart(Exception):
 
 class GamePageUnknownError(Exception):
     pass
+
+
+class OperationFailed(Exception):
+    pass

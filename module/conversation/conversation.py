@@ -110,7 +110,7 @@ class Conversation(UI):
             return
 
         self.device.screenshot()
-        if not self.appear(CONVERSATION_CHECK):
+        if not self.appear(CONVERSATION_CHECK, offset=(10, 10)):
             logger.warning('Perhaps the current page was changed by a human or certain error')
             logger.critical("Please switch current page into 'PAGE_CONVERSATION'")
             raise GamePageUnknownError
@@ -144,7 +144,7 @@ class Conversation(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(DETAIL_CHECK) and confirm_timer.reached():
+            if self.appear(DETAIL_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
         if RANK_MAX_CHECK.match(self.device.image):
@@ -165,7 +165,7 @@ class Conversation(UI):
                     click_timer.reset()
                     continue
 
-                if self.appear(CONVERSATION_CHECK) and confirm_timer.reached():
+                if self.appear(CONVERSATION_CHECK, offset=(10, 10)) and confirm_timer.reached():
                     self.device.image = mask_area(self.device.image, FAVOURITE_CHECK._button_offset)
                     return self.communicate()
 
@@ -266,13 +266,13 @@ class Conversation(UI):
                 continue
 
             if click_timer.reached() \
-                    and not self.appear(CONVERSATION_CHECK) \
+                    and not self.appear(CONVERSATION_CHECK, offset=(10, 10)) \
                     and self.appear_then_click(GOTO_BACK, offset=(10, 10), interval=3):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(CONVERSATION_CHECK) and confirm_timer.reached():
+            if self.appear(CONVERSATION_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
         return self.communicate()
