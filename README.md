@@ -16,11 +16,11 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 ------
 
 0.保持在NIKKE中使用语言为简体中文  
-1.解压NKAS.zip，第一次使用时，运行updater.bat
-2.在**\win-unpacked中，运行NikkeAutoScript.exe
+1.解压NKAS.zip，第一次使用时，运行updater.bat  
+2.在**\win-unpacked中，运行NikkeAutoScript.exe  
 3.在等待主程序加载完成后，在NKAS的设置中填写Serial  
 4.设置模拟器分辨率为720*1280 320DPI    
-5.运行调度器
+5.运行调度器  
 
 ### 依赖相关
 
