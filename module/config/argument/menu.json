@@ -11,6 +11,7 @@
     ],
     "Daily": [
       "Conversation",
+      "Shop",
       "SimulationRoom",
       "TribeTower",
       "RookieArena"

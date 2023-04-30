@@ -9,6 +9,7 @@ from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
+from module.handler.assets import CONFRIM_B, CONFRIM_A, CONFRIM_C
 from module.logger import logger
 
 
@@ -136,6 +137,10 @@ class NikkeAutoScript:
     def tribe_tower(self):
         from module.tribe_tower.tribe_tower import TribeTower
         TribeTower(config=self.config, device=self.device).run()
+
+    def shop(self):
+        from module.shop.shop import Shop
+        Shop(config=self.config, device=self.device).run()
 
     def wait_until(self, future):
         """
@@ -300,16 +305,16 @@ if __name__ == '__main__':
     # print(e.available_company)
     # print(len(e.available_company))
     # e._run()
-    a = e.available_company[0]
-    print(a)
-    print(e.available_company)
-    e.available_company.remove(a)
-    print(e.available_company)
+    # a = e.available_company[0]
+    # print(a)
+    # print(e.available_company)
+    # e.available_company.remove(a)
+    # print(e.available_company)
     # from module.simulation_room.event import ImprovementEvent
     # ImprovementEvent(button=IMPROVEMENT_EVENT_CHECK.location, config=self.config, device=self.device).run()
-    # if e.appear(RANDOM_EVENT_CHOOSE_EFFECT, offset=(10, 10), static=False, threshold=0.96):
-    #     print(1)
-    # if e.appear(CONFRIM_B, offset=(30, 30), static=False):
-    #     print(2)
-    # if e.appear(CONFRIM_C, offset=(30, 30), static=False):
-    #     print(3)
+    if e.appear(CONFRIM_A, offset=(10, 10), static=False):
+        print(1)
+    if e.appear(CONFRIM_B, offset=(30, 30), static=False):
+        print(2)
+    if e.appear(CONFRIM_C, offset=(30, 30), static=False):
+        print(3)

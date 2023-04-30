@@ -276,6 +276,73 @@
       }
     }
   },
+  "Shop": {
+    "Scheduler": {
+      "Enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "NextRun": {
+        "type": "datetime",
+        "value": "1989-12-27 00:00:00",
+        "validate": "datetime"
+      },
+      "Command": {
+        "type": "input",
+        "value": "Shop",
+        "display": "hide"
+      },
+      "SuccessInterval": {
+        "type": "input",
+        "value": 0,
+        "display": "hide"
+      },
+      "FailureInterval": {
+        "type": "input",
+        "value": 120,
+        "display": "hide"
+      },
+      "ServerUpdate": {
+        "type": "input",
+        "value": "04:00",
+        "display": "hide"
+      }
+    },
+    "GeneralShop": {
+      "enable": {
+        "type": "checkbox",
+        "value": true
+      }
+    },
+    "ArenaShop": {
+      "enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "priority": {
+        "type": "input",
+        "value": ""
+      }
+    },
+    "RubbishShop": {
+      "enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "priority": {
+        "type": "input",
+        "value": ""
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
   "SimulationRoom": {
     "Scheduler": {
       "Enable": {

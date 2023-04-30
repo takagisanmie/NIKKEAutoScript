@@ -76,6 +76,9 @@ Task:
   TribeTower:
     name: 企业塔
     help: ""
+  Shop:
+    name: 商店
+    help: ""
 Emulator:
   _info:
     name: 模拟器设置
@@ -194,4 +197,31 @@ Overcome:
     help: ""
   OnlyToCompleteDailyMission:
     name: 只完成每日任务，在进入后退出
+    help: ""
+GeneralShop:
+  _info:
+    name: 普通商店
+    help: ""
+  enable:
+    name: 启用该功能
+    help: ""
+ArenaShop:
+  _info:
+    name: 竞技场商店
+    help: ""
+  enable:
+    name: 启用该功能
+    help: ""
+  priority:
+    name: 优先购买
+    help: ""
+RubbishShop:
+  _info:
+    name: 废铁商店
+    help: ""
+  enable:
+    name: 启用该功能
+    help: ""
+  priority:
+    name: 优先购买
     help: ""

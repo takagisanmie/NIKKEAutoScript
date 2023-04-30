@@ -86,6 +86,30 @@
       "Storage": {}
     }
   },
+  "Shop": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "1989-12-27 00:00:00",
+      "Command": "Shop",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "GeneralShop": {
+      "enable": true
+    },
+    "ArenaShop": {
+      "enable": false,
+      "priority": null
+    },
+    "RubbishShop": {
+      "enable": false,
+      "priority": null
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "SimulationRoom": {
     "Scheduler": {
       "Enable": false,

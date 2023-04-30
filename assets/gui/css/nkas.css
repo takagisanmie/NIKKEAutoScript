@@ -186,6 +186,16 @@ button[type="button"] {
     width: 725px;
 }
 
+div[id*="pywebio-scope-group"] > p:first-child {
+    margin-top: 15px;
+    margin-bottom: -15px;
+    font-size: 20px;
+}
+
+div[id*="pywebio-scope-group"] > * input[name*="Shop_"][type*="text"]  {
+    width: 725px;
+}
+
 .form-control {
     width: fit-content;
 }

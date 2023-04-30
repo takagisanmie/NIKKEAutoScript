@@ -25,6 +25,12 @@ Conversation:
   - Scheduler
   - Conversation
 
+Shop:
+  - Scheduler
+  - GeneralShop
+  - ArenaShop
+  - RubbishShop
+
 SimulationRoom:
   - Scheduler
   - Area

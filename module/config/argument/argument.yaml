@@ -46,4 +46,12 @@ Area:
     value: A
     option: [ A, B, C ]
 Overcome:
-  OnlyToCompleteDailyMission: False
+  OnlyToCompleteDailyMission: false
+GeneralShop:
+  enable: true
+ArenaShop:
+  enable: false
+  priority: ''
+RubbishShop:
+  enable: false
+  priority: ''

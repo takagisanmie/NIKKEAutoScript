@@ -47,6 +47,12 @@ page_friend = Page(FRIEND_CHECK)
 page_friend.link(button=FRIEND_GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_FRIEND, destination=page_friend)
 
+# shop
+page_shop = Page(SHOP_CHECK)
+page_shop.link(button=GOTO_BACK, destination=page_main)
+# page_shop.link(button=GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_SHOP, destination=page_shop)
+
 # team
 page_team = Page(TEAM_CHECK)
 page_team.link(button=TEAM_GOTO_MAIN, destination=page_main)

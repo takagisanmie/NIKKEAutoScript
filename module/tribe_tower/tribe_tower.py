@@ -19,9 +19,6 @@ class NoAvailableCompany(Exception):
     pass
 
 
-
-
-
 class TribeTower(UI):
     opportunity = None
     company = []

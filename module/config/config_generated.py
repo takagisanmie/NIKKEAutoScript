@@ -42,5 +42,16 @@ class GeneratedConfig:
     # Group `Overcome`
     Overcome_OnlyToCompleteDailyMission = False
 
+    # Group `GeneralShop`
+    GeneralShop_enable = True
+
+    # Group `ArenaShop`
+    ArenaShop_enable = False
+    ArenaShop_priority = None
+
+    # Group `RubbishShop`
+    RubbishShop_enable = False
+    RubbishShop_priority = None
+
     # Group `Storage`
     Storage_Storage = {}
