@@ -27,3 +27,7 @@ SimulationRoom:
 TribeTower:
   Scheduler:
     Enable: false
+
+Daily:
+  Scheduler:
+    Enable: false

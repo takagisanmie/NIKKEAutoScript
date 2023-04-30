@@ -47,6 +47,11 @@ page_friend = Page(FRIEND_CHECK)
 page_friend.link(button=FRIEND_GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_FRIEND, destination=page_friend)
 
+# daily
+page_daily = Page(DAILY_CHECK)
+page_daily.link(button=DAILY_GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_DAILY, destination=page_daily)
+
 # shop
 page_shop = Page(SHOP_CHECK)
 page_shop.link(button=GOTO_BACK, destination=page_main)

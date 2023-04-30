@@ -33,7 +33,7 @@ class Reward(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(RECEIVE, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear_then_click(RECEIVE, offset=(30, 30), interval=10):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue

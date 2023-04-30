@@ -142,6 +142,10 @@ class NikkeAutoScript:
         from module.shop.shop import Shop
         Shop(config=self.config, device=self.device).run()
 
+    def daily(self):
+        from module.daily.daily import Daily
+        Daily(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
             Wait until a specific time.
@@ -299,9 +303,12 @@ if __name__ == '__main__':
     self = nkas
     self.config.bind('TribeTower')
     self.device.screenshot()
-    from module.tribe_tower.tribe_tower import TribeTower
+    from module.daily.daily import Daily
 
-    e = TribeTower(config=self.config, device=self.device)
+    e = Daily(config=self.config, device=self.device)
+    e.receive()
+
+
     # print(e.available_company)
     # print(len(e.available_company))
     # e._run()

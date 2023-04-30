@@ -44,9 +44,9 @@ class NikkeAutoScriptGUI(Frame):
         put_icon_buttons(ICON.Menu, onclick=self.ui_dashboard, id='Dashboard'),
         put_icon_buttons(ICON.Setting, onclick=self.ui_setting, id='Setting'),
         put_icon_buttons(ICON.Link, onclick=self.ui_link, id='Link'),
-        put_icon_buttons(ICON.Link, onclick=self.test, id='Link2'),
+        put_icon_buttons(ICON.Link, onclick=self.restart, id='Link2'),
 
-    def test(self):
+    def restart(self):
         def trigger():
             # with open("./config/reloadflag", mode="w"):
             #     # app ended here and uvicorn will restart whole app
@@ -538,7 +538,8 @@ class NikkeAutoScriptGUI(Frame):
         for path in get_nkas_config_listen_path(self.NKAS_ARGS):
             """
                 pin_on_change会监听name属性为"_".join(path)的输入组件的值
-                在200行，通过 output_kwargs["name"] = f"{task}_{group_name}_{arg_name} 定义
+                在213行，通过 output_kwargs["name"] = f"{task}_{group_name}_{arg_name} 定义
+                在改变被pin_on_change监听的属性时，会调用onchange的方法，更改的值为该方法的最后一个参数？
             """
             pin_on_change(
                 name="_".join(path), onchange=partial(put_queue, ".".join(path))

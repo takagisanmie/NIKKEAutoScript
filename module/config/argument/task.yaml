@@ -21,6 +21,9 @@ Commission:
 
 # ==================== Daily ====================
 
+Daily:
+  - Scheduler
+
 Conversation:
   - Scheduler
   - Conversation
