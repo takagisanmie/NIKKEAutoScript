@@ -44,7 +44,7 @@ class NikkeAutoScriptGUI(Frame):
         put_icon_buttons(ICON.Menu, onclick=self.ui_dashboard, id='Dashboard'),
         put_icon_buttons(ICON.Setting, onclick=self.ui_setting, id='Setting'),
         put_icon_buttons(ICON.Link, onclick=self.ui_link, id='Link'),
-        put_icon_buttons(ICON.Link, onclick=self.restart, id='Link2'),
+        put_icon_buttons(ICON.Refresh, onclick=self.restart, id='Link2'),
 
     def restart(self):
         def trigger():
