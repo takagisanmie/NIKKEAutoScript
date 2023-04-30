@@ -12,3 +12,4 @@ OCR_OPPORTUNITY = Button(area={'cn': (208, 300, 268, 336)}, color={'cn': (64, 84
 RANK_INCREASE_CHECK = Button(area={'cn': (252, 559, 416, 618)}, color={'cn': (67, 39, 57)}, button={'cn': (252, 559, 416, 618)}, file={'cn': './assets/cn/conversation/RANK_INCREASE_CHECK.png'})
 RANK_INCREASE_COMFIRM = Button(area={'cn': (272, 1109, 448, 1148)}, color={'cn': (209, 206, 209)}, button={'cn': (272, 1109, 448, 1148)}, file={'cn': './assets/cn/conversation/RANK_INCREASE_COMFIRM.png'})
 RANK_MAX_CHECK = Button(area={'cn': (603, 866, 636, 889)}, color={'cn': (252, 200, 196)}, button={'cn': (603, 866, 636, 889)}, file={'cn': './assets/cn/conversation/RANK_MAX_CHECK.png'})
+RUPEE_Winter_Shopper = Button(area={'cn': (0, 0, 209, 27)}, color={'cn': (156, 0, 0)}, button={'cn': (0, 0, 209, 27)}, file={'cn': './assets/cn/conversation/RUPEE_Winter_Shopper.png'})

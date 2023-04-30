@@ -3,6 +3,7 @@
 NKAS:
   - Emulator
   - Optimization
+  - Notification
 
 Restart:
   - Scheduler

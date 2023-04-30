@@ -10,6 +10,9 @@
     "Optimization": {
       "WhenTaskQueueEmpty": "goto_main"
     },
+    "Notification": {
+      "WhenDailyTaskCompleted": false
+    },
     "Storage": {
       "Storage": {}
     }

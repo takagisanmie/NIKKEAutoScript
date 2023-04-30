@@ -55,3 +55,5 @@ ArenaShop:
 RubbishShop:
   enable: false
   priority: ''
+Notification:
+  WhenDailyTaskCompleted: false

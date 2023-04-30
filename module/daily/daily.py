@@ -1,5 +1,6 @@
 from module.base.timer import Timer
 from module.base.utils import mask_area
+from module.common.enum.webui import ICON
 from module.daily.assets import *
 from module.logger import logger
 from module.ui.assets import DAILY_CHECK
@@ -39,7 +40,20 @@ class Daily(UI):
             if self.appear(DAILY_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
+    def toast(self):
+        print(ICON.Helm_Circle)
+        from winotify import Notification
+        toast = Notification(app_id="NKAS",
+                             title="NKAS",
+                             msg="任务已全部完成！",
+                             icon=ICON.Helm_Circle,
+                             duration='long')
+
+        toast.show()
+
     def run(self):
         self.ui_ensure(page_daily)
         self.receive()
+        if self.config.Notification_WhenDailyTaskCompleted:
+            self.toast()
         self.config.task_delay(server_update=True)

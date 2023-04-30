@@ -1,5 +1,7 @@
 from functools import cached_property
 
+import cv2
+
 from module.base.timer import Timer
 from module.base.utils import _area_offset, crop, mask_area, extract_letters, find_letter_area, point2str, \
     find_center, save_image
@@ -44,11 +46,21 @@ class Conversation(UI):
             logger.warning("There are no names included in the queue option")
             raise ConversationQueueIsEmpty
 
-    def name_after_process(self, text):
+    def match(self, img, button: Button):
+        button.ensure_template()
+        res = cv2.matchTemplate(img, button.image, cv2.TM_CCOEFF_NORMED)
+        _, similarity, _, upper_left = cv2.minMaxLoc(res)
+        if similarity > 0.85:
+            return True
+
+    def name_after_process(self, text, img):
         if '购物狂' in text:
-            text = '圣诞购物狂'
+            text = '冬日购物狂'
         elif '奇迹' in text:
             text = '奇迹仙女'
+        # TODO 奇迹仙女, D, 以及其他不好识别的NIKKE
+        elif self.match(img, RUPEE_Winter_Shopper):
+            text = '冬日购物狂'
         if text not in self.visited:
             return text
 
@@ -75,7 +87,8 @@ class Conversation(UI):
             _img = extract_letters(_img, letter=(74, 73, 74))
             text_rect = find_letter_area(_img < 128)
             text_rect = _area_offset(text_rect, (-2, -2, 3, 2))
-            name = self.name_after_process(self.ocr(crop(_img, text_rect), 'NIKKE_NAME'))
+            _letters_img = crop(_img, text_rect)
+            name = self.name_after_process(self.ocr(_letters_img, 'NIKKE_NAME'), _img)
 
             if not name:
                 self.device.image = mask_area(self.device.image, area)

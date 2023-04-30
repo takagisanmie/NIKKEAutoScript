@@ -44,6 +44,12 @@
         ]
       }
     },
+    "Notification": {
+      "WhenDailyTaskCompleted": {
+        "type": "checkbox",
+        "value": false
+      }
+    },
     "Storage": {
       "Storage": {
         "type": "storage",

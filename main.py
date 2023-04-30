@@ -9,7 +9,6 @@ from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
-from module.handler.assets import CONFRIM_B, CONFRIM_A, CONFRIM_C
 from module.logger import logger
 
 
@@ -301,13 +300,13 @@ if __name__ == '__main__':
     # TODO 当新人竞技场战斗时间过长
     nkas = NikkeAutoScript()
     self = nkas
-    self.config.bind('TribeTower')
-    self.device.screenshot()
+    self.config.bind('Daily')
+    # self.device.screenshot()
     from module.daily.daily import Daily
 
     e = Daily(config=self.config, device=self.device)
-    e.receive()
-
+    e.toast()
+    # e.receive()
 
     # print(e.available_company)
     # print(len(e.available_company))
@@ -319,9 +318,9 @@ if __name__ == '__main__':
     # print(e.available_company)
     # from module.simulation_room.event import ImprovementEvent
     # ImprovementEvent(button=IMPROVEMENT_EVENT_CHECK.location, config=self.config, device=self.device).run()
-    if e.appear(CONFRIM_A, offset=(10, 10), static=False):
-        print(1)
-    if e.appear(CONFRIM_B, offset=(30, 30), static=False):
-        print(2)
-    if e.appear(CONFRIM_C, offset=(30, 30), static=False):
-        print(3)
+    # if e.appear(CONFRIM_A, offset=(10, 10), static=False):
+    #     print(1)
+    # if e.appear(CONFRIM_B, offset=(30, 30), static=False):
+    #     print(2)
+    # if e.appear(CONFRIM_C, offset=(30, 30), static=False):
+    #     print(3)

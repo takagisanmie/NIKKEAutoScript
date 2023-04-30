@@ -53,5 +53,8 @@ class GeneratedConfig:
     RubbishShop_enable = False
     RubbishShop_priority = None
 
+    # Group `Notification`
+    Notification_WhenDailyTaskCompleted = False
+
     # Group `Storage`
     Storage_Storage = {}

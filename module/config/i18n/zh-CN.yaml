@@ -228,3 +228,10 @@ RubbishShop:
   priority:
     name: 优先购买
     help: ""
+Notification:
+  _info:
+    name: 通知设置
+    help: ""
+  WhenDailyTaskCompleted:
+    name: 当日常完成时，发送通知
+    help: ""

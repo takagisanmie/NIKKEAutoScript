@@ -11,3 +11,4 @@ adbutils==1.2.2
 rich==13.3.3
 imageio==2.27.0
 inflection==0.5.1
+winotify==1.1.0
