@@ -463,33 +463,33 @@ class Connection(ConnectionAttr):
                 SelectedGrids[AdbDeviceWithStatus]:
         """
         devices = []
-        try:
-            with self.adb_client._connect() as c:
-                """
-                    好像和 adb devices / adb get-serialno 差不多
-                    output: emulator-5554	device
-                    
-                    https://cs.android.com/android/platform/superproject/+/master:packages/modules/adb/SERVICES.TXT
-                """
-                c.send_command("host:devices")
-                c.check_okay()
-                output = c.read_string_block()
-                for line in output.splitlines():
-                    parts = line.strip().split("\t")
-                    if len(parts) != 2:
-                        continue
-                    """
-                        status: str = 'device'
-                    """
-                    device = AdbDeviceWithStatus(self.adb_client, parts[0], parts[1])
-                    devices.append(device)
+        # try:
+        with self.adb_client._connect() as c:
+            """
+                好像和 adb devices / adb get-serialno 差不多
+                output: emulator-5554	device
 
-        except ConnectionResetError as e:
-            # Happens only on CN users.
-            # ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
-            logger.error(e)
-            if '强迫关闭' in str(e):
-                logger.critical('无法连接至ADB服务，请关闭UU加速器、原神私服、以及一些劣质代理软件。')
+                https://cs.android.com/android/platform/superproject/+/master:packages/modules/adb/SERVICES.TXT
+            """
+            c.send_command("host:devices")
+            c.check_okay()
+            output = c.read_string_block()
+            for line in output.splitlines():
+                parts = line.strip().split("\t")
+                if len(parts) != 2:
+                    continue
+                """
+                    status: str = 'device'
+                """
+                device = AdbDeviceWithStatus(self.adb_client, parts[0], parts[1])
+                devices.append(device)
+
+        # except ConnectionResetError as e:
+        #     # Happens only on CN users.
+        #     # ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+        #     logger.error(e)
+        #     if '强迫关闭' in str(e):
+        #         logger.critical('无法连接至ADB服务，请关闭UU加速器、原神私服、以及一些劣质代理软件。')
 
         return SelectedGrids(devices)
 
