@@ -8,8 +8,8 @@ from module.ui.ui import UI
 
 class Shop(UI):
     def general_shop(self, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=2).start()
-        click_timer = Timer(0.3)
+        confirm_timer = Timer(5, count=2).start()
+        click_timer = Timer(1)
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -35,7 +35,8 @@ class Shop(UI):
                 break
 
     def ensure_fresh(self, skip_first_screenshot=True):
-        click_timer = Timer(0.3)
+        confirm_timer = Timer(5, count=2).start()
+        click_timer = Timer(1)
         flag = False
         already_checked = False
         while 1:
@@ -66,7 +67,7 @@ class Shop(UI):
                 click_timer.reset()
                 continue
 
-            if already_checked and self.appear(GENERAL_SHOP_CHECK, offset=(5, 5)):
+            if already_checked and confirm_timer.reached() and self.appear(GENERAL_SHOP_CHECK, offset=(5, 5)):
                 break
 
         return flag
