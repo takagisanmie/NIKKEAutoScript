@@ -1327,6 +1327,10 @@ Dorothy = [
     ''
 ]
 
+D = [
+    ''
+]
+
 Nikke_dialog = {
     'Alice': Alice,
     'Scarlet': Scarlet,
@@ -1392,6 +1396,7 @@ Nikke_dialog = {
     'Makima': Makima,
     'Himeno': Himeno,
     'Biscuit': Biscuit,
+    'D': D,
 }
 
 Nikke_list = [
@@ -1634,6 +1639,10 @@ Nikke_list = [
     {
         'key': 'Quency',
         'label': '坎西',
+    },
+    {
+        'key': 'D',
+        'label': 'D',
     },
     {
         'key': 'Power',

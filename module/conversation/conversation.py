@@ -35,6 +35,7 @@ class Conversation(UI):
     visited = set()
 
     stuck_timer = Timer(60, count=0).start()
+    confirm_timer = Timer(4, count=5).start()
 
     @cached_property
     def nikke_list(self):
@@ -54,30 +55,39 @@ class Conversation(UI):
             return True
 
     def name_after_process(self, text, img):
-        if '购物狂' in text:
+        if text:
+            if '购物狂' in text:
+                text = '冬日购物狂'
+            elif '奇迹' in text:
+                text = '奇迹仙女'
+        else:
+            logger.warning("cannot detect the current NIKKE's name")
+
+        # TODO 奇迹仙女, 以及其他不好识别的NIKKE
+        if self.match(img, RUPEE_WINTER_SHOPPER):
             text = '冬日购物狂'
-        elif '奇迹' in text:
-            text = '奇迹仙女'
-        # TODO 奇迹仙女, D, 以及其他不好识别的NIKKE
-        elif self.match(img, RUPEE_Winter_Shopper):
-            text = '冬日购物狂'
+        elif self.match(img, RUPEE):
+            text = '露菲'
+        elif self.match(img, D):
+            text = 'D'
         if text not in self.visited:
             return text
 
     def get_next_target(self):
         if not self.opportunity:
+            logger.attr('VISITED NIKKE LIST', self.visited)
             logger.warning('There are no opportunities remaining')
             raise NoOpportunityRemain
 
         elif self.stuck_timer.reached():
+            logger.attr('VISITED NIKKE LIST', self.visited)
             logger.attr('stuck timer reached', self.stuck_timer.reached())
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
-
-        elif len(self.visited) == len(self.nikke_list):
-            logger.attr('VISITED NIKKE LIST', self.visited)
-            logger.warning('Perhaps all selected NIKKE already had a conversation')
-            raise ChooseNextNIKKETooLong
+        # elif len(self.visited) == len(self.nikke_list):
+        #     logger.attr('VISITED NIKKE LIST', self.visited)
+        #     logger.warning('Perhaps all selected NIKKE already had a conversation')
+        #     raise ChooseNextNIKKETooLong
 
         _ = FAVOURITE_CHECK.match(self.device.image, static=False)
         if _:
@@ -90,13 +100,12 @@ class Conversation(UI):
             text_rect = _area_offset(text_rect, (-2, -2, 3, 2))
             _letters_img = crop(_img, text_rect)
             name = self.name_after_process(self.ocr(_letters_img, 'NIKKE_NAME'), _img)
-
+            # save_image(_letters_img, './RUPEE.png')
             if not name:
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
             self.visited.add(name)
-
             # 咨询状态
             if CASE_CLOSED.match(crop(self.device.image, check_area), static=False):
                 logger.warning('already had a conversation with current nikke')
@@ -119,6 +128,7 @@ class Conversation(UI):
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
+            self.confirm_timer.reset()
             super().__setattr__('current', name)
             super().__setattr__('key', r[0])
             return
@@ -129,8 +139,14 @@ class Conversation(UI):
             logger.critical("Please switch current page into 'PAGE_CONVERSATION'")
             raise GamePageUnknownError
 
+        elif self.confirm_timer.reached():
+            logger.attr('VISITED NIKKE LIST', self.visited)
+            logger.attr('confirm timer reached', self.confirm_timer.reached())
+            logger.warning('Perhaps all selected NIKKE already had a conversation')
+            raise ChooseNextNIKKETooLong
+
         self.device.swipe((360, 1000), (360, 960), handle_control_check=False)
-        self.device.sleep(1.2)
+        self.device.sleep(1.3)
         self.device.screenshot()
         self.get_next_target()
 
