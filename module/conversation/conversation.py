@@ -75,6 +75,7 @@ class Conversation(UI):
             raise ChooseNextNIKKETooLong
 
         elif len(self.visited) == len(self.nikke_list):
+            logger.attr('VISITED NIKKE LIST', self.visited)
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
 
