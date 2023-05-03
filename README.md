@@ -14,7 +14,7 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 ### 如何使用
 
 ------
-
+-1.可以加入qq划水群 823265807
 0.保持在NIKKE中使用语言为简体中文，以及全高画质  
 1.解压NKAS.zip，第一次使用时，运行updater.bat  
 2.在**\win-unpacked中，运行NikkeAutoScript.exe  
