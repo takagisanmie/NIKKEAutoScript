@@ -57,3 +57,15 @@ RubbishShop:
   priority: ''
 Notification:
   WhenDailyTaskCompleted: false
+Event:
+  Event_Name: ''
+  Complete_Event: false
+  Event:
+    value: 'event_1'
+    option: [ 'event_1' ]
+  Part:
+    value: 'story_1'
+    option: [ 'story_1','story_2' ]
+  Difficulty:
+    value: 'normal'
+    option: [ 'normal','hard' ]

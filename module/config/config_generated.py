@@ -56,5 +56,12 @@ class GeneratedConfig:
     # Group `Notification`
     Notification_WhenDailyTaskCompleted = False
 
+    # Group `Event`
+    Event_Event_Name = None
+    Event_Complete_Event = False
+    Event_Event = 'event_1'  # event_1
+    Event_Part = 'story_1'  # story_1, story_2
+    Event_Difficulty = 'normal'  # normal, hard
+
     # Group `Storage`
     Storage_Storage = {}

@@ -2,6 +2,7 @@ from module.base.base import ModuleBase
 from module.exception import GameStuckError, GameServerUnderMaintenance
 from module.handler.assets import *
 from module.logger import logger
+from module.ui.page import SKIP, TOUCH_TO_CONTINUE
 
 
 class InfoHandler(ModuleBase):
@@ -72,3 +73,10 @@ class InfoHandler(ModuleBase):
     def handle_system_maintenance(self):
         if self.appear(SYSTEM_MAINTENANCE_CHECK, offset=(30, 30), interval=3):
             raise GameServerUnderMaintenance('Server is currently under maintenance')
+
+    def handle_event(self, interval=3):
+        if self.appear_then_click(SKIP, offset=(5, 5), static=False, interval=interval):
+            return True
+        elif self.appear_then_click(TOUCH_TO_CONTINUE, offset=(5, 5), static=False, interval=interval):
+            self.device.click_minitouch(100, 100)
+            return True

@@ -9,7 +9,7 @@ from module.ui.ui import UI
 class Shop(UI):
     def general_shop(self, skip_first_screenshot=True):
         confirm_timer = Timer(5, count=2).start()
-        click_timer = Timer(1)
+        click_timer = Timer(1.8)
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -36,7 +36,7 @@ class Shop(UI):
 
     def ensure_fresh(self, skip_first_screenshot=True):
         confirm_timer = Timer(5, count=2).start()
-        click_timer = Timer(1)
+        click_timer = Timer(1.8)
         flag = False
         already_checked = False
         while 1:
@@ -58,7 +58,7 @@ class Shop(UI):
                 click_timer.reset()
                 continue
 
-            elif self.appear(CONFRIM_B, offset=(5, 5), static=False):
+            elif click_timer.reached() and self.appear(CONFRIM_B, offset=(5, 5), static=False):
                 already_checked = True
 
             if not flag and already_checked and click_timer.reached() and self.appear_then_click(CANCEL, offset=(5, 5),

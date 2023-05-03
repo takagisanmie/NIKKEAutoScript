@@ -192,7 +192,7 @@ div[id*="pywebio-scope-group"] > p:first-child {
     font-size: 20px;
 }
 
-div[id*="pywebio-scope-group"] > * input[name*="Shop_"][type*="text"]  {
+div[id*="pywebio-scope-group"] > * input[name*="Shop_"][type*="text"] {
     width: 725px;
 }
 

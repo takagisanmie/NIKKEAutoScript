@@ -9,7 +9,7 @@ from module.ui.page import (Page, page_unknown, page_main, page_reward, page_des
                             page_shop, page_team,
                             page_conversation, page_ark, page_tribe_tower, page_simulation_room, page_arena,
                             page_rookie_arena,
-                            page_special_arena, page_outpost, page_commission)
+                            page_special_arena, page_outpost, page_commission, page_event, page_story_1, page_story_2)
 
 
 class UI(InfoHandler):
@@ -30,6 +30,9 @@ class UI(InfoHandler):
                 page_special_arena,
                 page_outpost,
                 page_commission,
+                page_event,
+                page_story_1,
+                page_story_2,
                 ]
 
     def ui_page_appear(self, page: Page):
@@ -154,6 +157,9 @@ class UI(InfoHandler):
             else:
                 confirm_timer.reset()
 
+            if self.handle_event():
+                continue
+
             # Other pages
             clicked = False
             for page in visited:
@@ -222,6 +228,9 @@ class UI(InfoHandler):
 
         if self.appear(LOGIN_PAGE_CHECK, offset=(30, 30), interval=3):
             raise GameStart
+
+        if self.handle_event():
+            return True
 
         '''
             CONFRIM_A 按钮为平面或立体，'确认'没有阴影

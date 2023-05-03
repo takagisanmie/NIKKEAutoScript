@@ -172,16 +172,20 @@ class NikkeConfig(ConfigUpdater, ManualConfig, GeneratedConfig, ConfigWatcher):
         for task in ["Reward"]:
             if not self.is_task_enabled(task):
                 self.modified[f"{task}.Scheduler.Enable"] = True
-        force_enable = list
-
-        force_enable(
-            [
-                "Reward",
-            ]
-        )
+        # force_enable = list
+        #
+        # force_enable(
+        #     [
+        #         "Reward",
+        #     ]
+        # )
         # 当运行时间大于24小时之后时，设为现在运行
         limit_next_run(["Reward"], limit=now + timedelta(hours=24, seconds=-1))
         limit_next_run(self.args.keys(), limit=now + timedelta(hours=24, seconds=-1))
+        # 选择最新的活动
+        for task in ["Event"]:
+            # deep_set(self.data, keys=f"{task}.Event.Event", value=self.EVENTS[0].get('event_id'))
+            self.modified[f"{task}.Event.Event"] = self.EVENTS[0].get('event_id')
 
     def get_next(self):
         """

@@ -16,6 +16,9 @@
       "SimulationRoom",
       "TribeTower",
       "RookieArena"
+    ],
+    "Event": [
+      "Event"
     ]
   }
 }

@@ -45,3 +45,9 @@ TribeTower:
 
 RookieArena:
   - Scheduler
+
+# ==================== Event ====================
+
+Event:
+  - Scheduler
+  - Event

@@ -72,3 +72,6 @@ class SelectedGrids:
             int:
         """
         return len(self.grids)
+
+    def sort(self, key, index=0):
+        self.grids.sort(key=lambda x: x.__getattribute__(key)[index])

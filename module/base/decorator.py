@@ -49,6 +49,7 @@ class Config:
                 for record in cls.func_list[name]:
                     """
                         当已经记录的方法和当前被修饰的方法一样时，且参数组一样时，用当前方法覆盖已经记录的方法
+                        使用最后遍历的方法
                     """
                     if record['options'] == data['options']:
                         record['func'] = data['func']

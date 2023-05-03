@@ -172,5 +172,25 @@
     "Storage": {
       "Storage": {}
     }
+  },
+  "Event": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "1989-12-27 00:00:00",
+      "Command": "Event",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Event": {
+      "Event_Name": null,
+      "Complete_Event": false,
+      "Event": "event_1",
+      "Part": "story_1",
+      "Difficulty": "normal"
+    },
+    "Storage": {
+      "Storage": {}
+    }
   }
 }

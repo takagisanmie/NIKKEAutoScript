@@ -10,6 +10,7 @@ from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
+from module.shop.assets import GRATIS_REFRESH
 
 
 class NikkeAutoScript:
@@ -144,6 +145,10 @@ class NikkeAutoScript:
     def daily(self):
         from module.daily.daily import Daily
         Daily(config=self.config, device=self.device).run()
+
+    def event(self):
+        from module.event.event import Event
+        Event(config=self.config, device=self.device).run()
 
     def wait_until(self, future):
         """
@@ -298,27 +303,16 @@ class NikkeAutoScript:
 
 if __name__ == '__main__':
     # TODO 当新人竞技场战斗时间过长
+
     nkas = NikkeAutoScript()
     self = nkas
-    self.config.bind('Daily')
-    # self.device.screenshot()
-    from module.daily.daily import Daily
+    self.config.bind('Event')
+    self.device.screenshot()
+    from module.event.event import Event
 
-    e = Daily(config=self.config, device=self.device)
-    e.toast()
-    # e.receive()
-
-    # print(e.available_company)
-    # print(len(e.available_company))
-    # e._run()
-    # a = e.available_company[0]
-    # print(a)
-    # print(e.available_company)
-    # e.available_company.remove(a)
-    # print(e.available_company)
-    # from module.simulation_room.event import ImprovementEvent
-    # ImprovementEvent(button=IMPROVEMENT_EVENT_CHECK.location, config=self.config, device=self.device).run()
-    # if e.appear(CONFRIM_A, offset=(10, 10), static=False):
+    e = Event(config=self.config, device=self.device)
+    print(e.appear(GRATIS_REFRESH, offset=(5, 5), threshold=0.96, static=False) )
+    # if e.appear_then_click(SKIP, offset=(10, 10), static=False):
     #     print(1)
     # if e.appear(CONFRIM_B, offset=(30, 30), static=False):
     #     print(2)

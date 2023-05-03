@@ -11,7 +11,7 @@ from module.ui.ui import UI
 class Daily(UI):
     def receive(self, skip_first_screenshot=True):
         logger.hr('Reward receive', 2)
-        confirm_timer = Timer(6, count=2).start()
+        confirm_timer = Timer(9, count=3).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -20,13 +20,13 @@ class Daily(UI):
                 self.device.screenshot()
                 self.device.image = mask_area(self.device.image, COMPLETED_CHECK.button)
 
-            if click_timer.reached() and self.appear_then_click(COMPLETED_CHECK, offset=(5, 5), interval=4,
+            if click_timer.reached() and self.appear_then_click(COMPLETED_CHECK, offset=(5, 5), interval=6,
                                                                 threshold=0.8, static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(RECEIVE, offset=(5, 5), interval=2,
+            if click_timer.reached() and self.appear_then_click(RECEIVE, offset=(5, 5), interval=1,
                                                                 static=False):
                 confirm_timer.reset()
                 click_timer.reset()
@@ -38,6 +38,10 @@ class Daily(UI):
                 continue
 
             if self.appear(DAILY_CHECK, offset=(10, 10)) and confirm_timer.reached():
+                self.device.screenshot()
+                if self.appear(COMPLETED_CHECK, offset=(5, 5), threshold=0.8, static=False):
+                    skip_first_screenshot = True
+                    continue
                 break
 
     def toast(self):

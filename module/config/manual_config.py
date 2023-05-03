@@ -1,7 +1,10 @@
+from datetime import datetime, timedelta
+
+
 class ManualConfig:
     SCHEDULER_PRIORITY = """
        Restart
-       > Reward > Destroy > Commission > Shop > Conversation > RookieArena > SimulationRoom > TribeTower > Daily
+       > Reward > Destroy > Commission > Shop > Conversation > RookieArena > SimulationRoom > TribeTower > Event > Daily
        """
 
     FORWARD_PORT_RANGE = (20000, 21000)
@@ -19,6 +22,18 @@ class ManualConfig:
 
     DROIDCAST_RAW_FILEPATH_LOCAL = './bin/DroidCast/DroidCastS-release-1.1.5.apk'
     DROIDCAST_RAW_FILEPATH_REMOTE = '/data/local/tmp/DroidCastS.apk'
+
+    EVENTS = [
+        {
+            'event_id': 'event_1',
+            'event_name': 'OVER ZONE',
+            # large evnet
+            'event_type': 1,
+            'event_duration': timedelta(days=21),
+            # UTC+8 2023-04-27 06:00:00
+            'event_update_date': datetime(2023, 4, 27, 4)
+        }
+    ]
 
     @property
     def SERVER(self):

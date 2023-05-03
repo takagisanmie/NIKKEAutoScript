@@ -47,6 +47,9 @@ Menu:
   Daily:
     name: 日常
     help: ""
+  Event:
+    name: 活动
+    help: ""
 # 任务
 Task:
   NKAS:
@@ -81,6 +84,9 @@ Task:
     help: ""
   Daily:
     name: 日常
+    help: ""
+  Event:
+    name: 活动
     help: ""
 Emulator:
   _info:
@@ -235,3 +241,27 @@ Notification:
   WhenDailyTaskCompleted:
     name: 当日常完成时，发送通知
     help: ""
+Event:
+  _info:
+    name: 活动设置
+    help: ""
+  Event:
+    name: 活动
+    help: "会自动选取最新的活动"
+    event_1: 'OVER ZONE'
+  Event_Name:
+    name: 关卡名称
+    help: "例如 '1-11'"
+  Complete_Event:
+    name: 完成未完成的关卡
+    help: ""
+  Part:
+    name: Part
+    help: ""
+    story_1: 'Story 1'
+    story_2: 'Story 2'
+  Difficulty:
+    name: 难度
+    help: ""
+    normal: '普通'
+    hard: '困难'
