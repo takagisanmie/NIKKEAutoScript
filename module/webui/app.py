@@ -22,8 +22,10 @@ from module.webui.process_manager import ProcessManager
 from module.webui.setting import State
 from module.webui.updater import updater
 from module.webui.utils import add_css, get_nkas_config_listen_path, parse_pin_value, re_fullmatch, \
-    Switch
+    Switch, TaskHandler
 from module.webui.widgets import RichLog, put_icon_buttons, BinarySwitchButton, T_Output_Kwargs, put_output
+
+task_handler = TaskHandler()
 
 
 class NikkeAutoScriptGUI(Frame):
@@ -642,17 +644,37 @@ class NikkeAutoScriptGUI(Frame):
         # aside = get_localstorage("aside")
         self.show()
 
+        def goto_update():
+            self.ui_link()
+
+        update_switch = Switch(
+            status={
+                1: lambda: toast(
+                    t("Gui.Toast.ClickToUpdate"),
+                    duration=0,
+                    position="right",
+                    color="success",
+                    onclick=goto_update,
+                )
+            },
+            get_state=lambda: updater.state,
+            name="update_state",
+        )
+
         '''
             task_handler: 子任务处理器
             task_handler.start
             通过子线程在后台运行TaskHandler.loop()方法，循环运行添加的任务，直到调用stop
         '''
+        self.task_handler.add(update_switch.g(), 1)
         self.task_handler.start()
 
 
 def startup():
     # 初始化多进程数据共享
     State.init()
+    task_handler.add(updater.check_update, updater.delay)
+    task_handler.start()
 
 
 def clearup():

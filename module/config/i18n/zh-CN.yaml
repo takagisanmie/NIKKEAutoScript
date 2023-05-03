@@ -15,6 +15,7 @@ Gui:
     Waiting: 等待中
   Toast:
     ConfigSaved: 设置已保存
+    ClickToUpdate: 有更新可用，点击这里进行更新
   Text:
     clear: 清除
     InvalidFeedBack: 格式错误。 示例：{0}
