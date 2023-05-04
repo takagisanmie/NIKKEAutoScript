@@ -21,6 +21,7 @@ class Updater(GitManager, PipManager):
         # 进程同步标识
         self.event: threading.Event = None
 
+    @property
     def delay(self):
         self.read()
         return int(self.CheckUpdateInterval) * 60
