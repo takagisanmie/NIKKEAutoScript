@@ -1,5 +1,5 @@
 import time
-from datetime import timedelta
+from datetime import datetime, timedelta
 from functools import cached_property
 
 import inflection
@@ -314,10 +314,7 @@ if __name__ == '__main__':
     nkas = NikkeAutoScript()
     self = nkas
 
-    from datetime import datetime
-
     from module.event.event import Event
-
     e = Event(config=self.config, device=self.device)
     # print(e.next_tuesday)
     # nkas = NikkeAutoScript()
