@@ -10,7 +10,6 @@ from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
-from module.ui.page import NO_OPPORTUNITY
 
 
 class NikkeAutoScript:
@@ -315,6 +314,7 @@ if __name__ == '__main__':
     self = nkas
 
     from module.event.event import Event
+
     e = Event(config=self.config, device=self.device)
     # print(e.next_tuesday)
     # nkas = NikkeAutoScript()
@@ -329,8 +329,8 @@ if __name__ == '__main__':
     # self.device.image = cv2.cvtColor(cv2.imread('./pic/Screenshot_20230503-115640.png'), cv2.COLOR_BGR2RGB)
     # e = Conversation(config=self.config, device=self.device)
     # print(FAVOURITE_CHECK.match(self.device.image, static=False))
-    if e.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95, static=False):
-        print(1)
+    # if e.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95, static=False):
+    #     print(1)
     # if e.appear_then_click(SKIP, offset=(10, 10), static=False):
     #     print(1)
     # if e.appear(CONFRIM_B, offset=(30, 30), static=False):

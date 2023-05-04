@@ -16,7 +16,9 @@ from module.ui.page import page_main, page_event, page_story_1, MAIN_GOTO_EVENT,
     STORY_2_HARD_LOCKED, STORY_2_HARD_UNLOCKED, STORY_2_HARD_COMPLETED, STORY_1_NORMAL_STAGE_AREA_A, \
     STORY_1_NORMAL_STAGE_AREA_B, STORY_1_HARD_STAGE_AREA_B, STORY_1_HARD_STAGE_AREA_A, STORY_2_HARD_STAGE_AREA_B, \
     STORY_2_NORMAL_STAGE_AREA_A, STORY_2_NORMAL_STAGE_AREA_B, STORY_2_HARD_STAGE_AREA_A, STAGE_DETAILED_CHECK, FIGHT, \
-    NEXT_STAGE, END_CHECK, FIGHT_QUICKLY, MAX, QUICK_FIGHT_CONFIRM, NO_OPPORTUNITY, QUICK_FIGHT_CHECK
+    NEXT_STAGE, END_CHECK, FIGHT_QUICKLY, MAX, QUICK_FIGHT_CONFIRM, STORY_1_NORMAL_NO_OPPORTUNITY, \
+    STORY_1_HARD_NO_OPPORTUNITY, \
+    STORY_2_NORMAL_NO_OPPORTUNITY, STORY_2_HARD_NO_OPPORTUNITY, QUICK_FIGHT_CHECK
 from module.ui.ui import UI
 
 
@@ -121,6 +123,7 @@ class Event(UI):
                 locked = STORY_1_NORMAL_LOCKED
                 area_a = STORY_1_NORMAL_STAGE_AREA_A
                 area_b = STORY_1_NORMAL_STAGE_AREA_B
+                no_opportunity = STORY_1_NORMAL_NO_OPPORTUNITY
             else:
                 if self.config.Event_Difficulty == 'normal':
                     unlocked = STORY_2_NORMAL_UNLOCKED
@@ -128,12 +131,14 @@ class Event(UI):
                     locked = STORY_2_NORMAL_LOCKED
                     area_a = STORY_2_NORMAL_STAGE_AREA_A
                     area_b = STORY_2_NORMAL_STAGE_AREA_B
+                    no_opportunity = STORY_2_NORMAL_NO_OPPORTUNITY
                 else:
                     unlocked = STORY_2_HARD_UNLOCKED
                     completed = STORY_2_HARD_COMPLETED
                     locked = STORY_2_HARD_LOCKED
                     area_a = STORY_2_HARD_STAGE_AREA_A
                     area_b = STORY_2_HARD_STAGE_AREA_B
+                    no_opportunity = STORY_2_HARD_NO_OPPORTUNITY
         else:
             if self.config.Event_Difficulty == 'normal':
                 unlocked = STORY_1_NORMAL_UNLOCKED
@@ -141,17 +146,20 @@ class Event(UI):
                 locked = STORY_1_NORMAL_LOCKED
                 area_a = STORY_1_NORMAL_STAGE_AREA_A
                 area_b = STORY_1_NORMAL_STAGE_AREA_B
+                no_opportunity = STORY_1_NORMAL_NO_OPPORTUNITY
             else:
                 unlocked = STORY_1_HARD_UNLOCKED
                 completed = STORY_1_HARD_COMPLETED
                 locked = STORY_1_HARD_LOCKED
                 area_a = STORY_1_HARD_STAGE_AREA_A
                 area_b = STORY_1_HARD_STAGE_AREA_B
+                no_opportunity = STORY_1_HARD_NO_OPPORTUNITY
         self.unlocked = unlocked
         self.completed = completed
         self.locked = locked
         self.area_a = area_a
         self.area_b = area_b
+        self.no_opportunity = no_opportunity
 
     @Config.when(event_type=1)
     def redirect(self):
@@ -172,8 +180,7 @@ class Event(UI):
             self.ensure_into_event_page()
             self.ensure_into_stage_list()
             self.ensure_event_button()
-            if self.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95, static=False):
-                raise NoOpportunityRemain
+            self.ensure_opportunity_remain()
             if self.config.Event_Complete_Event:
                 self.detect_available_stage()
             self._loop()
@@ -212,9 +219,9 @@ class Event(UI):
                     raise EventPartUnavailableError(
                         f"'The second part of Story 2' is unavailable currently, it will be available on {self.event_story_2 + timedelta(days=7)}")
         if self.config.Event_Part == 'story_1':
-            self.ui_ensure(page_story_1, confirm_wait=2)
+            self.ui_ensure(page_story_1)
         elif self.config.Event_Part == 'story_2':
-            self.ui_ensure(page_story_2, confirm_wait=2)
+            self.ui_ensure(page_story_2)
 
     @Config.when(event_type=2)
     def ensure_into_event_page(self):
@@ -228,7 +235,7 @@ class Event(UI):
             if not self.event_story_second_part_is_available:
                 raise EventPartUnavailableError(
                     f"'The second part of Story 1' is unavailable currently, it will be available on {self.event_story_second_part}")
-        self.ui_ensure(page_story_1, confirm_wait=2)
+        self.ui_ensure(page_story_1)
 
     @Config.when(event_type=1)
     def ensure_into_stage_list(self, skip_first_screenshot=True):
@@ -268,7 +275,7 @@ class Event(UI):
                     'Click %s @ %s' % (point2str(*level_button), 'LEVEL_BUTTON')
                 )
                 confirm_timer.reset()
-                click_timer.reset()
+                click_timer_2.reset()
                 continue
 
             if self.appear(check, offset=(10, 10)) and confirm_timer.reached():
@@ -307,7 +314,7 @@ class Event(UI):
                     'Click %s @ %s' % (point2str(*level_button), 'LEVEL_BUTTON')
                 )
                 confirm_timer.reset()
-                click_timer.reset()
+                click_timer_2.reset()
                 continue
 
             if self.appear(check, offset=(10, 10)) and confirm_timer.reached():
@@ -461,8 +468,7 @@ class Event(UI):
                         and confirm_timer.reached():
                     raise NoOpportunityRemain
 
-        if self.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95, static=False):
-            raise NoOpportunityRemain
+        self.ensure_opportunity_remain()
 
     def ensure_back(self, skip_first_screenshot=True):
         confirm_timer = Timer(1, count=3).start()
@@ -498,6 +504,10 @@ class Event(UI):
 
             if self.appear(GOTO_BACK, offset=(30, 30), static=False) and confirm_timer.reached():
                 break
+
+    def ensure_opportunity_remain(self):
+        if self.appear(self.no_opportunity, offset=(5, 5), threshold=0.95, static=False):
+            raise NoOpportunityRemain
 
     def ensure_sroll_to_top(self, count=2):
         for i in range(count):
