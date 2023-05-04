@@ -68,3 +68,5 @@ Event:
   Difficulty:
     value: 'normal'
     option: [ 'normal','hard' ]
+Daily:
+  EnhanceEquipment: false

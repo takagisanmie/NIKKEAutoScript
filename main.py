@@ -7,6 +7,7 @@ import inflection
 import glo
 from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
+from module.daily.assets import RANDOM_EQUIPMENT
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
@@ -318,6 +319,9 @@ if __name__ == '__main__':
     self.config.bind('RubbishShop')
     e = RubbishShop(config=self.config, device=self.device)
     e.device.screenshot()
+    # e.ui_ensure(page_inventory)
+    if e.appear_then_click(RANDOM_EQUIPMENT, offset=(5, 5), static=False):
+        print(1)
     # e._run()
     # self = e
     # product_list = self.priority.delete(self.priority._select('name', self.visited).grids)

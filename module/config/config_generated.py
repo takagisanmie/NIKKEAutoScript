@@ -62,5 +62,8 @@ class GeneratedConfig:
     Event_Part = 'story_1'  # story_1, story_2
     Event_Difficulty = 'normal'  # normal, hard
 
+    # Group `Daily`
+    Daily_EnhanceEquipment = False
+
     # Group `Storage`
     Storage_Storage = {}

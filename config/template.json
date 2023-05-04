@@ -82,6 +82,9 @@
       "FailureInterval": 120,
       "ServerUpdate": "04:00"
     },
+    "Daily": {
+      "EnhanceEquipment": false
+    },
     "Storage": {
       "Storage": {}
     }

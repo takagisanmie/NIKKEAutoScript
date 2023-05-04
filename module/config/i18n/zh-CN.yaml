@@ -284,3 +284,10 @@ Event:
     help: ""
     normal: '普通'
     hard: '困难'
+Daily:
+  _info:
+    name: 每日任务
+    help: ""
+  EnhanceEquipment:
+    name: 强化背包内随机一个装备，会消耗 一个模组推进器 (蓝) 或 模组高级增强器 (紫)
+    help: ""
