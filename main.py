@@ -158,6 +158,10 @@ class NikkeAutoScript:
         from module.mission_pass.mission_pass import MissionPass
         MissionPass(config=self.config, device=self.device).run()
 
+    def liberation(self):
+        from module.liberation.liberation import Liberation
+        Liberation(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
             Wait until a specific time.
@@ -311,7 +315,6 @@ class NikkeAutoScript:
 
 if __name__ == '__main__':
     # TODO 当新人竞技场战斗时间过长
-    # TODO 领取PASS
     # TODO 解放任务
     # TODO 付费商店
     # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
@@ -326,30 +329,6 @@ if __name__ == '__main__':
     # e.ui_ensure(page_inventory)
     if e.appear_then_click(RANDOM_EQUIPMENT, offset=(5, 5), static=False):
         print(1)
-    # e._run()
-    # self = e
-    # product_list = self.priority.delete(self.priority._select('name', self.visited).grids)
-    # for i in product_list:
-    #     print(i.name)
-
-    # print(e.next_tuesday)
-    # nkas = NikkeAutoScript()
-    # self = nkas
-    # self.config.bind('Event')
-    # self.device.screenshot()
-    # result = exec_file('./module/rubbish_shop/assets.py')
-    # print(result)
-    # print(result['RUBBISH_SHOP_CHECK'].area)
-
-    # from module.event.event import Event
-    # import cv2
-    # from module.conversation.conversation import Conversation
-
-    # self.device.image = cv2.imread('./pic/Screenshot_20230503-115640.png')
-    # self.device.image = cv2.cvtColor(cv2.imread('Screenshot_20230504-112900.png'), cv2.COLOR_BGR2RGB)
-    # e = Conversation(config=self.config, device=self.device)
-    # print(FAVOURITE_CHECK.match(self.device.image, static=False))
-
     # if e.appear(NO_MONEY, offset=(5, 5), static=False) and NO_MONEY.match_appear_on(self.device.image):
     #     print(1)
     # if e.appear_then_click(SKIP, offset=(10, 10), static=False):

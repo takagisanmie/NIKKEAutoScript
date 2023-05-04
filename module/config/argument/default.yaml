@@ -39,3 +39,7 @@ RubbishShop:
 MissionPass:
   Scheduler:
     Enable: false
+
+Liberation:
+  Scheduler:
+    Enable: false

@@ -99,6 +99,7 @@ class Event(UI):
     def stage(self) -> int:
         if not self.config.Event_Event_Name:
             self.config.Event_Event_Name = '1-11'
+        logger.attr('STAGE NAME', self.config.Event_Event_Name)
         prefix, suffix = self.config.Event_Event_Name.strip(' ').split('-')
         return int(suffix)
 
@@ -218,6 +219,9 @@ class Event(UI):
                 if not self.event_story_2_second_part:
                     raise EventPartUnavailableError(
                         f"'The second part of Story 2' is unavailable currently, it will be available on {self.event_story_2 + timedelta(days=7)}")
+
+        logger.attr('PART', self.config.Event_Part)
+        logger.attr('DIFFICULTY', self.config.Event_Difficulty)
         if self.config.Event_Part == 'story_1':
             self.ui_ensure(page_story_1)
         elif self.config.Event_Part == 'story_2':
@@ -235,6 +239,8 @@ class Event(UI):
             if not self.event_story_second_part_is_available:
                 raise EventPartUnavailableError(
                     f"'The second part of Story 1' is unavailable currently, it will be available on {self.event_story_second_part}")
+        logger.attr('PART', self.config.Event_Part)
+        logger.attr('DIFFICULTY', self.config.Event_Difficulty)
         self.ui_ensure(page_story_1)
 
     @Config.when(event_type=1)
@@ -325,6 +331,7 @@ class Event(UI):
         logger.hr('STAGE AREA A', 2)
         stage_list = self.stage_list(self.area_a.area)
         stage_list = stage_list.select(type='available')
+        logger.attr('AVAILABLE STAGE COUNT', stage_list.count)
         if stage := stage_list.first_or_none():
             self.loop(stage, goto_next_stage=True)
         else:
@@ -333,6 +340,7 @@ class Event(UI):
         logger.hr('STAGE AREA B', 2)
         stage_list = self.stage_list(self.area_b.area)
         stage_list = stage_list.select(type='available')
+        logger.attr('AVAILABLE STAGE COUNT', stage_list.count)
         if stage := stage_list.first_or_none():
             self.loop(stage, goto_next_stage=True)
         else:
@@ -345,6 +353,7 @@ class Event(UI):
         logger.hr('STAGE AREA A', 2)
         stage_a_list = self.stage_list(self.area_a.area)
         stage_a_list = stage_a_list.select(type='completed')
+        logger.attr('COMPLETED STAGE COUNT', stage_a_list.count)
         stage_a_list.sort('location', 1)
         if stage_a_list.count >= self.stage:
             self.loop(stage_a_list.__getitem__(self.stage - 1))
@@ -353,6 +362,7 @@ class Event(UI):
             logger.hr('STAGE AREA B', 2)
             stage_b_list = self.stage_list(self.area_b.area)
             stage_b_list = stage_b_list.select(type='completed')
+            logger.attr('COMPLETED STAGE COUNT', stage_b_list.count)
             stage_b_list.sort('location', 1)
             self.loop(stage_b_list.__getitem__(self.stage - 1 - stage_a_list.count))
 

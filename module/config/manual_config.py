@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 class ManualConfig:
     SCHEDULER_PRIORITY = """
        Restart
-       > Reward > Destroy > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event >  Daily > MissionPass
+       > Reward > Destroy > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event >  Daily > MissionPass > Liberation
        """
 
     RUBBISH_SHOP_PRIORITY = """

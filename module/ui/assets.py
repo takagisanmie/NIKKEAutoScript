@@ -45,5 +45,6 @@ SIMULATION_ROOM_CHECK = Button(area={'cn': (263, 602, 464, 686)}, color={'cn': (
 SPECIAL_ARENA_CHECK = Button(area={'cn': (204, 138, 524, 229)}, color={'cn': (87, 90, 97)}, button={'cn': (204, 138, 524, 229)}, file={'cn': './assets/cn/ui/SPECIAL_ARENA_CHECK.png'})
 TEAM_CHECK = Button(area={'cn': (35, 305, 152, 320)}, color={'cn': (200, 198, 199)}, button={'cn': (35, 305, 152, 320)}, file={'cn': './assets/cn/ui/TEAM_CHECK.png'})
 TEAM_GOTO_CONVERSATION = Button(area={'cn': (393, 136, 456, 174)}, color={'cn': (72, 71, 69)}, button={'cn': (393, 136, 456, 174)}, file={'cn': './assets/cn/ui/TEAM_GOTO_CONVERSATION.png'})
+TEAM_GOTO_LIBERATION = Button(area={'cn': (114, 142, 159, 163)}, color={'cn': (129, 127, 127)}, button={'cn': (114, 142, 159, 163)}, file={'cn': './assets/cn/ui/TEAM_GOTO_LIBERATION.png'})
 TEAM_GOTO_MAIN = Button(area={'cn': (340, 1225, 380, 1245)}, color={'cn': (76, 77, 73)}, button={'cn': (340, 1225, 380, 1245)}, file={'cn': './assets/cn/ui/TEAM_GOTO_MAIN.png'})
 TRIBE_TOWER_CHECK = Button(area={'cn': (196, 97, 536, 168)}, color={'cn': (130, 137, 141)}, button={'cn': (196, 97, 536, 168)}, file={'cn': './assets/cn/ui/TRIBE_TOWER_CHECK.png'})

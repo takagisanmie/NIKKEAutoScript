@@ -29,6 +29,9 @@ Daily:
 MissionPass:
   - Scheduler
 
+Liberation:
+  - Scheduler
+
 Conversation:
   - Scheduler
   - Conversation
