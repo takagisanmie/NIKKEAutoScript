@@ -26,6 +26,9 @@ Daily:
   - Scheduler
   - Daily
 
+MissionPass:
+  - Scheduler
+
 Conversation:
   - Scheduler
   - Conversation

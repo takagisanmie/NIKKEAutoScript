@@ -154,6 +154,10 @@ class NikkeAutoScript:
         from module.event.event import Event
         Event(config=self.config, device=self.device).run()
 
+    def mission_pass(self):
+        from module.mission_pass.mission_pass import MissionPass
+        MissionPass(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
             Wait until a specific time.
@@ -307,10 +311,10 @@ class NikkeAutoScript:
 
 if __name__ == '__main__':
     # TODO 当新人竞技场战斗时间过长
-    # TODO 废铁商店
-    # TODO 竞技场商店
     # TODO 领取PASS
     # TODO 解放任务
+    # TODO 付费商店
+    # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
     nkas = NikkeAutoScript()
     self = nkas
 

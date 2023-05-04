@@ -35,3 +35,7 @@ Daily:
 RubbishShop:
   Scheduler:
     Enable: false
+
+MissionPass:
+  Scheduler:
+    Enable: false

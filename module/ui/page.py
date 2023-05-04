@@ -68,6 +68,11 @@ page_inventory = Page(INVENTORY_CHECK)
 page_inventory.link(button=TEAM_GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_INVENTORY, destination=page_inventory)
 
+# pass
+page_pass = Page(PASS_CHECK)
+page_pass.link(button=PASS_GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_PASS, destination=page_pass)
+
 # conversation
 page_conversation = Page(CONVERSATION_CHECK)
 page_conversation.link(button=GOTO_BACK, destination=page_team)
