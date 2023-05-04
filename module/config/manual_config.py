@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 class ManualConfig:
     SCHEDULER_PRIORITY = """
        Restart
-       > Reward > Destroy > Commission > Shop > Conversation > RookieArena > SimulationRoom > TribeTower > Event > Daily
+       > Reward > Destroy > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event > Daily
        """
 
     FORWARD_PORT_RANGE = (20000, 21000)

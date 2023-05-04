@@ -91,7 +91,7 @@ class Event(UI):
 
     @cached_property
     def event_story_2_difficulty_area(self):
-        return [(0, 0), (0, 0)]
+        return [(450, 1200), (590, 1200)]
 
     @cached_property
     def stage(self) -> int:
@@ -172,6 +172,8 @@ class Event(UI):
             self.ensure_into_event_page()
             self.ensure_into_stage_list()
             self.ensure_event_button()
+            if self.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95, static=False):
+                raise NoOpportunityRemain
             if self.config.Event_Complete_Event:
                 self.detect_available_stage()
             self._loop()
@@ -196,16 +198,19 @@ class Event(UI):
         if self.config.Event_Part == 'story_1':
             if self.config.Event_Difficulty != 'normal':
                 raise EventDifficultyError('The current part is only available in normal level')
+            if self.event_story_2_is_available:
+                raise HardEventAvailable("'Story 2' is available currently")
         if self.config.Event_Part == 'story_2':
             if not self.event_story_2_is_available:
                 raise EventPartUnavailableError(
                     f"'Story 2' is unavailable currently, it will be available on {self.event_story_2}")
-            if not self.event_story_2_second_part:
-                raise EventPartUnavailableError(
-                    f"'The second part of Story 2' is unavailable currently, it will be available on {self.event_story_2 + timedelta(days=7)}")
             if self.config.Event_Difficulty == 'normal':
                 if self.event_story_2_second_part:
                     raise HardEventAvailable('Higher difficulty levels are available.')
+            if self.config.Event_Difficulty == 'hard':
+                if not self.event_story_2_second_part:
+                    raise EventPartUnavailableError(
+                        f"'The second part of Story 2' is unavailable currently, it will be available on {self.event_story_2 + timedelta(days=7)}")
         if self.config.Event_Part == 'story_1':
             self.ui_ensure(page_story_1, confirm_wait=2)
         elif self.config.Event_Part == 'story_2':
@@ -256,8 +261,8 @@ class Event(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer_2.reached() and isinstance(level_button, tuple) and self.appear(STAGE_CHECK, offset=(10, 10),
-                                                                                           static=False):
+            if click_timer_2.reached() and isinstance(level_button, tuple) and not self.appear(check, offset=(10, 10),
+                                                                                               static=False):
                 self.device.click_minitouch(*level_button)
                 logger.info(
                     'Click %s @ %s' % (point2str(*level_button), 'LEVEL_BUTTON')
@@ -295,8 +300,8 @@ class Event(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer_2.reached() and isinstance(level_button, tuple) and self.appear(STAGE_CHECK, offset=(10, 10),
-                                                                                           static=False):
+            if click_timer_2.reached() and isinstance(level_button, tuple) and not self.appear(check, offset=(10, 10),
+                                                                                               static=False):
                 self.device.click_minitouch(*level_button)
                 logger.info(
                     'Click %s @ %s' % (point2str(*level_button), 'LEVEL_BUTTON')
@@ -345,7 +350,7 @@ class Event(UI):
             self.loop(stage_b_list.__getitem__(self.stage - 1 - stage_a_list.count))
 
     def loop(self, stage: Stage, skip_first_screenshot=True, goto_next_stage=False):
-        confirm_timer = Timer(5, count=3).start()
+        confirm_timer = Timer(8, count=5).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(3)
         if not goto_next_stage:
@@ -456,7 +461,7 @@ class Event(UI):
                         and confirm_timer.reached():
                     raise NoOpportunityRemain
 
-        if self.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95):
+        if self.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95, static=False):
             raise NoOpportunityRemain
 
     def ensure_back(self, skip_first_screenshot=True):

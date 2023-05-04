@@ -6,7 +6,26 @@ from module.ui.page import page_shop
 from module.ui.ui import UI
 
 
-class Shop(UI):
+class ShopBase(UI):
+    def ensure_into_shop(self, button, check, skip_first_screenshot=True):
+        logger.hr(f"{check.name.split('_')[:1][0]} SHOP", 2)
+        click_timer = Timer(0.3)
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            if click_timer.reached() and self.appear_then_click(button, offset=(5, 5), interval=5):
+                click_timer.reset()
+                continue
+
+            if self.appear(check, offset=(5, 5)):
+                break
+
+
+class Shop(ShopBase):
+    # general shop
     def general_shop(self, skip_first_screenshot=True):
         confirm_timer = Timer(5, count=2).start()
         click_timer = Timer(1.8)
@@ -72,22 +91,6 @@ class Shop(UI):
 
         return flag
 
-    def ensure_into_shop(self, button, check, skip_first_screenshot=True):
-        logger.hr(f"{check.name.split('_')[:1][0]} SHOP", 2)
-        click_timer = Timer(0.3)
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
-            if click_timer.reached() and self.appear_then_click(button, offset=(5, 5), interval=5):
-                click_timer.reset()
-                continue
-
-            if self.appear(check, offset=(5, 5)):
-                break
-
     def run(self):
         self.ui_ensure(page_shop)
         if self.config.GeneralShop_enable:
@@ -95,5 +98,4 @@ class Shop(UI):
             self.general_shop()
             if self.ensure_fresh():
                 self.general_shop()
-
         self.config.task_delay(server_update=True)

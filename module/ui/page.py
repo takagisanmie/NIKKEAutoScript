@@ -169,7 +169,7 @@ page_story_1 = Page(STORY_1_CHECK)
 # page_story_1.link(button=GOTO_BACK, destination=page_main)
 page_story_1.link(button=GOTO_MAIN, destination=page_main)
 
-page_story_2 = Page(None)
+page_story_2 = Page(STORY_2_CHECK)
 page_story_2.link(button=GOTO_BACK, destination=page_event)
 page_story_2.link(button=GOTO_MAIN, destination=page_main)
 page_event.link(button=EVENT_GOTO_STORY_2, destination=page_story_2)

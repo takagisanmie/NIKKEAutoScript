@@ -50,7 +50,6 @@ class GeneratedConfig:
     ArenaShop_priority = None
 
     # Group `RubbishShop`
-    RubbishShop_enable = False
     RubbishShop_priority = None
 
     # Group `Notification`

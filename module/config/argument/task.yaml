@@ -33,6 +33,9 @@ Shop:
   - Scheduler
   - GeneralShop
   - ArenaShop
+
+RubbishShop:
+  - Scheduler
   - RubbishShop
 
 SimulationRoom:

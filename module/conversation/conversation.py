@@ -243,17 +243,22 @@ class Conversation(UI):
         answer_b = self.ocr(extract_letters(crop(self.device.image, answer_b_area), letter=(247, 243, 247)),
                             label='OCR_ANSWER_B')
 
-        if len(list(filter(lambda x: list(x) and x in answer_a, correct_answer))):
-            logger.info('Answer A seems to be the correct one')
-            self.device.click_minitouch(*find_center(answer_a_area))
-        elif len(list(filter(lambda x: list(x) and x in answer_b, correct_answer))):
-            logger.info('Answer B seems to be the correct one')
-            self.device.click_minitouch(*find_center(answer_b_area))
-        else:
+        def cannot_decide():
             import time
             logger.warning('cannot decide the correct answer,will choose Answer A')
             save_image(self.device.image, f'./cannot_decide_answer_{time.time()}.png')
             self.device.click_minitouch(*find_center(answer_a_area))
+        try:
+            if len(list(filter(lambda x: list(x) and x in answer_a, correct_answer))):
+                logger.info('Answer A seems to be the correct one')
+                self.device.click_minitouch(*find_center(answer_a_area))
+            elif len(list(filter(lambda x: list(x) and x in answer_b, correct_answer))):
+                logger.info('Answer B seems to be the correct one')
+                self.device.click_minitouch(*find_center(answer_b_area))
+            else:
+                cannot_decide()
+        except TypeError:
+            cannot_decide()
 
         self.opportunity -= 1
         self.stuck_timer.reset()
