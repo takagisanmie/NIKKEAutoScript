@@ -10,6 +10,7 @@ from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
+from module.rubbish_shop.assets import NO_MONEY
 
 
 class NikkeAutoScript:
@@ -313,24 +314,37 @@ if __name__ == '__main__':
     nkas = NikkeAutoScript()
     self = nkas
 
-    from module.event.event import Event
+    from module.rubbish_shop.rubbish_shop import RubbishShop
 
-    e = Event(config=self.config, device=self.device)
+    self.config.bind('RubbishShop')
+    e = RubbishShop(config=self.config, device=self.device)
+    e.device.screenshot()
+    # e._run()
+    # self = e
+    # product_list = self.priority.delete(self.priority._select('name', self.visited).grids)
+    # for i in product_list:
+    #     print(i.name)
+
     # print(e.next_tuesday)
     # nkas = NikkeAutoScript()
     # self = nkas
-    self.config.bind('Event')
-    self.device.screenshot()
+    # self.config.bind('Event')
+    # self.device.screenshot()
+    # result = exec_file('./module/rubbish_shop/assets.py')
+    # print(result)
+    # print(result['RUBBISH_SHOP_CHECK'].area)
+
     # from module.event.event import Event
     # import cv2
     # from module.conversation.conversation import Conversation
 
     # self.device.image = cv2.imread('./pic/Screenshot_20230503-115640.png')
-    # self.device.image = cv2.cvtColor(cv2.imread('./pic/Screenshot_20230503-115640.png'), cv2.COLOR_BGR2RGB)
+    # self.device.image = cv2.cvtColor(cv2.imread('Screenshot_20230504-112900.png'), cv2.COLOR_BGR2RGB)
     # e = Conversation(config=self.config, device=self.device)
     # print(FAVOURITE_CHECK.match(self.device.image, static=False))
-    # if e.appear(NO_OPPORTUNITY, offset=(5, 5), threshold=0.95, static=False):
-    #     print(1)
+
+    if e.appear(NO_MONEY, offset=(5, 5), static=False) and NO_MONEY.match_appear_on(self.device.image):
+        print(1)
     # if e.appear_then_click(SKIP, offset=(10, 10), static=False):
     #     print(1)
     # if e.appear(CONFRIM_B, offset=(30, 30), static=False):

@@ -3,6 +3,7 @@ from statistics import mean
 import cv2
 import numpy as np
 from PIL import Image
+from filelock import FileLock
 
 
 def random_normal_distribution_int(a, b, n=3):
@@ -335,6 +336,17 @@ def find_center(rect):
     x = mean([ul_x, br_x])
     y = mean([ul_y, br_y])
     return x, y
+
+
+def exec_file(file) -> dict:
+    lock = FileLock(f"{file}.lock")
+    with lock:
+        result = {}
+        with open(file, 'r') as f:
+            code = f.read()
+            exec(code, result)
+        del result['__builtins__']
+        return result
 
 
 def show_image(image, title='image', delay=0):

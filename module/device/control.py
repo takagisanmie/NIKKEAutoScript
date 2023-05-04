@@ -40,13 +40,13 @@ class Control(Minitouch):
             self.config.Emulator_ControlMethod)
         method(x, y)
 
-    def swipe(self, p1, p2, name='SWIPE', distance_check=True, handle_control_check=True):
+    def swipe(self, p1, p2, name='SWIPE', label='Swipe', distance_check=True, handle_control_check=True):
         if handle_control_check:
             self.handle_control_check(name)
         p1, p2 = ensure_int(p1, p2)
         method = self.config.Emulator_ControlMethod
         if method == 'minitouch':
-            logger.info('Swipe %s -> %s' % (point2str(*p1), point2str(*p2)))
+            logger.info('%s %s -> %s' % (label, point2str(*p1), point2str(*p2)))
 
         if distance_check:
             if np.linalg.norm(np.subtract(p1, p2)) < 10:

@@ -509,16 +509,6 @@ class Event(UI):
         if self.appear(self.no_opportunity, offset=(5, 5), threshold=0.95, static=False):
             raise NoOpportunityRemain
 
-    def ensure_sroll_to_top(self, count=2):
-        for i in range(count):
-            self.device.swipe((360, 460), (360, 900), handle_control_check=False)
-            self.device.sleep(1.4)
-
-    def ensure_sroll_to_bottom(self, count=2):
-        for i in range(count):
-            self.device.swipe((360, 900), (360, 460), handle_control_check=False)
-            self.device.sleep(1.4)
-
     def crop(self, area):
         self.device.screenshot()
         return crop(self.device.image, area)

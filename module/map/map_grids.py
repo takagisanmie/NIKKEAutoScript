@@ -44,6 +44,24 @@ class SelectedGrids:
 
         return SelectedGrids([grid for grid in self.grids if matched(grid)])
 
+    def _select(self, key, values):
+        """
+        Args:
+            key: Attributes of Grid.
+        Returns:
+            SelectedGrids:
+        """
+
+        def matched(obj):
+            flag = False
+            for v in values:
+                obj_v = obj.__getattribute__(key)
+                if type(obj_v) == type(v) and obj_v == v:
+                    flag = True
+            return flag
+
+        return SelectedGrids([grid for grid in self.grids if matched(grid)])
+
     def first_or_none(self):
         """
         Returns:

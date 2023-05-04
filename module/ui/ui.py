@@ -54,7 +54,7 @@ class UI(InfoHandler):
         def rotation_check():
             self.device.get_orientation()
 
-        timeout = Timer(10, count=20).start()
+        timeout = Timer(15, count=20).start()
         click_timer = Timer(0.3)
 
         while 1:

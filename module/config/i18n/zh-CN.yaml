@@ -234,7 +234,18 @@ RubbishShop:
     help: ""
   priority:
     name: 优先购买
-    help: ""
+    help: " 不填写默认购买珠宝和芯尘盒 \n例如: 'GEM > CORE_DUST_CASE'，用一个大于号分开，可以选择的：\n
+             GEM: 珠宝\n
+             CORE_DUST_CASE: 芯尘盒\n
+             CREDIT_CASE: 信用点盒\n
+             BATTLE_DATA_SET_CASE: 战斗数据辑盒\n
+             GENERAL_TICKET: 指挥官通用券\n
+             ELYSION_TICKET: 极乐净土VIP券\n
+             MISSILIS_TICKET: 米西利斯VIP卡\n
+             TETRA_TICKET: 泰特拉VIP护理券\n
+             PILGRIM_TICKET: 朝圣者补给套组交换券\n
+             ABNORMAL_TICKET: 反常年券\n
+          "
 Notification:
   _info:
     name: 通知设置

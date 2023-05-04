@@ -7,6 +7,24 @@ class ManualConfig:
        > Reward > Destroy > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event > Daily
        """
 
+    RUBBISH_SHOP_PRIORITY = """
+       GEM
+       > CORE_DUST_CASE
+       """
+
+    RUBBISH_SHOP_PRODUCT = {
+        'GEM': 1,
+        'CORE_DUST_CASE': 2,
+        'CREDIT_CASE': 2,
+        'BATTLE_DATA_SET_CASE': 2,
+        'GENERAL_TICKET': 1,
+        'ELYSION_TICKET': 1,
+        'MISSILIS_TICKET': 1,
+        'TETRA_TICKET': 1,
+        'PILGRIM_TICKET': 1,
+        'ABNORMAL_TICKET': 1,
+    }
+
     FORWARD_PORT_RANGE = (20000, 21000)
 
     BUTTON_OFFSET = 30

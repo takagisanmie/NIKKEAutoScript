@@ -44,12 +44,13 @@ class Timer:
         else:
             return 0.
 
-    def reached(self):
+    def reached(self, increase=True):
         """
         Returns:
             bool
         """
-        self._reach_count += 1
+        if increase:
+            self._reach_count += 1
         return time.time() - self._current > self.limit and self._reach_count > self.count
 
     def reset(self):
