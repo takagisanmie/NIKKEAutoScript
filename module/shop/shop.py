@@ -186,6 +186,7 @@ class Shop(ShopBase):
 
             if self.appear(ARENA_SHOP_CHECK, offset=(5, 5), static=False) and click_timer.reached():
                 logger.warning('Perhaps all the products of the same type have been bought')
+                product.timer.limit = 0
                 product.timer.count = 0
                 product.timer._reach_count = 1
                 break
