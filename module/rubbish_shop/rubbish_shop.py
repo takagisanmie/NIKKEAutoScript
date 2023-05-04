@@ -7,22 +7,9 @@ from module.base.utils import exec_file, point2str
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.rubbish_shop.assets import *
-from module.shop.shop import ShopBase
+from module.shop.assets import NO_MONEY, MAX
+from module.shop.shop import ShopBase, Product, NotEnoughMoneyError
 from module.ui.page import page_shop
-
-
-class NotEnoughMoneyError(Exception):
-    pass
-
-
-class Product:
-    def __init__(self, name, count, button):
-        self.name = name
-        self.timer = Timer(1, count=count - 1)
-        self.button: Button = button
-
-    def __str__(self):
-        return f'Product: ({self.name}, count: {self.timer.count + 1})'
 
 
 class RubbishShop(ShopBase):

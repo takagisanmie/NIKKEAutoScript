@@ -12,6 +12,8 @@ class ManualConfig:
        > CORE_DUST_CASE
        """
 
+    ARENA_SHOP_PRIORITY = """"""
+
     RUBBISH_SHOP_PRODUCT = {
         'GEM': 1,
         'CORE_DUST_CASE': 2,
@@ -23,6 +25,15 @@ class ManualConfig:
         'TETRA_TICKET': 1,
         'PILGRIM_TICKET': 1,
         'ABNORMAL_TICKET': 1,
+    }
+
+    ARENA_SHOP_PRODUCT = {
+        'ELECTRIC_CODE': 1,
+        'FIRE_CODE': 1,
+        'IRON_CODE': 1,
+        'WATER_CODE': 1,
+        'WIND_CODE': 1,
+        'MANUAL_SELECTION_BOX': 1,
     }
 
     FORWARD_PORT_RANGE = (20000, 21000)

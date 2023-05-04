@@ -10,7 +10,6 @@ from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
-from module.rubbish_shop.assets import NO_MONEY
 
 
 class NikkeAutoScript:
@@ -343,8 +342,8 @@ if __name__ == '__main__':
     # e = Conversation(config=self.config, device=self.device)
     # print(FAVOURITE_CHECK.match(self.device.image, static=False))
 
-    if e.appear(NO_MONEY, offset=(5, 5), static=False) and NO_MONEY.match_appear_on(self.device.image):
-        print(1)
+    # if e.appear(NO_MONEY, offset=(5, 5), static=False) and NO_MONEY.match_appear_on(self.device.image):
+    #     print(1)
     # if e.appear_then_click(SKIP, offset=(10, 10), static=False):
     #     print(1)
     # if e.appear(CONFRIM_B, offset=(30, 30), static=False):

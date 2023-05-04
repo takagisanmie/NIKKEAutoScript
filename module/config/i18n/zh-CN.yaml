@@ -227,7 +227,14 @@ ArenaShop:
     help: ""
   priority:
     name: 优先购买
-    help: ""
+    help: " 不填写则不购买 \n例如: 'ELECTRIC_CODE > MANUAL_SELECTION_BOX'，用一个大于号分开，可以选择的：\n
+                ELECTRIC_CODE: 电击代码\n
+                FIRE_CODE: 燃烧代码\n
+                IRON_CODE: 铁甲代码\n
+                WATER_CODE: 水冷代码\n
+                WIND_CODE: 风压\n
+                MANUAL_SELECTION_BOX: 代码自选箱
+             "
 RubbishShop:
   _info:
     name: 废铁商店
