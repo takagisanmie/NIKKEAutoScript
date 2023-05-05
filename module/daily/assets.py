@@ -6,6 +6,7 @@ from module.base.button import Button
 ADVANCED_MATERIALS = Button(area={'cn': (204, 607, 269, 672)}, color={'cn': (102, 97, 99)}, button={'cn': (204, 607, 269, 672)}, file={'cn': './assets/cn/daily/ADVANCED_MATERIALS.png'})
 COMPLETED_CHECK = Button(area={'cn': (170, 204, 190, 223)}, color={'cn': (116, 111, 140)}, button={'cn': (170, 204, 190, 223)}, file={'cn': './assets/cn/daily/COMPLETED_CHECK.png'})
 ENHANCE = Button(area={'cn': (366, 903, 413, 925)}, color={'cn': (26, 110, 155)}, button={'cn': (366, 903, 413, 925)}, file={'cn': './assets/cn/daily/ENHANCE.png'})
+ENHANCEMENT_CHECK = Button(area={'cn': (341, 164, 437, 189)}, color={'cn': (137, 188, 244)}, button={'cn': (341, 164, 437, 189)}, file={'cn': './assets/cn/daily/ENHANCEMENT_CHECK.png'})
 ENHANCE_CONFIRM = Button(area={'cn': (492, 1065, 550, 1094)}, color={'cn': (77, 199, 255)}, button={'cn': (492, 1065, 550, 1094)}, file={'cn': './assets/cn/daily/ENHANCE_CONFIRM.png'})
 GOTO_EQUIPMENT_LIST = Button(area={'cn': (373, 199, 429, 217)}, color={'cn': (152, 153, 155)}, button={'cn': (373, 199, 429, 217)}, file={'cn': './assets/cn/daily/GOTO_EQUIPMENT_LIST.png'})
 NORMAL_MATERIALS = Button(area={'cn': (98, 607, 152, 669)}, color={'cn': (113, 108, 109)}, button={'cn': (98, 607, 152, 669)}, file={'cn': './assets/cn/daily/NORMAL_MATERIALS.png'})

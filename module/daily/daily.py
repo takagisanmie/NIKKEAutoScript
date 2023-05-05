@@ -1,3 +1,4 @@
+from module.base.decorator import run_once
 from module.base.timer import Timer
 from module.base.utils import mask_area, point2str
 from module.common.enum.webui import ICON
@@ -15,7 +16,7 @@ class NoItemsError(Exception):
 class Daily(UI):
     def receive(self, skip_first_screenshot=True):
         logger.hr('Reward receive', 2)
-        confirm_timer = Timer(3, count=3).start()
+        confirm_timer = Timer(2, count=2).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -83,12 +84,17 @@ class Daily(UI):
                 break
 
         skip_first_screenshot = True
-        confirm_timer.limit = 4
+        confirm_timer.limit = 3
         confirm_timer.count = 3
         confirm_timer.reset()
         click_timer.reset()
         click_timer_2.reset()
         flag = False
+
+        @run_once
+        def sroll_to_top():
+            self.ensure_sroll((360, 620), (360, 920), count=2, delay=0.6)
+            self.device.screenshot()
 
         while 1:
             if skip_first_screenshot:
@@ -103,10 +109,13 @@ class Daily(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(ENHANCE, offset=(5, 5), interval=3):
+            if click_timer.reached() and self.appear_then_click(ENHANCE, offset=(5, 5), interval=3, static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
+
+            if self.appear(ENHANCEMENT_CHECK, offset=(5, 5), static=False):
+                sroll_to_top()
 
             if not flag and click_timer_2.reached() \
                     and (self.appear_then_click(NORMAL_MATERIALS, offset=(5, 5), interval=3)
