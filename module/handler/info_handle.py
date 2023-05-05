@@ -78,5 +78,5 @@ class InfoHandler(ModuleBase):
         if self.appear_then_click(SKIP, offset=(5, 5), static=False, interval=interval):
             return True
         elif self.appear_then_click(TOUCH_TO_CONTINUE, offset=(5, 5), static=False, interval=interval):
-            self.device.click_minitouch(100, 100)
+            self.device.click_minitouch(360, 720)
             return True

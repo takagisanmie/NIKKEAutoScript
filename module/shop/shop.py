@@ -22,7 +22,7 @@ class ProductQueueIsEmpty(Exception):
 class Product:
     def __init__(self, name, count, button):
         self.name = name
-        self.timer = Timer(1, count=count - 1)
+        self.timer = Timer(0, count=count - 1)
         self.button: Button = button
 
     def __str__(self):
@@ -46,111 +46,29 @@ class ShopBase(UI):
             if self.appear(check, offset=(5, 5)):
                 break
 
-
-class Shop(ShopBase):
-    # general shop
-    def general_shop(self, skip_first_screenshot=True):
-        confirm_timer = Timer(5, count=2).start()
-        click_timer = Timer(1.8)
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
-            if click_timer.reached() and self.appear_then_click(GRATIS, offset=(5, 5), interval=5, static=False):
-                confirm_timer.reset()
-                click_timer.reset()
-                continue
-
-            if click_timer.reached() and self.appear_then_click(BUY, offset=(5, 5), interval=5, static=False):
-                confirm_timer.reset()
-                click_timer.reset()
-                continue
-
-            if click_timer.reached() and self.handle_reward(interval=0.3):
-                confirm_timer.reset()
-                click_timer.reset()
-                continue
-
-            if self.appear(GENERAL_SHOP_CHECK, offset=(5, 5)) and confirm_timer.reached():
-                break
-
-    def ensure_fresh(self, skip_first_screenshot=True):
-        confirm_timer = Timer(5, count=2).start()
-        click_timer = Timer(1.8)
-        flag = False
-        already_checked = False
-        while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
-
-            if not already_checked and click_timer.reached() and self.appear_then_click(REFRESH, offset=(5, 5),
-                                                                                        interval=3, static=False):
-                click_timer.reset()
-                continue
-
-            if click_timer.reached() \
-                    and self.appear(GRATIS_REFRESH, offset=(5, 5), threshold=0.96, static=False) \
-                    and self.appear_then_click(CONFRIM_B, offset=(5, 5), static=False):
-                flag = True
-                already_checked = True
-                click_timer.reset()
-                continue
-
-            elif click_timer.reached() and self.appear(CONFRIM_B, offset=(5, 5), static=False):
-                already_checked = True
-
-            if not flag and already_checked and click_timer.reached() and self.appear_then_click(CANCEL, offset=(5, 5),
-                                                                                                 interval=3,
-                                                                                                 static=False):
-                click_timer.reset()
-                continue
-
-            if already_checked and confirm_timer.reached() and self.appear(GENERAL_SHOP_CHECK, offset=(5, 5)):
-                break
-
-        return flag
-
-    # arena shop
-    file = './module/shop/assets.py'
-    visited = set()
-
-    @cached_property
-    def priority(self) -> SelectedGrids:
-        if not self.config.ArenaShop_priority:
-            priority = self.config.ARENA_SHOP_PRIORITY
-        else:
-            priority = self.config.ArenaShop_priority
-        priority = re.sub(r'\s+', '', priority).split('>')
-        result = exec_file(self.file)
-        return SelectedGrids([Product(i, self.config.ARENA_SHOP_PRODUCT.get(i), result.get(i)) for i in priority])
-
-    def _run(self):
-        while len(self.visited) != len(self.priority):
-            product_list = self.priority.delete(self.priority._select('name', self.visited).grids)
-            logger.attr('PENDING PRODUCT LIST', [i.name for i in product_list])
-            self.process(product_list.first_or_none())
-
-    def process(self, product: Product):
+    def process(self, product: Product, visited: set, check: Button, swipe=False):
         logger.hr(product, 3)
-        self.detect_product(product)
+        self.detect_product(product, check, swipe)
         if not product.timer.reached(increase=False):
-            self.process(product)
+            self.process(product, visited, check, swipe)
         else:
-            self.visited.add(product.name)
+            visited.add(product.name)
 
-    def detect_product(self, product: Product):
+    def detect_product(self, product: Product, check: Button, swipe=False):
+        if swipe:
+            self.ensure_sroll_to_top(x1=(360, 720), x2=(360, 920), delay=1.4)
+
         product.timer.start()
         confirm_timer = Timer(2, count=2).start()
+        scroll_timer = Timer(0, count=3).start()
         click_timer = Timer(0.3)
         flag = False
         while 1:
             self.device.screenshot()
 
-            if click_timer.reached() and self.appear(product.button, offset=(10, 10), static=False) \
+            if not flag \
+                    and click_timer.reached() \
+                    and self.appear(product.button, offset=(10, 10), static=False) \
                     and product.button.match_appear_on(self.device.image):
                 self.device.click_minitouch(*product.button.location)
                 logger.info(
@@ -164,7 +82,10 @@ class Shop(ShopBase):
             if self.appear(NO_MONEY, offset=(5, 5), static=False) and NO_MONEY.match_appear_on(self.device.image):
                 raise NotEnoughMoneyError
 
-            if click_timer.reached() and self.appear_then_click(MAX, offset=(30, 30), interval=3):
+            if click_timer.reached() \
+                    and self.appear(MAX, offset=(30, 30), interval=3) \
+                    and MAX.match_appear_on(self.device.image, threshold=10):
+                self.device.click(MAX)
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
@@ -180,18 +101,35 @@ class Shop(ShopBase):
                 confirm_timer.reset()
                 continue
 
-            if self.appear(ARENA_SHOP_CHECK, offset=(5, 5), static=False) and flag:
+            if self.appear(check, offset=(5, 5), static=False) and flag:
                 product.timer.reached()
                 break
 
-            if self.appear(ARENA_SHOP_CHECK, offset=(5, 5), static=False) and click_timer.reached():
+            if self.appear(check, offset=(5, 5), static=False) and confirm_timer.reached():
                 logger.warning('Perhaps all the products of the same type have been bought')
                 product.timer.limit = 0
                 product.timer.count = 0
                 product.timer._reach_count = 1
                 break
 
-    def ensure_back(self, skip_first_screenshot=True):
+            if swipe:
+                if not scroll_timer.reached(increase=False) \
+                        and self.appear(check, offset=(5, 5), static=False) \
+                        and click_timer.reached():
+                    self.device.swipe((360, 1000), (360, 960), handle_control_check=False)
+                    self.device.sleep(1.4)
+                    scroll_timer.reached()
+                    confirm_timer.reset()
+
+    def _run(self, visited, priority, check, then=None, swipe=False):
+        while len(visited) != len(priority):
+            product_list = priority.delete(priority._select('name', visited).grids)
+            logger.attr('PENDING PRODUCT LIST', [i.name for i in product_list])
+            self.process(product_list.first_or_none(), visited, check, swipe)
+            if callable(then):
+                then(visited)
+
+    def ensure_back(self, check: Button, skip_first_screenshot=True):
         confirm_timer = Timer(1, count=1).start()
         click_timer = Timer(0.3)
         while 1:
@@ -205,25 +143,90 @@ class Shop(ShopBase):
                 click_timer.reset()
                 continue
 
-            if self.appear(ARENA_SHOP_CHECK, offset=(10, 10)) and confirm_timer.reached():
+            if self.appear(check, offset=(10, 10)) and confirm_timer.reached():
                 break
+
+
+class Shop(ShopBase):
+    general_shop_visited = set()
+    arena_shop_visited = set()
+
+    @cached_property
+    def assets(self) -> dict:
+        return exec_file('./module/shop/assets.py')
+
+    @cached_property
+    def general_shop_priority(self) -> SelectedGrids:
+        priority = re.sub(r'\s+', '', self.config.GENERAL_SHOP_PRIORITY).split('>')
+        return SelectedGrids(
+            [Product(i, self.config.GENERAL_SHOP_PRODUCT.get(i), self.assets.get(i)) for i in priority])
+
+    @cached_property
+    def arena_shop_priority(self) -> SelectedGrids:
+        if not self.config.ArenaShop_priority:
+            priority = self.config.ARENA_SHOP_PRIORITY
+        else:
+            priority = self.config.ArenaShop_priority
+        priority = re.sub(r'\s+', '', priority).split('>')
+        return SelectedGrids([Product(i, self.config.ARENA_SHOP_PRODUCT.get(i), self.assets.get(i)) for i in priority])
+
+    def general_shop_after(self, visited: set, skip_first_screenshot=True):
+        confirm_timer = Timer(2, count=3).start()
+        click_timer = Timer(0.6)
+        flag = False
+        already_checked = False
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            if not already_checked and click_timer.reached() and self.appear_then_click(REFRESH, offset=(5, 5),
+                                                                                        interval=3, static=False):
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if click_timer.reached() \
+                    and self.appear(GRATIS_REFRESH, offset=(5, 5), threshold=0.96, static=False) \
+                    and self.appear_then_click(CONFRIM_B, offset=(5, 5), static=False):
+                flag = True
+                already_checked = True
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            elif click_timer.reached() and self.appear(CONFRIM_B, offset=(5, 5), static=False):
+                already_checked = True
+
+            if not flag and already_checked and click_timer.reached() and self.appear_then_click(CANCEL, offset=(5, 5),
+                                                                                                 interval=3,
+                                                                                                 static=False):
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
+
+            if already_checked and self.appear(GENERAL_SHOP_CHECK, offset=(5, 5)) and confirm_timer.reached():
+                break
+
+        if flag:
+            visited.clear()
 
     def run(self):
         self.ui_ensure(page_shop)
         if self.config.GeneralShop_enable:
             self.ensure_into_shop(GOTO_GENERAL_SHOP, GENERAL_SHOP_CHECK)
-            self.general_shop()
-            if self.ensure_fresh():
-                self.general_shop()
+            self._run(self.general_shop_visited, self.general_shop_priority, GENERAL_SHOP_CHECK,
+                      then=self.general_shop_after)
         try:
             if self.config.ArenaShop_enable:
                 self.ensure_into_shop(GOTO_ARENA_SHOP, ARENA_SHOP_CHECK)
                 if not self.config.ArenaShop_priority:
                     raise ProductQueueIsEmpty
-                self._run()
+                self._run(self.arena_shop_visited, self.arena_shop_priority, ARENA_SHOP_CHECK)
         except NotEnoughMoneyError:
             logger.error('The rest of money is not enough to buy this product')
-            self.ensure_back()
+            self.ensure_back(ARENA_SHOP_CHECK)
         except ProductQueueIsEmpty:
             logger.warning("There are no products included in the queue option")
         self.config.task_delay(server_update=True)

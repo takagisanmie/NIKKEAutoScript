@@ -7,7 +7,7 @@ import inflection
 import glo
 from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
-from module.daily.assets import RANDOM_EQUIPMENT
+from module.daily.assets import ENHANCE
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
@@ -315,20 +315,27 @@ class NikkeAutoScript:
 
 if __name__ == '__main__':
     # TODO 当新人竞技场战斗时间过长
-    # TODO 解放任务
     # TODO 付费商店
     # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
+    # TODO 强化装备时，先滑动
+    # TODO 画质问题
     nkas = NikkeAutoScript()
     self = nkas
+    # self.device.screenshot()
 
+    # self.device.image = cv2.cvtColor(cv2.imread('./236258360-5b38e15c-8ef5-4a63-b603-5741a55f9737.png'),
+    #                                  cv2.COLOR_BGR2RGB)
     from module.rubbish_shop.rubbish_shop import RubbishShop
 
     self.config.bind('RubbishShop')
+    self.device.screenshot()
     e = RubbishShop(config=self.config, device=self.device)
-    e.device.screenshot()
-    # e.ui_ensure(page_inventory)
-    if e.appear_then_click(RANDOM_EQUIPMENT, offset=(5, 5), static=False):
+    if e.appear(ENHANCE, offset=(5, 5), static=False):
         print(1)
+    # e.device.screenshot()
+    # e.ui_ensure(page_inventory)
+    # if e.appear_then_click(RANDOM_EQUIPMENT, offset=(5, 5), static=False):
+    #     print(1)
     # if e.appear(NO_MONEY, offset=(5, 5), static=False) and NO_MONEY.match_appear_on(self.device.image):
     #     print(1)
     # if e.appear_then_click(SKIP, offset=(10, 10), static=False):

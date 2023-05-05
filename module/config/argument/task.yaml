@@ -32,6 +32,9 @@ MissionPass:
 Liberation:
   - Scheduler
 
+DailyGift:
+  - Scheduler
+
 Conversation:
   - Scheduler
   - Conversation

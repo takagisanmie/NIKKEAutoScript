@@ -7,12 +7,18 @@ class ManualConfig:
        > Reward > Destroy > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event >  Daily > MissionPass > Liberation
        """
 
+    GENERAL_SHOP_PRIORITY = """GRATIS"""
+
     RUBBISH_SHOP_PRIORITY = """
        GEM
        > CORE_DUST_CASE
        """
 
     ARENA_SHOP_PRIORITY = """"""
+
+    GENERAL_SHOP_PRODUCT = {
+        'GRATIS': 1,
+    }
 
     RUBBISH_SHOP_PRODUCT = {
         'GEM': 1,
