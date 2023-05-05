@@ -246,9 +246,10 @@ class Conversation(UI):
         def cannot_decide():
             import time
             logger.warning('cannot decide the correct answer,will choose Answer A')
-            save_image(self.device.image, f'./cannot_decide_answer_{time.time()}.png')
+            self.device.sleep(1)
+            save_image(self.device.screenshot(), f'./cannot_decide_answer_{time.time()}.png')
             self.device.click_minitouch(*find_center(answer_a_area))
-            
+
         def get_similarity(sentences, target, threshold=0.8):
             import difflib
             max_ratio = 0
@@ -261,7 +262,7 @@ class Conversation(UI):
             if max_ratio < threshold:
                 return 0, ''
             return max_ratio, max_sentence
-        
+
         try:
             if len(list(filter(lambda x: list(x) and x in answer_a, correct_answer))):
                 logger.info('Answer A seems to be the correct one')
