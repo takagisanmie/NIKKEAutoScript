@@ -248,6 +248,20 @@ class Conversation(UI):
             logger.warning('cannot decide the correct answer,will choose Answer A')
             save_image(self.device.image, f'./cannot_decide_answer_{time.time()}.png')
             self.device.click_minitouch(*find_center(answer_a_area))
+            
+        def get_similarity(sentences, target, threshold=0.8):
+            import difflib
+            max_ratio = 0
+            max_sentence = ''
+            for sentence in sentences:
+                ratio = difflib.SequenceMatcher(None, sentence, target).quick_ratio()
+                if ratio > max_ratio:
+                    max_ratio = ratio
+                    max_sentence = sentence
+            if max_ratio < threshold:
+                return 0, ''
+            return max_ratio, max_sentence
+        
         try:
             if len(list(filter(lambda x: list(x) and x in answer_a, correct_answer))):
                 logger.info('Answer A seems to be the correct one')
@@ -256,7 +270,16 @@ class Conversation(UI):
                 logger.info('Answer B seems to be the correct one')
                 self.device.click_minitouch(*find_center(answer_b_area))
             else:
-                cannot_decide()
+                ratio_a, similar_a = get_similarity(correct_answer, answer_a)
+                ratio_b, similar_b = get_similarity(correct_answer, answer_b)
+                if ratio_a > ratio_b >= 0:
+                    logger.info('Answer A seems to be the correct one similar to %s', similar_a)
+                    self.device.click_minitouch(*find_center(answer_a_area))
+                elif ratio_b > ratio_a >= 0:
+                    logger.info('Answer B seems to be the correct one similar to %s', similar_b)
+                    self.device.click_minitouch(*find_center(answer_b_area))
+                else:
+                    cannot_decide()
         except TypeError:
             cannot_decide()
 
