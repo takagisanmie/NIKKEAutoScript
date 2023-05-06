@@ -271,14 +271,17 @@ class Conversation(UI):
                 logger.info('Answer B seems to be the correct one')
                 self.device.click_minitouch(*find_center(answer_b_area))
             else:
-                ratio_a, similar_a = get_similarity(correct_answer, answer_a)
-                ratio_b, similar_b = get_similarity(correct_answer, answer_b)
-                if ratio_a > ratio_b >= 0:
-                    logger.info('Answer A seems to be the correct one similar to %s', similar_a)
-                    self.device.click_minitouch(*find_center(answer_a_area))
-                elif ratio_b > ratio_a >= 0:
-                    logger.info('Answer B seems to be the correct one similar to %s', similar_b)
-                    self.device.click_minitouch(*find_center(answer_b_area))
+                if answer_a is not None and answer_b is not None:
+                    ratio_a, similar_a = get_similarity(correct_answer, answer_a)
+                    ratio_b, similar_b = get_similarity(correct_answer, answer_b)
+                    if ratio_a > ratio_b >= 0:
+                        logger.info('Answer A seems to be the correct one similar to %s', similar_a)
+                        self.device.click_minitouch(*find_center(answer_a_area))
+                    elif ratio_b > ratio_a >= 0:
+                        logger.info('Answer B seems to be the correct one similar to %s', similar_b)
+                        self.device.click_minitouch(*find_center(answer_b_area))
+                    else:
+                        cannot_decide()
                 else:
                     cannot_decide()
         except TypeError:
