@@ -32,6 +32,10 @@ Daily:
   Scheduler:
     Enable: false
 
+DailyGift:
+  Scheduler:
+    Enable: false
+
 RubbishShop:
   Scheduler:
     Enable: false

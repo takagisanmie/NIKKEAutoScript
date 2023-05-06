@@ -1,3 +1,6 @@
+import os
+import os
+import re
 import time
 from datetime import datetime, timedelta
 from functools import cached_property
@@ -7,7 +10,6 @@ import inflection
 import glo
 from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
-from module.daily.assets import ENHANCE
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
@@ -69,9 +71,9 @@ class NikkeAutoScript:
             '''
             logger.error(e)
             '''
-                self.save_error_log()
                 在 Alas 中会将在raise前最后的截图和log写入./log/error 
             '''
+            self.save_error_log()
             logger.warning(f'Game stuck, {self.device.package} will be restarted in 10 seconds')
             logger.warning('If you are playing by hand, please stop NKAS')
             self.config.task_call('Restart')
@@ -88,8 +90,41 @@ class NikkeAutoScript:
             exit(1)
 
         except Exception as e:
+            self.save_error_log()
             logger.exception(e)
             exit(1)
+
+    def save_error_log(self):
+        """
+        Save last 60 screenshots in ./log/error/<timestamp>
+        Save logs to ./log/error/<timestamp>/log.txt
+        """
+
+        from module.base.utils import save_image
+        from module.handler.sensitive_info import handle_sensitive_logs
+
+        if not os.path.exists('./log/error'):
+            os.mkdir('./log/error')
+        folder = f'./log/error/{int(time.time() * 1000)}'
+        logger.warning(f'Saving error: {folder}')
+        os.mkdir(folder)
+        for data in self.device.screenshot_deque:
+            image_time = datetime.strftime(data['time'], '%Y-%m-%d_%H-%M-%S-%f')
+            # 遮挡个人消息
+            # image = handle_sensitive_image(data['image'])
+            image = data['image']
+            save_image(image, f'{folder}/{image_time}.png')
+        with open(logger.log_file, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+            start = 0
+            for index, line in enumerate(lines):
+                line = line.strip(' \r\t\n')
+                if re.match('^═{15,}$', line):
+                    start = index
+            lines = lines[start - 2:]
+            lines = handle_sensitive_logs(lines)
+        with open(f'{folder}/log.txt', 'w', encoding='utf-8') as f:
+            f.writelines(lines)
 
     def restart(self):
         from module.handler.login import LoginHandler
@@ -317,21 +352,25 @@ if __name__ == '__main__':
     # TODO 当新人竞技场战斗时间过长
     # TODO 付费商店
     # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
-    # TODO 强化装备时，先滑动
-    # TODO 画质问题
     nkas = NikkeAutoScript()
     self = nkas
+
+
     # self.device.screenshot()
 
     # self.device.image = cv2.cvtColor(cv2.imread('./236258360-5b38e15c-8ef5-4a63-b603-5741a55f9737.png'),
     #                                  cv2.COLOR_BGR2RGB)
-    from module.rubbish_shop.rubbish_shop import RubbishShop
+    # from module.rubbish_shop.rubbish_shop import RubbishShop
 
-    self.config.bind('RubbishShop')
-    self.device.screenshot()
-    e = RubbishShop(config=self.config, device=self.device)
-    if e.appear(ENHANCE, offset=(5, 5), static=False):
-        print(1)
+    # self.config.bind('RubbishShop')
+    # self.device.screenshot()
+    # e = RubbishShop(config=self.config, device=self.device)
+    # if e.appear(ENHANCE, offset=(5, 5), static=False):
+    #     print(1)
+
+    # raise GameStuckError
+    # self.run('rubbish_shop')
+
     # e.device.screenshot()
     # e.ui_ensure(page_inventory)
     # if e.appear_then_click(RANDOM_EQUIPMENT, offset=(5, 5), static=False):

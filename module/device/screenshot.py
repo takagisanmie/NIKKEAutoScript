@@ -1,3 +1,5 @@
+from collections import deque
+from datetime import datetime
 from functools import cached_property
 
 from module.base.timer import Timer
@@ -18,6 +20,10 @@ class Screenshot(DroidCast):
             'DroidCast': self.screenshot_droidcast,
         }
 
+    @cached_property
+    def screenshot_deque(self):
+        return deque(maxlen=int(self.config.Error_ScreenshotLength))
+
     def screenshot(self):
         """
             截图
@@ -34,6 +40,8 @@ class Screenshot(DroidCast):
         self.image = method()
 
         self.image = self._handle_orientated_image(self.image)
+
+        self.screenshot_deque.append({'time': datetime.now(), 'image': self.image})
 
         return self.image
 
