@@ -1,5 +1,4 @@
 import os
-import os
 import re
 import time
 from datetime import datetime, timedelta
@@ -7,7 +6,6 @@ from functools import cached_property
 
 import inflection
 
-import glo
 from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
@@ -17,8 +15,6 @@ from module.logger import logger
 
 class NikkeAutoScript:
     def __init__(self, config_name='nkas'):
-        glo._init()
-        glo.set_value('nkas', self)
         logger.hr('Start', level=0)
         self.config_name = config_name
 
@@ -119,9 +115,11 @@ class NikkeAutoScript:
             start = 0
             for index, line in enumerate(lines):
                 line = line.strip(' \r\t\n')
+                # 从最后一个任务截取
                 if re.match('^═{15,}$', line):
                     start = index
             lines = lines[start - 2:]
+            # 替换真实路径
             lines = handle_sensitive_logs(lines)
         with open(f'{folder}/log.txt', 'w', encoding='utf-8') as f:
             f.writelines(lines)
@@ -354,8 +352,8 @@ if __name__ == '__main__':
     # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
     nkas = NikkeAutoScript()
     self = nkas
-
-
+    # text = handle_sensitive_text(text)
+    # print(text)
     # self.device.screenshot()
 
     # self.device.image = cv2.cvtColor(cv2.imread('./236258360-5b38e15c-8ef5-4a63-b603-5741a55f9737.png'),
