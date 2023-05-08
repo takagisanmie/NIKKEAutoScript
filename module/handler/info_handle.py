@@ -56,6 +56,11 @@ class InfoHandler(ModuleBase):
                 and self.appear_then_click(CONFRIM_A, offset=(30, 30), interval=3, static=False):
             return True
 
+    def handle_popup(self):
+        if self.appear(POPUP_CHECK, offset=(30, 30), interval=3) \
+                and self.appear_then_click(ANNOUNCEMENT, offset=(30, 30), interval=3, threshold=0.74, static=False):
+            return True
+
     def handle_announcement(self):
         if self.appear(ANNOUNCEMENT_CHECK, offset=(30, 30), interval=3, threshold=0.74, static=False) \
                 and self.appear_then_click(ANNOUNCEMENT, offset=(30, 30), interval=3, threshold=0.74, static=False):

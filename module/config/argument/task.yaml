@@ -32,9 +32,6 @@ MissionPass:
 Liberation:
   - Scheduler
 
-DailyGift:
-  - Scheduler
-
 Conversation:
   - Scheduler
   - Conversation
@@ -64,3 +61,14 @@ RookieArena:
 Event:
   - Scheduler
   - Event
+
+# ==================== Gift ====================
+
+DailyGift:
+  - Scheduler
+
+WeeklyGift:
+  - Scheduler
+
+MonthlyGift:
+  - Scheduler

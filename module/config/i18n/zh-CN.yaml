@@ -51,6 +51,9 @@ Menu:
   Event:
     name: 活动
     help: ""
+  Gift:
+    name: 免费礼包
+    help: ""
 # 任务
 Task:
   NKAS:
@@ -100,6 +103,12 @@ Task:
     help: ""
   DailyGift:
     name: 每日礼包
+    help: ""
+  WeeklyGift:
+    name: 每周礼包
+    help: ""
+  MonthlyGift:
+    name: 每月礼包
     help: ""
 Emulator:
   _info:

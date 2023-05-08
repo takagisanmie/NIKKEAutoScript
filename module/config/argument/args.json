@@ -364,47 +364,6 @@
       }
     }
   },
-  "DailyGift": {
-    "Scheduler": {
-      "Enable": {
-        "type": "checkbox",
-        "value": false
-      },
-      "NextRun": {
-        "type": "datetime",
-        "value": "1989-12-27 00:00:00",
-        "validate": "datetime"
-      },
-      "Command": {
-        "type": "input",
-        "value": "DailyGift",
-        "display": "hide"
-      },
-      "SuccessInterval": {
-        "type": "input",
-        "value": 0,
-        "display": "hide"
-      },
-      "FailureInterval": {
-        "type": "input",
-        "value": 120,
-        "display": "hide"
-      },
-      "ServerUpdate": {
-        "type": "input",
-        "value": "04:00",
-        "display": "hide"
-      }
-    },
-    "Storage": {
-      "Storage": {
-        "type": "storage",
-        "value": {},
-        "valuetype": "ignore",
-        "display": "disabled"
-      }
-    }
-  },
   "Conversation": {
     "Scheduler": {
       "Enable": {
@@ -779,6 +738,129 @@
           "normal",
           "hard"
         ]
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
+  "DailyGift": {
+    "Scheduler": {
+      "Enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "NextRun": {
+        "type": "datetime",
+        "value": "1989-12-27 00:00:00",
+        "validate": "datetime"
+      },
+      "Command": {
+        "type": "input",
+        "value": "DailyGift",
+        "display": "hide"
+      },
+      "SuccessInterval": {
+        "type": "input",
+        "value": 0,
+        "display": "hide"
+      },
+      "FailureInterval": {
+        "type": "input",
+        "value": 120,
+        "display": "hide"
+      },
+      "ServerUpdate": {
+        "type": "input",
+        "value": "04:00",
+        "display": "hide"
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
+  "WeeklyGift": {
+    "Scheduler": {
+      "Enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "NextRun": {
+        "type": "datetime",
+        "value": "1989-12-27 00:00:00",
+        "validate": "datetime"
+      },
+      "Command": {
+        "type": "input",
+        "value": "WeeklyGift",
+        "display": "hide"
+      },
+      "SuccessInterval": {
+        "type": "input",
+        "value": 0,
+        "display": "hide"
+      },
+      "FailureInterval": {
+        "type": "input",
+        "value": 120,
+        "display": "hide"
+      },
+      "ServerUpdate": {
+        "type": "input",
+        "value": "04:00",
+        "display": "hide"
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
+  "MonthlyGift": {
+    "Scheduler": {
+      "Enable": {
+        "type": "checkbox",
+        "value": false
+      },
+      "NextRun": {
+        "type": "datetime",
+        "value": "1989-12-27 00:00:00",
+        "validate": "datetime"
+      },
+      "Command": {
+        "type": "input",
+        "value": "MonthlyGift",
+        "display": "hide"
+      },
+      "SuccessInterval": {
+        "type": "input",
+        "value": 0,
+        "display": "hide"
+      },
+      "FailureInterval": {
+        "type": "input",
+        "value": 120,
+        "display": "hide"
+      },
+      "ServerUpdate": {
+        "type": "input",
+        "value": "04:00",
+        "display": "hide"
       }
     },
     "Storage": {

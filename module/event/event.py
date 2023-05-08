@@ -274,8 +274,9 @@ class Event(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer_2.reached() and isinstance(level_button, tuple) and not self.appear(check, offset=(10, 10),
-                                                                                               static=False):
+            if click_timer_2.reached() and isinstance(level_button, tuple) \
+                    and not self.appear(check, offset=(10, 10), static=False) \
+                    and not self.appear(button, offset=(10, 10), static=False):
                 self.device.click_minitouch(*level_button)
                 logger.info(
                     'Click %s @ %s' % (point2str(*level_button), 'LEVEL_BUTTON')
@@ -313,8 +314,9 @@ class Event(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer_2.reached() and isinstance(level_button, tuple) and not self.appear(check, offset=(10, 10),
-                                                                                               static=False):
+            if click_timer_2.reached() and isinstance(level_button, tuple) \
+                    and not self.appear(check, offset=(10, 10), static=False) \
+                    and not self.appear(button, offset=(10, 10), static=False):
                 self.device.click_minitouch(*level_button)
                 logger.info(
                     'Click %s @ %s' % (point2str(*level_button), 'LEVEL_BUTTON')

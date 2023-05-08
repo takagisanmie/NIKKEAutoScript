@@ -32,10 +32,6 @@ Daily:
   Scheduler:
     Enable: false
 
-DailyGift:
-  Scheduler:
-    Enable: false
-
 RubbishShop:
   Scheduler:
     Enable: false
@@ -45,5 +41,17 @@ MissionPass:
     Enable: false
 
 Liberation:
+  Scheduler:
+    Enable: false
+
+DailyGift:
+  Scheduler:
+    Enable: false
+
+WeeklyGift:
+  Scheduler:
+    Enable: false
+
+MonthlyGift:
   Scheduler:
     Enable: false

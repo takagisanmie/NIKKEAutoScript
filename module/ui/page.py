@@ -58,6 +58,12 @@ page_shop.link(button=GOTO_BACK, destination=page_main)
 # page_shop.link(button=GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_SHOP, destination=page_shop)
 
+# cash shop
+page_cash_shop = Page(CASH_SHOP_CHECK)
+page_cash_shop.link(button=GOTO_BACK, destination=page_main)
+# page_cash_shop.link(button=GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_CASH_SHOP, destination=page_cash_shop)
+
 # team
 page_team = Page(TEAM_CHECK)
 page_team.link(button=TEAM_GOTO_MAIN, destination=page_main)

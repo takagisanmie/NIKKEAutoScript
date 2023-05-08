@@ -195,6 +195,18 @@ class NikkeAutoScript:
         from module.liberation.liberation import Liberation
         Liberation(config=self.config, device=self.device).run()
 
+    def daily_gift(self):
+        from module.gift.gift import DailyGift
+        DailyGift(config=self.config, device=self.device).run()
+
+    def weekly_gift(self):
+        from module.gift.gift import WeeklyGift
+        WeeklyGift(config=self.config, device=self.device).run()
+
+    def monthly_gift(self):
+        from module.gift.gift import MonthlyGift
+        MonthlyGift(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
             Wait until a specific time.
@@ -348,23 +360,27 @@ class NikkeAutoScript:
 
 if __name__ == '__main__':
     # TODO 当新人竞技场战斗时间过长
-    # TODO 付费商店
     # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
     nkas = NikkeAutoScript()
     self = nkas
     # text = handle_sensitive_text(text)
     # print(text)
     # self.device.screenshot()
-
-    # self.device.image = cv2.cvtColor(cv2.imread('./236258360-5b38e15c-8ef5-4a63-b603-5741a55f9737.png'),
+    # import cv2
+    # self.device.image = cv2.cvtColor(cv2.imread('./Screenshot_20230508-160451.png'),
     #                                  cv2.COLOR_BGR2RGB)
     # from module.rubbish_shop.rubbish_shop import RubbishShop
 
     # self.config.bind('RubbishShop')
     # self.device.screenshot()
     # e = RubbishShop(config=self.config, device=self.device)
-    # if e.appear(ENHANCE, offset=(5, 5), static=False):
+    # if e.appear(POPUP_CHECK, offset=(5, 5), static=False):
     #     print(1)
+    # if e.appear(ANNOUNCEMENT, offset=(5, 5), static=False):
+    #     print(2)
+    #
+    # if e.appear(MONTHLY_CHECK, offset=(5, 5), static=False):
+    #     print(2)
 
     # raise GameStuckError
     # self.run('rubbish_shop')

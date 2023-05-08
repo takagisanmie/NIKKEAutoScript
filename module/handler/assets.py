@@ -15,6 +15,7 @@ LEVEL_UP_CHECK = Button(area={'cn': (312, 601, 408, 618)}, color={'cn': (0, 68, 
 LOGIN_CHECK = Button(area={'cn': (225, 1047, 496, 1068)}, color={'cn': (58, 58, 57)}, button={'cn': (225, 1047, 496, 1068)}, file={'cn': './assets/cn/handler/LOGIN_CHECK.png'})
 LOGIN_PAGE_CHECK = Button(area={'cn': (229, 1247, 495, 1259)}, color={'cn': (64, 64, 63)}, button={'cn': (229, 1247, 495, 1259)}, file={'cn': './assets/cn/handler/LOGIN_PAGE_CHECK.png'})
 PAID_GIFT_CHECK = Button(area={'cn': (158, 93, 478, 282)}, color={'cn': (130, 112, 89)}, button={'cn': (158, 93, 478, 282)}, file={'cn': './assets/cn/handler/PAID_GIFT_CHECK.png'})
+POPUP_CHECK = Button(area={'cn': (251, 660, 460, 678)}, color={'cn': (160, 160, 160)}, button={'cn': (251, 660, 460, 678)}, file={'cn': './assets/cn/handler/POPUP_CHECK.png'})
 REWARD = Button(area={'cn': (306, 408, 416, 449)}, color={'cn': (153, 154, 153)}, button={'cn': (306, 408, 416, 449)}, file={'cn': './assets/cn/handler/REWARD.png'})
 SERVER_CHECK = Button(area={'cn': (297, 298, 422, 321)}, color={'cn': (164, 203, 247)}, button={'cn': (297, 298, 422, 321)}, file={'cn': './assets/cn/handler/SERVER_CHECK.png'})
 SYSTEM_ERROR_CHECK = Button(area={'cn': (311, 567, 389, 585)}, color={'cn': (151, 151, 151)}, button={'cn': (311, 567, 389, 585)}, file={'cn': './assets/cn/handler/SYSTEM_ERROR_CHECK.png'})

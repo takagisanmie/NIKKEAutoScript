@@ -13,7 +13,6 @@
       "Daily",
       "MissionPass",
       "Liberation",
-      "DailyGift",
       "Conversation",
       "Shop",
       "RubbishShop",
@@ -23,6 +22,11 @@
     ],
     "Event": [
       "Event"
+    ],
+    "Gift": [
+      "DailyGift",
+      "WeeklyGift",
+      "MonthlyGift"
     ]
   }
 }
