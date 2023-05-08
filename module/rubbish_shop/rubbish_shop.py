@@ -19,7 +19,7 @@ class RubbishShop(ShopBase):
 
     @cached_property
     def rubbish_shop_priority(self) -> SelectedGrids:
-        if not self.config.RubbishShop_priority:
+        if self.config.RubbishShop_priority is None or not len(self.config.RubbishShop_priority.strip(' ')):
             priority = self.config.RUBBISH_SHOP_PRIORITY
         else:
             priority = self.config.RubbishShop_priority

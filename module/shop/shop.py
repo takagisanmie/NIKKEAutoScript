@@ -163,11 +163,7 @@ class Shop(ShopBase):
 
     @cached_property
     def arena_shop_priority(self) -> SelectedGrids:
-        if not self.config.ArenaShop_priority:
-            priority = self.config.ARENA_SHOP_PRIORITY
-        else:
-            priority = self.config.ArenaShop_priority
-        priority = re.sub(r'\s+', '', priority).split('>')
+        priority = re.sub(r'\s+', '', self.config.ArenaShop_priority).split('>')
         return SelectedGrids([Product(i, self.config.ARENA_SHOP_PRODUCT.get(i), self.assets.get(i)) for i in priority])
 
     def general_shop_after(self, visited: set, skip_first_screenshot=True):
@@ -221,7 +217,7 @@ class Shop(ShopBase):
         try:
             if self.config.ArenaShop_enable:
                 self.ensure_into_shop(GOTO_ARENA_SHOP, ARENA_SHOP_CHECK)
-                if not self.config.ArenaShop_priority:
+                if self.config.ArenaShop_priority is None or not len(self.config.ArenaShop_priority.strip(' ')):
                     raise ProductQueueIsEmpty
                 self._run(self.arena_shop_visited, self.arena_shop_priority, ARENA_SHOP_CHECK)
         except NotEnoughMoneyError:
