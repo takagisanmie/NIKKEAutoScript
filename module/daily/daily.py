@@ -118,8 +118,9 @@ class Daily(UI):
                 sroll_to_top()
 
             if not flag and click_timer_2.reached() \
-                    and (self.appear_then_click(NORMAL_MATERIALS, offset=(5, 5), interval=3)
-                         or self.appear_then_click(ADVANCED_MATERIALS, offset=(5, 5), interval=3)):
+                    and (self.appear_then_click(NORMAL_MATERIALS, offset=(5, 5), interval=3,
+                                                static=False)
+                         or self.appear_then_click(ADVANCED_MATERIALS, offset=(5, 5), interval=3, static=False)):
                 confirm_timer.reset()
                 click_timer_2.reset()
                 continue
