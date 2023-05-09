@@ -60,7 +60,7 @@ class ShopBase(UI):
 
         product.timer.start()
         confirm_timer = Timer(2, count=2).start()
-        scroll_timer = Timer(0, count=3).start()
+        scroll_timer = Timer(0, count=4).start()
         click_timer = Timer(0.3)
         flag = False
         while 1:
@@ -116,8 +116,8 @@ class ShopBase(UI):
                 if not scroll_timer.reached(increase=False) \
                         and self.appear(check, offset=(5, 5), static=False) \
                         and click_timer.reached():
-                    self.device.swipe((360, 1000), (360, 960), handle_control_check=False)
-                    self.device.sleep(1.4)
+                    self.device.swipe((360, 1000), (360, 970), handle_control_check=False)
+                    self.device.sleep(1.6)
                     scroll_timer.reached()
                     confirm_timer.reset()
 

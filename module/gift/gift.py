@@ -16,6 +16,8 @@ class NetworkError(Exception):
 
 
 class GiftBase(UI):
+    diff = datetime.now(timezone.utc).astimezone().utcoffset() - timedelta(hours=8)
+
     def _run(self, button, check):
         if not self.appear(CASH_SHOP_CHECK, offset=(10, 10)):
             self.ui_ensure(page_main)
@@ -46,6 +48,11 @@ class GiftBase(UI):
                 click_timer.reset()
                 continue
 
+            if click_timer.reached() and self.handle_popup():
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
             if click_timer.reached() \
                     and self.appear(GENERAL_GIFT_CHECK, offset=(10, 10), static=False) \
                     and not self.appear(MONTHLY, offset=(10, 10), static=False):
@@ -68,6 +75,11 @@ class GiftBase(UI):
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
+
+            if click_timer.reached() and self.handle_popup():
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if click_timer.reached() and self.appear_then_click(button, offset=(30, 30), interval=2):
                 confirm_timer.reset()
@@ -96,6 +108,11 @@ class GiftBase(UI):
                 )
                 click_timer.reset()
                 confirm_timer.reset()
+                continue
+
+            if click_timer.reached() and self.handle_popup():
+                confirm_timer.reset()
+                click_timer.reset()
                 continue
 
             if click_timer.reached() and self.handle_reward(1):
@@ -137,8 +154,8 @@ class WeeklyGift(GiftBase):
     def next_tuesday(self) -> datetime:
         local_now = datetime.now()
         remain = (1 - local_now.weekday()) % 7
-        diff = datetime.now(timezone.utc).astimezone().utcoffset() - timedelta(hours=8)
-        return local_now.replace(hour=4, minute=0, second=0, microsecond=0) + timedelta(days=remain) + diff
+        remain = remain + 7 if remain == 0 else remain
+        return local_now.replace(hour=4, minute=0, second=0, microsecond=0) + timedelta(days=remain) + self.diff
 
     def run(self):
         self._run(WEEKLY, WEEKLY_CHECK)
@@ -151,8 +168,9 @@ class MonthlyGift(GiftBase):
     def next_month(self) -> datetime:
         local_now = datetime.now()
         next_month = local_now.month % 12 + 1
-        diff = datetime.now(timezone.utc).astimezone().utcoffset() - timedelta(hours=8)
-        return local_now.replace(month=next_month, day=1, hour=4, minute=0, second=0, microsecond=0) + diff
+        next_year = local_now.year + 1 if next_month == 1 else local_now.year
+        return local_now.replace(year=next_year, month=next_month, day=1, hour=4, minute=0, second=0,
+                                 microsecond=0) + self.diff
 
     def run(self):
         self._run(MONTHLY, MONTHLY_CHECK)

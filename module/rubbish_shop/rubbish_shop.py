@@ -31,6 +31,7 @@ class RubbishShop(ShopBase):
     def next_tuesday(self) -> datetime:
         local_now = datetime.now()
         remain = (1 - local_now.weekday()) % 7
+        remain = remain + 7 if remain == 0 else remain
         diff = datetime.now(timezone.utc).astimezone().utcoffset() - timedelta(hours=8)
         return local_now.replace(hour=4, minute=0, second=0, microsecond=0) + timedelta(days=remain) + diff
 

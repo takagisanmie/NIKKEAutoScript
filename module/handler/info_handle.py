@@ -57,7 +57,7 @@ class InfoHandler(ModuleBase):
             return True
 
     def handle_popup(self):
-        if self.appear(POPUP_CHECK, offset=(30, 30), interval=3) \
+        if self.appear(POPUP_CHECK, offset=(30, 30), interval=3, static=False) \
                 and self.appear_then_click(ANNOUNCEMENT, offset=(30, 30), interval=3, threshold=0.74, static=False):
             return True
 
