@@ -56,7 +56,7 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 #### Q7：运行调度器时出现'BaseError: /data/app/com.proximabeta.nikke-.......apk: no such file or directory'
 #### A7：这是因为模拟器的NIKKE是通过Google Play下载的，可以卸载后在QooApp下载，可以解决这个问题
 ------
-#### Q8：进入付费商店时，提示'网络异常，读取商店结账咨询失败'
+#### Q8：进入付费商店时，提示'网络异常，读取商店结账资讯失败'
 #### A8：这很可能是因为模拟器的 Google Play 未登录账号，可以登录账号后再尝试
 ------
 ### 预览
