@@ -250,7 +250,7 @@ ArenaShop:
                 FIRE_CODE: 燃烧代码\n
                 IRON_CODE: 铁甲代码\n
                 WATER_CODE: 水冷代码\n
-                WIND_CODE: 风压\n
+                WIND_CODE: 风压代码\n
                 MANUAL_SELECTION_BOX: 代码自选箱
              "
 RubbishShop:
