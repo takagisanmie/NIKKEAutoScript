@@ -245,7 +245,7 @@ class Event(UI):
 
     @Config.when(event_type=1)
     def ensure_into_stage_list(self, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(2)
 

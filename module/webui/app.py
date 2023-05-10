@@ -78,6 +78,9 @@ class NikkeAutoScriptGUI(Frame):
 
     @use_scope("menu", clear=True)
     def dashboard_set_menu(self) -> None:
+
+        put_scope("menu-container"),
+
         task = 'nkas'
 
         '''
@@ -87,42 +90,43 @@ class NikkeAutoScriptGUI(Frame):
             AzurLaneAutoScript(config_name='alas').loop()
 
         '''
-        put_scope("scheduler"),
-        with use_scope('scheduler'):
-            put_row([put_text(t('Gui.Menu.Scheduler')), put_scope("scheduler_btn")])
-            with use_scope('scheduler_btn'):
-                switch_scheduler = BinarySwitchButton(
-                    label_on=t("Gui.Button.Stop"),
-                    label_off=t("Gui.Button.Start"),
-                    onclick_on=lambda: self.nkas.stop(),
-                    onclick_off=lambda: self.nkas.start(None),
-                    get_state=lambda: self.nkas.alive,
-                    color_on="off",
-                    color_off="on",
-                    scope="scheduler_btn",
-                )
+        with use_scope('menu-container'):
+            put_scope("scheduler"),
+            with use_scope('scheduler'):
+                put_row([put_text(t('Gui.Menu.Scheduler')), put_scope("scheduler_btn")])
+                with use_scope('scheduler_btn'):
+                    switch_scheduler = BinarySwitchButton(
+                        label_on=t("Gui.Button.Stop"),
+                        label_off=t("Gui.Button.Start"),
+                        onclick_on=lambda: self.nkas.stop(),
+                        onclick_off=lambda: self.nkas.start(None),
+                        get_state=lambda: self.nkas.alive,
+                        color_on="off",
+                        color_off="on",
+                        scope="scheduler_btn",
+                    )
 
-                self.task_handler.add(switch_scheduler.g(), 1, True)
+                    self.task_handler.add(switch_scheduler.g(), 1, True)
 
-        # 显示任务队列
-        with use_scope('running'):
-            put_row([put_text(t('Gui.Overview.Running'))])
-            put_scrollable([put_scope('running_list')], height=220, keep_bottom=False)
+            # 显示任务队列
+            with use_scope('running'):
+                put_row([put_text(t('Gui.Overview.Running'))])
+                put_scrollable([put_scope('running_list')], height=None, keep_bottom=False)
 
-        put_scope("pending"),
-        with use_scope('pending'):
-            put_row([put_text(t('Gui.Overview.Pending'))])
-            put_scrollable([put_scope('pending_list')], height=220, keep_bottom=False)
+            put_scope("pending"),
+            with use_scope('pending'):
+                put_row([put_text(t('Gui.Overview.Pending'))])
+                put_scrollable([put_scope('pending_list')], height=None, keep_bottom=False)
 
-        put_scope("waiting"),
-        with use_scope('waiting'):
-            put_row([put_text(t('Gui.Overview.Waiting'))])
-            put_scrollable([put_scope('waiting_list')], height=220, keep_bottom=False)
+            put_scope("waiting"),
+            with use_scope('waiting'):
+                put_row([put_text(t('Gui.Overview.Waiting'))])
+                put_scrollable([put_scope('waiting_list')], height=None, keep_bottom=False)
 
     @use_scope("content", clear=True)
     def dashboard_set_content(self):
         log = RichLog("log")
-        put_scrollable([put_scope("log", [put_html("")])], height=(200, 750), keep_bottom=True).style(
+        put_scrollable([put_scope("log", [put_html("")])], height=None, keep_bottom=True).style(
             '--log-scrollable--')
 
         '''
@@ -171,7 +175,7 @@ class NikkeAutoScriptGUI(Frame):
         Set arg groups from dict
         """
         put_scope("_groups",
-                  [put_scrollable([put_scope("groups")], height=(700, 200), keep_bottom=False).style(
+                  [put_scrollable([put_scope("groups")], height=None, keep_bottom=False).style(
                       '--groups-scrollable--'), put_scope("navigator")])
         run_js(
             '''

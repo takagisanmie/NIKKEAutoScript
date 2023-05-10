@@ -230,6 +230,9 @@
       "Part": "story_1",
       "Difficulty": "normal"
     },
+    "Formation": {
+      "AutoFormation": false
+    },
     "Storage": {
       "Storage": {}
     }
