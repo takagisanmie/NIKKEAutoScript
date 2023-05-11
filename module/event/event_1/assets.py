@@ -38,7 +38,7 @@ STORY_2_GOTO_STAGE_LIST = Button(area={'cn': (355, 886, 453, 966)}, color={'cn':
 STORY_2_HARD_CHECK = Button(area={'cn': (47, 297, 205, 340)}, color={'cn': (33, 36, 33)}, button={'cn': (47, 297, 205, 340)}, file={'cn': './assets/event/event_1/STORY_2_HARD_CHECK.png'})
 STORY_2_HARD_COMPLETED = Button(area={'cn': (329, 375, 399, 391)}, color={'cn': (87, 87, 89)}, button={'cn': (329, 375, 399, 391)}, file={'cn': './assets/event/event_1/STORY_2_HARD_COMPLETED.png'})
 STORY_2_HARD_LOCKED = Button(area={'cn': (289, 563, 429, 586)}, color={'cn': (106, 106, 113)}, button={'cn': (289, 563, 429, 586)}, file={'cn': './assets/event/event_1/STORY_2_HARD_LOCKED.png'})
-STORY_2_HARD_NO_OPPORTUNITY = Button(area={'cn': (611, 303, 656, 328)}, color={'cn': (145, 141, 151)}, button={'cn': (611, 303, 656, 328)}, file={'cn': './assets/event/event_1/STORY_2_HARD_NO_OPPORTUNITY.png'})
+STORY_2_HARD_NO_OPPORTUNITY = Button(area={'cn': (571, 299, 661, 330)}, color={'cn': (134, 131, 144)}, button={'cn': (571, 299, 661, 330)}, file={'cn': './assets/event/event_1/STORY_2_HARD_NO_OPPORTUNITY.png'})
 STORY_2_HARD_STAGE_AREA_A = Button(area={'cn': (83, 358, 654, 1133)}, color={'cn': (44, 44, 52)}, button={'cn': (83, 358, 654, 1133)}, file={'cn': './assets/event/event_1/STORY_2_HARD_STAGE_AREA_A.png'})
 STORY_2_HARD_STAGE_AREA_B = Button(area={'cn': (68, 786, 656, 1086)}, color={'cn': (34, 35, 42)}, button={'cn': (68, 786, 656, 1086)}, file={'cn': './assets/event/event_1/STORY_2_HARD_STAGE_AREA_B.png'})
 STORY_2_HARD_UNLOCKED = Button(area={'cn': (332, 465, 396, 480)}, color={'cn': (102, 96, 121)}, button={'cn': (332, 465, 396, 480)}, file={'cn': './assets/event/event_1/STORY_2_HARD_UNLOCKED.png'})
