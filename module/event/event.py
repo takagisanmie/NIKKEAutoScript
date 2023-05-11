@@ -202,6 +202,8 @@ class Event(UI):
 
     @Config.when(event_type=1)
     def ensure_into_event_page(self):
+        logger.attr('PART', self.config.Event_Part)
+        logger.attr('DIFFICULTY', self.config.Event_Difficulty)
         # large event
         if self.config.Event_Part == 'story_1':
             if self.config.Event_Difficulty != 'normal':
@@ -219,9 +221,6 @@ class Event(UI):
                 if not self.event_story_2_second_part:
                     raise EventPartUnavailableError(
                         f"'The second part of Story 2' is unavailable currently, it will be available on {self.event_story_2 + timedelta(days=7)}")
-
-        logger.attr('PART', self.config.Event_Part)
-        logger.attr('DIFFICULTY', self.config.Event_Difficulty)
         if self.config.Event_Part == 'story_1':
             self.ui_ensure(page_story_1)
         elif self.config.Event_Part == 'story_2':
@@ -229,6 +228,8 @@ class Event(UI):
 
     @Config.when(event_type=2)
     def ensure_into_event_page(self):
+        logger.attr('PART', self.config.Event_Part)
+        logger.attr('DIFFICULTY', self.config.Event_Difficulty)
         # small event
         if self.config.Event_Part != 'story_1':
             raise EventPartError('The current event only has a single part')
@@ -239,13 +240,11 @@ class Event(UI):
             if not self.event_story_second_part_is_available:
                 raise EventPartUnavailableError(
                     f"'The second part of Story 1' is unavailable currently, it will be available on {self.event_story_second_part}")
-        logger.attr('PART', self.config.Event_Part)
-        logger.attr('DIFFICULTY', self.config.Event_Difficulty)
         self.ui_ensure(page_story_1)
 
     @Config.when(event_type=1)
     def ensure_into_stage_list(self, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=3).start()
+        confirm_timer = Timer(2, count=3).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(2)
 
@@ -290,7 +289,7 @@ class Event(UI):
 
     @Config.when(event_type=2)
     def ensure_into_stage_list(self, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(2, count=3).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(2)
 
@@ -329,7 +328,7 @@ class Event(UI):
                 break
 
     def detect_available_stage(self):
-        self.ensure_sroll_to_top()
+        self.ensure_sroll_to_top(x1=(360, 460), x2=(360, 950))
         logger.hr('STAGE AREA A', 2)
         stage_list = self.stage_list(self.area_a.area)
         stage_list = stage_list.select(type='available')
@@ -338,7 +337,7 @@ class Event(UI):
             self.loop(stage, goto_next_stage=True)
         else:
             logger.info('All the stages in area A have been completed')
-        self.ensure_sroll_to_bottom()
+        self.ensure_sroll_to_bottom(x1=(360, 950), x2=(360, 460))
         logger.hr('STAGE AREA B', 2)
         stage_list = self.stage_list(self.area_b.area)
         stage_list = stage_list.select(type='available')
@@ -351,7 +350,7 @@ class Event(UI):
 
     def _loop(self):
         logger.hr('LOOP', 2)
-        self.ensure_sroll_to_top()
+        self.ensure_sroll_to_top(x1=(360, 460), x2=(360, 950))
         logger.hr('STAGE AREA A', 2)
         stage_a_list = self.stage_list(self.area_a.area)
         stage_a_list = stage_a_list.select(type='completed')
@@ -360,7 +359,7 @@ class Event(UI):
         if stage_a_list.count >= self.stage:
             self.loop(stage_a_list.__getitem__(self.stage - 1))
         else:
-            self.ensure_sroll_to_bottom()
+            self.ensure_sroll_to_bottom(x1=(360, 950), x2=(360, 460))
             logger.hr('STAGE AREA B', 2)
             stage_b_list = self.stage_list(self.area_b.area)
             stage_b_list = stage_b_list.select(type='completed')
@@ -436,6 +435,7 @@ class Event(UI):
                     continue
 
                 if click_timer.reached() and self.appear_then_click(FIGHT, interval=1, static=False):
+                    self.device.sleep(6)
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
