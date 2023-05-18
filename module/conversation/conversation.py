@@ -10,13 +10,9 @@ from module.conversation.assets import *
 from module.exception import GamePageUnknownError
 from module.handler.assets import CONFRIM_B, AUTO_CLICK_CHECK
 from module.logger import logger
-from module.ocr.ocr import DigitCounter
 from module.ui.assets import CONVERSATION_CHECK, GOTO_BACK
 from module.ui.page import page_conversation
 from module.ui.ui import UI
-
-OCR_OPPORTUNITY = DigitCounter(OCR_OPPORTUNITY, lang='cnocr', name='OCR_OPPORTUNITY', letter=(247, 247, 247),
-                               threshold=128)
 
 
 class ChooseNextNIKKETooLong(Exception):
@@ -36,6 +32,12 @@ class Conversation(UI):
 
     stuck_timer = Timer(60, count=0).start()
     confirm_timer = Timer(4, count=5).start()
+
+    @property
+    def opportunity_remain(self):
+        result = OPPORTUNITY.appear_on(self.device.image)
+        logger.info(f'[Opportunity remain] {result}')
+        return result
 
     @cached_property
     def nikke_list(self):
@@ -74,7 +76,7 @@ class Conversation(UI):
             return text
 
     def get_next_target(self):
-        if not self.opportunity:
+        if not self.opportunity_remain:
             logger.attr('VISITED NIKKE LIST', self.visited)
             logger.warning('There are no opportunities remaining')
             raise NoOpportunityRemain
@@ -287,7 +289,6 @@ class Conversation(UI):
         except TypeError:
             cannot_decide()
 
-        self.opportunity -= 1
         self.stuck_timer.reset()
 
         while 1:
@@ -340,8 +341,8 @@ class Conversation(UI):
         return self.communicate()
 
     def ensure_opportunity_remain(self):
-        super().__setattr__('opportunity', int(OCR_OPPORTUNITY.ocr(self.device.image)[0]))
-        return self.opportunity
+        if self.opportunity_remain:
+            return True
 
     def run(self):
         self.ui_ensure(page_conversation, confirm_wait=3)

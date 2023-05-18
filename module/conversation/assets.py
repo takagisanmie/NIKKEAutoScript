@@ -9,7 +9,7 @@ COMMUNICATE = Button(area={'cn': (512, 1046, 574, 1086)}, color={'cn': (73, 189,
 D = Button(area={'cn': (0, 0, 19, 22)}, color={'cn': (147, 0, 0)}, button={'cn': (0, 0, 19, 22)}, file={'cn': './assets/cn/conversation/D.png'})
 DETAIL_CHECK = Button(area={'cn': (508, 962, 597, 980)}, color={'cn': (127, 142, 161)}, button={'cn': (508, 962, 597, 980)}, file={'cn': './assets/cn/conversation/DETAIL_CHECK.png'})
 FAVOURITE_CHECK = Button(area={'cn': (27, 394, 45, 499)}, color={'cn': (254, 98, 83)}, button={'cn': (27, 394, 45, 499)}, file={'cn': './assets/cn/conversation/FAVOURITE_CHECK.png'})
-OCR_OPPORTUNITY = Button(area={'cn': (208, 300, 268, 336)}, color={'cn': (64, 84, 112)}, button={'cn': (208, 300, 268, 336)}, file={'cn': './assets/cn/conversation/OCR_OPPORTUNITY.png'})
+OPPORTUNITY = Button(area={'cn': (83, 295, 183, 325)}, color={'cn': (70, 192, 249)}, button={'cn': (83, 295, 183, 325)}, file={'cn': './assets/cn/conversation/OPPORTUNITY.png'})
 RANK_INCREASE_CHECK = Button(area={'cn': (252, 559, 416, 618)}, color={'cn': (67, 39, 57)}, button={'cn': (252, 559, 416, 618)}, file={'cn': './assets/cn/conversation/RANK_INCREASE_CHECK.png'})
 RANK_INCREASE_COMFIRM = Button(area={'cn': (272, 1109, 448, 1148)}, color={'cn': (209, 206, 209)}, button={'cn': (272, 1109, 448, 1148)}, file={'cn': './assets/cn/conversation/RANK_INCREASE_COMFIRM.png'})
 RANK_MAX_CHECK = Button(area={'cn': (603, 866, 636, 889)}, color={'cn': (252, 200, 196)}, button={'cn': (603, 866, 636, 889)}, file={'cn': './assets/cn/conversation/RANK_MAX_CHECK.png'})
