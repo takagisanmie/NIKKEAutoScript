@@ -286,6 +286,7 @@ Event:
     name: 活动
     help: "会自动选取最新的活动"
     event_1: 'OVER ZONE'
+    event_2: 'Bunny X 777'
   Event_Name:
     name: 关卡名称
     help: "例如 '1-11'"
@@ -307,7 +308,7 @@ Formation:
     name: 阵型设置
     help: ""
   AutoFormation:
-    name: '自动编队'
+    name: '自动编队(未完成)'
     help: "在队伍为空时，自动选择带有掉落加成的NIKKE，会无视爆裂等级"
 Daily:
   _info:

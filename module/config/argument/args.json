@@ -718,9 +718,9 @@
       },
       "Event": {
         "type": "select",
-        "value": "event_1",
+        "value": "event_2",
         "option": [
-          "event_1"
+          "event_2"
         ]
       },
       "Part": {

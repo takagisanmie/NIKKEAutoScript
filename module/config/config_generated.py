@@ -58,7 +58,7 @@ class GeneratedConfig:
     # Group `Event`
     Event_Event_Name = None
     Event_Complete_Event = False
-    Event_Event = 'event_1'  # event_1
+    Event_Event = 'event_2'  # event_2
     Event_Part = 'story_1'  # story_1, story_2
     Event_Difficulty = 'normal'  # normal, hard
 

@@ -89,7 +89,7 @@ class Event(UI):
 
     @cached_property
     def event_story_1_difficulty_area(self):
-        return [(0, 0), (0, 0)]
+        return [(460, 1200), (640, 1200)]
 
     @cached_property
     def event_story_2_difficulty_area(self):
@@ -108,7 +108,7 @@ class Event(UI):
 
         available_stage = [Stage(type='available', location=_area_offset(i.get('location'), (area[0], area[1]))) for i
                            in
-                           self.unlocked.match_several(image, offset=5, threshold=0.8, static=False)]
+                           self.unlocked.match_several(image, offset=5, threshold=0.98, static=False)]
         completed_stage = [Stage(type='completed', location=_area_offset(i.get('location'), (area[0], area[1]))) for i
                            in
                            self.completed.match_several(image, offset=5, threshold=0.8, static=False)]

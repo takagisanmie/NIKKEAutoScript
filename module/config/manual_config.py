@@ -60,6 +60,15 @@ class ManualConfig:
 
     EVENTS = [
         {
+            'event_id': 'event_2',
+            'event_name': 'Bunny X 777',
+            # small evnet
+            'event_type': 2,
+            'event_duration': timedelta(days=14),
+            # UTC+8 2023-05-18 19:00:00
+            'event_update_date': datetime(2023, 5, 18, 4)
+        },
+        {
             'event_id': 'event_1',
             'event_name': 'OVER ZONE',
             # large evnet
