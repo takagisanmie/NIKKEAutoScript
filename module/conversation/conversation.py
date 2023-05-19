@@ -30,8 +30,8 @@ class ConversationQueueIsEmpty(Exception):
 class Conversation(UI):
     visited = set()
 
-    stuck_timer = Timer(60, count=0).start()
-    confirm_timer = Timer(4, count=5).start()
+    _stuck_timer = Timer(60, count=5)
+    _confirm_timer = Timer(4, count=5)
 
     @property
     def opportunity_remain(self):
@@ -111,9 +111,9 @@ class Conversation(UI):
             logger.warning('There are no opportunities remaining')
             raise NoOpportunityRemain
 
-        elif self.stuck_timer.reached():
+        elif self._stuck_timer.reached():
             logger.attr('VISITED NIKKE LIST', self.visited)
-            logger.attr('stuck timer reached', self.stuck_timer.reached())
+            logger.attr('stuck timer reached', self._stuck_timer.reached())
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
 
@@ -154,7 +154,7 @@ class Conversation(UI):
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
-            self.confirm_timer.reset()
+            self._confirm_timer.reset()
             super().__setattr__('current', name)
             super().__setattr__('key', self.nikke_keys[name])
             return
@@ -165,9 +165,9 @@ class Conversation(UI):
             logger.critical("Please switch current page into 'PAGE_CONVERSATION'")
             raise GamePageUnknownError
 
-        elif self.confirm_timer.reached():
+        elif self._confirm_timer.reached():
             logger.attr('VISITED NIKKE LIST', self.visited)
-            logger.attr('confirm timer reached', self.confirm_timer.reached())
+            logger.attr('confirm timer reached', self._confirm_timer.reached())
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
 
@@ -313,7 +313,7 @@ class Conversation(UI):
         except TypeError:
             cannot_decide()
 
-        self.stuck_timer.reset()
+        self._stuck_timer.reset()
 
         while 1:
             if skip_first_screenshot:
@@ -371,6 +371,8 @@ class Conversation(UI):
     def run(self):
         self.ui_ensure(page_conversation, confirm_wait=1)
         if self.ensure_opportunity_remain():
+            self._stuck_timer.start()
+            self._confirm_timer.start()
             try:
                 self.communicate()
             except ChooseNextNIKKETooLong as e:
