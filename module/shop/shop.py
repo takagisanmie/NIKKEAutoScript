@@ -52,6 +52,8 @@ class ShopBase(UI):
         if not product.timer.reached(increase=False):
             self.process(product, visited, check, swipe)
         else:
+            self.device.stuck_record_clear()
+            self.device.click_record_clear()
             visited.add(product.name)
 
     def detect_product(self, product: Product, check: Button, swipe=False):
