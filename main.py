@@ -8,6 +8,7 @@ import inflection
 
 from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
+from module.conversation.conversation import Conversation
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
@@ -363,6 +364,20 @@ if __name__ == '__main__':
     # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
     nkas = NikkeAutoScript()
     self = nkas
+
+    # self.device.screenshot()
+    # color_similar(, self._active)
+    # print(get_color(self.device.image, BURST_3.area))
+
+    # nc = NIKKECategory(self.config, self.device)
+    # ns = NIKKESwitch(['ADMI'], self.config, self.device)
+    # for i in ns.nikke_list:
+    #     print(i)
+    c = Conversation(self.config, self.device)
+    # for i in c.nikke_keys:
+    #     print(i)
+    r = [i['爱丽丝'] for i in c.nikke_keys if i.get('爱丽丝')]
+    print(r)
     # text = handle_sensitive_text(text)
     # print(text)
     # self.device.screenshot()

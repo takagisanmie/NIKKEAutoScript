@@ -87,12 +87,11 @@ class RookieArena(UI):
                 click_timer.reset()
                 continue
 
-            if not already_start \
-                    and click_timer.reached() \
-                    and self.appear(END_COMPETITION, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear(END_COMPETITION, offset=(30, 30), interval=2):
                 logger.info(
                     'Click %s @ %s' % (point2str(100, 100), 'END_COMPETITION')
                 )
+                self.device.handle_control_check(END_COMPETITION)
                 self.device.click_minitouch(100, 100)
                 already_start = True
                 confirm_timer.reset()
