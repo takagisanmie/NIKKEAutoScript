@@ -388,7 +388,8 @@ class Event(UI):
                     click_timer_2.reset()
                     continue
 
-                if click_timer.reached() and self.appear_then_click(FIGHT_QUICKLY, interval=5):
+                if click_timer.reached() and self.appear_then_click(FIGHT_QUICKLY, offset=(5, 5), interval=5,
+                                                                    static=False):
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
@@ -414,7 +415,7 @@ class Event(UI):
                     raise NoOpportunityRemain
 
                 if self.appear(STAGE_DETAILED_CHECK, offset=(5, 5), static=False) \
-                        and not self.appear(FIGHT) \
+                        and not self.appear(FIGHT, threshold=25) \
                         and confirm_timer.reached():
                     raise NoOpportunityRemain
         else:
