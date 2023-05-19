@@ -49,6 +49,17 @@ class Conversation(UI):
             logger.warning("There are no names included in the queue option")
             raise ConversationQueueIsEmpty
 
+    @cached_property
+    def nikke_names(self) -> list[str]:
+        return list(map(lambda x: x.get('label'), Nikke_list))
+
+    @cached_property
+    def nikke_keys(self) -> dict:
+        nikke_keys = {}
+        for i in Nikke_list:
+            nikke_keys[i.get('label')] = i.get('key')
+        return nikke_keys
+
     def match(self, img, button: Button):
         button.ensure_template()
         res = cv2.matchTemplate(img, button.image, cv2.TM_CCOEFF_NORMED)
@@ -62,8 +73,6 @@ class Conversation(UI):
                 text = '冬日购物狂'
             elif '奇迹' in text:
                 text = '奇迹仙女'
-        else:
-            logger.warning("cannot detect the current NIKKE's name")
 
         # TODO 奇迹仙女, 以及其他不好识别的NIKKE
         if self.match(img, RUPEE_WINTER_SHOPPER):
@@ -72,6 +81,27 @@ class Conversation(UI):
             text = '露菲'
         elif self.match(img, D):
             text = 'D'
+        else:
+            def get_similarity(names, target, threshold=0.49):
+                import difflib
+                max_ratio = 0
+                most_matched_name = ''
+                for name in names:
+                    ratio = difflib.SequenceMatcher(None, name, target).quick_ratio()
+                    if ratio > max_ratio:
+                        max_ratio = ratio
+                        most_matched_name = name
+                if max_ratio < threshold:
+                    return 0, ''
+                return max_ratio, most_matched_name
+
+            _, name = get_similarity(self.nikke_names, text)
+            if _:
+                logger.info(f"corrected '{text}' -> '{name}'")
+                text = name
+            else:
+                logger.warning("cannot detect the current NIKKE's name")
+
         if text not in self.visited:
             return text
 
@@ -86,10 +116,6 @@ class Conversation(UI):
             logger.attr('stuck timer reached', self.stuck_timer.reached())
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
-        # elif len(self.visited) == len(self.nikke_list):
-        #     logger.attr('VISITED NIKKE LIST', self.visited)
-        #     logger.warning('Perhaps all selected NIKKE already had a conversation')
-        #     raise ChooseNextNIKKETooLong
 
         _ = FAVOURITE_CHECK.match(self.device.image, static=False)
         if _:
@@ -115,24 +141,22 @@ class Conversation(UI):
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
-            r = [i.get('key') for i in Nikke_list if i.get('label') in name]
-
-            if not len(r):
+            # 是否支持
+            if name not in self.nikke_names:
                 logger.warning(f"don't support communication with {name}")
                 logger.warning("skip this nikke's conversation")
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
-            _ = list(filter(lambda x: x == name, self.nikke_list))
-
-            if not len(_):
+            # 是否填写在设置中
+            if name not in self.nikke_list:
                 logger.warning(f"{name} not included in the option")
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
             self.confirm_timer.reset()
             super().__setattr__('current', name)
-            super().__setattr__('key', r[0])
+            super().__setattr__('key', self.nikke_keys[name])
             return
 
         self.device.screenshot()
@@ -345,7 +369,7 @@ class Conversation(UI):
             return True
 
     def run(self):
-        self.ui_ensure(page_conversation, confirm_wait=3)
+        self.ui_ensure(page_conversation, confirm_wait=1)
         if self.ensure_opportunity_remain():
             try:
                 self.communicate()
