@@ -1330,6 +1330,9 @@ Dorothy = [
 D = [
     ''
 ]
+Blanc = [
+    ''
+]
 
 Nikke_dialog = {
     'Alice': Alice,
@@ -1397,6 +1400,7 @@ Nikke_dialog = {
     'Himeno': Himeno,
     'Biscuit': Biscuit,
     'D': D,
+    'Blanc': Blanc,
 }
 
 Nikke_list = [
@@ -1646,19 +1650,23 @@ Nikke_list = [
     },
     {
         'key': 'Power',
-        'label': '帕瓦(无数据)',
+        'label': '帕瓦',
     },
     {
         'key': 'Makima',
-        'label': '玛奇玛(无数据)',
+        'label': '玛奇玛',
     },
     {
         'key': 'Himeno',
-        'label': '姬野(无数据)',
+        'label': '姬野',
     },
     {
         'key': 'Biscuit',
         'label': '饼干',
+    },
+    {
+        'key': 'Blanc',
+        'label': '布兰儿',
     },
 
 ]

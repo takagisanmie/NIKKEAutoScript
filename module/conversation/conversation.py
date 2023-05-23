@@ -337,7 +337,7 @@ class Conversation(UI):
         self.ensure_back()
 
     def ensure_back(self, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(2, count=3).start()
         click_timer = Timer(0.3)
 
         while 1:
@@ -346,7 +346,7 @@ class Conversation(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(RANK_INCREASE_COMFIRM, offset=(10, 10), interval=3,
+            if click_timer.reached() and self.appear_then_click(RANK_INCREASE_COMFIRM, offset=(10, 10), interval=0.3,
                                                                 static=False):
                 confirm_timer.reset()
                 click_timer.reset()
