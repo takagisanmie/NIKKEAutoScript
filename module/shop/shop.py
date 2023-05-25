@@ -62,7 +62,7 @@ class ShopBase(UI):
 
         product.timer.start()
         confirm_timer = Timer(2, count=2).start()
-        scroll_timer = Timer(0, count=4).start()
+        scroll_timer = Timer(0, count=5).start()
         click_timer = Timer(0.3)
         flag = False
         while 1:

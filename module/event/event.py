@@ -4,6 +4,7 @@ from functools import cached_property
 from module.base.decorator import Config
 from module.base.timer import Timer
 from module.base.utils import point2str, crop, _area_offset
+from module.event.assets import HARD_AVAILABLE_CHECK
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.simulation_room.assets import AUTO_SHOOT, AUTO_BURST, PAUSE
@@ -192,6 +193,7 @@ class Event(UI):
         except EventPartUnavailableError as e:
             logger.error(e)
         except HardEventAvailable as e:
+            self.ensure_back()
             logger.error(e)
         except NoOpportunityRemain as e:
             self.ensure_back()
@@ -491,6 +493,10 @@ class Event(UI):
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
+
+            if click_timer.reached() and self.appear_then_click(HARD_AVAILABLE_CHECK, offset=(5, 5), interval=1,
+                                                                static=False):
+                raise HardEventAvailable
 
             if click_timer.reached() and self.handle_event(1):
                 confirm_timer.reset()
