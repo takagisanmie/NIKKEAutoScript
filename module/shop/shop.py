@@ -140,12 +140,12 @@ class ShopBase(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(CANCEL, offset=(30, 30), interval=3):
+            if click_timer.reached() and self.appear_then_click(CANCEL, offset=(30, 30), interval=1, static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(check, offset=(10, 10)) and confirm_timer.reached():
+            if self.appear(check, offset=(10, 10), static=False) and confirm_timer.reached():
                 break
 
 
