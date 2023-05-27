@@ -2,7 +2,7 @@ from functools import cached_property
 
 from module.base.timer import Timer
 from module.base.utils import point2str, _area_offset, crop
-from module.exception import GamePageUnknownError, OperationFailed
+from module.exception import GamePageUnknownError, OperationFailed, GameStuckError
 from module.handler.assets import CONFRIM_B
 from module.logger import logger
 from module.simulation_room.assets import *
@@ -250,13 +250,14 @@ class SimulationRoom(UI):
         except GamePageUnknownError:
             logger.error('The simulation has already been started')
             logger.critical("Please end the current simulation and restart it")
-
+            self.handle_failed()
         except OperationFailed:
             logger.warning('failed to overcome the current battle, will skip simulation task')
             self.handle_failed()
         self.config.task_delay(server_update=True)
 
     def handle_failed(self, skip_first_screenshot=True):
+        timeout = Timer(10).start()
         confirm_timer = Timer(1, count=2).start()
         click_timer = Timer(0.3)
         while 1:
@@ -269,6 +270,9 @@ class SimulationRoom(UI):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
+
+            if timeout.reached():
+                raise GameStuckError
 
             if self.appear(GOTO_BACK, offset=(30, 30)):
                 return
