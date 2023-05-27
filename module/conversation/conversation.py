@@ -35,7 +35,7 @@ class Conversation(UI):
 
     @property
     def opportunity_remain(self):
-        result = OPPORTUNITY.appear_on(self.device.image)
+        result = OPPORTUNITY.appear_on(self.device.image, threshold=25)
         logger.info(f'[Opportunity remain] {result}')
         return result
 
@@ -117,7 +117,7 @@ class Conversation(UI):
             logger.warning('Perhaps all selected NIKKE already had a conversation')
             raise ChooseNextNIKKETooLong
 
-        _ = FAVOURITE_CHECK.match(self.device.image, static=False)
+        _ = FAVOURITE_CHECK.match(self.device.image, threshold=0.71, static=False)
         if _:
             area = FAVOURITE_CHECK._button_offset
             name_area = _area_offset(area, (18, 57, 220, -10))
@@ -135,7 +135,7 @@ class Conversation(UI):
 
             self.visited.add(name)
             # 咨询状态
-            if CASE_CLOSED.match(crop(self.device.image, check_area), static=False):
+            if CASE_CLOSED.match(crop(self.device.image, check_area), threshold=0.71, static=False):
                 logger.warning('already had a conversation with current nikke')
                 logger.warning("skip this nikke's conversation")
                 self.device.image = mask_area(self.device.image, area)
@@ -290,26 +290,19 @@ class Conversation(UI):
             return max_ratio, max_sentence
 
         try:
-            if len(list(filter(lambda x: list(x) and x in answer_a, correct_answer))):
-                logger.info('Answer A seems to be the correct one')
-                self.device.click_minitouch(*find_center(answer_a_area))
-            elif len(list(filter(lambda x: list(x) and x in answer_b, correct_answer))):
-                logger.info('Answer B seems to be the correct one')
-                self.device.click_minitouch(*find_center(answer_b_area))
-            else:
-                if answer_a is not None and answer_b is not None:
-                    ratio_a, similar_a = get_similarity(correct_answer, answer_a)
-                    ratio_b, similar_b = get_similarity(correct_answer, answer_b)
-                    if ratio_a > ratio_b >= 0:
-                        logger.info('Answer A seems to be the correct one similar to %s', similar_a)
-                        self.device.click_minitouch(*find_center(answer_a_area))
-                    elif ratio_b > ratio_a >= 0:
-                        logger.info('Answer B seems to be the correct one similar to %s', similar_b)
-                        self.device.click_minitouch(*find_center(answer_b_area))
-                    else:
-                        cannot_decide()
+            if answer_a is not None and answer_b is not None:
+                ratio_a, similar_a = get_similarity(correct_answer, answer_a)
+                ratio_b, similar_b = get_similarity(correct_answer, answer_b)
+                if ratio_a > ratio_b >= 0:
+                    logger.info('Answer A seems to be the correct one similar to %s', similar_a)
+                    self.device.click_minitouch(*find_center(answer_a_area))
+                elif ratio_b > ratio_a >= 0:
+                    logger.info('Answer B seems to be the correct one similar to %s', similar_b)
+                    self.device.click_minitouch(*find_center(answer_b_area))
                 else:
                     cannot_decide()
+            else:
+                cannot_decide()
         except TypeError:
             cannot_decide()
 
@@ -325,7 +318,6 @@ class Conversation(UI):
                     or self.appear(RANK_INCREASE_CHECK, offset=(30, 30), static=False):
                 break
 
-            # if click_timer.reached() and self.appear(AUTO_CLICK_CHECK, offset=(30, 30), interval=0.3):
             if click_timer.reached():
                 self.device.click_minitouch(*find_center(answer_a_area))
                 logger.info(
