@@ -61,7 +61,6 @@ RookieArena:
 Event:
   - Scheduler
   - Event
-  - Formation
 
 # ==================== Gift ====================
 

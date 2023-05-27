@@ -303,13 +303,6 @@ Event:
     help: ""
     normal: '普通'
     hard: '困难'
-Formation:
-  _info:
-    name: 阵型设置
-    help: ""
-  AutoFormation:
-    name: '自动编队(未完成)'
-    help: "在队伍为空时，自动选择带有掉落加成的NIKKE，会无视爆裂等级"
 Daily:
   _info:
     name: 每日任务

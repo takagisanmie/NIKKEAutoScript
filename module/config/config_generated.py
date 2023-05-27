@@ -62,9 +62,6 @@ class GeneratedConfig:
     Event_Part = 'story_1'  # story_1, story_2
     Event_Difficulty = 'normal'  # normal, hard
 
-    # Group `Formation`
-    Formation_AutoFormation = False
-
     # Group `Daily`
     Daily_EnhanceEquipment = False
 
