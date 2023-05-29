@@ -7,7 +7,7 @@ from module.ui.ui import UI
 
 class Liberation(UI):
     def _run(self, skip_first_screenshot=True):
-        confirm_timer = Timer(5, count=5).start()
+        confirm_timer = Timer(10, count=10).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -33,6 +33,24 @@ class Liberation(UI):
                 continue
 
             if click_timer.reached() and self.appear_then_click(COMPLETED_3, offset=(30, 30), interval=1, threshold=0.8,
+                                                                static=False):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.appear_then_click(COMPLETED_4, offset=(30, 30), interval=1, threshold=0.8,
+                                                                static=False):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.appear_then_click(COMPLETED_5, offset=(30, 30), interval=1, threshold=0.8,
+                                                                static=False):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and self.appear_then_click(COMPLETED_6, offset=(30, 30), interval=1, threshold=0.8,
                                                                 static=False):
                 confirm_timer.reset()
                 click_timer.reset()

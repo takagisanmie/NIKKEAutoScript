@@ -43,7 +43,8 @@ class GiftBase(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(GOTO_GENERAL_GIFT, offset=(30, 30), interval=2, static=False):
+            if click_timer.reached() and self.appear_then_click(GOTO_GENERAL_GIFT, offset=(30, 30), interval=2,
+                                                                static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
