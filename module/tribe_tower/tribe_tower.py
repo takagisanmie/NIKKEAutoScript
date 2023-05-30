@@ -67,6 +67,11 @@ class TribeTower(UI):
             else:
                 self.device.screenshot()
 
+            if click_timer.reached() and self.handle_paid_gift():
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
             if click_timer.reached() and self.appear(TRIBE_TOWER_CHECK, offset=(30, 30), interval=5):
                 button = self.available_company[0].get('button')
                 self.device.click_minitouch(*button)
@@ -83,6 +88,11 @@ class TribeTower(UI):
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
+
+            if click_timer.reached() and self.handle_paid_gift():
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if click_timer.reached() and self.appear(TRIBE_TOWER_DETAILED_CHECK, offset=(30, 30),
                                                      interval=5):
@@ -106,6 +116,11 @@ class TribeTower(UI):
                     skip_first_screenshot = False
                 else:
                     self.device.screenshot()
+
+                if click_timer.reached() and self.handle_paid_gift():
+                    confirm_timer.reset()
+                    click_timer.reset()
+                    continue
 
                 if click_timer.reached() and self.appear_then_click(FIGHT, offset=(30, 30), interval=5):
                     confirm_timer.reset()
@@ -170,6 +185,11 @@ class TribeTower(UI):
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
+
+            if click_timer.reached() and self.handle_paid_gift():
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
             if click_timer.reached() and self.appear_then_click(BACK, offset=(5, 5), interval=5):
                 confirm_timer.reset()
