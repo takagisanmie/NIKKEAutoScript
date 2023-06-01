@@ -133,7 +133,7 @@ page_commission.link(button=COMMISSION_GOTO_OUTPOST, destination=page_outpost)
 # page_outpost.link(button=GOTO_MAIN, destination=page_main)
 page_outpost.link(button=OUTPOST_GOTO_COMMISSION, destination=page_commission)
 
-from module.event.event_2.assets import *
+from module.event.event_3.assets import *
 
 MAIN_GOTO_EVENT = MAIN_GOTO_EVENT
 EVENT_GOTO_STORY_1 = EVENT_GOTO_STORY_1

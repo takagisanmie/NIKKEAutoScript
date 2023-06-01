@@ -109,7 +109,7 @@ class Event(UI):
 
         available_stage = [Stage(type='available', location=_area_offset(i.get('location'), (area[0], area[1]))) for i
                            in
-                           self.unlocked.match_several(image, offset=5, threshold=0.98, static=False)]
+                           self.unlocked.match_several(image, offset=5, threshold=0.82, static=False)]
         completed_stage = [Stage(type='completed', location=_area_offset(i.get('location'), (area[0], area[1]))) for i
                            in
                            self.completed.match_several(image, offset=5, threshold=0.8, static=False)]

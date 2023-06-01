@@ -6,13 +6,13 @@ from module.ui.page import SKIP, TOUCH_TO_CONTINUE
 
 
 class InfoHandler(ModuleBase):
-    def handle_paid_gift(self):
-        if self.appear(PAID_GIFT_CHECK, offset=(30, 30), interval=3, static=False):
-            if self.appear_text_then_click('点击关闭画面', interval=3):
+    def handle_paid_gift(self, interval=1):
+        if self.appear(PAID_GIFT_CHECK, offset=(30, 30), interval=interval, static=False):
+            if self.appear_text_then_click('点击关闭画面', interval=interval):
                 return True
 
-        elif self.appear(PAID_GIFT_CONFIRM_CHECK, offset=(30, 30), interval=3, static=False):
-            if self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=3, static=False):
+        elif self.appear(PAID_GIFT_CONFIRM_CHECK, offset=(30, 30), interval=interval, static=False):
+            if self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=interval, static=False):
                 return True
 
         return False

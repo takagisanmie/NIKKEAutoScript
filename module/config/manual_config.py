@@ -60,6 +60,15 @@ class ManualConfig:
 
     EVENTS = [
         {
+            'event_id': 'event_3',
+            'event_name': "Queen's Order",
+            # small evnet
+            'event_type': 2,
+            'event_duration': timedelta(days=14),
+            # UTC+8 2023-06-1 19:00:00
+            'event_update_date': datetime(2023, 6, 1, 4)
+        },
+        {
             'event_id': 'event_2',
             'event_name': 'Bunny X 777',
             # small evnet

@@ -287,6 +287,7 @@ Event:
     help: "会自动选取最新的活动"
     event_1: 'OVER ZONE'
     event_2: 'Bunny X 777'
+    event_3: "Queen's Order"
   Event_Name:
     name: 关卡名称
     help: "例如 '1-11'"
