@@ -8,7 +8,6 @@ import inflection
 
 from module.config.config import NikkeConfig, TaskEnd
 from module.config.utils import deep_get, deep_set
-from module.conversation.conversation import Conversation
 from module.exception import RequestHumanTakeover, GameNotRunningError, GameStuckError, GameTooManyClickError, \
     GameServerUnderMaintenance, GameStart
 from module.logger import logger
@@ -360,55 +359,5 @@ class NikkeAutoScript:
 
 
 if __name__ == '__main__':
-    # TODO 当新人竞技场战斗时间过长
-    # TODO 当活动队伍没有编队时，选取优先选取带有加成的NIKKE
     nkas = NikkeAutoScript()
-    self = nkas
-
-    # self.device.screenshot()
-    # color_similar(, self._active)
-    # print(get_color(self.device.image, BURST_3.area))
-
-    # nc = NIKKECategory(self.config, self.device)
-    # ns = NIKKESwitch(['ADMI'], self.config, self.device)
-    # for i in ns.nikke_list:
-    #     print(i)
-    c = Conversation(self.config, self.device)
-    # for i in c.nikke_keys:
-    #     print(i)
-    r = [i['爱丽丝'] for i in c.nikke_keys if i.get('爱丽丝')]
-    print(r)
-    # text = handle_sensitive_text(text)
-    # print(text)
-    # self.device.screenshot()
-    # import cv2
-    # self.device.image = cv2.cvtColor(cv2.imread('./Screenshot_20230508-160451.png'),
-    #                                  cv2.COLOR_BGR2RGB)
-    # from module.rubbish_shop.rubbish_shop import RubbishShop
-
-    # self.config.bind('RubbishShop')
-    # self.device.screenshot()
-    # e = RubbishShop(config=self.config, device=self.device)
-    # if e.appear(POPUP_CHECK, offset=(5, 5), static=False):
-    #     print(1)
-    # if e.appear(ANNOUNCEMENT, offset=(5, 5), static=False):
-    #     print(2)
-    #
-    # if e.appear(MONTHLY_CHECK, offset=(5, 5), static=False):
-    #     print(2)
-
-    # raise GameStuckError
-    # self.run('rubbish_shop')
-
-    # e.device.screenshot()
-    # e.ui_ensure(page_inventory)
-    # if e.appear_then_click(RANDOM_EQUIPMENT, offset=(5, 5), static=False):
-    #     print(1)
-    # if e.appear(NO_MONEY, offset=(5, 5), static=False) and NO_MONEY.match_appear_on(self.device.image):
-    #     print(1)
-    # if e.appear_then_click(SKIP, offset=(10, 10), static=False):
-    #     print(1)
-    # if e.appear(CONFRIM_B, offset=(30, 30), static=False):
-    #     print(2)
-    # if e.appear(CONFRIM_C, offset=(30, 30), static=False):
-    #     print(3)
+    nkas.loop()

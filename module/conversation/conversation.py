@@ -276,7 +276,7 @@ class Conversation(UI):
             save_image(self.device.screenshot(), f'./cannot_decide_answer_{time.time()}.png')
             self.device.click_minitouch(*find_center(answer_a_area))
 
-        def get_similarity(sentences, target, threshold=0.8):
+        def get_similarity(sentences, target, threshold=0.49):
             import difflib
             max_ratio = 0
             max_sentence = ''
