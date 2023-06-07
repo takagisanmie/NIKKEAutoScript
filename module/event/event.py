@@ -8,7 +8,7 @@ from module.event.assets import HARD_AVAILABLE_CHECK
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.simulation_room.assets import AUTO_SHOOT, AUTO_BURST, PAUSE
-from module.ui.assets import GOTO_BACK
+from module.ui.assets import GOTO_BACK, MAIN_CHECK
 from module.ui.page import page_main, page_event, page_story_1, MAIN_GOTO_EVENT, EVENT_GOTO_STORY_1, page_story_2, \
     STORY_1_NORMAL_CHECK, \
     STORY_1_HARD_CHECK, STORY_2_NORMAL_CHECK, STORY_2_HARD_CHECK, STORY_1_GOTO_STAGE_LIST, STORY_2_GOTO_STAGE_LIST, \
@@ -521,7 +521,8 @@ class Event(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(GOTO_BACK, offset=(30, 30), static=False) and confirm_timer.reached():
+            if (self.appear(GOTO_BACK, offset=(30, 30), static=False) or self.appear(MAIN_CHECK, offset=(30, 30),
+                                                                                     static=False)) and confirm_timer.reached():
                 break
 
     def ensure_opportunity_remain(self):
