@@ -26,7 +26,7 @@ class RookieArena(UI):
         r.sort(key=lambda x: x[1])
         r = [_area_offset(i, (22, -10, 65, 8)) for i in r]
 
-        r = [self.ocr_models.get('nikke').ocr(crop(crop(self.device.image, i), _area_offset(
+        r = [self.ocr_models.get('arena').ocr(crop(crop(self.device.image, i), _area_offset(
             find_letter_area(extract_letters(crop(self.device.image, i), letter=(90, 93, 99)) < 128), (-2, -2, 3, 2))))
              for i in r]
 
@@ -39,7 +39,7 @@ class RookieArena(UI):
     @cached_property
     def own_power(self) -> int:
         area = _area_offset(OWN_POWER_CHECK.area, (20, -2, 70, 2))
-        OWN_POWER = Digit([area], name='OWN_POWER', letter=(247, 247, 247), threshold=128)
+        OWN_POWER = Digit([area], name='OWN_POWER', letter=(247, 247, 247), threshold=128, lang='arena')
         return int(OWN_POWER.ocr(self.device.image))
 
     @cached_property

@@ -52,6 +52,7 @@ class ModuleBase:
     def ocr_models(self):
         return {
             'nikke': OCR_MODEL.nikke,
+            'arena': OCR_MODEL.arena,
             'cnocr': OCR_MODEL.cnocr,
         }
 
