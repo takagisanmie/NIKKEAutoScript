@@ -50,11 +50,7 @@ class ModuleBase:
 
     @cached_property
     def ocr_models(self):
-        return {
-            'nikke': OCR_MODEL.nikke,
-            'arena': OCR_MODEL.arena,
-            'cnocr': OCR_MODEL.cnocr,
-        }
+        return OCR_MODEL
 
     def appear(self, button: Button, offset=0, interval=0, threshold=None, static=True) -> bool:
 
@@ -107,7 +103,7 @@ class ModuleBase:
             if not self.interval_timer[text].reached():
                 return False
 
-        res = self.ocr_models.get(model).ocr(self.device.image, area=area)
+        res = self.ocr_models.__getattribute__(model).ocr(self.device.image, area=area)
         location = self.device.get_location(text, res)
         if location:
             if interval:
@@ -144,7 +140,7 @@ class ModuleBase:
 
     def ocr(self, image, label='', model='cnocr'):
         start_time = time.time()
-        result = self.ocr_models.get(model).ocr(image)
+        result = self.ocr_models.__getattribute__(model).ocr(image)
         if len(result):
             text = result[0].get('text')
             logger.attr(name='%s %ss' % (label, float2str(time.time() - start_time)),

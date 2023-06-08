@@ -26,7 +26,7 @@ class RookieArena(UI):
         r.sort(key=lambda x: x[1])
         r = [_area_offset(i, (22, -10, 65, 8)) for i in r]
 
-        r = [self.ocr_models.get('arena').ocr(crop(crop(self.device.image, i), _area_offset(
+        r = [self.ocr_models.__getattribute__('arena').ocr(crop(crop(self.device.image, i), _area_offset(
             find_letter_area(extract_letters(crop(self.device.image, i), letter=(90, 93, 99)) < 128), (-2, -2, 3, 2))))
              for i in r]
 
