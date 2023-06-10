@@ -23,17 +23,18 @@ class OcrModel:
         """
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
                         model_name='/t25.ckpt', name='nikke')
+
     @cached_property
     def arena(self):
         """
-            t26
+            t27
             base: cnocr-v2.2-densenet_lite_136-gru.ckpt
-            training data: 3720 + 61
+            training data: 4287 + 61
             epochs: 15
             mainly used for the rookie arena
         """
         return NikkeOcr(rec_model_name='densenet_lite_136-gru', root='./bin/cnocr_models/nikke',
-                        model_name='/t26.ckpt', name='arena')
+                        model_name='/t27.ckpt', name='arena')
 
     # @cached_property
     # def nikke_digit(self):
