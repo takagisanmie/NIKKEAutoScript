@@ -1636,6 +1636,29 @@ Nihilister = [
     "现在的情况会不会更好呢"
 ]
 
+Rosanna = [
+    "因为我相信罗珊娜",
+    "肯定很累吧",
+    "要不要铺上高级地毯",
+    "呼叫ACPU部队",
+    "赶紧低头",
+    "咨询结束之后要不要去喝一杯",
+    "找找桌游",
+    "他背叛你了",
+    "别盯着我看了好吗",
+    "我去跟她好好说说",
+    "和她搭话",
+    "砰砰",
+    "恐惧的象征",
+    "刀",
+    "饭店",
+    "头",
+    "我我爱你地面",
+    "我也伸手点两下自己的嘴唇",
+    "当然",
+    "素雅的黑白色系的衣服",
+]
+
 Nikke_dialog = {
     'Alice': Alice,
     'Scarlet': Scarlet,
@@ -1714,6 +1737,7 @@ Nikke_dialog = {
     'Mica': Mica,
     'Rei': Rei,
     'Nihilister': Nihilister,
+    'Rosanna': Rosanna,
 }
 
 Nikke_list = [
@@ -2025,4 +2049,8 @@ Nikke_list = [
         'key': 'Nihilister',
         'label': '尼希利斯塔',
     },
+    {
+        'key': 'Rosanna',
+        'label': '罗珊娜',
+    }
 ]
