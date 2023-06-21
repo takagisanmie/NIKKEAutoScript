@@ -84,6 +84,12 @@ class Reward(UI):
             else:
                 self.device.screenshot()
 
+            if click_timer.reached() and self.appear_then_click(ARENA_GOTO_SPECIAL_ARENA, offset=(30, 30),
+                                                                interval=5, static=False):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
             if click_timer.reached() and self.appear_then_click(RECEIVE_SPECIAL_ARENA_POINT, offset=(30, 30),
                                                                 interval=5, static=False):
                 confirm_timer.reset()
@@ -92,6 +98,9 @@ class Reward(UI):
 
             if self.appear(NO_REWARDS, offset=(5, 5), threshold=0.95, static=False):
                 raise NoRewards
+
+            elif self.appear(NO_REWARDS_2, offset=(5, 5), threshold=0.95, static=False):
+                return True
 
             if click_timer.reached() and self.appear_then_click(REWARD, offset=(30, 30),
                                                                 interval=5, static=False):
@@ -134,7 +143,7 @@ class Reward(UI):
             self.ui_ensure(page_friend)
             self.receive_social_point()
         if self.config.Reward_CollectSpecialArenaPoint:
-            self.ui_ensure(page_special_arena)
+            self.ui_ensure(page_arena)
             try:
                 self.receive_special_arena_point()
             except NoRewards:
