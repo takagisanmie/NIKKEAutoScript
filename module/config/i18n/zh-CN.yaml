@@ -196,7 +196,8 @@ Conversation:
   WaitToCommunicate:
     name: 等待咨询的妮姬
     help: "请收藏想要咨询的妮姬\n
-           例如: '红莲 爱丽丝'，用一个空格分开
+           例如: '红莲 爱丽丝'，用一个空格分开\n
+           像 '梅里：海湾女神', '尼恩：蓝色海洋' 请填 '海湾女神', '蓝色海洋'
           "
 Area:
   _info:
@@ -288,6 +289,7 @@ Event:
     event_1: 'OVER ZONE'
     event_2: 'Bunny X 777'
     event_3: "Queen's Order"
+    event_4: "Blue Water Island"
   Event_Name:
     name: 关卡名称
     help: "例如 '1-11'"
