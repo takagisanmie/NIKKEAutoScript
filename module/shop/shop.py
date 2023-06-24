@@ -227,4 +227,6 @@ class Shop(ShopBase):
             self.ensure_back(ARENA_SHOP_CHECK)
         except ProductQueueIsEmpty:
             logger.warning("There are no products included in the queue option")
+        self.general_shop_visited.clear()
+        self.arena_shop_visited.clear()
         self.config.task_delay(server_update=True)

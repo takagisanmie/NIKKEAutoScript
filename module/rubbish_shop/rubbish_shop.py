@@ -43,4 +43,5 @@ class RubbishShop(ShopBase):
         except NotEnoughMoneyError:
             logger.error('The rest of money is not enough to buy this product')
             self.ensure_back(RUBBISH_SHOP_CHECK)
+        self.rubbish_shop_visited.clear()
         self.config.task_delay(target=self.next_tuesday)

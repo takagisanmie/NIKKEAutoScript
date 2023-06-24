@@ -363,8 +363,8 @@ class Conversation(UI):
     def run(self):
         self.ui_ensure(page_conversation, confirm_wait=1)
         if self.ensure_opportunity_remain():
-            self._stuck_timer.start()
-            self._confirm_timer.start()
+            self._stuck_timer.reset().start()
+            self._confirm_timer.reset().start()
             try:
                 self.communicate()
             except ChooseNextNIKKETooLong as e:
@@ -375,6 +375,7 @@ class Conversation(UI):
                 logger.error(e)
         else:
             logger.info('There are no opportunities remaining')
+        self.visited.clear()
         self.config.task_delay(server_update=True)
 
 
