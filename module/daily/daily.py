@@ -133,9 +133,9 @@ class Daily(UI):
 
             if confirm_timer.reached():
                 if flag:
-                    logger.info('already enhanced a random equipment in the inventory')
+                    logger.info('already enhanced a random piece of equipment in the inventory')
                 else:
-                    logger.warning('Not enough materials to enhance a equipment')
+                    logger.warning('Not enough materials to enhance a piece of equipment')
                 self.ensure_back()
                 return
 
@@ -165,7 +165,7 @@ class Daily(UI):
                 self.ui_ensure(page_inventory)
                 self.enhance_equipment()
         except NoItemsError:
-            logger.warning('No equipments in the inventory')
+            logger.warning('No equipment in the inventory')
             self.ensure_back()
         self.ui_ensure(page_daily)
         self.receive()

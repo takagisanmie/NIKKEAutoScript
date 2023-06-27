@@ -9,3 +9,4 @@ COMPLETED_3 = Button(area={'cn': (497, 991, 527, 1007)}, color={'cn': (27, 96, 1
 COMPLETED_4 = Button(area={'cn': (363, 961, 398, 977)}, color={'cn': (163, 47, 174)}, button={'cn': (363, 961, 398, 977)}, file={'cn': './assets/cn/liberation/COMPLETED_4.png'})
 COMPLETED_5 = Button(area={'cn': (361, 1039, 397, 1055)}, color={'cn': (60, 123, 167)}, button={'cn': (361, 1039, 397, 1055)}, file={'cn': './assets/cn/liberation/COMPLETED_5.png'})
 COMPLETED_6 = Button(area={'cn': (363, 1115, 395, 1134)}, color={'cn': (196, 128, 44)}, button={'cn': (363, 1115, 395, 1134)}, file={'cn': './assets/cn/liberation/COMPLETED_6.png'})
+CONFIRM_D = Button(area={'cn': (330, 1141, 389, 1167)}, color={'cn': (136, 137, 137)}, button={'cn': (330, 1141, 389, 1167)}, file={'cn': './assets/cn/liberation/CONFIRM_D.png'})

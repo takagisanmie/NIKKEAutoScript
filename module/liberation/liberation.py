@@ -56,6 +56,13 @@ class Liberation(UI):
                 click_timer.reset()
                 continue
 
+            if click_timer.reached() and self.appear_then_click(CONFIRM_D, offset=(30, 30), interval=1, threshold=0.8,
+                                                                static=False):
+                self.config.modified[f"Liberation.Scheduler.Enable"] = False
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
             if click_timer.reached() and self.handle_event(1):
                 confirm_timer.reset()
                 click_timer.reset()
@@ -71,6 +78,5 @@ class Liberation(UI):
 
     def run(self):
         self.ui_ensure(page_team, skip_first_screenshot=True)
-        # TODO 奖励，解放完成时
         self._run()
         self.config.task_delay(server_update=True)

@@ -342,7 +342,7 @@ def exec_file(file) -> dict:
     lock = FileLock(f"{file}.lock")
     with lock:
         result = {}
-        with open(file, 'r') as f:
+        with open(file, 'r', encoding='utf-8') as f:
             code = f.read()
             exec(code, result)
         del result['__builtins__']
