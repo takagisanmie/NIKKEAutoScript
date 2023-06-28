@@ -6,9 +6,13 @@ from module.base.utils import _area_offset, crop, extract_letters, find_letter_a
 from module.logger import logger
 from module.ocr.ocr import Digit
 from module.rookie_arena.assets import *
-from module.ui.assets import ROOKIE_ARENA_CHECK
-from module.ui.page import page_rookie_arena
+from module.ui.assets import ROOKIE_ARENA_CHECK, ARENA_GOTO_ROOKIE_ARENA
+from module.ui.page import page_arena
 from module.ui.ui import UI
+
+
+class RookieArenaIsUnavailable(Exception):
+    pass
 
 
 class RookieArena(UI):
@@ -104,10 +108,36 @@ class RookieArena(UI):
         if self.free_opportunity_remain:
             return self.start_competition()
 
-    def run(self):
-        self.ui_ensure(page_rookie_arena, confirm_wait=2)
+    def ensure_into_rookie_arena(self, skip_first_screenshot=True):
+        confirm_timer = Timer(2, count=3).start()
+        click_timer = Timer(0.3)
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            if self.appear(NEXT_SEASON, offset=(5, 5), static=False):
+                raise RookieArenaIsUnavailable
+
+            if click_timer.reached() and self.appear_then_click(ARENA_GOTO_ROOKIE_ARENA, offset=(30, 30),
+                                                                interval=5, static=False):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.appear(ROOKIE_ARENA_CHECK, offset=(10, 10), static=False) and confirm_timer.reached():
+                break
+
         if self.free_opportunity_remain:
             self.start_competition()
         else:
             logger.info('There are no free opportunities')
+
+    def run(self):
+        self.ui_ensure(page_arena)
+        try:
+            self.ensure_into_rookie_arena()
+        except RookieArenaIsUnavailable:
+            pass
         self.config.task_delay(server_update=True)
