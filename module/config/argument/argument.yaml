@@ -60,8 +60,8 @@ Event:
   Event_Name: ''
   Complete_Event: false
   Event:
-    value: 'event_3'
-    option: [ 'event_3' ]
+    value: 'event_5'
+    option: [ 'event_5' ]
   Part:
     value: 'story_1'
     option: [ 'story_1','story_2' ]

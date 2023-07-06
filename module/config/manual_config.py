@@ -60,6 +60,24 @@ class ManualConfig:
 
     EVENTS = [
         {
+            'event_id': 'event_5',
+            'event_name': "NYA NYA PARADISE",
+            # small evnet
+            'event_type': 2,
+            'event_duration': timedelta(days=14),
+            # UTC+8 2023-07-06 21:00:00
+            'event_update_date': datetime(2023, 7, 6, 4)
+        },
+        {
+            'event_id': 'event_4',
+            'event_name': "Blue Water Island",
+            # large evnet
+            'event_type': 1,
+            'event_duration': timedelta(days=21),
+            # UTC+8 2023-06-15 17:00:00
+            'event_update_date': datetime(2023, 6, 15, 4)
+        },
+        {
             'event_id': 'event_3',
             'event_name': "Queen's Order",
             # small evnet

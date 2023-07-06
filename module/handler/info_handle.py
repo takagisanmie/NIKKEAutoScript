@@ -22,6 +22,10 @@ class InfoHandler(ModuleBase):
             self.device.sleep(2)
             return True
 
+        if self.appear_then_click(DAILY_LOGIN_REWARD_2, offset=(30, 30), interval=2, static=False):
+            self.device.sleep(2)
+            return True
+
         # Daily Login, Memories Spring, Monthly Card, etc.
         if self.appear_text_then_click('_领取奖励', interval=1):
             self.device.sleep(2)
