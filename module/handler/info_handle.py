@@ -44,6 +44,10 @@ class InfoHandler(ModuleBase):
                                         area=(165, 255, 560, 290)):
             return True
 
+        if self.appear_then_click(CLOSE_DAILY_LOGIN_C, offset=(30, 30), interval=5, static=False):
+            self.device.sleep(2)
+            return True
+
         return False
 
     def handle_reward(self, interval=5):
