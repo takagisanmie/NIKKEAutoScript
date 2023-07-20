@@ -18,7 +18,7 @@ class InfoHandler(ModuleBase):
         return False
 
     def handle_login_reward(self):
-        if self.appear_then_click(DAILY_LOGIN_REWARD, offset=(30, 30), interval=2, static=False):
+        if self.appear_then_click(DAILY_LOGIN_REWARD, offset=(30, 30), interval=2, static=False, threshold=0.6):
             self.device.sleep(2)
             return True
 

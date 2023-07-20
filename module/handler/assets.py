@@ -10,7 +10,7 @@ CLOSE_DAILY_LOGIN_C = Button(area={'cn': (620, 166, 656, 204)}, color={'cn': (15
 CONFRIM_A = Button(area={'cn': (354, 819, 393, 844)}, color={'cn': (136, 217, 255)}, button={'cn': (354, 819, 393, 844)}, file={'cn': './assets/cn/handler/CONFRIM_A.png'})
 CONFRIM_B = Button(area={'cn': (507, 790, 555, 813)}, color={'cn': (110, 197, 241)}, button={'cn': (507, 790, 555, 813)}, file={'cn': './assets/cn/handler/CONFRIM_B.png'})
 CONFRIM_C = Button(area={'cn': (334, 1012, 385, 1036)}, color={'cn': (115, 206, 248)}, button={'cn': (334, 1012, 385, 1036)}, file={'cn': './assets/cn/handler/CONFRIM_C.png'})
-DAILY_LOGIN_REWARD = Button(area={'cn': (462, 554, 519, 601)}, color={'cn': (254, 176, 214)}, button={'cn': (462, 554, 519, 601)}, file={'cn': './assets/cn/handler/DAILY_LOGIN_REWARD.png'})
+DAILY_LOGIN_REWARD = Button(area={'cn': (429, 539, 595, 616)}, color={'cn': (216, 172, 131)}, button={'cn': (429, 539, 595, 616)}, file={'cn': './assets/cn/handler/DAILY_LOGIN_REWARD.png'})
 DAILY_LOGIN_REWARD_2 = Button(area={'cn': (485, 1133, 572, 1156)}, color={'cn': (151, 213, 251)}, button={'cn': (485, 1133, 572, 1156)}, file={'cn': './assets/cn/handler/DAILY_LOGIN_REWARD_2.png'})
 DOWNLOAD_CHECK = Button(area={'cn': (115, 618, 356, 639)}, color={'cn': (201, 197, 201)}, button={'cn': (115, 618, 356, 639)}, file={'cn': './assets/cn/handler/DOWNLOAD_CHECK.png'})
 LEVEL_UP_CHECK = Button(area={'cn': (312, 601, 408, 618)}, color={'cn': (0, 68, 129)}, button={'cn': (312, 601, 408, 618)}, file={'cn': './assets/cn/handler/LEVEL_UP_CHECK.png'})
