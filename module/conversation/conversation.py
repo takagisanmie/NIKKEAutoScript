@@ -4,8 +4,8 @@ import cv2
 
 from module.base.timer import Timer
 from module.base.utils import _area_offset, crop, mask_area, extract_letters, find_letter_area, point2str, \
-    find_center, save_image
-from module.conversation._conversation import Nikke_list, Nikke_dialog
+    find_center
+from module.config.utils import read_file
 from module.conversation.assets import *
 from module.exception import GamePageUnknownError
 from module.handler.assets import CONFRIM_B, AUTO_CLICK_CHECK
@@ -40,25 +40,12 @@ class Conversation(UI):
         return result
 
     @cached_property
-    def nikke_list(self):
-        try:
-            _ = self.config.Conversation_WaitToCommunicate.strip(' ').split(' ')
-            logger.attr('NIKKE LIST', _)
-            return _
-        except AttributeError:
-            logger.warning("There are no names included in the queue option")
-            raise ConversationQueueIsEmpty
+    def dialogue(self) -> dict:
+        return read_file('./module/conversation/dialogue.json')
 
     @cached_property
-    def nikke_names(self) -> list[str]:
-        return list(map(lambda x: x.get('label'), Nikke_list))
-
-    @cached_property
-    def nikke_keys(self) -> dict:
-        nikke_keys = {}
-        for i in Nikke_list:
-            nikke_keys[i.get('label')] = i.get('key')
-        return nikke_keys
+    def nikke_names(self):
+        return self.dialogue.keys()
 
     def match(self, img, button: Button):
         button.ensure_template()
@@ -148,15 +135,8 @@ class Conversation(UI):
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
 
-            # 是否填写在设置中
-            if name not in self.nikke_list:
-                logger.warning(f"{name} not included in the option")
-                self.device.image = mask_area(self.device.image, area)
-                return self.get_next_target()
-
             self._confirm_timer.reset()
             super().__setattr__('current', name)
-            super().__setattr__('key', self.nikke_keys[name])
             return
 
         self.device.screenshot()
@@ -258,7 +238,7 @@ class Conversation(UI):
                 continue
 
     def answer(self, skip_first_screenshot=True):
-        correct_answer = Nikke_dialog.get(self.key)
+        correct_answer = self.dialogue.get(self.current)
         click_timer = Timer(0.5)
 
         answer_a_area = (82, 817, 640, 900)
@@ -270,10 +250,9 @@ class Conversation(UI):
                             label='OCR_ANSWER_B')
 
         def cannot_decide():
-            import time
             logger.warning('cannot decide the correct answer,will choose Answer A')
-            self.device.sleep(1)
-            save_image(self.device.screenshot(), f'./cannot_decide_answer_{time.time()}.png')
+            # self.device.sleep(1)
+            # save_image(self.device.screenshot(), f'./cannot_decide_answer_{time.time()}.png')
             self.device.click_minitouch(*find_center(answer_a_area))
 
         def get_similarity(sentences, target, threshold=0.49):

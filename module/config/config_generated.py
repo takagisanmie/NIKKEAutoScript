@@ -31,9 +31,6 @@ class GeneratedConfig:
     Reward_CollectSocialPoint = True
     Reward_CollectSpecialArenaPoint = True
 
-    # Group `Conversation`
-    Conversation_WaitToCommunicate = None
-
     # Group `Area`
     Area_Difficulty = 'Level_1'  # Level_1, Level_2, Level_3, Level_4, Level_5
     Area_OnsetArea = 'A'  # A, B, C

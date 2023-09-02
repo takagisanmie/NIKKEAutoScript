@@ -396,12 +396,6 @@
         "display": "hide"
       }
     },
-    "Conversation": {
-      "WaitToCommunicate": {
-        "type": "input",
-        "value": ""
-      }
-    },
     "Storage": {
       "Storage": {
         "type": "storage",

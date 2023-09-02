@@ -32,9 +32,6 @@ Optimization:
 Reward:
   CollectSocialPoint: true
   CollectSpecialArenaPoint: true
-Conversation:
-  WaitToCommunicate:
-    value: ''
 Area:
   Difficulty:
     value: 'Level_1'
