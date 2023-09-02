@@ -235,6 +235,9 @@ class UI(InfoHandler):
         if self.handle_event():
             return True
 
+        if self.handle_login():
+            return True
+
         '''
             CONFRIM_A 按钮为平面或立体，'确认'没有阴影
             CONFRIM_B 按钮为立体，'确认'有阴影

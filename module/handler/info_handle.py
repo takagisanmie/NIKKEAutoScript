@@ -94,3 +94,9 @@ class InfoHandler(ModuleBase):
         elif self.appear_then_click(TOUCH_TO_CONTINUE, offset=(5, 5), static=False, interval=interval):
             self.device.click_minitouch(360, 720)
             return True
+
+    def handle_login(self):
+        if self.appear(LOGIN_CHECK, offset=(30, 30), interval=5) or self.appear(LOGIN_CHECK_B, offset=(30, 30),
+                                                                                interval=5):
+            self.device.click(LOGIN_CHECK)
+            logger.info('Login success')

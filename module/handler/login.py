@@ -43,7 +43,8 @@ class LoginHandler(UI):
                 continue
 
             # TOUCH TO CONTINUE
-            if self.appear(LOGIN_CHECK, offset=(30, 30), interval=5):
+            if self.appear(LOGIN_CHECK, offset=(30, 30), interval=5) or self.appear(LOGIN_CHECK_B, offset=(30, 30),
+                                                                                    interval=5):
                 self.device.click(LOGIN_CHECK)
                 if not login_success:
                     logger.info('Login success')

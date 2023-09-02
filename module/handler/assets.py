@@ -15,6 +15,7 @@ DAILY_LOGIN_REWARD_2 = Button(area={'cn': (485, 1133, 572, 1156)}, color={'cn': 
 DOWNLOAD_CHECK = Button(area={'cn': (115, 618, 356, 639)}, color={'cn': (201, 197, 201)}, button={'cn': (115, 618, 356, 639)}, file={'cn': './assets/cn/handler/DOWNLOAD_CHECK.png'})
 LEVEL_UP_CHECK = Button(area={'cn': (312, 601, 408, 618)}, color={'cn': (0, 68, 129)}, button={'cn': (312, 601, 408, 618)}, file={'cn': './assets/cn/handler/LEVEL_UP_CHECK.png'})
 LOGIN_CHECK = Button(area={'cn': (225, 1047, 496, 1068)}, color={'cn': (58, 58, 57)}, button={'cn': (225, 1047, 496, 1068)}, file={'cn': './assets/cn/handler/LOGIN_CHECK.png'})
+LOGIN_CHECK_B = Button(area={'cn': (219, 1042, 501, 1076)}, color={'cn': (59, 59, 57)}, button={'cn': (219, 1042, 501, 1076)}, file={'cn': './assets/cn/handler/LOGIN_CHECK_B.png'})
 LOGIN_PAGE_CHECK = Button(area={'cn': (229, 1247, 495, 1259)}, color={'cn': (64, 64, 63)}, button={'cn': (229, 1247, 495, 1259)}, file={'cn': './assets/cn/handler/LOGIN_PAGE_CHECK.png'})
 PAID_GIFT_CHECK = Button(area={'cn': (169, 619, 527, 640)}, color={'cn': (35, 136, 134)}, button={'cn': (169, 619, 527, 640)}, file={'cn': './assets/cn/handler/PAID_GIFT_CHECK.png'})
 PAID_GIFT_CONFIRM_CHECK = Button(area={'cn': (85, 562, 614, 587)}, color={'cn': (190, 190, 190)}, button={'cn': (85, 562, 614, 587)}, file={'cn': './assets/cn/handler/PAID_GIFT_CONFIRM_CHECK.png'})
