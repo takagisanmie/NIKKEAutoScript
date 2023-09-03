@@ -63,11 +63,15 @@ class Conversation(UI):
 
         # TODO 奇迹仙女, 以及其他不好识别的NIKKE
         if self.match(img, RUPEE_WINTER_SHOPPER):
-            text = '冬日购物狂'
+            text = '露菲：冬日购物狂'
         elif self.match(img, RUPEE):
             text = '露菲'
         elif self.match(img, D):
             text = 'D'
+        elif self.match(img, NERO):
+            text = '尼罗'
+        elif self.match(img, ANIS_SPARKLING_SUMMER):
+            text = '阿妮斯：闪耀夏日'
         else:
             def get_similarity(names, target, threshold=0.49):
                 import difflib
@@ -89,6 +93,7 @@ class Conversation(UI):
             else:
                 logger.warning("cannot detect the current NIKKE's name")
 
+        logger.info(f"[NIKKE_NAME] {text}")
         if text not in self.visited:
             return text
 
@@ -114,8 +119,8 @@ class Conversation(UI):
             text_rect = find_letter_area(_img < 128)
             text_rect = _area_offset(text_rect, (-2, -2, 3, 2))
             _letters_img = crop(_img, text_rect)
-            name = self.name_after_process(self.ocr(_letters_img, 'NIKKE_NAME'), _img)
             # save_image(_letters_img, './RUPEE.png')
+            name = self.name_after_process(self.ocr(_letters_img, 'NIKKE_NAME'), _img)
             if not name:
                 self.device.image = mask_area(self.device.image, area)
                 return self.get_next_target()
