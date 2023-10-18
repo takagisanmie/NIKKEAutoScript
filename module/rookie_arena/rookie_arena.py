@@ -117,7 +117,7 @@ class RookieArena(UI):
             else:
                 self.device.screenshot()
 
-            if self.appear(NEXT_SEASON, offset=(5, 5)):
+            if self.appear(NEXT_SEASON, offset=(50, 50)):
                 raise RookieArenaIsUnavailable
 
             if click_timer.reached() and self.appear_then_click(ARENA_GOTO_ROOKIE_ARENA, offset=(30, 30),
