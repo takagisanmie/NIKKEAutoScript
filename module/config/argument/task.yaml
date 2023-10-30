@@ -20,6 +20,9 @@ Destroy:
 Commission:
   - Scheduler
 
+Mailbox:
+  - Scheduler
+
 # ==================== Daily ====================
 
 Daily:

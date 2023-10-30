@@ -71,6 +71,9 @@ Task:
   Commission:
     name: 委托
     help: ""
+  Mailbox:
+    name: 邮箱
+    help: ""
   RookieArena:
     name: 新人竞技场
     help: ""

@@ -207,6 +207,10 @@ class NikkeAutoScript:
         from module.gift.gift import MonthlyGift
         MonthlyGift(config=self.config, device=self.device).run()
 
+    def mailbox(self):
+        from module.mailbox.mailbox import Mailbox
+        Mailbox(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
             Wait until a specific time.

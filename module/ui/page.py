@@ -133,6 +133,11 @@ page_commission.link(button=COMMISSION_GOTO_OUTPOST, destination=page_outpost)
 # page_outpost.link(button=GOTO_MAIN, destination=page_main)
 page_outpost.link(button=OUTPOST_GOTO_COMMISSION, destination=page_commission)
 
+# mailbox
+page_mailbox = Page(MAILBOX_CHECK)
+page_mailbox.link(button=MAILBOX_GOTO_MAIN, destination=page_main)
+page_main.link(button=MAIN_GOTO_MAILBOX, destination=page_mailbox)
+
 from module.event.event_5.assets import *
 
 MAIN_GOTO_EVENT = MAIN_GOTO_EVENT
