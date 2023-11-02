@@ -136,11 +136,34 @@ class Reward(UI):
                 self.device.click_minitouch(100, 100)
                 click_timer.reset()
 
+    def temporary(self, button, skip_first_screenshot=True):
+        click_timer = Timer(0.3)
+        confirm_timer = Timer(1, count=2).start()
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            if click_timer.reached() and self.appear_then_click(button, offset=(30, 30),
+                                                                interval=0.3, static=False):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if confirm_timer.reached():
+                break
+
     def run(self):
         self.ui_ensure(page_reward)
         self.receive_reward()
         if self.config.Reward_CollectSocialPoint:
-            self.ui_ensure(page_friend)
+            # ----
+            # self.ui_ensure(page_friend)
+            # ----
+            self.ui_ensure(page_main)
+            self.temporary(MAIN_GOTO_FRIEND)
+            # ----
             self.receive_social_point()
         if self.config.Reward_CollectSpecialArenaPoint:
             self.ui_ensure(page_arena)
