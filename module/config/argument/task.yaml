@@ -64,6 +64,9 @@ Event:
   - Scheduler
   - Event
 
+NikkeSurvivors:
+  - Scheduler
+
 # ==================== Gift ====================
 
 DailyGift:

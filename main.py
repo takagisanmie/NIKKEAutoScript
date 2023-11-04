@@ -211,6 +211,10 @@ class NikkeAutoScript:
         from module.mailbox.mailbox import Mailbox
         Mailbox(config=self.config, device=self.device).run()
 
+    def nikke_survivors(self):
+        from module.nikke_survivors.nikke_survivors import NikkeSurvivors
+        NikkeSurvivors(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
             Wait until a specific time.

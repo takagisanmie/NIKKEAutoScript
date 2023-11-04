@@ -95,6 +95,9 @@ Task:
   Event:
     name: 活动
     help: ""
+  NikkeSurvivors:
+    name: 小游戏挑战模式挂机
+    help: ""
   RubbishShop:
     name: 废铁商店
     help: ""

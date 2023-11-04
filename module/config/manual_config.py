@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 class ManualConfig:
     SCHEDULER_PRIORITY = """
        Restart
-       > Reward > Destroy > Mailbox > DailyGift > WeeklyGift > MonthlyGift > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event >  Daily > MissionPass > Liberation
+       > Reward > Destroy > Mailbox > DailyGift > WeeklyGift > MonthlyGift > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event >  Daily > MissionPass > Liberation > NikkeSurvivors
        """
 
     GENERAL_SHOP_PRIORITY = """GRATIS"""
@@ -18,6 +18,7 @@ class ManualConfig:
 
     GENERAL_SHOP_PRODUCT = {
         'GRATIS': 1,
+        'CORE_DUST_CASE': (1, 1)
     }
 
     RUBBISH_SHOP_PRODUCT = {

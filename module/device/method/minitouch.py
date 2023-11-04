@@ -437,6 +437,22 @@ class Minitouch(Connection):
         builder.up().commit()
         self.minitouch_send()
 
+    @retry
+    def drag_minitouch(self, p1, p2):
+        points = insert_swipe(p0=translate_tuple(p1), p3=translate_tuple(p2))
+        builder = self.minitouch_builder
+
+        builder.down(*points[0]).commit()
+        self.minitouch_send()
+
+        for point in points[1:]:
+            builder.move(*point).commit().wait(10)
+        self.minitouch_send()
+
+        self.sleep(5)
+        builder.up().commit()
+        self.minitouch_send()
+
 
 def translate_tuple(p):
     return p[0] * 2 * 0.9, p[1] / 2 * 1.12
