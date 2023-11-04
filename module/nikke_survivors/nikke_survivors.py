@@ -2,7 +2,7 @@ import datetime
 import time
 
 from module.base.timer import Timer
-from module.daily.assets import SW, LU_CHECK
+from module.daily.assets import SW, LU_CHECK, SELECT
 from module.logger import logger
 from module.ui.ui import UI
 
@@ -12,13 +12,9 @@ class NikkeSurvivors(UI):
     def run(self):
         click_timer = Timer(0.2)
         confirm_timer = Timer(5, count=5).start()
-        skip_first_screenshot = True
         start_time = time.time()
         while 1:
-            if skip_first_screenshot:
-                skip_first_screenshot = False
-            else:
-                self.device.screenshot()
+            self.device.screenshot()
 
             if confirm_timer.reached():
                 total_time = datetime.datetime.strftime(datetime.datetime.utcfromtimestamp((time.time() - start_time)),
@@ -33,7 +29,7 @@ class NikkeSurvivors(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(LU_CHECK):
+            if click_timer.reached() and self.appear(LU_CHECK, offset=(30, 30)):
                 self.device.click_minitouch(360, 640)
                 click_timer.reset()
                 continue
@@ -46,7 +42,7 @@ class NikkeSurvivors(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self._appear_text_then_click('_白雪公主', (360, 1200), '白雪公主', interval=3):
+            if click_timer.reached() and self.appear_then_click(SELECT, offset=(30, 30), interval=3):
                 click_timer.reset()
                 continue
 
