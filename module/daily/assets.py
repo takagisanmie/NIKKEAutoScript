@@ -14,4 +14,5 @@ NORMAL_MATERIALS = Button(area={'cn': (98, 607, 152, 669)}, color={'cn': (113, 1
 NO_ITEMS = Button(area={'cn': (338, 711, 454, 732)}, color={'cn': (188, 186, 186)}, button={'cn': (338, 711, 454, 732)}, file={'cn': './assets/cn/daily/NO_ITEMS.png'})
 RANDOM_EQUIPMENT = Button(area={'cn': (110, 343, 136, 352)}, color={'cn': (175, 175, 176)}, button={'cn': (110, 343, 136, 352)}, file={'cn': './assets/cn/daily/RANDOM_EQUIPMENT.png'})
 RECEIVE = Button(area={'cn': (533, 1142, 617, 1161)}, color={'cn': (149, 222, 255)}, button={'cn': (533, 1142, 617, 1161)}, file={'cn': './assets/cn/daily/RECEIVE.png'})
+SELECT = Button(area={'cn': (296, 1150, 421, 1182)}, color={'cn': (107, 208, 230)}, button={'cn': (296, 1150, 421, 1182)}, file={'cn': './assets/cn/daily/SELECT.png'})
 SW = Button(area={'cn': (289, 1156, 444, 1268)}, color={'cn': (117, 138, 152)}, button={'cn': (289, 1156, 444, 1268)}, file={'cn': './assets/cn/daily/SW.png'})
