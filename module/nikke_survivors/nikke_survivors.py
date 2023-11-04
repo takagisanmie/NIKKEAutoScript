@@ -1,6 +1,7 @@
 import datetime
 import time
 
+from module.base.decorator import del_cached_property
 from module.base.timer import Timer
 from module.daily.assets import SW, LU_CHECK, SELECT
 from module.logger import logger
@@ -13,6 +14,12 @@ class NikkeSurvivors(UI):
         click_timer = Timer(0.2)
         confirm_timer = Timer(5, count=5).start()
         start_time = time.time()
+
+        self.device.click_minitouch(1,1)
+        if hasattr(self.device, '_minitouch_pid'):
+            self.device.adb_shell('kill %s' % self.device._minitouch_pid)
+            del_cached_property(self.device, 'minitouch_builder')
+
         while 1:
             self.device.screenshot()
 
