@@ -65,14 +65,9 @@ class OcrModel:
                 r = [i['position'] for i in result if text in i['text']]
 
             if r:
-                lc = []
-                for i in range(len(r)):
-                    upper_left, bottom_right = r[0][0], r[0][2]
-                    x, y = (np.array(upper_left) + np.array(bottom_right)) / 2
-                    if len(r) == 1:
-                        return x, y
-                    lc.append((x, y))
-                return lc
+                upper_left, bottom_right = r[0][0], r[0][2]
+                x, y = (np.array(upper_left) + np.array(bottom_right)) / 2
+                return x, y
 
 
 OCR_MODEL = OcrModel()
