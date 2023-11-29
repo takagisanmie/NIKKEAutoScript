@@ -18,7 +18,7 @@ class Device(Screenshot, Control, AppControl):
     # 点击过的 Button 队列
     click_record = deque(maxlen=15)
     # 操作计时器
-    stuck_timer = Timer(60, count=60).start()
+    stuck_timer = Timer(120, count=60).start()
     stuck_timer_long = Timer(240, count=180).start()
     """ 
         如果 detect_record 含有在 stuck_long_wait_list 中的 Button，在 stuck_timer_long 到达上限前不会 raise exception
