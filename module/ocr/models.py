@@ -56,18 +56,34 @@ class OcrModel:
                         model_name='/cnocr-v2.2-densenet_lite_136-gru.ckpt', name='cnocr')
 
     def get_location(self, text, result):
-
         if result:
-            if '_' in text:
-                text = text.strip('_')
-                r = [i['position'] for i in result if text == i['text']]
-            else:
-                r = [i['position'] for i in result if text in i['text']]
+            merged_dict = {}
+            for dictionary in list(map(lambda x: {x['text']: x['position']}, result)):
+                merged_dict.update(dictionary)
+
+            r = None
+            _, text = self.get_similarity(list(map(lambda x: x['text'], result)), text, threshold=0.51)
+
+            if _:
+                r = [merged_dict[text]]
 
             if r:
                 upper_left, bottom_right = r[0][0], r[0][2]
                 x, y = (np.array(upper_left) + np.array(bottom_right)) / 2
                 return x, y
+
+    def get_similarity(self, names, target, threshold=0.49):
+        import difflib
+        max_ratio = 0
+        most_matched_name = ''
+        for name in names:
+            ratio = difflib.SequenceMatcher(None, name, target).quick_ratio()
+            if ratio > max_ratio:
+                max_ratio = ratio
+                most_matched_name = name
+        if max_ratio < threshold:
+            return 0, ''
+        return max_ratio, most_matched_name
 
 
 OCR_MODEL = OcrModel()

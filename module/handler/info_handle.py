@@ -27,7 +27,7 @@ class InfoHandler(ModuleBase):
             return True
 
         # Daily Login, Memories Spring, Monthly Card, etc.
-        if self.appear_text_then_click('_领取奖励', interval=1):
+        if self.appear_text_then_click('_领取奖励', interval=6):
             self.device.sleep(2)
             return True
 
@@ -52,6 +52,11 @@ class InfoHandler(ModuleBase):
 
         if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_C', interval=5,
                                         area=(165, 300, 570, 340)):
+            self.device.sleep(3)
+            return True
+
+        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_D', interval=5,
+                                        area=(430, 380, 740, 420)):
             self.device.sleep(3)
             return True
 
