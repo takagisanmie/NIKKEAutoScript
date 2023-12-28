@@ -40,22 +40,22 @@ class InfoHandler(ModuleBase):
             Daily Login, Memories Spring, etc.
         '''
         # 420:550, 230:700
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_A', interval=5,
+        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_A', interval=1,
                                         area=(230, 420, 700, 550)):
             self.device.sleep(3)
             return True
 
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_B', interval=5,
+        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_B', interval=1,
                                         area=(165, 255, 560, 290)):
             self.device.sleep(3)
             return True
 
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_C', interval=5,
+        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_C', interval=1,
                                         area=(165, 300, 570, 340)):
             self.device.sleep(3)
             return True
 
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_D', interval=5,
+        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_D', interval=1,
                                         area=(430, 380, 740, 420)):
             self.device.sleep(3)
             return True
