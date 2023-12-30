@@ -27,11 +27,11 @@ class InfoHandler(ModuleBase):
             return True
 
         # Daily Login, Memories Spring, Monthly Card, etc.
-        if self.appear_text_then_click('_领取奖励', interval=6):
-            self.device.sleep(2)
+        if self.appear_text_then_click('_领取奖励', interval=9):
+            self.device.sleep(1)
             return True
 
-        if self.appear_text_then_click('_全部领取', interval=6):
+        if self.appear_text_then_click('_全部领取', interval=9):
             self.device.sleep(1)
             return True
 
