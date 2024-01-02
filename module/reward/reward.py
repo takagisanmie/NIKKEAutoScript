@@ -102,6 +102,9 @@ class Reward(UI):
             elif self.appear(NO_REWARDS_2, offset=(5, 5), threshold=0.95, static=False):
                 return True
 
+            elif self.appear(NO_REWARDS_3, offset=(5, 5), threshold=0.95):
+                return True
+
             if click_timer.reached() and self.appear_then_click(REWARD_B, offset=(30, 30),
                                                                 interval=5, static=False):
                 confirm_timer.reset()
