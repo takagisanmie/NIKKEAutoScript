@@ -18,21 +18,15 @@ class InfoHandler(ModuleBase):
         return False
 
     def handle_login_reward(self):
-        if self.appear_then_click(DAILY_LOGIN_REWARD, offset=(30, 30), interval=2, static=False, threshold=0.6):
-            self.device.sleep(2)
-            return True
-
-        if self.appear_then_click(DAILY_LOGIN_REWARD_2, offset=(30, 30), interval=2, static=False):
-            self.device.sleep(2)
-            return True
-
         # Daily Login, Memories Spring, Monthly Card, etc.
-        if self.appear_text_then_click('_领取奖励', interval=9):
-            self.device.sleep(1)
+        if self.appear_text_then_click('_领取奖励', interval=3):
             return True
 
-        if self.appear_text_then_click('_全部领取', interval=9):
-            self.device.sleep(1)
+        elif self.appear_text_then_click('_全部领取', interval=3):
+            return True
+
+        if CLOSE_DAILY_LOGIN.appear_on(self.device.image):
+            self.device.click_minitouch(20, 600)
             return True
 
         '''
@@ -40,29 +34,29 @@ class InfoHandler(ModuleBase):
             Daily Login, Memories Spring, etc.
         '''
         # 420:550, 230:700
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_A', interval=1,
-                                        area=(230, 420, 700, 550)):
-            self.device.sleep(3)
-            return True
-
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_B', interval=1,
-                                        area=(165, 255, 560, 290)):
-            self.device.sleep(3)
-            return True
-
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_C', interval=1,
-                                        area=(165, 300, 570, 340)):
-            self.device.sleep(3)
-            return True
-
-        if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_D', interval=1,
-                                        area=(430, 380, 740, 420)):
-            self.device.sleep(3)
-            return True
-
-        if self.appear_then_click(CLOSE_DAILY_LOGIN_C, offset=(30, 30), interval=5, static=False):
-            self.device.sleep(2)
-            return True
+        # if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_A', interval=1,
+        #                                 area=(230, 420, 700, 550)):
+        #     self.device.sleep(3)
+        #     return True
+        #
+        # if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_B', interval=1,
+        #                                 area=(165, 255, 560, 290)):
+        #     self.device.sleep(3)
+        #     return True
+        #
+        # if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_C', interval=1,
+        #                                 area=(165, 300, 570, 340)):
+        #     self.device.sleep(3)
+        #     return True
+        #
+        # if self._appear_text_then_click('根据累积登入天数', (20, 600), 'CLOSE_DAILY_LOGIN_D', interval=1,
+        #                                 area=(430, 380, 740, 420)):
+        #     self.device.sleep(3)
+        #     return True
+        #
+        # if self.appear_then_click(CLOSE_DAILY_LOGIN_C, offset=(30, 30), interval=5, static=False):
+        #     self.device.sleep(2)
+        #     return True
 
         return False
 
