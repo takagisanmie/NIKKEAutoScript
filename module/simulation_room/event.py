@@ -185,8 +185,9 @@ class RandomEvent(EventBase):
                         logger.info(
                             'Click %s @ %s' % (point2str(*button), 'EFFECT')
                         )
+                        self.device.sleep(0.6)
 
-                    if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=1,
+                    if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=2,
                                                                         static=False):
                         confirm_timer.reset()
                         click_timer.reset()
@@ -322,8 +323,9 @@ class ImprovementEvent(EventBase):
                         logger.info(
                             'Click %s @ %s' % (point2str(*button), 'EFFECT')
                         )
+                        self.device.sleep(0.6)
 
-                    if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=1,
+                    if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=2,
                                                                         static=False):
                         confirm_timer.reset()
                         click_timer.reset()
