@@ -37,8 +37,8 @@ class SimulationRoom(UI):
             'Level_1': (140, 550),
             'Level_2': (370, 550),
             'Level_3': (550, 550),
-            'Level_4': (140, 640),
-            'Level_5': (370, 640),
+            'Level_4': (240, 640),
+            'Level_5': (490, 640),
         }
 
     @cached_property

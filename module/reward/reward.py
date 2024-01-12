@@ -149,7 +149,7 @@ class Reward(UI):
                 self.device.screenshot()
 
             if click_timer.reached() and self.appear_then_click(button, offset=(30, 30),
-                                                                interval=0.3, static=False):
+                                                                interval=0.3):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
@@ -162,10 +162,10 @@ class Reward(UI):
         self.receive_reward()
         if self.config.Reward_CollectSocialPoint:
             # ----
-            # self.ui_ensure(page_friend)
+            self.ui_ensure(page_friend)
             # ----
-            self.ui_ensure(page_main)
-            self.temporary(MAIN_GOTO_FRIEND)
+            # self.ui_ensure(page_main)
+            # self.temporary(MAIN_GOTO_FRIEND)
             # ----
             self.receive_social_point()
         if self.config.Reward_CollectSpecialArenaPoint:
