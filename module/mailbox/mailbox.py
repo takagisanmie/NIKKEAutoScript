@@ -17,7 +17,8 @@ class Mailbox(UI):
             else:
                 self.device.screenshot()
 
-            if self.appear_then_click(RECEIVE, offset=(30, 30), interval=1, static=False):
+            if RECEIVE.appear_on(self.device.image):
+                self.device.click_minitouch(*RECEIVE.location)
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
