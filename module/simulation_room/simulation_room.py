@@ -338,7 +338,7 @@ class SimulationRoom(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(SIMULATION_CHECK, offset=(30, 30)) and confirm_timer.reached():
+            if self.appear(SIMULATION_CHECK, offset=(30, 30), threshold=0.86) and confirm_timer.reached():
                 logger.hr(f'Area {self.region_label.get(self.current_region)}', 2)
                 break
 

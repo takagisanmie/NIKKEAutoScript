@@ -37,7 +37,7 @@ class EnemyEvent(EventBase):
         logger.hr('Start a hostile event', 3)
         click_timer = Timer(0.3)
 
-        already_fight = False
+        skip = False
 
         while 1:
             if skip_first_screenshot:
@@ -60,12 +60,13 @@ class EnemyEvent(EventBase):
                     click_timer.reset()
                     continue
 
-            if click_timer.reached() and self.appear_then_click(FIGHT_QUICKLY, offset=(30, 30), interval=5):
-                already_fight = True
+            if click_timer.reached() and self.appear_then_click(FIGHT_QUICKLY, offset=(30, 30), interval=5,
+                                                                threshold=0.85):
+                skip = True
                 click_timer.reset()
                 continue
 
-            elif not already_fight and click_timer.reached() and self.appear_then_click(FIGHT, offset=(30, 30),
+            elif not skip and click_timer.reached() and self.appear_then_click(FIGHT, offset=(30, 30),
                                                                                         interval=5):
                 click_timer.reset()
                 continue
