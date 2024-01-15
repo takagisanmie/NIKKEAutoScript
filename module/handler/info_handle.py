@@ -18,15 +18,14 @@ class InfoHandler(ModuleBase):
         return False
 
     def handle_login_reward(self):
+        if CLOSE_DAILY_LOGIN.appear_on(self.device.image):
+            self.device.click_minitouch(20, 600)
+            return True
         # Daily Login, Memories Spring, Monthly Card, etc.
         if self.appear_text_then_click('_领取奖励', interval=5):
             return True
 
         elif self.appear_text_then_click('_全部领取', interval=5):
-            return True
-
-        if CLOSE_DAILY_LOGIN.appear_on(self.device.image):
-            self.device.click_minitouch(20, 600)
             return True
 
         '''
