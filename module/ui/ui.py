@@ -211,11 +211,11 @@ class UI(InfoHandler):
         if self.handle_paid_gift():
             return True
 
-        # Daily Login, Memories Spring, Monthly Card, etc.
-        if self.handle_login_reward():
+        if self.handle_announcement():
             return True
 
-        if self.handle_announcement():
+        # Daily Login, Memories Spring, Monthly Card, etc.
+        if self.handle_login_reward():
             return True
 
         if self.handle_server():

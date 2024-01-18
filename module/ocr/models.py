@@ -72,15 +72,18 @@ class OcrModel:
                 x, y = (np.array(upper_left) + np.array(bottom_right)) / 2
                 return x, y
 
-    def get_similarity(self, names, target, threshold=0.49):
+    def get_similarity(self, texts, target, threshold=0.49):
         import difflib
         max_ratio = 0
         most_matched_name = ''
-        for name in names:
-            ratio = difflib.SequenceMatcher(None, name, target).quick_ratio()
+        for text in texts:
+            if '_' in target:
+                if target.strip('_') != text:
+                    continue
+            ratio = difflib.SequenceMatcher(None, text, target).quick_ratio()
             if ratio > max_ratio:
                 max_ratio = ratio
-                most_matched_name = name
+                most_matched_name = text
         if max_ratio < threshold:
             return 0, ''
         return max_ratio, most_matched_name
