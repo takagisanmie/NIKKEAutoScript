@@ -76,7 +76,7 @@ class Reward(UI):
 
     def receive_special_arena_point(self, skip_first_screenshot=True):
         logger.hr('Special Arena Point receive')
-        confirm_timer = Timer(5, count=4).start()
+        confirm_timer = Timer(6, count=5).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:

@@ -7,7 +7,7 @@ NO_REWARDS = Button(area={'cn': (386, 531, 632, 568)}, color={'cn': (191, 179, 1
 NO_REWARDS_2 = Button(area={'cn': (620, 750, 663, 786)}, color={'cn': (81, 84, 93)}, button={'cn': (620, 750, 663, 786)}, file={'cn': './assets/cn/reward/NO_REWARDS_2.png'})
 NO_REWARDS_3 = Button(area={'cn': (438, 754, 603, 778)}, color={'cn': (69, 81, 99)}, button={'cn': (438, 754, 603, 778)}, file={'cn': './assets/cn/reward/NO_REWARDS_3.png'})
 RECEIVE = Button(area={'cn': (426, 1047, 471, 1090)}, color={'cn': (67, 191, 249)}, button={'cn': (426, 1047, 471, 1090)}, file={'cn': './assets/cn/reward/RECEIVE.png'})
-RECEIVE_SPECIAL_ARENA_POINT = Button(area={'cn': (306, 283, 417, 292)}, color={'cn': (155, 161, 164)}, button={'cn': (306, 283, 417, 292)}, file={'cn': './assets/cn/reward/RECEIVE_SPECIAL_ARENA_POINT.png'})
+RECEIVE_SPECIAL_ARENA_POINT = Button(area={'cn': (296, 299, 310, 332)}, color={'cn': (174, 206, 151)}, button={'cn': (296, 299, 310, 332)}, file={'cn': './assets/cn/reward/RECEIVE_SPECIAL_ARENA_POINT.png'})
 REWARD = Button(area={'cn': (445, 1125, 541, 1150)}, color={'cn': (128, 198, 233)}, button={'cn': (445, 1125, 541, 1150)}, file={'cn': './assets/cn/reward/REWARD.png'})
 REWARD_B = Button(area={'cn': (477, 1122, 532, 1152)}, color={'cn': (91, 185, 232)}, button={'cn': (477, 1122, 532, 1152)}, file={'cn': './assets/cn/reward/REWARD_B.png'})
 SEND_AND_RECEIVE = Button(area={'cn': (508, 1075, 589, 1101)}, color={'cn': (129, 213, 251)}, button={'cn': (508, 1075, 589, 1101)}, file={'cn': './assets/cn/reward/SEND_AND_RECEIVE.png'})
