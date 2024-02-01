@@ -2,8 +2,8 @@ from module.base.timer import Timer
 from module.base.utils import mask_area, point2str, _area_offset
 from module.logger import logger
 from module.mission_pass.assets import *
-from module.ui.assets import PASS_CHECK, MAIN_GOTO_PASS
-from module.ui.page import page_main
+from module.ui.assets import PASS_CHECK
+from module.ui.page import page_pass
 from module.ui.ui import UI
 
 
@@ -18,7 +18,7 @@ class MissionPass(UI):
                 self.device.screenshot()
                 self.device.image = mask_area(self.device.image, COMPLETED_CHECK.button)
 
-            if click_timer.reached() and self.appear(COMPLETED_CHECK, offset=(5, 5), interval=6,
+            if click_timer.reached() and self.appear(COMPLETED_CHECK, offset=(5, 5), interval=2,
                                                      threshold=0.8, static=False):
                 self.device.click_minitouch(*_area_offset(COMPLETED_CHECK.location, (-80, 10)))
                 logger.info(
@@ -28,8 +28,8 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(RECEIVE, offset=(5, 5), interval=1,
-                                                                static=False):
+            if click_timer.reached() and RECEIVE.appear_on(self.device.image):
+                self.device.click(RECEIVE)
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
@@ -48,7 +48,7 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(PASS_CHECK, offset=(10, 10)) and confirm_timer.reached():
+            if self.appear(PASS_CHECK) and confirm_timer.reached():
                 self.device.screenshot()
                 if self.appear(COMPLETED_CHECK, offset=(5, 5), threshold=0.8, static=False):
                     skip_first_screenshot = True
@@ -75,10 +75,10 @@ class MissionPass(UI):
 
     def run(self):
         # ----
-        # self.ui_ensure(page_pass)
+        self.ui_ensure(page_pass)
         # ----
-        self.ui_ensure(page_main)
-        self.temporary(MAIN_GOTO_PASS)
+        # self.ui_ensure(page_main)
+        # self.temporary(MAIN_GOTO_PASS)
         # ----
         self.receive()
         self.config.task_delay(server_update=True)
