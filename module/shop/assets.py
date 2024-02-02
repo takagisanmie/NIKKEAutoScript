@@ -117,12 +117,6 @@ REFRESH = Button(
     button={"cn": (402, 571, 425, 593)},
     file={"cn": "./assets/cn/shop/REFRESH.png"},
 )
-TEST = Button(
-    area={"cn": (164, 886, 273, 910)},
-    color={"cn": (164, 165, 166)},
-    button={"cn": (164, 886, 273, 910)},
-    file={"cn": "./assets/cn/shop/TEST.png"},
-)
 WATER_CODE = Button(
     area={"cn": (394, 706, 430, 768)},
     color={"cn": (94, 116, 133)},
