@@ -46,6 +46,7 @@ class ShopBase(UI):
                 self.device.screenshot()
 
             if self.appear(check, offset=(5, 5)):
+                self.device.sleep(2)
                 break
 
             if click_timer.reached() and self.appear_then_click(
@@ -114,7 +115,7 @@ class ShopBase(UI):
         skip_first_screenshot=True,
     ):
         timeout = Timer(1.5, 2).start()
-        click_timer = Timer(1.227)
+        click_timer = Timer(0.6)
         product: Button = products.first_or_none().button
         logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
 
@@ -150,13 +151,15 @@ class ShopBase(UI):
                             super().__setattr__("_image", img)
                             if not self.credit_or_gratis:
                                 skip_first_screenshot = True
-                                mask_area(self.device.image, product.button)
+                                self.device.image = mask_area(
+                                    self.device.image, product.button
+                                )
                                 continue
-
                         if click_timer.reached():
                             self.device.click(product)
                             click_timer.reset()
                             timeout.reset()
+                            continue
 
             except Refresh:
                 if not self.refreshed:
