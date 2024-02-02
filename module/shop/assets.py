@@ -4,9 +4,9 @@ from module.base.button import Button
 # Don't modify it manually.
 
 ARENA_SHOP_CHECK = Button(
-    area={"cn": (127, 476, 284, 504)},
-    color={"cn": (135, 136, 138)},
-    button={"cn": (127, 476, 284, 504)},
+    area={"cn": (127, 476, 223, 504)},
+    color={"cn": (137, 138, 139)},
+    button={"cn": (127, 476, 223, 504)},
     file={"cn": "./assets/cn/shop/ARENA_SHOP_CHECK.png"},
 )
 BUY = Button(
@@ -27,6 +27,12 @@ CORE_DUST_CASE = Button(
     button={"cn": (573, 647, 636, 669)},
     file={"cn": "./assets/cn/shop/CORE_DUST_CASE.png"},
 )
+CREDIT = Button(
+    area={"cn": (561, 867, 596, 897)},
+    color={"cn": (78, 77, 71)},
+    button={"cn": (561, 867, 596, 897)},
+    file={"cn": "./assets/cn/shop/CREDIT.png"},
+)
 ELECTRIC_CODE = Button(
     area={"cn": (201, 706, 239, 765)},
     color={"cn": (168, 78, 96)},
@@ -40,9 +46,9 @@ FIRE_CODE = Button(
     file={"cn": "./assets/cn/shop/FIRE_CODE.png"},
 )
 GENERAL_SHOP_CHECK = Button(
-    area={"cn": (120, 469, 261, 517)},
-    color={"cn": (182, 183, 186)},
-    button={"cn": (120, 469, 261, 517)},
+    area={"cn": (126, 474, 190, 506)},
+    color={"cn": (140, 140, 142)},
+    button={"cn": (126, 474, 190, 506)},
     file={"cn": "./assets/cn/shop/GENERAL_SHOP_CHECK.png"},
 )
 GOTO_ARENA_SHOP = Button(
@@ -62,6 +68,12 @@ GRATIS = Button(
     color={"cn": (253, 194, 126)},
     button={"cn": (176, 836, 256, 848)},
     file={"cn": "./assets/cn/shop/GRATIS.png"},
+)
+GRATIS_B = Button(
+    area={"cn": (194, 860, 247, 903)},
+    color={"cn": (76, 88, 97)},
+    button={"cn": (194, 860, 247, 903)},
+    file={"cn": "./assets/cn/shop/GRATIS_B.png"},
 )
 GRATIS_REFRESH = Button(
     area={"cn": (379, 671, 427, 697)},
@@ -93,11 +105,23 @@ NO_MONEY = Button(
     button={"cn": (450, 877, 460, 911)},
     file={"cn": "./assets/cn/shop/NO_MONEY.png"},
 )
+PURCHASE_CHECK = Button(
+    area={"cn": (308, 211, 412, 242)},
+    color={"cn": (115, 167, 227)},
+    button={"cn": (308, 211, 412, 242)},
+    file={"cn": "./assets/cn/shop/PURCHASE_CHECK.png"},
+)
 REFRESH = Button(
-    area={"cn": (197, 576, 251, 589)},
-    color={"cn": (148, 147, 149)},
-    button={"cn": (197, 576, 251, 589)},
+    area={"cn": (402, 571, 425, 593)},
+    color={"cn": (109, 111, 113)},
+    button={"cn": (402, 571, 425, 593)},
     file={"cn": "./assets/cn/shop/REFRESH.png"},
+)
+TEST = Button(
+    area={"cn": (164, 886, 273, 910)},
+    color={"cn": (164, 165, 166)},
+    button={"cn": (164, 886, 273, 910)},
+    file={"cn": "./assets/cn/shop/TEST.png"},
 )
 WATER_CODE = Button(
     area={"cn": (394, 706, 430, 768)},
