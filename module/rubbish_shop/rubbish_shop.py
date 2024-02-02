@@ -2,6 +2,7 @@ import re
 from datetime import datetime, timedelta, timezone
 from functools import cached_property
 
+from module.base.decorator import del_cached_property
 from module.base.utils import exec_file
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
@@ -11,8 +12,6 @@ from module.ui.page import page_shop
 
 
 class RubbishShop(ShopBase):
-    rubbish_shop_visited = set()
-
     @cached_property
     def assets(self) -> dict:
         return exec_file("./module/rubbish_shop/assets.py")
@@ -54,5 +53,5 @@ class RubbishShop(ShopBase):
         except NotEnoughMoneyError:
             logger.error("The rest of money is not enough to buy this product")
             self.ensure_back(RUBBISH_SHOP_CHECK)
-        self.rubbish_shop_visited.clear()
+        del_cached_property(self, "rubbish_shop_priority")
         self.config.task_delay(target=self.next_tuesday)
