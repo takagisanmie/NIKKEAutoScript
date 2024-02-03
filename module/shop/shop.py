@@ -115,7 +115,7 @@ class ShopBase(UI):
         skip_first_screenshot=True,
     ):
         timeout = Timer(1.5, 2).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(1.227)
         product: Button = products.first_or_none().button
         logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
 
