@@ -5,7 +5,8 @@
       "PackageName": "com_proximabeta_nikke",
       "ScreenshotMethod": "DroidCast",
       "ControlMethod": "minitouch",
-      "AdbRestart": false
+      "AdbRestart": false,
+      "ScreenshotInterval": 0.5
     },
     "Optimization": {
       "WhenTaskQueueEmpty": "goto_main"

@@ -23,6 +23,7 @@ class GeneratedConfig:
     Emulator_ScreenshotMethod = 'DroidCast'  # DroidCast
     Emulator_ControlMethod = 'minitouch'  # minitouch
     Emulator_AdbRestart = False
+    Emulator_ScreenshotInterval = 0.5
 
     # Group `Optimization`
     Optimization_WhenTaskQueueEmpty = 'goto_main'  # stay_there, goto_main, close_game

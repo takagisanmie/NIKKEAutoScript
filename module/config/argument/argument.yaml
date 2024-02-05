@@ -25,6 +25,7 @@ Emulator:
     value: minitouch
     option: [ minitouch, ]
   AdbRestart: false
+  ScreenshotInterval: 0.5
 Optimization:
   WhenTaskQueueEmpty:
     value: goto_main

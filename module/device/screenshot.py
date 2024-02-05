@@ -12,12 +12,16 @@ class ScreenshotSizeError(Exception):
 
 
 class Screenshot(DroidCast):
-    _screenshot_interval = Timer(0.5)
+    def __init__(self, config):
+        super().__init__(config)
+        self._screenshot_interval = Timer(
+            float(self.config.Emulator_ScreenshotInterval)
+        )
 
     @cached_property
     def screenshot_methods(self):
         return {
-            'DroidCast': self.screenshot_droidcast,
+            "DroidCast": self.screenshot_droidcast,
         }
 
     @cached_property
@@ -26,10 +30,10 @@ class Screenshot(DroidCast):
 
     def screenshot(self):
         """
-            截图
+        截图
 
-            Returns:
-                np.ndarray:
+        Returns:
+            np.ndarray:
         """
 
         # 每次两次截图间隔时间
@@ -41,17 +45,17 @@ class Screenshot(DroidCast):
 
         self.image = self._handle_orientated_image(self.image)
 
-        self.screenshot_deque.append({'time': datetime.now(), 'image': self.image})
+        self.screenshot_deque.append({"time": datetime.now(), "image": self.image})
 
         return self.image
 
     def _handle_orientated_image(self, image):
         """
-            Args:
-                image (np.ndarray):
+        Args:
+            image (np.ndarray):
 
-            Returns:
-                np.ndarray:
+        Returns:
+            np.ndarray:
         """
         width, height = image_size(self.image)
         if width == 720 and height == 1280:

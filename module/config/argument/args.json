@@ -31,6 +31,10 @@
       "AdbRestart": {
         "type": "checkbox",
         "value": false
+      },
+      "ScreenshotInterval": {
+        "type": "input",
+        "value": 0.5
       }
     },
     "Optimization": {
