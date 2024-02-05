@@ -174,10 +174,10 @@ class ShopBase(UI):
                         if (
                             not self.refreshed
                             and click_timer.reached()
-                            and self.appear_then_click(
-                                REFRESH, offset=(5, 5), static=False
-                            )
+                            and self.appear(REFRESH, offset=(5, 5), static=False)
                         ):
+                            x, y = REFRESH.location
+                            self.device.click_minitouch(x - 80, y)
                             click_timer.reset()
                             confirm_timer.reset()
 
