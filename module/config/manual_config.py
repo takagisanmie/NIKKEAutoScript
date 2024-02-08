@@ -21,7 +21,7 @@ class ManualConfig:
     RUBBISH_SHOP_PRODUCT = {
         "GEM": 1,
         "CORE_DUST_CASE": 2,
-        "CREDIT_CASE": 2,
+        "CREDIT_CASE": 3,
         "BATTLE_DATA_SET_CASE": 2,
         "GENERAL_TICKET": 1,
         "ELYSION_TICKET": 1,

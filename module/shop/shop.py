@@ -28,7 +28,7 @@ class ProductQueueIsEmpty(Exception):
 class Product:
     def __init__(self, name, count, button):
         self.name = name
-        self.timer = Timer(0, count=count - 1)
+        self.timer = Timer(0, count=count - 1).start()
         self.button: Button = button
 
     def __str__(self):
@@ -233,17 +233,17 @@ class ShopBase(UI):
         click_timer = Timer(1.227)
         product: Button = products.first_or_none().button
         logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
-
+        flag = False
         while 1:
-            if swipe_confirm.reached():
-                swipe_confirm.reset()
-                self.ensure_sroll_to_top(x1=(360, 700), x2=(360, 1000), count=3)
+            if (swipe_confirm.reached() and click_timer.reached()) or flag:
                 products = products.delete([products.first_or_none()])
                 logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
                 if products.first_or_none() is None:
                     break
                 product = products.first_or_none().button
-
+                self.ensure_sroll_to_top(x1=(360, 700), x2=(360, 1000), count=3)
+                swipe_confirm.reset()
+                flag = False
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
@@ -251,6 +251,10 @@ class ShopBase(UI):
 
             if self.appear(PURCHASE_CHECK, offset=(5, 5), static=False):
                 self.p()
+                if products.first_or_none().timer.reached():
+                    flag = True
+                    continue
+                swipe_confirm.reset()
             else:
                 if self.appear(
                     product, offset=(5, 5), threshold=0.9, static=False
@@ -264,7 +268,7 @@ class ShopBase(UI):
                         and click_timer.reached()
                     ):
                         self.device.swipe(
-                            (360, 1000), (360, 950), handle_control_check=False
+                            (360, 1000), (360, 945), handle_control_check=False
                         )
                         self.device.sleep(1.6)
                         swipe_confirm.reached()

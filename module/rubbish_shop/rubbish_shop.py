@@ -48,8 +48,7 @@ class RubbishShop(ShopBase):
         self.ui_ensure(page_shop)
         self.ensure_into_shop(GOTO_RUBBISH_SHOP, RUBBISH_SHOP_CHECK)
         try:
-            self.purchase1(self.rubbish_shop_priority)
-
+            self.purchase1(self.rubbish_shop_priority, skip_first_screenshot=False)
         except NotEnoughMoneyError:
             logger.error("The rest of money is not enough to buy this product")
             self.ensure_back(RUBBISH_SHOP_CHECK)
