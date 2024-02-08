@@ -58,15 +58,6 @@ TribeTower:
 RookieArena:
   - Scheduler
 
-# ==================== Event ====================
-
-Event:
-  - Scheduler
-  - Event
-
-NikkeSurvivors:
-  - Scheduler
-
 # ==================== Gift ====================
 
 DailyGift:
