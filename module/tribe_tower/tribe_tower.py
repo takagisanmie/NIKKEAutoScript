@@ -6,7 +6,7 @@ from module.exception import OperationFailed
 from module.logger import logger
 from module.simulation_room.assets import AUTO_SHOOT, AUTO_BURST, PAUSE
 from module.tribe_tower.assets import *
-from module.ui.assets import TRIBE_TOWER_CHECK, GOTO_BACK
+from module.ui.assets import TRIBE_TOWER_CHECK, GOTO_BACK, MAIN_CHECK
 from module.ui.page import page_tribe_tower
 from module.ui.ui import UI
 
@@ -26,7 +26,9 @@ class TribeTower(UI):
     @property
     def _opportunity(self) -> int:
         for x in range(3):
-            for index, i in enumerate([OPPORTUNITY_0, OPPORTUNITY_1, OPPORTUNITY_2, OPPORTUNITY_3]):
+            for index, i in enumerate(
+                [OPPORTUNITY_0, OPPORTUNITY_1, OPPORTUNITY_2, OPPORTUNITY_3]
+            ):
                 if self.appear(i, offset=(5, 5), threshold=0.96, static=False):
                     self.opportunity = index
                     return self.opportunity
@@ -36,9 +38,13 @@ class TribeTower(UI):
     @cached_property
     def available_company(self) -> list[dict]:
         for x in range(3):
-            for index, i in enumerate([ELYSION_CHECK, MISSILIS_CHECK, TETRA_CHECK, PILGRIM_CHECK]):
+            for index, i in enumerate(
+                [ELYSION_CHECK, MISSILIS_CHECK, TETRA_CHECK, PILGRIM_CHECK]
+            ):
                 if self.appear(i, offset=(5, 5), threshold=0.9, static=False):
-                    self.company.append({'name': i.name.split('_')[0], 'button': i.location})
+                    self.company.append(
+                        {"name": i.name.split("_")[0], "button": i.location}
+                    )
             if len(self.company):
                 return self.company
             self.device.screenshot()
@@ -49,13 +55,13 @@ class TribeTower(UI):
             try:
                 self.ensure_into_tribe_tower()
             except NoOpportunityRemain:
-                logger.warning('The current tribe tower has no remaining opportunities')
+                logger.warning("The current tribe tower has no remaining opportunities")
                 self.ensure_back()
                 self.available_company.remove(self.available_company[0])
                 continue
 
         if not self.config.Overcome_OnlyToCompleteDailyMission:
-            logger.warning('All the available companies have tried')
+            logger.warning("All the available companies have tried")
 
     def ensure_into_tribe_tower(self, skip_first_screenshot=True):
         logger.hr(f'{self.available_company[0].get("name")} TOWER', 2)
@@ -72,17 +78,22 @@ class TribeTower(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(TRIBE_TOWER_CHECK, offset=(30, 30), interval=5):
-                button = self.available_company[0].get('button')
+            if click_timer.reached() and self.appear(
+                TRIBE_TOWER_CHECK, offset=(30, 30), interval=5
+            ):
+                button = self.available_company[0].get("button")
                 self.device.click_minitouch(*button)
-                logger.info('Click %s @ %s' % (point2str(*button), 'TOWER'))
+                logger.info("Click %s @ %s" % (point2str(*button), "TOWER"))
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(TRIBE_TOWER_DETAILED_CHECK, offset=(30, 30)) and confirm_timer.reached():
+            if (
+                self.appear(TRIBE_TOWER_DETAILED_CHECK, offset=(30, 30))
+                and confirm_timer.reached()
+            ):
                 break
-        logger.attr('Opportunity', self._opportunity)
+        logger.attr("Opportunity", self._opportunity)
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -94,20 +105,24 @@ class TribeTower(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(TRIBE_TOWER_DETAILED_CHECK, offset=(30, 30),
-                                                     interval=5):
+            if click_timer.reached() and self.appear(
+                TRIBE_TOWER_DETAILED_CHECK, offset=(30, 30), interval=5
+            ):
                 self.device.click_minitouch(360, 560)
-                logger.info('Click %s @ %s' % (point2str(360, 560), 'STAGE'))
+                logger.info("Click %s @ %s" % (point2str(360, 560), "STAGE"))
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(STAGE_INFO_CHECK, offset=(30, 30), static=False) and confirm_timer.reached():
+            if (
+                self.appear(STAGE_INFO_CHECK, offset=(30, 30), static=False)
+                and confirm_timer.reached()
+            ):
                 break
         self.try_to_overcome_current_stage()
 
     def try_to_overcome_current_stage(self, skip_first_screenshot=True):
-        logger.hr(f'OVERCOME STAGE', 3)
+        logger.hr(f"OVERCOME STAGE", 3)
         confirm_timer = Timer(1, count=2).start()
         click_timer = Timer(0.3)
         try:
@@ -122,32 +137,40 @@ class TribeTower(UI):
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() and self.appear_then_click(FIGHT, offset=(30, 30), interval=5):
+                if click_timer.reached() and self.appear_then_click(
+                    FIGHT, offset=(30, 30), interval=5
+                ):
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() and self.appear_then_click(AUTO_SHOOT, offset=(30, 30), interval=5,
-                                                                    threshold=0.8):
+                if click_timer.reached() and self.appear_then_click(
+                    AUTO_SHOOT, offset=(30, 30), interval=5, threshold=0.8
+                ):
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() and self.appear_then_click(AUTO_BURST, offset=(30, 30), interval=5,
-                                                                    threshold=0.8):
+                if click_timer.reached() and self.appear_then_click(
+                    AUTO_BURST, offset=(30, 30), interval=5, threshold=0.8
+                ):
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() and self.appear_then_click(NEXT_STAGE, offset=(30, 30)):
+                if click_timer.reached() and self.appear_then_click(
+                    NEXT_STAGE, offset=(30, 30)
+                ):
                     self.device.sleep(5)
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() \
-                        and not self.appear(NEXT_STAGE, offset=(30, 30)) \
-                        and self.appear_then_click(END_CHECK, offset=(30, 30)):
+                if (
+                    click_timer.reached()
+                    and not self.appear(NEXT_STAGE, offset=(30, 30))
+                    and self.appear_then_click(END_CHECK, offset=(30, 30))
+                ):
                     confirm_timer.reset()
                     click_timer.reset()
                     continue
@@ -163,14 +186,18 @@ class TribeTower(UI):
                     self.device.sleep(5)
                     continue
 
-                if self.appear(TRIBE_TOWER_DETAILED_CHECK, offset=(30, 30), interval=6) \
-                        and self.appear(GOTO_BACK, offset=(30, 30)) \
-                        and confirm_timer.reached():
+                if (
+                    self.appear(TRIBE_TOWER_DETAILED_CHECK, offset=(30, 30), interval=6)
+                    and self.appear(GOTO_BACK, offset=(30, 30))
+                    and confirm_timer.reached()
+                ):
                     raise NoOpportunityRemain
 
         except OperationFailed:
             if not self.config.Overcome_OnlyToCompleteDailyMission:
-                logger.warning('failed to overcome the current stage, will try the other tribe tower')
+                logger.warning(
+                    "failed to overcome the current stage, will try the other tribe tower"
+                )
                 self.available_company.remove(self.available_company[0])
             else:
                 self.available_company.clear()
@@ -191,21 +218,30 @@ class TribeTower(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(BACK, offset=(5, 5), interval=5):
+            if click_timer.reached() and self.appear_then_click(
+                BACK, offset=(5, 5), interval=5
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(GOTO_BACK, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear_then_click(
+                GOTO_BACK, offset=(30, 30), interval=5
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(TRIBE_TOWER_CHECK, offset=(30, 30)) and confirm_timer.reached():
+            if (
+                self.appear(TRIBE_TOWER_CHECK, offset=(30, 30))
+                or self.appear(MAIN_CHECK, offset=(5, 5), static=False)
+            ) and confirm_timer.reached():
                 return
 
     def ensure_failed(self, skip_first_screenshot=True):
-        logger.info("abandon the current attempt to overcome it, because it's set up this way")
+        logger.info(
+            "abandon the current attempt to overcome it, because it's set up this way"
+        )
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -213,11 +249,15 @@ class TribeTower(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(PAUSE, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear_then_click(
+                PAUSE, offset=(30, 30), interval=5
+            ):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(ABANDON, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear_then_click(
+                ABANDON, offset=(30, 30), interval=5
+            ):
                 click_timer.reset()
                 continue
 
