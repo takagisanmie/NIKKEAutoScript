@@ -324,11 +324,11 @@ class Shop(ShopBase):
     @property
     def credit_or_gratis(self) -> bool:
         if GRATIS_B.match(
-            self._image, offset=(5, 5), threshold=0.8, static=False
+            self._image, offset=(5, 5), threshold=0.96, static=False
         ) and GRATIS_B.match_appear_on(self._image, threshold=5):
             return True
         elif CREDIT.match(
-            self._image, offset=(5, 5), threshold=0.8, static=False
+            self._image, offset=(5, 5), threshold=0.96, static=False
         ) and CREDIT.match_appear_on(self._image, threshold=5):
             return True
 
