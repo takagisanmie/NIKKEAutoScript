@@ -1,0 +1,285 @@
+{
+  "NKAS": {
+    "Emulator": {
+      "Serial": "127.0.0.1:5555   ",
+      "PackageName": "com_proximabeta_nikke",
+      "ScreenshotMethod": "DroidCast",
+      "ControlMethod": "minitouch",
+      "AdbRestart": true,
+      "ScreenshotInterval": 0.5
+    },
+    "Optimization": {
+      "WhenTaskQueueEmpty": "close_game"
+    },
+    "Notification": {
+      "WhenDailyTaskCompleted": false
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Restart": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "Restart",
+      "SuccessInterval": 0,
+      "FailureInterval": 0,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Reward": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 14:33:59",
+      "Command": "Reward",
+      "SuccessInterval": "120-240",
+      "FailureInterval": "120-240",
+      "ServerUpdate": "04:00"
+    },
+    "Reward": {
+      "CollectSocialPoint": true,
+      "CollectSpecialArenaPoint": true
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Destroy": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "Destroy",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Commission": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 18:12:22",
+      "Command": "Commission",
+      "SuccessInterval": "240-240",
+      "FailureInterval": "120-240",
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Mailbox": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "Mailbox",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Daily": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "Daily",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Daily": {
+      "EnhanceEquipment": true
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "MissionPass": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2024-03-27 21:00:00",
+      "Command": "MissionPass",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Liberation": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "Liberation",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Conversation": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "Conversation",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Shop": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "Shop",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "GeneralShop": {
+      "enable": true
+    },
+    "ArenaShop": {
+      "enable": true,
+      "priority": "FIRE_CODE >ELECTRIC_CODE > IRON_CODE >WATER_CODE > WIND_CODE"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "RubbishShop": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2024-03-25 21:00:00",
+      "Command": "RubbishShop",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "RubbishShop": {
+      "priority": null
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "SimulationRoom": {
+    "Scheduler": {
+      "Enable": false,
+      "NextRun": "2024-03-26 21:00:00",
+      "Command": "SimulationRoom",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Area": {
+      "Difficulty": "Level_4",
+      "OnsetArea": "A",
+      "EndingArea": "C"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "TribeTower": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "TribeTower",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Overcome": {
+      "OnlyToCompleteDailyMission": true
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "RedeemCodes": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 16:11:50",
+      "Command": "RedeemCodes",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "RookieArena": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "RookieArena",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "DailyGift": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:00:00",
+      "Command": "DailyGift",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "WeeklyGift": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-04-01 21:00:00",
+      "Command": "WeeklyGift",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "MonthlyGift": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-31 21:00:00",
+      "Command": "MonthlyGift",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "Event": {
+    "Event": {
+      "Event": "event_5"
+    }
+  }
+}
