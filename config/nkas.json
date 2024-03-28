@@ -21,7 +21,7 @@
   "Restart": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-28 21:00:00",
+      "NextRun": "2024-03-28 19:51:01",
       "Command": "Restart",
       "SuccessInterval": 0,
       "FailureInterval": 0,
@@ -152,11 +152,11 @@
       "ServerUpdate": "04:00"
     },
     "GeneralShop": {
-      "enable": true
+      "enable": false
     },
     "ArenaShop": {
       "enable": true,
-      "priority": "FIRE_CODE >ELECTRIC_CODE > IRON_CODE >WATER_CODE > WIND_CODE"
+      "priority": "FIRE_CODE >FIRE_CODE >FIRE_CODE >ELECTRIC_CODE >ELECTRIC_CODE >ELECTRIC_CODE > IRON_CODE > IRON_CODE > IRON_CODE >WATER_CODE >WATER_CODE >WATER_CODE > WIND_CODE> WIND_CODE> WIND_CODE"
     },
     "Storage": {
       "Storage": {}
@@ -212,19 +212,6 @@
       "Storage": {}
     }
   },
-  "RedeemCodes": {
-    "Scheduler": {
-      "Enable": true,
-      "NextRun": "2024-03-28 16:11:50",
-      "Command": "RedeemCodes",
-      "SuccessInterval": 0,
-      "FailureInterval": 120,
-      "ServerUpdate": "04:00"
-    },
-    "Storage": {
-      "Storage": {}
-    }
-  },
   "RookieArena": {
     "Scheduler": {
       "Enable": true,
@@ -269,6 +256,19 @@
       "Enable": true,
       "NextRun": "2024-03-31 21:00:00",
       "Command": "MonthlyGift",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
+  "RedeemCodes": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "2024-03-28 21:50:58",
+      "Command": "RedeemCodes",
       "SuccessInterval": 0,
       "FailureInterval": 120,
       "ServerUpdate": "04:00"
