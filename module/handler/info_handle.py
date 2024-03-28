@@ -41,6 +41,7 @@ class InfoHandler(ModuleBase):
             if not color_similar(
                 color1=b, color2=(112.786625, 111.897375, 113.121875), threshold=10
             ):
+                self.device.click_minitouch(x, y)
                 return True
             else:
                 self.device.click_minitouch(20, 600)
