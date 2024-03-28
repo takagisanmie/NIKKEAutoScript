@@ -215,6 +215,10 @@ class NikkeAutoScript:
         from module.nikke_survivors.nikke_survivors import NikkeSurvivors
         NikkeSurvivors(config=self.config, device=self.device).run()
 
+    def redeem_codes(self):
+        from module.redeem_codes.redeem_codes import RedeemCodes
+        RedeemCodes(config=self.config, device=self.device).run()
+        
     def wait_until(self, future):
         """
             Wait until a specific time.
