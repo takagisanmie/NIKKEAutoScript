@@ -225,6 +225,19 @@
       "Storage": {}
     }
   },
+  "RedeemCodes": {
+    "Scheduler": {
+      "Enable": true,
+      "NextRun": "1989-12-27 00:00:00",
+      "Command": "RedeemCodes",
+      "SuccessInterval": 0,
+      "FailureInterval": 120,
+      "ServerUpdate": "04:00"
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "DailyGift": {
     "Scheduler": {
       "Enable": false,
