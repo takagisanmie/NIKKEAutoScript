@@ -28,6 +28,10 @@ TribeTower:
   Scheduler:
     Enable: false
 
+RedeemCodes:
+  Scheduler:
+    Enable: true
+
 Daily:
   Scheduler:
     Enable: false
