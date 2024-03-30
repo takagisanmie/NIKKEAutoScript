@@ -10,3 +10,10 @@
 **/log
 **/node_modules
 
+config/reloadnkas
+glo.py
+install_package.py
+start.bat
+updater.bat
+config/deploy.yaml
+config/nkas.json
