@@ -24,4 +24,4 @@ dic_lang: dict[str, dict[str, str]] = {}
 
 def reload():
     global dic_lang
-    dic_lang = read('./module/config/i18n/zh-CN.yaml')
+    dic_lang = read('./module/config/i18n/en-EN.yaml')
