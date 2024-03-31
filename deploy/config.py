@@ -12,7 +12,7 @@ class ExecutionError(Exception):
 
 
 class ConfigModel:
-    Repository: str = "https://github.com/takagisanmie/NIKKEAutoScript"
+    Repository: str = "https://github.com/totallynotaguynon/NKAS"
     Branch: str = "master"
     GitExecutable: str = "./toolkit/Git/mingw64/bin/git.exe"
     GitProxy: Optional[str] = None
