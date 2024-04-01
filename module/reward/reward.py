@@ -12,7 +12,7 @@ class NoRewards(Exception):
 
 class Reward(UI):
     def receive_reward(self, skip_first_screenshot=True):
-        logger.hr('Reward receive')
+        logger.hr("Reward receive")
         confirm_timer = Timer(1, count=3).start()
         # Set click interval to 0.3, because game can't respond that fast.
         click_timer = Timer(0.3)
@@ -37,7 +37,9 @@ class Reward(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(RECEIVE, offset=(30, 30), interval=10):
+            if click_timer.reached() and self.appear_then_click(
+                RECEIVE, offset=(30, 30), interval=10
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
@@ -45,11 +47,11 @@ class Reward(UI):
             if self.appear(MAIN_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
-        logger.info('Defence Reward receive end')
+        logger.info("Defence Reward receive end")
         return True
 
     def receive_social_point(self, skip_first_screenshot=True):
-        logger.hr('Social Point receive')
+        logger.hr("Social Point receive")
         confirm_timer = Timer(5, count=3).start()
         click_timer = Timer(0.3)
         while 1:
@@ -58,12 +60,16 @@ class Reward(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(SEND_AND_RECEIVE, offset=(30, 30), interval=2):
+            if click_timer.reached() and self.appear_then_click(
+                SEND_AND_RECEIVE, offset=(30, 30), interval=2
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=1, static=False):
+            if click_timer.reached() and self.appear_then_click(
+                CONFRIM_B, offset=(30, 30), interval=1, static=False
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
@@ -71,11 +77,11 @@ class Reward(UI):
             if confirm_timer.reached():
                 break
 
-        logger.info('Social Point receive end')
+        logger.info("Social Point receive end")
         return True
 
     def receive_special_arena_point(self, skip_first_screenshot=True):
-        logger.hr('Special Arena Point receive')
+        logger.hr("Special Arena Point receive")
         confirm_timer = Timer(6, count=5).start()
         click_timer = Timer(0.3)
         while 1:
@@ -84,14 +90,16 @@ class Reward(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(ARENA_GOTO_SPECIAL_ARENA, offset=(30, 30),
-                                                                interval=5, static=False):
+            if click_timer.reached() and self.appear_then_click(
+                ARENA_GOTO_SPECIAL_ARENA, offset=(30, 30), interval=5, static=False
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(RECEIVE_SPECIAL_ARENA_POINT, offset=(30, 30),
-                                                                interval=5, static=False):
+            if click_timer.reached() and self.appear_then_click(
+                RECEIVE_SPECIAL_ARENA_POINT, offset=(30, 30), interval=5, static=False
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
@@ -105,14 +113,15 @@ class Reward(UI):
             elif self.appear(NO_REWARDS_3, offset=(5, 5), threshold=0.95):
                 return True
 
-            if click_timer.reached() and self.appear_then_click(REWARD_B, offset=(30, 30),
-                                                                interval=5, static=False):
+            if click_timer.reached() and self.appear_then_click(
+                REWARD_B, offset=(30, 30), interval=5, static=False
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
             if self.handle_reward(interval=1):
-                logger.info('Special Arena Point receive end')
+                logger.info("Special Arena Point receive end")
                 raise NoRewards
 
             if confirm_timer.reached():
@@ -148,8 +157,9 @@ class Reward(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(button, offset=(30, 30),
-                                                                interval=0.3):
+            if click_timer.reached() and self.appear_then_click(
+                button, offset=(5, 5), interval=0.3, static=False, threshold=0.9
+            ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
@@ -162,10 +172,10 @@ class Reward(UI):
         self.receive_reward()
         if self.config.Reward_CollectSocialPoint:
             # ----
-            self.ui_ensure(page_friend)
+            # self.ui_ensure(page_friend)
             # ----
-            # self.ui_ensure(page_main)
-            # self.temporary(MAIN_GOTO_FRIEND)
+            self.ui_ensure(page_main)
+            self.temporary(MAIN_GOTO_FRIEND)
             # ----
             self.receive_social_point()
         if self.config.Reward_CollectSpecialArenaPoint:
