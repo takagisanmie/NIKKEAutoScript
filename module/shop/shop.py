@@ -229,7 +229,7 @@ class ShopBase(UI):
         products: SelectedGrids,
         skip_first_screenshot=True,
     ):
-        swipe_confirm = Timer(2, count=6).start()
+        swipe_confirm = Timer(2, count=8).start()
         click_timer = Timer(1.227)
         product: Button = products.first_or_none().button
         logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
