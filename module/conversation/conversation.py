@@ -33,8 +33,9 @@ class Conversation(UI):
         return result
 
     def get_next_target(self):
-        if DETAIL_CHECK.match(self.device.image, threshold=0.71):
-            if OPPORTUNITY_B.match(self.device.image, offset=5, threshold=0.8, static=False):
+        if DETAIL_CHECK.match(self.device.image, threshold=0.71) and GIFT.match_appear_on(self.device.image,
+                                                                                          threshold=10):
+            if OPPORTUNITY_B.match(self.device.image, offset=5, threshold=0.92, static=False):
                 logger.warning("There are no opportunities remaining")
                 raise NoOpportunityRemain
 
@@ -45,20 +46,23 @@ class Conversation(UI):
                 self.device.click_minitouch(690, 560)
             else:
                 self._confirm_timer.reset()
+                self.device.stuck_record_clear()
+                self.device.click_record_clear()
                 return
         else:
             try:
-                if not self.opportunity_remain:
-                    logger.warning("There are no opportunities remaining")
-                    raise NoOpportunityRemain
-                r = [
-                    i.get("area")
-                    for i in FAVOURITE_CHECK.match_several(
-                        self.device.image, threshold=0.71, static=False
-                    )
-                ]
-                r.sort(key=lambda x: x[1])
-                self.device.click_minitouch(*find_center(r[0]))
+                if CONVERSATION_CHECK.match(self.device.image, offset=5):
+                    if not self.opportunity_remain:
+                        logger.warning("There are no opportunities remaining")
+                        raise NoOpportunityRemain
+                    r = [
+                        i.get("area")
+                        for i in FAVOURITE_CHECK.match_several(
+                            self.device.image, threshold=0.71, static=False
+                        )
+                    ]
+                    r.sort(key=lambda x: x[1])
+                    self.device.click_minitouch(*find_center(r[0]))
             except Exception:
                 pass
 
@@ -88,7 +92,7 @@ class Conversation(UI):
                 continue
 
             if click_timer.reached() and self.appear_then_click(
-                    CONFRIM_B, offset=(30, 30), interval=1
+                    CONFRIM_B, offset=(5, 5), static=False
             ):
                 click_timer.reset()
                 continue
@@ -128,7 +132,7 @@ class Conversation(UI):
                 click_timer.reset()
                 continue
 
-        self.device.sleep(2)
+        self.device.sleep(2.5)
         return self.communicate()
         # self.ensure_back()
 
