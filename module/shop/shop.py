@@ -143,7 +143,7 @@ class ShopBase(UI):
                     if self.appear(
                         product, offset=(5, 5), threshold=0.9, static=False
                     ) and product.match_appear_on(self.device.image, 10):
-                        if check_price:
+                        if check_price and product.name != ORNAMENT.name:
                             area = _area_offset(product.button, (-50, 0, 50, 250))
                             img = self.device.image[
                                 area[1] : area[3], area[0] : area[2]

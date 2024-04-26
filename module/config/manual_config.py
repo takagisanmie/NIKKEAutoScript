@@ -7,7 +7,7 @@ class ManualConfig:
        > Reward > Destroy > Mailbox > DailyGift > WeeklyGift > MonthlyGift > Commission > Shop > RubbishShop > Conversation > RookieArena > SimulationRoom > TribeTower > Event >  Daily > MissionPass > Liberation > NikkeSurvivors
        """
 
-    GENERAL_SHOP_PRIORITY = """GRATIS > CORE_DUST_CASE"""
+    GENERAL_SHOP_PRIORITY = """GRATIS > CORE_DUST_CASE > ORNAMENT"""
 
     RUBBISH_SHOP_PRIORITY = """
        GEM
@@ -16,7 +16,7 @@ class ManualConfig:
 
     ARENA_SHOP_PRIORITY = """"""
 
-    GENERAL_SHOP_PRODUCT = {"GRATIS": 1, "CORE_DUST_CASE": 1}
+    GENERAL_SHOP_PRODUCT = {"GRATIS": 1, "CORE_DUST_CASE": 1, "ORNAMENT": 1}
 
     RUBBISH_SHOP_PRODUCT = {
         "GEM": 1,
