@@ -38,6 +38,7 @@ class ManualConfig:
         "WATER_CODE": 1,
         "WIND_CODE": 1,
         "MANUAL_SELECTION_BOX": 1,
+        "ORNAMENT": 1,
     }
 
     FORWARD_PORT_RANGE = (20000, 21000)

@@ -35,7 +35,7 @@ class Conversation(UI):
     def get_next_target(self):
         if DETAIL_CHECK.match(self.device.image, threshold=0.71) and GIFT.match_appear_on(self.device.image,
                                                                                           threshold=10):
-            if OPPORTUNITY_B.match(self.device.image, offset=5, threshold=0.92, static=False):
+            if OPPORTUNITY_B.match(self.device.image, offset=5, threshold=0.96, static=False):
                 logger.warning("There are no opportunities remaining")
                 raise NoOpportunityRemain
 
