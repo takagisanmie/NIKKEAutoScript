@@ -6,6 +6,7 @@ from module.base.button import Button
 ANSWER_CHECK = Button(area={'cn': (70, 818, 88, 894)}, color={'cn': (7, 24, 35)}, button={'cn': (70, 818, 88, 894)}, file={'cn': './assets/cn/conversation/ANSWER_CHECK.png'})
 CASE_CLOSED = Button(area={'cn': (583, 637, 686, 647)}, color={'cn': (103, 205, 250)}, button={'cn': (583, 637, 686, 647)}, file={'cn': './assets/cn/conversation/CASE_CLOSED.png'})
 COMMUNICATE = Button(area={'cn': (460, 1017, 559, 1064)}, color={'cn': (87, 149, 207)}, button={'cn': (460, 1017, 559, 1064)}, file={'cn': './assets/cn/conversation/COMMUNICATE.png'})
+COMMUNICATE_QUICKLY = Button(area={'cn': (472, 952, 580, 988)}, color={'cn': (254, 143, 101)}, button={'cn': (472, 952, 580, 988)}, file={'cn': './assets/cn/conversation/COMMUNICATE_QUICKLY.png'})
 DETAIL_CHECK = Button(area={'cn': (514, 1173, 621, 1197)}, color={'cn': (254, 141, 129)}, button={'cn': (514, 1173, 621, 1197)}, file={'cn': './assets/cn/conversation/DETAIL_CHECK.png'})
 FAVOURITE_CHECK = Button(area={'cn': (27, 394, 45, 499)}, color={'cn': (254, 98, 83)}, button={'cn': (27, 394, 45, 499)}, file={'cn': './assets/cn/conversation/FAVOURITE_CHECK.png'})
 GIFT = Button(area={'cn': (160, 1018, 225, 1059)}, color={'cn': (254, 177, 79)}, button={'cn': (160, 1018, 225, 1059)}, file={'cn': './assets/cn/conversation/GIFT.png'})

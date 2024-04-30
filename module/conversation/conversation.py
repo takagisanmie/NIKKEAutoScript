@@ -77,7 +77,7 @@ class Conversation(UI):
         self.answer()
 
     def ensure_wait_to_answer(self, skip_first_screenshot=True):
-        click_timer = Timer(0.3)
+        click_timer = Timer(0.6)
 
         while 1:
             if skip_first_screenshot:
@@ -86,8 +86,15 @@ class Conversation(UI):
                 self.device.screenshot()
 
             if click_timer.reached() and self.appear_then_click(
+                    COMMUNICATE_QUICKLY, offset=(5, 5), interval=3
+            ) and COMMUNICATE_QUICKLY.match_appear_on(self.device.image,
+                                                      threshold=10):
+                click_timer.reset()
+                continue
+            elif click_timer.reached() and self.appear_then_click(
                     COMMUNICATE, offset=(30, 30), interval=3
-            ):
+            ) and COMMUNICATE.match_appear_on(self.device.image,
+                                              threshold=10):
                 click_timer.reset()
                 continue
 
@@ -97,9 +104,14 @@ class Conversation(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(ANSWER_CHECK, offset=(1, 1), static=False):
+            if click_timer.reached() and self.appear(ANSWER_CHECK, offset=(1, 1), static=False):
                 self.device.sleep(0.5)
                 break
+
+            elif click_timer.reached() and self.appear(DETAIL_CHECK, offset=(30, 30),
+                                                       static=False) and GIFT.match_appear_on(self.device.image,
+                                                                                              threshold=10):
+                return self.communicate()
 
             if click_timer.reached() and self.appear(
                     AUTO_CLICK_CHECK, offset=(30, 30), interval=0.3
@@ -112,8 +124,6 @@ class Conversation(UI):
     def answer(self, skip_first_screenshot=True):
         click_timer = Timer(0.5)
         answer_a_area = (82, 817, 640, 900)
-        self.device.click_minitouch(*find_center(answer_a_area))
-
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
