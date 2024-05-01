@@ -76,7 +76,7 @@ class Conversation(UI):
         self.ensure_wait_to_answer()
 
     def ensure_wait_to_answer(self, skip_first_screenshot=True):
-        confirm_timer = Timer(2, count=3).start()
+        confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(1)
         while 1:
             if skip_first_screenshot:
@@ -100,14 +100,16 @@ class Conversation(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear_then_click(
-                    CONFRIM_B, offset=(5, 5), interval=0.3, static=False
+            if self.appear(
+                    CONFRIM_B, offset=(5, 5), static=False
             ):
+                x, y = CONFRIM_B.location
+                self.device.click_minitouch(x - 75, y)
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(ANSWER_CHECK, offset=(1, 1), static=False) and confirm_timer.reached():
+            if self.appear(ANSWER_CHECK, offset=(1, 1), static=False):
                 return self.answer()
 
             elif not COMMUNICATE.match_appear_on(self.device.image, threshold=6) \
