@@ -74,50 +74,58 @@ class Conversation(UI):
         logger.hr("Start a conversation")
         self.get_next_target()
         self.ensure_wait_to_answer()
-        self.answer()
 
     def ensure_wait_to_answer(self, skip_first_screenshot=True):
-        click_timer = Timer(0.6)
-
+        confirm_timer = Timer(2, count=3).start()
+        click_timer = Timer(1)
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(
-                    COMMUNICATE_QUICKLY, offset=(5, 5), interval=3
-            ) and COMMUNICATE_QUICKLY.match_appear_on(self.device.image,
-                                                      threshold=10):
-                click_timer.reset()
-                continue
-            elif click_timer.reached() and self.appear_then_click(
-                    COMMUNICATE, offset=(30, 30), interval=3
-            ) and COMMUNICATE.match_appear_on(self.device.image,
-                                              threshold=10):
-                click_timer.reset()
-                continue
-
-            if click_timer.reached() and self.appear_then_click(
-                    CONFRIM_B, offset=(5, 5), static=False
+            if click_timer.reached() and COMMUNICATE_QUICKLY.match_appear_on(self.device.image,
+                                                                             threshold=6) and self.appear_then_click(
+                COMMUNICATE_QUICKLY, offset=(5, 5), interval=3
             ):
+                confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(ANSWER_CHECK, offset=(1, 1), static=False):
-                self.device.sleep(0.5)
-                break
+            elif click_timer.reached() and COMMUNICATE.match_appear_on(self.device.image,
+                                                                       threshold=6) and self.appear_then_click(
+                COMMUNICATE, offset=(30, 30), interval=3
+            ):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
 
-            elif click_timer.reached() and self.appear(DETAIL_CHECK, offset=(30, 30),
-                                                       static=False) and GIFT.match_appear_on(self.device.image,
-                                                                                              threshold=10):
+            if self.appear_then_click(
+                    CONFRIM_B, offset=(5, 5), interval=0.3, static=False
+            ):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.appear(ANSWER_CHECK, offset=(1, 1), static=False) and confirm_timer.reached():
+                return self.answer()
+
+            elif not COMMUNICATE.match_appear_on(self.device.image, threshold=6) \
+                    and self.appear(DETAIL_CHECK, offset=(5, 5), static=False) \
+                    and GIFT.match_appear_on(self.device.image, threshold=10) \
+                    and confirm_timer.reached():
                 return self.communicate()
 
-            if click_timer.reached() and self.appear(
+            if self.appear(
                     AUTO_CLICK_CHECK, offset=(30, 30), interval=0.3
             ):
                 self.device.click_minitouch(100, 100)
                 logger.info("Click %s @ %s" % (point2str(100, 100), "WAIT_TO_ANSWER"))
+                click_timer.reset()
+                continue
+
+            if click_timer.reached() and not GIFT.match_appear_on(self.device.image, threshold=10):
+                self.device.click_minitouch(100, 100)
                 click_timer.reset()
                 continue
 
