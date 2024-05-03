@@ -50,12 +50,16 @@ class Interception(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(BATTLE_QUICKLY, offset=(5, 5)):
+            if click_timer.reached() \
+                    and BATTLE_QUICKLY.match_appear_on(self.device.image, 10) \
+                    and self.appear_then_click(BATTLE_QUICKLY, offset=(5, 5)):
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
 
-            elif click_timer.reached() and self.appear_then_click(BATTLE, offset=(5, 5)):
+            elif click_timer.reached() \
+                    and BATTLE.match_appear_on(self.device.image, 10) \
+                    and self.appear_then_click(BATTLE, offset=(5, 5)):
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
