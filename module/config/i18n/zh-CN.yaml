@@ -92,12 +92,15 @@ Task:
   Daily:
     name: 日常
     help: ""
-  Event:
-    name: 活动
-    help: ""
-  NikkeSurvivors:
-    name: 小游戏挑战模式挂机
-    help: ""
+  Interception:
+    name: 特殊拦截战
+    help: "请确保有足够的战力能够在Auto模式下通过9阶段，火车选择编队1，其他选择编队2 \n
+    火车队伍推荐，从左到右，按顺序摆放：\n
+    鲁德米拉，1 1 4，全T9装备，充能魔方\n
+    皇冠，10 10 10，全T10装备，换弹魔方\n
+    红莲：暗影，10 7 10，全T10装备，换弹魔方\n
+    樱花，4 4 4，全T9装备，充能魔方\n
+    小红帽，10 10 10，全T10装备，换弹魔方\n"
   RubbishShop:
     name: 废铁商店
     help: ""

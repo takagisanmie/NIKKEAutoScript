@@ -38,7 +38,7 @@ class Reward(UI):
                 continue
 
             if click_timer.reached() and self.appear_then_click(
-                RECEIVE, offset=(30, 30), interval=10
+                    RECEIVE, offset=(30, 30), interval=10
             ):
                 confirm_timer.reset()
                 click_timer.reset()
@@ -61,14 +61,14 @@ class Reward(UI):
                 self.device.screenshot()
 
             if click_timer.reached() and self.appear_then_click(
-                SEND_AND_RECEIVE, offset=(30, 30), interval=2
+                    SEND_AND_RECEIVE, offset=(30, 30), interval=2
             ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
             if click_timer.reached() and self.appear_then_click(
-                CONFRIM_B, offset=(30, 30), interval=1, static=False
+                    CONFRIM_B, offset=(30, 30), interval=1, static=False
             ):
                 confirm_timer.reset()
                 click_timer.reset()
@@ -91,14 +91,21 @@ class Reward(UI):
                 self.device.screenshot()
 
             if click_timer.reached() and self.appear_then_click(
-                ARENA_GOTO_SPECIAL_ARENA, offset=(30, 30), interval=5, static=False
+                    ARENA_GOTO_SPECIAL_ARENA, offset=(30, 30), interval=5, static=False
             ):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
             if click_timer.reached() and self.appear_then_click(
-                RECEIVE_SPECIAL_ARENA_POINT, offset=(30, 30), interval=5, static=False
+                    RECEIVE_SPECIAL_ARENA_POINT, offset=(30, 30), interval=5, static=False
+            ):
+                confirm_timer.reset()
+                click_timer.reset()
+                continue
+
+            if self.appear_then_click(
+                    REWARD_B, offset=(30, 30), interval=5, static=False
             ):
                 confirm_timer.reset()
                 click_timer.reset()
@@ -112,13 +119,6 @@ class Reward(UI):
 
             elif self.appear(NO_REWARDS_3, offset=(5, 5), threshold=0.95):
                 return True
-
-            if click_timer.reached() and self.appear_then_click(
-                REWARD_B, offset=(30, 30), interval=5, static=False
-            ):
-                confirm_timer.reset()
-                click_timer.reset()
-                continue
 
             if self.handle_reward(interval=1):
                 logger.info("Special Arena Point receive end")
@@ -158,7 +158,7 @@ class Reward(UI):
                 self.device.screenshot()
 
             if click_timer.reached() and self.appear_then_click(
-                button, offset=(5, 5), interval=0.3, static=False, threshold=0.9
+                    button, offset=(5, 5), interval=0.3, static=False, threshold=0.9
             ):
                 confirm_timer.reset()
                 click_timer.reset()
