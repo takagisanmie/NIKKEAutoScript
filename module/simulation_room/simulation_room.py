@@ -333,7 +333,7 @@ class SimulationRoom(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(START_SIMULATION_CONFIRM, offset=(30, 30), interval=5):
+            if click_timer.reached() and self.appear_then_click(START_SIMULATION_CONFIRM, offset=(5, 5), static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue

@@ -97,6 +97,18 @@ page_tribe_tower.link(button=GOTO_BACK, destination=page_ark)
 page_tribe_tower.link(button=GOTO_MAIN, destination=page_main)
 page_ark.link(button=ARK_GOTO_TRIBE_TOWER, destination=page_tribe_tower)
 
+# interception
+page_interception = Page(INTERCEPTION_CHECK)
+page_interception.link(button=GOTO_BACK, destination=page_ark)
+page_interception.link(button=GOTO_MAIN, destination=page_main)
+page_ark.link(button=ARK_GOTO_INTERCEPTION, destination=page_interception)
+
+# interception
+page_special_interception = Page(SPECIAL_INTERCEPTION_CHECK)
+page_special_interception.link(button=GOTO_BACK, destination=page_interception)
+page_special_interception.link(button=GOTO_MAIN, destination=page_main)
+# page_interception.link(button=INTERCEPTION_GOTO_SPECIAL_INTERCEPTION, destination=page_special_interception)
+
 # simulation room
 page_simulation_room = Page(SIMULATION_ROOM_CHECK)
 page_simulation_room.link(button=GOTO_BACK, destination=page_ark)
@@ -137,63 +149,3 @@ page_outpost.link(button=OUTPOST_GOTO_COMMISSION, destination=page_commission)
 page_mailbox = Page(MAILBOX_CHECK)
 page_mailbox.link(button=MAILBOX_GOTO_MAIN, destination=page_main)
 page_main.link(button=MAIN_GOTO_MAILBOX, destination=page_mailbox)
-
-from module.event.event_5.assets import *
-
-MAIN_GOTO_EVENT = MAIN_GOTO_EVENT
-EVENT_GOTO_STORY_1 = EVENT_GOTO_STORY_1
-SKIP = SKIP
-STAGE_DETAILED_CHECK = STAGE_DETAILED_CHECK
-TOUCH_TO_CONTINUE = TOUCH_TO_CONTINUE
-STORY_1_NORMAL_CHECK = STORY_1_NORMAL_CHECK
-STORY_1_HARD_CHECK = STORY_1_HARD_CHECK
-STORY_2_NORMAL_CHECK = STORY_2_NORMAL_CHECK
-STORY_2_HARD_CHECK = STORY_2_HARD_CHECK
-STORY_1_GOTO_STAGE_LIST = STORY_1_GOTO_STAGE_LIST
-STORY_2_GOTO_STAGE_LIST = STORY_2_GOTO_STAGE_LIST
-STAGE_CHECK = STAGE_CHECK
-STORY_1_NORMAL_UNLOCKED = STORY_1_NORMAL_UNLOCKED
-STORY_1_NORMAL_COMPLETED = STORY_1_NORMAL_COMPLETED
-STORY_1_NORMAL_LOCKED = STORY_1_NORMAL_LOCKED
-STORY_1_HARD_UNLOCKED = STORY_1_HARD_UNLOCKED
-STORY_1_HARD_COMPLETED = STORY_1_HARD_COMPLETED
-STORY_1_HARD_LOCKED = STORY_1_HARD_LOCKED
-STORY_2_NORMAL_UNLOCKED = STORY_2_NORMAL_UNLOCKED
-STORY_2_NORMAL_COMPLETED = STORY_2_NORMAL_COMPLETED
-STORY_2_NORMAL_LOCKED = STORY_2_NORMAL_LOCKED
-STORY_2_HARD_UNLOCKED = STORY_2_HARD_UNLOCKED
-STORY_2_HARD_COMPLETED = STORY_2_HARD_COMPLETED
-STORY_2_HARD_LOCKED = STORY_2_HARD_LOCKED
-STORY_1_NORMAL_STAGE_AREA_A = STORY_1_NORMAL_STAGE_AREA_A
-STORY_1_NORMAL_STAGE_AREA_B = STORY_1_NORMAL_STAGE_AREA_B
-STORY_1_HARD_STAGE_AREA_A = STORY_1_HARD_STAGE_AREA_A
-STORY_1_HARD_STAGE_AREA_B = STORY_1_HARD_STAGE_AREA_B
-STORY_2_NORMAL_STAGE_AREA_A = STORY_2_NORMAL_STAGE_AREA_A
-STORY_2_NORMAL_STAGE_AREA_B = STORY_2_NORMAL_STAGE_AREA_B
-STORY_2_HARD_STAGE_AREA_A = STORY_2_HARD_STAGE_AREA_A
-STORY_2_HARD_STAGE_AREA_B = STORY_2_HARD_STAGE_AREA_B
-FIGHT = FIGHT
-NEXT_STAGE = NEXT_STAGE
-END_CHECK = END_CHECK
-FIGHT_QUICKLY = FIGHT_QUICKLY
-MAX = MAX
-QUICK_FIGHT_CONFIRM = QUICK_FIGHT_CONFIRM
-STORY_1_NORMAL_NO_OPPORTUNITY = STORY_1_NORMAL_NO_OPPORTUNITY
-STORY_1_HARD_NO_OPPORTUNITY = STORY_1_HARD_NO_OPPORTUNITY
-STORY_2_NORMAL_NO_OPPORTUNITY = STORY_2_NORMAL_NO_OPPORTUNITY
-STORY_2_HARD_NO_OPPORTUNITY = STORY_2_HARD_NO_OPPORTUNITY
-QUICK_FIGHT_CHECK = QUICK_FIGHT_CHECK
-
-# Event
-page_event = Page(EVENT_CHECK)
-page_event.link(button=GOTO_BACK, destination=page_main)
-# page_event.link(button=GOTO_MAIN, destination=page_main)
-
-page_story_1 = Page(STORY_1_CHECK)
-# page_story_1.link(button=GOTO_BACK, destination=page_main)
-page_story_1.link(button=GOTO_MAIN, destination=page_main)
-
-page_story_2 = Page(STORY_2_CHECK)
-page_story_2.link(button=GOTO_BACK, destination=page_event)
-page_story_2.link(button=GOTO_MAIN, destination=page_main)
-page_event.link(button=EVENT_GOTO_STORY_2, destination=page_story_2)

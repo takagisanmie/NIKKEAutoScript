@@ -58,6 +58,9 @@ TribeTower:
 RookieArena:
   - Scheduler
 
+Interception:
+  - Scheduler
+
 # ==================== Gift ====================
 
 DailyGift:
