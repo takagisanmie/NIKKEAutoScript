@@ -41,8 +41,8 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 #### Q3：updater.bat 在运行后一闪而过
 #### A3： 这应该是无法访问Github时会出现的情况，可以在 config/deploy.yaml 的 GitProxy 字段中填写代理，或者更改hosts等
 ------
-#### Q4：在咨询任务中，无法咨询任何NIKKE，确保在设置中填写了NIKKE的正确名称，以及在游戏中收藏了对应的NIKKE
-#### A4：请检查NIKKE的画质设置，确保为全高画质，所有选项全部打开，并且拥有‘光晕效果’和‘颜色分级’两个选项
+#### Q4：在咨询任务中，无法咨询任何NIKKE
+#### A4：请检查NIKKE的画质设置，确保选项拥有‘光晕效果’和‘颜色分级’两个选项，以及在游戏中收藏了想咨询的NIKKE
 ------
 #### Q5：在运行某个任务时，没有正确点击
 #### A5：可能是模拟器的分辨率为1280 * 720，但在运行NIKKE时是以竖屏运行的，这样会导致点击到错误位置，请设置为720 * 1280后，再次尝试
@@ -59,8 +59,13 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 #### Q9：进入付费商店时，提示'网络异常，读取商店结账资讯失败'
 #### A9：这很可能是因为模拟器的 Google Play 未登录账号，可以登录账号后再尝试
 ------
+#### 推荐画面设置
+<img src="https://s2.loli.net/2024/05/06/Rjcx7EwWXlbKBot.png" alt="1.png" style="zoom: 50%;" />
+
 ### 预览
 
 ------
 
 ![Snipaste_2023-04-30_16-18-20.png](https://s2.loli.net/2023/04/30/zkSraMNEGgQv7iw.png)
+
+![](https://profile-counter.glitch.me/takagisanmie-NIKKEAutoScript/count.svg)
