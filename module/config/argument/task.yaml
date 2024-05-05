@@ -24,6 +24,8 @@ Mailbox:
   - Scheduler
 
 # ==================== Daily ====================
+LIPass:
+  - Scheduler
 
 Daily:
   - Scheduler

@@ -92,10 +92,13 @@ Task:
   Daily:
     name: 日常
     help: ""
+  LIPass:
+    name: LIPass每日签到
+    help: "可在 https://pass.levelinfinite.com/rewards?lang=zh 兑换珠宝"
   Interception:
     name: 特殊拦截战
     help: "请确保有足够的战力能够在Auto模式下通过9阶段，火车选择编队1，其他选择编队2 \n
-    火车队伍推荐，从左到右，按顺序摆放：\n
+    火车队伍推荐，最低参考战力128000，从左到右，按顺序摆放：\n
     鲁德米拉，1 1 4，全T9装备，充能魔方\n
     皇冠，10 10 10，全T10装备，换弹魔方\n
     红莲：暗影，10 7 10，全T10装备，换弹魔方\n
