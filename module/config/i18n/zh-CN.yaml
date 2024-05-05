@@ -94,7 +94,8 @@ Task:
     help: ""
   LIPass:
     name: LIPass每日签到
-    help: "可在 https://pass.levelinfinite.com/rewards?lang=zh 兑换珠宝"
+    help: "可在 https://pass.levelinfinite.com/rewards?lang=zh 兑换珠宝 \n
+    需要在 NKAS\\module\\lipass\\lipass.py 中填写Cookie"
   Interception:
     name: 特殊拦截战
     help: "请确保有足够的战力能够在Auto模式下通过9阶段，火车选择编队1，其他选择编队2 \n
