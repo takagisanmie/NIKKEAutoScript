@@ -245,6 +245,11 @@ class NikkeAutoScript:
 
         Interception(config=self.config, device=self.device).run()
 
+    def li_pass(self):
+        from module.lipass.lipass import LIPass
+
+        LIPass(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
         Wait until a specific time.
