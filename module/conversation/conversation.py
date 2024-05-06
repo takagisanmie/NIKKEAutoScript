@@ -77,7 +77,7 @@ class Conversation(UI):
 
     def ensure_wait_to_answer(self, skip_first_screenshot=True):
         confirm_timer = Timer(0.6, count=1).start()
-        click_timer = Timer(1)
+        click_timer = Timer(0.9)
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -109,7 +109,7 @@ class Conversation(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(ANSWER_CHECK, offset=(1, 1), static=False):
+            if self.appear(ANSWER_CHECK, offset=(1, 1), threshold=0.96, static=False):
                 return self.answer()
 
             elif not COMMUNICATE.match_appear_on(self.device.image, threshold=6) \
