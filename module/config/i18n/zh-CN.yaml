@@ -268,7 +268,8 @@ ArenaShop:
                 IRON_CODE: 铁甲代码\n
                 WATER_CODE: 水冷代码\n
                 WIND_CODE: 风压代码\n
-                MANUAL_SELECTION_BOX: 代码自选箱
+                MANUAL_SELECTION_BOX: 代码自选箱\n
+                ORNAMENT: 简介装饰品\n
              "
 RubbishShop:
   _info:

@@ -44,7 +44,7 @@ class LIPass(UI):
                 if msg['msg'] == 'ok':
                     logger.info('check in success')
                 if msg['msg'] == 'system error':
-                    logger.warn('perhaps have already been check in')
+                    logger.warn('perhaps have already been checked in')
                 res.close()
             except NoCookie as e:
                 logger.error("NoCookie")
