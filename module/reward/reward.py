@@ -12,7 +12,7 @@ class NoRewards(Exception):
 
 class Reward(UI):
     def receive_reward(self, skip_first_screenshot=True):
-        logger.hr("Reward receive")
+        logger.hr("Receive reward")
         confirm_timer = Timer(1, count=3).start()
         # Set click interval to 0.3, because game can't respond that fast.
         click_timer = Timer(0.3)
@@ -47,11 +47,11 @@ class Reward(UI):
             if self.appear(MAIN_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
-        logger.info("Defence Reward receive end")
+        logger.info("Defence Reward have been received")
         return True
 
     def receive_social_point(self, skip_first_screenshot=True):
-        logger.hr("Social Point receive")
+        logger.hr("Receive social point")
         confirm_timer = Timer(5, count=3).start()
         click_timer = Timer(0.3)
         while 1:
@@ -77,11 +77,11 @@ class Reward(UI):
             if confirm_timer.reached():
                 break
 
-        logger.info("Social Point receive end")
+        logger.info("Social Point have been received")
         return True
 
     def receive_special_arena_point(self, skip_first_screenshot=True):
-        logger.hr("Special Arena Point receive")
+        logger.hr("Receive special arena point")
         confirm_timer = Timer(6, count=5).start()
         click_timer = Timer(0.3)
         while 1:
@@ -121,7 +121,7 @@ class Reward(UI):
                 return True
 
             if self.handle_reward(interval=1):
-                logger.info("Special Arena Point receive end")
+                logger.info("Special Arena Point have been received")
                 raise NoRewards
 
             if confirm_timer.reached():

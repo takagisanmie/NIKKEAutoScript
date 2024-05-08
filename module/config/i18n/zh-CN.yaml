@@ -65,7 +65,7 @@ Task:
   Reward:
     name: 收获
     help: ""
-  Destroy:
+  Destruction:
     name: 歼灭
     help: ""
   Commission:

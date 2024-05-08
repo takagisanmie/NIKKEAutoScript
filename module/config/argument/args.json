@@ -157,7 +157,7 @@
       }
     }
   },
-  "Destroy": {
+  "Destruction": {
     "Scheduler": {
       "Enable": {
         "type": "checkbox",
@@ -170,7 +170,7 @@
       },
       "Command": {
         "type": "input",
-        "value": "Destroy",
+        "value": "Destruction",
         "display": "hide"
       },
       "SuccessInterval": {

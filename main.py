@@ -160,10 +160,10 @@ class NikkeAutoScript:
 
         Reward(config=self.config, device=self.device).run()
 
-    def destroy(self):
-        from module.destroy.destroy import Destroy
+    def destruction(self):
+        from module.destruction.destruction import Destruction
 
-        Destroy(config=self.config, device=self.device).run()
+        Destruction(config=self.config, device=self.device).run()
 
     def commission(self):
         from module.commission.commission import Commission
@@ -204,11 +204,6 @@ class NikkeAutoScript:
         from module.daily.daily import Daily
 
         Daily(config=self.config, device=self.device).run()
-
-    def event(self):
-        from module.event.event import Event
-
-        Event(config=self.config, device=self.device).run()
 
     def mission_pass(self):
         from module.mission_pass.mission_pass import MissionPass

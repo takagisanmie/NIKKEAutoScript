@@ -1,14 +1,14 @@
 from module.base.timer import Timer
-from module.destroy.assets import DESTROY
+from module.destruction.assets import DESTROY
 from module.logger import logger
 from module.ui.assets import DESTROY_CHECK
 from module.ui.page import page_destroy
 from module.ui.ui import UI
 
 
-class Destroy(UI):
+class Destruction(UI):
     def destroy(self, skip_first_screenshot=True):
-        logger.hr('Destroy')
+        logger.hr('Destruction')
         confirm_timer = Timer(1, count=3).start()
         click_timer = Timer(0.3)
         while 1:
@@ -40,7 +40,7 @@ class Destroy(UI):
             if self.appear(DESTROY_CHECK, offset=(10, 10)) and confirm_timer.reached():
                 break
 
-        logger.info('Destroy end')
+        logger.info('Destruction has finished')
         return True
 
     def run(self):
