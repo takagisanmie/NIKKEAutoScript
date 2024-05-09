@@ -19,24 +19,18 @@ class LIPass(UI):
         if local_now > _:
             try:
                 # 请勿泄露自己的Cookie
-                lip_user_name = ""
-                lip_uid = ""
-                lip_token = ""
-                if lip_token.strip() == "":
+                if self.config.Cookie_lip_token.strip() == "" or self.config.Cookie_lip_token is None:
                     raise NoCookie
-                lip_openid = ""
-                lip_expire_time = ""
-                lip_picture_url = ""
                 headers = {
                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36",
-                    "Cookie": f"lip_user_name={lip_user_name};"
-                              f"lip_uid={lip_uid};"
+                    "Cookie": f"lip_user_name={self.config.Cookie_lip_user_name};"
+                              f"lip_uid={self.config.Cookie_lip_uid};"
                               "lip_channelid=131;"
-                              f"lip_token={lip_token}; "
-                              f"lip_openid={lip_openid};"
+                              f"lip_token={self.config.Cookie_lip_token}; "
+                              f"lip_openid={self.config.Cookie_lip_openid};"
                               f"lip_adult_status=1;"
-                              f"lip_expire_time={lip_expire_time}; "
-                              f"lip_picture_url={lip_picture_url}"
+                              f"lip_expire_time={self.config.Cookie_lip_expire_time}; "
+                              f"lip_picture_url={self.config.Cookie_lip_picture_url}"
                 }
                 data = '{"task_id":"15"}'
                 res = requests.post(url=url, data=data, headers=headers, verify=False)
@@ -49,7 +43,7 @@ class LIPass(UI):
             except NoCookie as e:
                 logger.error("NoCookie")
                 logger.warn(
-                    "if you want to check in at lipass, please confirm that your Cookie in NKAS\module\lipass\lipass.py is correct.")
+                    "if you want to check in at lipass, please confirm that your Cookie is correct.")
             except Exception as e:
                 logger.error(e)
             self.config.task_delay(server_update=True)

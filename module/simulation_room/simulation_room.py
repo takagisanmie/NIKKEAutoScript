@@ -3,7 +3,7 @@ from functools import cached_property
 from module.base.timer import Timer
 from module.base.utils import point2str, _area_offset, crop
 from module.exception import GamePageUnknownError, OperationFailed, GameStuckError
-from module.handler.assets import CONFRIM_B
+from module.handler.assets import CONFIRM_B
 from module.logger import logger
 from module.simulation_room.assets import *
 from module.tribe_tower.assets import BACK
@@ -133,7 +133,7 @@ class SimulationRoom(UI):
                     )
                     self.device.sleep(0.6)
 
-                if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=6,
+                if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=6,
                                                                     static=False):
                     confirm_timer.reset()
                     click_timer.reset()
@@ -385,7 +385,7 @@ class SimulationRoom(UI):
 
             if click_timer.reached() and self.appear(CHOOSE_INITIAL_EFFECT_CHECK, offset=(10, 10), static=False):
                 if self.appear_then_click(NOT_CHOOSE_INITIAL_EFFECT, offset=(10, 10), interval=3, static=False):
-                    self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=1, static=False)
+                    self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=1, static=False)
                     click_timer.reset()
                     continue
 

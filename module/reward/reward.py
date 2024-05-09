@@ -1,5 +1,5 @@
 from module.base.timer import Timer
-from module.handler.assets import CONFRIM_B
+from module.handler.assets import CONFIRM_B
 from module.logger import logger
 from module.reward.assets import *
 from module.ui.page import *
@@ -68,7 +68,7 @@ class Reward(UI):
                 continue
 
             if click_timer.reached() and self.appear_then_click(
-                    CONFRIM_B, offset=(30, 30), interval=1, static=False
+                    CONFIRM_B, offset=(30, 30), interval=1, static=False
             ):
                 confirm_timer.reset()
                 click_timer.reset()

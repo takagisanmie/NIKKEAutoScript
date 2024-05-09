@@ -63,5 +63,13 @@ class GeneratedConfig:
     # Group `Daily`
     Daily_EnhanceEquipment = False
 
+    # Group `Cookie`
+    Cookie_lip_user_name = None
+    Cookie_lip_uid = None
+    Cookie_lip_token = None
+    Cookie_lip_openid = None
+    Cookie_lip_expire_time = None
+    Cookie_lip_picture_url = None
+
     # Group `Storage`
     Storage_Storage = {}

@@ -68,3 +68,22 @@ Event:
     option: [ 'normal','hard' ]
 Daily:
   EnhanceEquipment: false
+Cookie:
+   lip_user_name:
+     value: ""
+     valuetype: str
+   lip_uid:
+     value: ""
+     valuetype: str
+   lip_token:
+     value: ""
+     valuetype: str
+   lip_openid:
+     value: ""
+     valuetype: str
+   lip_expire_time:
+     value: ""
+     valuetype: str
+   lip_picture_url:
+     value: ""
+     valuetype: str

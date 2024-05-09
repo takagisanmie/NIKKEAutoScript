@@ -312,6 +312,38 @@
         "display": "hide"
       }
     },
+    "Cookie": {
+      "lip_user_name": {
+        "type": "input",
+        "value": "",
+        "valuetype": "str"
+      },
+      "lip_uid": {
+        "type": "input",
+        "value": "",
+        "valuetype": "str"
+      },
+      "lip_token": {
+        "type": "input",
+        "value": "",
+        "valuetype": "str"
+      },
+      "lip_openid": {
+        "type": "input",
+        "value": "",
+        "valuetype": "str"
+      },
+      "lip_expire_time": {
+        "type": "input",
+        "value": "",
+        "valuetype": "str"
+      },
+      "lip_picture_url": {
+        "type": "input",
+        "value": "",
+        "valuetype": "str"
+      }
+    },
     "Storage": {
       "Storage": {
         "type": "storage",

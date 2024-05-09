@@ -1,7 +1,7 @@
 from module.base.timer import Timer
 from module.base.utils import point2str
 from module.exception import OperationFailed
-from module.handler.assets import CONFRIM_B
+from module.handler.assets import CONFIRM_B
 from module.logger import logger
 from module.simulation_room.assets import *
 from module.tribe_tower.assets import OPERATION_FAILED
@@ -122,7 +122,7 @@ class HealingEvent(EventBase):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=2, static=False):
+            if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=2, static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
@@ -162,7 +162,7 @@ class RandomEvent(EventBase):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=3,
+            if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=3,
                                                                 static=False):
                 confirm_timer.reset()
                 click_timer.reset()
@@ -188,7 +188,7 @@ class RandomEvent(EventBase):
                         )
                         self.device.sleep(0.6)
 
-                    if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=2,
+                    if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=2,
                                                                         static=False):
                         confirm_timer.reset()
                         click_timer.reset()
@@ -221,7 +221,7 @@ class RandomEvent(EventBase):
                                 'Click %s @ %s' % (point2str(*button), 'EFFECT')
                             )
 
-                    if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=1,
+                    if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=1,
                                                                         static=False):
                         confirm_timer.reset()
                         click_timer.reset()
@@ -259,7 +259,7 @@ class RandomEvent(EventBase):
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=5,
+                if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=5,
                                                                     static=False):
                     confirm_timer.reset()
                     click_timer.reset()
@@ -300,7 +300,7 @@ class ImprovementEvent(EventBase):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=3,
+            if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=3,
                                                                 static=False):
                 confirm_timer.reset()
                 click_timer.reset()
@@ -326,7 +326,7 @@ class ImprovementEvent(EventBase):
                         )
                         self.device.sleep(0.6)
 
-                    if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=2,
+                    if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=2,
                                                                         static=False):
                         confirm_timer.reset()
                         click_timer.reset()
@@ -364,7 +364,7 @@ class ImprovementEvent(EventBase):
                     click_timer.reset()
                     continue
 
-                if click_timer.reached() and self.appear_then_click(CONFRIM_B, offset=(30, 30), interval=5,
+                if click_timer.reached() and self.appear_then_click(CONFIRM_B, offset=(30, 30), interval=5,
                                                                     static=False):
                     confirm_timer.reset()
                     click_timer.reset()

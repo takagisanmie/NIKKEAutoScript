@@ -4,7 +4,7 @@ from functools import cached_property
 from module.base.decorator import del_cached_property
 from module.base.timer import Timer
 from module.base.utils import exec_file, _area_offset, mask_area
-from module.handler.assets import CONFRIM_B
+from module.handler.assets import CONFIRM_B
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.shop.assets import *
@@ -190,13 +190,13 @@ class ShopBase(UI):
                                 static=False,
                             )
                             and self.appear_then_click(
-                                CONFRIM_B, offset=(5, 5), static=False
+                                CONFIRM_B, offset=(5, 5), static=False
                             )
                         ):
                             while 1:
                                 self.device.screenshot()
                                 self.appear_then_click(
-                                    CONFRIM_B, offset=(5, 5), static=False
+                                    CONFIRM_B, offset=(5, 5), static=False
                                 )
                                 if SHOP_CHECK.appear_on(self.device.image):
                                     break

@@ -18,7 +18,7 @@ class InfoHandler(ModuleBase):
                 PAID_GIFT_CONFIRM_CHECK, offset=(30, 30), interval=interval, static=False
         ):
             if self.appear_then_click(
-                    CONFRIM_B, offset=(30, 30), interval=interval, static=False
+                    CONFIRM_B, offset=(30, 30), interval=interval, static=False
             ):
                 return True
 
@@ -93,7 +93,7 @@ class InfoHandler(ModuleBase):
         if self.appear(
                 SERVER_CHECK, offset=(30, 30), interval=3, static=False
         ) and self.appear_then_click(
-            CONFRIM_A, offset=(30, 30), interval=3, static=False
+            CONFIRM_A, offset=(30, 30), interval=3, static=False
         ):
             return True
 
@@ -125,7 +125,7 @@ class InfoHandler(ModuleBase):
         if self.appear(
                 DOWNLOAD_CHECK, offset=(30, 30), interval=3, static=False
         ) and self.appear_then_click(
-            CONFRIM_A, offset=(30, 30), interval=3, static=False
+            CONFIRM_A, offset=(30, 30), interval=3, static=False
         ):
             return True
 

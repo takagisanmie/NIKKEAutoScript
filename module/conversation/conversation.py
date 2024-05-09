@@ -4,7 +4,7 @@ from module.base.utils import (
     find_center,
 )
 from module.conversation.assets import *
-from module.handler.assets import CONFRIM_B, AUTO_CLICK_CHECK
+from module.handler.assets import CONFIRM_B, AUTO_CLICK_CHECK
 from module.logger import logger
 from module.ui.assets import CONVERSATION_CHECK, GOTO_BACK
 from module.ui.page import page_conversation
@@ -101,9 +101,9 @@ class Conversation(UI):
                 continue
 
             if self.appear(
-                    CONFRIM_B, offset=(5, 5), static=False
+                    CONFIRM_B, offset=(5, 5), static=False
             ):
-                x, y = CONFRIM_B.location
+                x, y = CONFIRM_B.location
                 self.device.click_minitouch(x - 75, y)
                 confirm_timer.reset()
                 click_timer.reset()

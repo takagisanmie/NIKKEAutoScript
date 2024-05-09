@@ -96,6 +96,14 @@
       "FailureInterval": 120,
       "ServerUpdate": "04:00"
     },
+    "Cookie": {
+      "lip_user_name": null,
+      "lip_uid": null,
+      "lip_token": null,
+      "lip_openid": null,
+      "lip_expire_time": null,
+      "lip_picture_url": null
+    },
     "Storage": {
       "Storage": {}
     }

@@ -241,25 +241,22 @@ class UI(InfoHandler):
             return True
 
         '''
-            CONFRIM_A 按钮为平面或立体，'确认'没有阴影
-            CONFRIM_B 按钮为立体，'确认'有阴影
-            CONFRIM_B 和 CONFRIM_C 相似
+           CONFIRM_A 按钮为平面或立体，'确认'没有阴影
+           CONFIRM_B 按钮为立体，'确认'有阴影
+           CONFIRM_B 和 CONFIRM_C 相似
         '''
 
         # 未知弹窗的确认
-        if self.appear(CONFRIM_A, offset=(30, 30), interval=3, static=False):
-            # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_A.png')
-            self.device.click(CONFRIM_A)
+        if self.appear(CONFIRM_A, offset=(30, 30), interval=3, static=False):
+            self.device.click(CONFIRM_A)
             return True
 
-        if self.appear(CONFRIM_B, offset=(30, 30), interval=3, static=False):
-            # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_B.png')
-            self.device.click(CONFRIM_B)
+        if self.appear(CONFIRM_B, offset=(30, 30), interval=3, static=False):
+            self.device.click(CONFIRM_B)
             return True
 
-        if self.appear(CONFRIM_C, offset=(30, 30), interval=3, static=False):
-            # save_image(self.device.image, f'./pic/{time.time()}-CONFRIM_C.png')
-            self.device.click(CONFRIM_C)
+        if self.appear(CONFIRM_C, offset=(30, 30), interval=3, static=False):
+            self.device.click(CONFIRM_C)
             return True
 
     def ui_goto_main(self):
