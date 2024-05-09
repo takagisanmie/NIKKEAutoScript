@@ -3,7 +3,9 @@ from datetime import datetime, timedelta, timezone
 from functools import cached_property
 
 from module.base.decorator import del_cached_property
-from module.base.utils import exec_file
+from module.base.timer import Timer
+from module.base.utils import exec_file, crop
+from module.handler.assets import CONFIRM_A
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.rubbish_shop.assets import *
@@ -19,7 +21,7 @@ class RubbishShop(ShopBase):
     @cached_property
     def rubbish_shop_priority(self) -> SelectedGrids:
         if self.config.RubbishShop_priority is None or not len(
-            self.config.RubbishShop_priority.strip(" ")
+                self.config.RubbishShop_priority.strip(" ")
         ):
             priority = self.config.RUBBISH_SHOP_PRIORITY
         else:
@@ -39,18 +41,70 @@ class RubbishShop(ShopBase):
         remain = remain + 7 if remain == 0 else remain
         diff = datetime.now(timezone.utc).astimezone().utcoffset() - timedelta(hours=8)
         return (
-            local_now.replace(hour=4, minute=0, second=0, microsecond=0)
-            + timedelta(days=remain)
-            + diff
+                local_now.replace(hour=4, minute=0, second=0, microsecond=0)
+                + timedelta(days=remain)
+                + diff
         )
+
+    @cached_property
+    def currency(self) -> int:
+        confirm_timer = Timer(1, count=2).start()
+        click_timer = Timer(0.3)
+        skip_first_screenshot = True
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            if click_timer.reached() and not self.appear(CONFIRM_A, offset=5, static=False):
+                self.device.click_minitouch(600, 600)
+                click_timer.reset()
+                continue
+
+            if self.appear(CONFIRM_A, offset=5, static=False) and confirm_timer.reached():
+                break
+
+        img = crop(self.device.image, (300, 680, 450, 720))
+        result = int(re.sub("\D", "", self.ocr_models.cnocr.ocr_for_single_line(img)['text']))
+        logger.attr('Currency', result)
+        skip_first_screenshot = True
+        confirm_timer.reset()
+        click_timer.reset()
+
+        while 1:
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
+
+            if click_timer.reached() and self.appear(CONFIRM_A, offset=5, static=False):
+                self.device.click_minitouch(100, 100)
+                click_timer.reset()
+                continue
+
+            if not self.appear(CONFIRM_A, offset=5, static=False) and confirm_timer.reached():
+                break
+
+        return result
+
+    @cached_property
+    def total_cost(self) -> int:
+        cost = sum(
+            [self.config.RUBBISH_SHOP_PRODUCT_COST.get(i) for i in self.config.RUBBISH_SHOP_PRODUCT_COST.keys() if
+             i in list(map(lambda x: x.name, self.rubbish_shop_priority.grids))])
+        logger.attr('Total Cost', cost)
+        return cost
 
     def run(self):
         self.ui_ensure(page_shop)
         self.ensure_into_shop(GOTO_RUBBISH_SHOP, RUBBISH_SHOP_CHECK)
         try:
-            self.purchase1(self.rubbish_shop_priority, skip_first_screenshot=False)
+            if self.total_cost > self.currency:
+                raise NotEnoughMoneyError
+            self.purchase1(self.rubbish_shop_priority, skip_first_screenshot=True)
         except NotEnoughMoneyError:
-            logger.error("The rest of money is not enough to buy this product")
+            logger.error("The rest of money is not enough to buy these products")
             self.ensure_back(RUBBISH_SHOP_CHECK)
         del_cached_property(self, "rubbish_shop_priority")
         self.config.task_delay(target=self.next_tuesday)

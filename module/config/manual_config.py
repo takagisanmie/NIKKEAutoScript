@@ -30,6 +30,23 @@ class ManualConfig:
         "ABNORMAL_TICKET": 1,
     }
 
+    RUBBISH_SHOP_PRODUCT_COST = {
+        # 5x500
+        "GEM": 2500,
+        # 6x100, 5x575
+        "CORE_DUST_CASE": 3475,
+        # 5x100, 10x180, 12x30
+        "CREDIT_CASE": 2660,
+        # 6x100, 5x575
+        "BATTLE_DATA_SET_CASE": 3475,
+        "GENERAL_TICKET": 400,
+        "ELYSION_TICKET": 600,
+        "MISSILIS_TICKET": 600,
+        "TETRA_TICKET": 600,
+        "PILGRIM_TICKET": 600,
+        "ABNORMAL_TICKET": 600,
+    }
+
     ARENA_SHOP_PRODUCT = {
         "ELECTRIC_CODE": 1,
         "FIRE_CODE": 1,
