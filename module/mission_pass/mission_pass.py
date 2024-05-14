@@ -12,6 +12,7 @@ class MissionPass(UI):
         confirm_timer = Timer(1, count=2).start()
         _confirm_timer = Timer(1, count=2).start()
         click_timer = Timer(0.3)
+        flag = True
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -29,7 +30,7 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(button, offset=5, interval=1):
+            if flag and click_timer.reached() and self.appear_then_click(button, offset=5, interval=1):
                 click_timer.reset()
                 continue
 
@@ -53,6 +54,7 @@ class MissionPass(UI):
             if self.appear(PASS_CHECK, offset=5) \
                     and confirm_timer.reached() \
                     and not self.appear(COMPLETED_CHECK, offset=(5, 5), threshold=0.9, static=False):
+                flag = False
                 self.device.click_minitouch(1, 1)
                 continue
 
@@ -96,17 +98,17 @@ class MissionPass(UI):
                             button=(x1 + 10, y1 - 40, x2 + 240, y2))
                 mp._match_init = True
                 mp.image = crop(self.device.image, (x1 + 10, y1 - 40, x2 + 240, y2))
-                visited_count += 1
 
                 if len(mp_list) == 0 and DOT.match(mp.image, offset=5, static=False):
                     mp_list.append(mp)
                     continue
 
                 for i in mp_list:
-                    if not i.match(mp.image, threshold=0.9, static=False):
+                    if not i.match(mp.image, threshold=0.8, static=False):
                         if DOT.match(mp.image, offset=5, static=False):
                             mp_list.append(mp)
 
+                visited_count += 1
                 if len(mp_list) == self.config.PASS_LIMIT or visited_count == self.config.PASS_LIMIT:
                     break
 
@@ -126,6 +128,7 @@ class MissionPass(UI):
                     mp_list.append(mp)
                 break
 
+        logger.attr('PENDING MISSION PASS', len(mp_list))
         for i in mp_list:
             while 1:
                 self.device.screenshot()
