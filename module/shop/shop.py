@@ -71,8 +71,8 @@ class ShopBase(UI):
             if button is not None \
                     and confirm_timer.reached() \
                     and click_timer.reached() \
-                    and self.appear_then_click(button, offset=5, threshold=0.96, static=False) \
-                    and button.match_appear_on(self.device.image, 6):
+                    and self.appear_then_click(button, offset=5, threshold=0.9, static=False) \
+                    and button.match_appear_on(self.device.image, 10):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
