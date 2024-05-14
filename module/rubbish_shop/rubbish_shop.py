@@ -9,7 +9,7 @@ from module.handler.assets import CONFIRM_A
 from module.logger import logger
 from module.map.map_grids import SelectedGrids
 from module.rubbish_shop.assets import *
-from module.shop.shop import ShopBase, Product, NotEnoughMoneyError
+from module.shop.shop import ShopBase, Product, NotEnoughMoneyError, PurchaseTimeTooLong
 from module.ui.page import page_shop
 
 
@@ -106,5 +106,7 @@ class RubbishShop(ShopBase):
         except NotEnoughMoneyError:
             logger.error("The rest of money is not enough to buy these products")
             self.ensure_back(RUBBISH_SHOP_CHECK)
+        except PurchaseTimeTooLong:
+            pass
         del_cached_property(self, "rubbish_shop_priority")
         self.config.task_delay(target=self.next_tuesday)

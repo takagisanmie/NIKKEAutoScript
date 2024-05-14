@@ -17,6 +17,10 @@ class NotEnoughMoneyError(Exception):
     pass
 
 
+class PurchaseTimeTooLong(Exception):
+    pass
+
+
 class Refresh(Exception):
     pass
 
@@ -55,15 +59,21 @@ class ShopBase(UI):
                 click_timer.reset()
                 continue
 
-    def p(self, button=None):
-        click_timer = Timer(1.227)
+    def p(self, button=None, skip_first_screenshot=True):
+        confirm_timer = Timer(2, 3).start()
+        click_timer = Timer(0.3)
         while 1:
-            self.device.screenshot()
+            if skip_first_screenshot:
+                skip_first_screenshot = False
+            else:
+                self.device.screenshot()
 
             if button is not None \
+                    and confirm_timer.reached() \
                     and click_timer.reached() \
-                    and self.appear_then_click(button, offset=5, threshold=0.9, static=False) \
-                    and button.match_appear_on(self.device.image, 10):
+                    and self.appear_then_click(button, offset=5, threshold=0.96, static=False) \
+                    and button.match_appear_on(self.device.image, 6):
+                confirm_timer.reset()
                 click_timer.reset()
                 continue
 
@@ -235,7 +245,6 @@ class ShopBase(UI):
     ):
         swipe_confirm = Timer(2, count=9).start()
         click_timer = Timer(0.6)
-        product: Button = products.first_or_none().button
         logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
         while 1:
             if skip_first_screenshot:
@@ -245,18 +254,21 @@ class ShopBase(UI):
 
             for i in products:
                 if self.appear(i.button, offset=5, threshold=0.9, static=False) \
-                        and product.match_appear_on(self.device.image, 10):
+                        and i.button.match_appear_on(self.device.image, 10):
                     if click_timer.reached():
                         self.device.click(i.button)
+                        img = self.device.image
                         self.p(i.button)
+                        self.device.image = img
                         if i.timer.reached():
                             products = products.delete([i])
                             logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
                             if not products.count:
-                                raise NotEnoughMoneyError
-                            break
+                                raise PurchaseTimeTooLong
+                            continue
+
             if swipe_confirm.reached():
-                raise NotEnoughMoneyError
+                raise PurchaseTimeTooLong
 
             self.device.swipe((360, 1000), (360, 965), handle_control_check=False)
             self.device.sleep(1)
@@ -375,6 +387,8 @@ class Shop(ShopBase):
             self.ensure_back(ARENA_SHOP_CHECK)
         except ProductQueueIsEmpty:
             logger.warning("There are no products included in the queue option")
+        except PurchaseTimeTooLong:
+            pass
         del_cached_property(self, "general_shop_priority")
         del_cached_property(self, "arena_shop_priority")
         self.config.task_delay(server_update=True)
