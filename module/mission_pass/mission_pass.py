@@ -39,11 +39,8 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(RANK_UP_CHECK, offset=(10, 10), static=False):
-                self.device.click_minitouch(360, 870)
-                logger.info(
-                    'Click %s @ %s' % (point2str(360, 870), 'RANK_UP')
-                )
+            if click_timer.reached() and self.appear(RANK_UP_CHECK, offset=5, static=False):
+                self.device.click_minitouch(1, 1)
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
@@ -56,7 +53,6 @@ class MissionPass(UI):
             if self.appear(PASS_CHECK, offset=5) \
                     and confirm_timer.reached() \
                     and not self.appear(COMPLETED_CHECK, offset=(5, 5), threshold=0.9, static=False):
-                self.device.screenshot()
                 self.device.click_minitouch(1, 1)
                 continue
 

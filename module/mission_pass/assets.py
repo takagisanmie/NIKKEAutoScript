@@ -7,5 +7,5 @@ CHANGE = Button(area={'cn': (449, 202, 481, 232)}, color={'cn': (80, 81, 77)}, b
 COMPLETED_CHECK = Button(area={'cn': (659, 389, 673, 412)}, color={'cn': (239, 222, 220)}, button={'cn': (659, 389, 673, 412)}, file={'cn': './assets/cn/mission_pass/COMPLETED_CHECK.png'})
 DOT = Button(area={'cn': (697, 169, 708, 183)}, color={'cn': (250, 126, 96)}, button={'cn': (697, 169, 708, 183)}, file={'cn': './assets/cn/mission_pass/DOT.png'})
 PASS_CHECK = Button(area={'cn': (340, 1054, 594, 1075)}, color={'cn': (189, 190, 191)}, button={'cn': (340, 1054, 594, 1075)}, file={'cn': './assets/cn/mission_pass/PASS_CHECK.png'})
-RANK_UP_CHECK = Button(area={'cn': (289, 586, 430, 619)}, color={'cn': (81, 84, 81)}, button={'cn': (289, 586, 430, 619)}, file={'cn': './assets/cn/mission_pass/RANK_UP_CHECK.png'})
+RANK_UP_CHECK = Button(area={'cn': (289, 587, 430, 617)}, color={'cn': (89, 92, 89)}, button={'cn': (289, 587, 430, 617)}, file={'cn': './assets/cn/mission_pass/RANK_UP_CHECK.png'})
 RECEIVE = Button(area={'cn': (319, 1184, 402, 1203)}, color={'cn': (154, 222, 251)}, button={'cn': (319, 1184, 402, 1203)}, file={'cn': './assets/cn/mission_pass/RECEIVE.png'})
