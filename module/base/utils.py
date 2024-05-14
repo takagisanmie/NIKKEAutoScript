@@ -182,7 +182,7 @@ def crop(image, area):
 
     Args:
         image (np.ndarray):
-        area:
+        area: (upper_left_x, upper_left_y, bottom_right_x, bottom_right_y)
 
     Returns:
         np.ndarray:
