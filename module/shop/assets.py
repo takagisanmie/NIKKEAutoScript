@@ -6,7 +6,7 @@ from module.base.button import Button
 ARENA_SHOP_CHECK = Button(area={'cn': (127, 476, 223, 504)}, color={'cn': (137, 138, 139)}, button={'cn': (127, 476, 223, 504)}, file={'cn': './assets/cn/shop/ARENA_SHOP_CHECK.png'})
 BUY = Button(area={'cn': (470, 1073, 505, 1095)}, color={'cn': (129, 199, 232)}, button={'cn': (470, 1073, 505, 1095)}, file={'cn': './assets/cn/shop/BUY.png'})
 CANCEL = Button(area={'cn': (208, 789, 255, 813)}, color={'cn': (158, 157, 158)}, button={'cn': (208, 789, 255, 813)}, file={'cn': './assets/cn/shop/CANCEL.png'})
-CORE_DUST_CASE = Button(area={'cn': (573, 647, 636, 669)}, color={'cn': (170, 170, 170)}, button={'cn': (573, 647, 636, 669)}, file={'cn': './assets/cn/shop/CORE_DUST_CASE.png'})
+CORE_DUST_CASE = Button(area={'cn': (198, 648, 239, 671)}, color={'cn': (179, 179, 180)}, button={'cn': (198, 648, 239, 671)}, file={'cn': './assets/cn/shop/CORE_DUST_CASE.png'})
 CREDIT = Button(area={'cn': (561, 867, 596, 897)}, color={'cn': (78, 77, 71)}, button={'cn': (561, 867, 596, 897)}, file={'cn': './assets/cn/shop/CREDIT.png'})
 ELECTRIC_CODE = Button(area={'cn': (201, 706, 239, 765)}, color={'cn': (168, 78, 96)}, button={'cn': (201, 706, 239, 765)}, file={'cn': './assets/cn/shop/ELECTRIC_CODE.png'})
 FIRE_CODE = Button(area={'cn': (202, 707, 240, 768)}, color={'cn': (161, 78, 53)}, button={'cn': (202, 707, 240, 768)}, file={'cn': './assets/cn/shop/FIRE_CODE.png'})
