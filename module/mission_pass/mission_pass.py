@@ -13,6 +13,7 @@ class MissionPass(UI):
         _confirm_timer = Timer(1, count=2).start()
         click_timer = Timer(0.3)
         flag = True
+        interval = 0
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -20,17 +21,14 @@ class MissionPass(UI):
                 self.device.screenshot()
 
             if click_timer.reached() \
-                    and self.appear(COMPLETED_CHECK, offset=(5, 5), interval=2, threshold=0.9, static=False) \
+                    and self.appear(COMPLETED_CHECK, offset=(5, 5), interval=interval, threshold=0.9, static=False) \
                     and COMPLETED_CHECK.match_appear_on(self.device.image, 10):
                 self.device.click_minitouch(*_area_offset(COMPLETED_CHECK.location, (-80, 10)))
                 logger.info(
                     'Click %s @ %s' % (point2str(*_area_offset(COMPLETED_CHECK.location, (-80, 10))), 'COMPLETED')
                 )
+                interval = 2
                 confirm_timer.reset()
-                click_timer.reset()
-                continue
-
-            if flag and click_timer.reached() and self.appear_then_click(button, offset=5, interval=1):
                 click_timer.reset()
                 continue
 
@@ -40,7 +38,7 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(RANK_UP_CHECK, offset=5, static=False):
+            if click_timer.reached() and self.appear(RANK_UP_CHECK, offset=5, interval=1, static=False):
                 self.device.click_minitouch(1, 1)
                 click_timer.reset()
                 confirm_timer.reset()
@@ -51,14 +49,25 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(PASS_CHECK, offset=5) \
+            if self.appear(PASS_CHECK, offset=5, interval=0.6) \
                     and confirm_timer.reached() \
                     and not self.appear(COMPLETED_CHECK, offset=(5, 5), threshold=0.9, static=False):
                 flag = False
                 self.device.click_minitouch(1, 1)
                 continue
 
-            if self.appear(MAIN_CHECK, offset=5) and _confirm_timer.reached():
+            if flag and click_timer.reached() and self.appear_then_click(button, offset=5, interval=1):
+                click_timer.reset()
+                continue
+
+            if self.appear(MAIN_CHECK, offset=5, interval=0.3) and _confirm_timer.reached():
+                break
+
+    def confirm_transformation(self):
+        confirm_timer = Timer(0.6, count=1).start()
+        while 1:
+            self.device.screenshot()
+            if self.appear(CHANGE, offset=5, threshold=0.96, static=False) and confirm_timer.reached():
                 break
 
     def run(self):
@@ -85,14 +94,7 @@ class MissionPass(UI):
                     and self.appear_then_click(CHANGE, offset=5, threshold=0.9, static=False):
                 x1, y1, x2, y2 = map(int, CHANGE.area)
 
-                def confirm_transformation():
-                    confirm_timer = Timer(0.6, count=1).start()
-                    while 1:
-                        self.device.screenshot()
-                        if self.appear(CHANGE, offset=5, threshold=0.96, static=False) and confirm_timer.reached():
-                            break
-
-                confirm_transformation()
+                self.confirm_transformation()
 
                 mp = Button((x1 + 10, y1 - 40, x2 + 240, y2), None,
                             button=(x1 + 10, y1 - 40, x2 + 240, y2))
@@ -132,13 +134,14 @@ class MissionPass(UI):
         for i in mp_list:
             while 1:
                 self.device.screenshot()
-                if click_timer.reached() and self.appear_then_click(i, offset=5):
+                if click_timer.reached() and self.appear(i, offset=5):
                     self.receive(i)
                     mp_list.remove(i)
                     break
 
                 if click_timer.reached() and self.appear_then_click(CHANGE, offset=5):
                     click_timer.reset()
+                    self.confirm_transformation()
                     continue
 
             if not len(mp_list):
