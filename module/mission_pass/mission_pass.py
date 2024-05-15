@@ -56,11 +56,11 @@ class MissionPass(UI):
                 self.device.click_minitouch(1, 1)
                 continue
 
-            if flag and click_timer.reached() and self.appear_then_click(button, offset=5, interval=1):
+            if flag and click_timer.reached() and self.appear_then_click(button, offset=5, interval=0.6):
                 click_timer.reset()
                 continue
 
-            if self.appear(MAIN_CHECK, offset=5, interval=0.3) and _confirm_timer.reached():
+            if not flag and self.appear(MAIN_CHECK, offset=5, interval=0.3) and _confirm_timer.reached():
                 break
 
     def confirm_transformation(self):
