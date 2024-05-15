@@ -118,7 +118,7 @@ class ShopBase(UI):
 
         while 1:
             try:
-                if timeout.reached() and not self.appear(product, offset=(5, 5), threshold=0.9, static=False):
+                if timeout.reached() and not product.match_appear_on(self.device.image, threshold=10):
                     timeout.reset()
                     products = products.delete([products.first_or_none()])
                     logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
