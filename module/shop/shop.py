@@ -42,6 +42,7 @@ class Product:
 class ShopBase(UI):
     def ensure_into_shop(self, button, check, skip_first_screenshot=True):
         logger.hr(f"{check.name.split('_')[:1][0]} SHOP", 2)
+        confirm_timer = Timer(2, 3).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -49,13 +50,13 @@ class ShopBase(UI):
             else:
                 self.device.screenshot()
 
-            if self.appear(check, offset=(5, 5)):
-                self.device.sleep(2)
+            if self.appear(check, offset=(5, 5)) and confirm_timer.reached():
                 break
 
             if click_timer.reached() \
                     and self.appear_then_click(button, offset=(5, 5), interval=5):
                 click_timer.reset()
+                confirm_timer.reset()
                 continue
 
     def p(self, button=None, skip_first_screenshot=True):
@@ -137,7 +138,7 @@ class ShopBase(UI):
                     self.p()
 
                 else:
-                    if self.appear(product, offset=(5, 5), threshold=0.9, interval=0.6, static=False) \
+                    if self.appear(product, offset=(5, 5), threshold=0.9, interval=1.2, static=False) \
                             and product.match_appear_on(self.device.image, 10):
                         if check_price and product.name != ORNAMENT.name:
                             area = _area_offset(product.button, (-50, 0, 50, 250))
