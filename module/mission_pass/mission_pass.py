@@ -56,8 +56,9 @@ class MissionPass(UI):
                 self.device.click_minitouch(1, 1)
                 continue
 
-            if flag and click_timer.reached() and self.appear_then_click(button, offset=5, interval=0.6):
+            if flag and click_timer.reached() and self.appear_then_click(button, offset=5, interval=1.2):
                 click_timer.reset()
+                confirm_timer.reset()
                 continue
 
             if not flag and self.appear(MAIN_CHECK, offset=5, interval=0.3) and _confirm_timer.reached():
@@ -92,14 +93,12 @@ class MissionPass(UI):
             if self.config.PASS_LIMIT == 2 \
                     and click_timer.reached() \
                     and self.appear_then_click(CHANGE, offset=5, threshold=0.9, static=False):
-                x1, y1, x2, y2 = map(int, CHANGE.area)
 
+                area = _area_offset(CHANGE.area, (10, -40, 240, 0))
                 self.confirm_transformation()
-
-                mp = Button((x1 + 10, y1 - 40, x2 + 240, y2), None,
-                            button=(x1 + 10, y1 - 40, x2 + 240, y2))
+                mp = Button(area, None, button=area)
                 mp._match_init = True
-                mp.image = crop(self.device.image, (x1 + 10, y1 - 40, x2 + 240, y2))
+                mp.image = crop(self.device.image, area)
 
                 if len(mp_list) == 0 and DOT.match(mp.image, offset=5, static=False):
                     mp_list.append(mp)
@@ -119,12 +118,11 @@ class MissionPass(UI):
             elif self.config.PASS_LIMIT == 1 \
                     and click_timer.reached() \
                     and self.appear(MAIN_GOTO_PASS, offset=5, threshold=0.9, static=False):
-                x1, y1, x2, y2 = map(int, MAIN_GOTO_PASS.area)
 
-                mp = Button((x1 + 10, y1 - 40, x2 + 80, y2), None,
-                            button=(x1 + 10, y1 - 40, x2 + 80, y2))
+                area = _area_offset(MAIN_GOTO_PASS.area, (10, -40, 100, 0))
+                mp = Button(area, None, button=area)
                 mp._match_init = True
-                mp.image = crop(self.device.image, (x1 + 10, y1 - 40, x2 + 80, y2))
+                mp.image = crop(self.device.image, area)
 
                 if DOT.match(mp.image, offset=5, static=False):
                     mp_list.append(mp)
