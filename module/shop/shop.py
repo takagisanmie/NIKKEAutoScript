@@ -53,14 +53,14 @@ class ShopBase(UI):
                 self.device.sleep(2)
                 break
 
-            if click_timer.reached() and self.appear_then_click(
-                    button, offset=(5, 5), interval=5
-            ):
+            if click_timer.reached() \
+                    and self.appear_then_click(button, offset=(5, 5), interval=5):
                 click_timer.reset()
                 continue
 
     def p(self, button=None, skip_first_screenshot=True):
         confirm_timer = Timer(2, 3).start()
+        _confirm_timer = Timer(1, 2).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -71,29 +71,25 @@ class ShopBase(UI):
             if button is not None \
                     and confirm_timer.reached() \
                     and click_timer.reached() \
-                    and self.appear_then_click(button, offset=5, threshold=0.9, static=False) \
+                    and self.appear_then_click(button, offset=5, threshold=0.9, interval=1, static=False) \
                     and button.match_appear_on(self.device.image, 10):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(
-                    NO_MONEY, offset=(5, 5), static=False
-            ) and NO_MONEY.match_appear_on(self.device.image):
+            if self.appear(NO_MONEY, offset=(5, 5), static=False) \
+                    and NO_MONEY.match_appear_on(self.device.image):
                 raise NotEnoughMoneyError
 
-            if (
-                    click_timer.reached()
-                    and self.appear(MAX, offset=(30, 30), interval=3, static=False)
-                    and MAX.match_appear_on(self.device.image, threshold=10)
-            ):
+            if click_timer.reached() \
+                    and self.appear(MAX, offset=(30, 30), interval=3, static=False) \
+                    and MAX.match_appear_on(self.device.image, threshold=10):
                 self.device.click(MAX)
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(
-                    BUY, offset=(30, 30), interval=3, static=False
-            ):
+            if click_timer.reached() \
+                    and self.appear_then_click(BUY, offset=(30, 30), interval=3, static=False):
                 click_timer.reset()
                 continue
 
@@ -105,21 +101,8 @@ class ShopBase(UI):
                     else:
                         self.device.screenshot()
                     self.handle_reward(1)
-                    if self.appear(SHOP_CHECK, offset=(5, 5)):
-                        break
-
-                # products = products.delete([products.first_or_none()])
-                # logger.attr(
-                #     "PENDING PRODUCT LIST", [i.name for i in products]
-                # )
-                # if products.first_or_none() is None:
-                #     if refresh and not self.refreshed:
-                #         raise Refresh
-                #     break
-                # product = products.first_or_none().button
-
-                click_timer.reset()
-                break
+                    if self.appear(SHOP_CHECK, offset=(5, 5)) and _confirm_timer.reached():
+                        return
 
     def purchase(
             self,
@@ -128,14 +111,14 @@ class ShopBase(UI):
             refresh=False,
             skip_first_screenshot=True,
     ):
-        timeout = Timer(1.5, 2).start()
-        click_timer = Timer(1.227)
+        timeout = Timer(1.2, 2).start()
+        click_timer = Timer(0.3)
         product: Button = products.first_or_none().button
         logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
 
         while 1:
             try:
-                if timeout.reached():
+                if timeout.reached() and not self.appear(product, offset=(5, 5), threshold=0.9, static=False):
                     timeout.reset()
                     products = products.delete([products.first_or_none()])
                     logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
@@ -150,24 +133,19 @@ class ShopBase(UI):
                 else:
                     self.device.screenshot()
 
-                if self.appear(PURCHASE_CHECK, offset=(5, 5), static=False):
+                if self.appear(PURCHASE_CHECK, offset=(5, 5), interval=0.6, static=False):
                     self.p()
 
                 else:
-                    if self.appear(
-                            product, offset=(5, 5), threshold=0.9, static=False
-                    ) and product.match_appear_on(self.device.image, 10):
+                    if self.appear(product, offset=(5, 5), threshold=0.9, interval=0.6, static=False) \
+                            and product.match_appear_on(self.device.image, 10):
                         if check_price and product.name != ORNAMENT.name:
                             area = _area_offset(product.button, (-50, 0, 50, 250))
-                            img = self.device.image[
-                                  area[1]: area[3], area[0]: area[2]
-                                  ]
+                            img = self.device.image[area[1]: area[3], area[0]: area[2]]
                             super().__setattr__("_image", img)
                             if not self.credit_or_gratis:
                                 skip_first_screenshot = True
-                                self.device.image = mask_area(
-                                    self.device.image, product.button
-                                )
+                                self.device.image = mask_area(self.device.image, product.button)
                                 continue
                         if click_timer.reached():
                             self.device.click(product)
@@ -177,42 +155,32 @@ class ShopBase(UI):
 
             except Refresh:
                 if not self.refreshed:
-                    confirm_timer = Timer(2, count=3).start()
-                    click_timer = Timer(1.227)
+                    click_timer = Timer(0.3)
                     while 1:
                         if skip_first_screenshot:
                             skip_first_screenshot = False
                         else:
                             self.device.screenshot()
 
-                        if (
-                                not self.refreshed
-                                and click_timer.reached()
-                                and self.appear(REFRESH, offset=(5, 5), static=False)
-                        ):
+                        if not self.refreshed \
+                                and click_timer.reached() \
+                                and self.appear(REFRESH, offset=(5, 5), interval=1, static=False):
                             x, y = REFRESH.location
                             self.device.click_minitouch(x - 80, y)
                             click_timer.reset()
-                            confirm_timer.reset()
 
-                        if (
-                                click_timer.reached()
-                                and self.appear(
-                            GRATIS_REFRESH,
-                            offset=(5, 5),
-                            threshold=0.96,
-                            static=False,
-                        )
-                                and self.appear_then_click(
-                            CONFIRM_B, offset=(5, 5), static=False
-                        )
-                        ):
+                        if click_timer.reached() \
+                                and self.appear(GRATIS_REFRESH, offset=(5, 5), threshold=0.96, interval=1, static=False) \
+                                and self.appear_then_click(CONFIRM_B, offset=(5, 5), interval=1, static=False):
                             while 1:
                                 self.device.screenshot()
-                                self.appear_then_click(
-                                    CONFIRM_B, offset=(5, 5), static=False
-                                )
-                                if SHOP_CHECK.appear_on(self.device.image):
+
+                                if click_timer.reached() \
+                                        and self.appear_then_click(CONFIRM_B, offset=(5, 5), interval=1, static=False):
+                                    click_timer.reset()
+                                    continue
+
+                                if self.appear(SHOP_CHECK, offset=5) and SHOP_CHECK.appear_on(self.device.image):
                                     break
 
                             del self.__dict__["general_shop_priority"]
@@ -222,17 +190,15 @@ class ShopBase(UI):
                             timeout.reset()
                             break
 
-                        if click_timer.reached() and self.appear_then_click(
-                                CANCEL, offset=(5, 5), interval=2, static=False
-                        ):
+                        if click_timer.reached() \
+                                and self.appear_then_click(CANCEL, offset=(5, 5), interval=2, static=False):
                             click_timer.reset()
                             while 1:
                                 self.device.screenshot()
-                                if click_timer.reached() and self.appear_then_click(
-                                        CANCEL, offset=(5, 5), static=False
-                                ):
+                                if click_timer.reached() \
+                                        and self.appear_then_click(CANCEL, offset=(5, 5), static=False):
                                     click_timer.reset()
-                                if SHOP_CHECK.appear_on(self.device.image):
+                                if self.appear(SHOP_CHECK, offset=5) and SHOP_CHECK.appear_on(self.device.image):
                                     break
                             self.refreshed = True
                             timeout.reset()
@@ -272,42 +238,6 @@ class ShopBase(UI):
 
             self.device.swipe((360, 1000), (360, 965), handle_control_check=False)
             self.device.sleep(1)
-            # if (swipe_confirm.reached() and click_timer.reached()) or flag:
-            #     products = products.delete([products.first_or_none()])
-            #     logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
-            #     if products.first_or_none() is None:
-            #         break
-            #     product = products.first_or_none().button
-            #     swipe_confirm.reset()
-            #     flag = False
-            # if skip_first_screenshot:
-            #     skip_first_screenshot = False
-            # else:
-            #     self.device.screenshot()
-            #
-            # if self.appear(PURCHASE_CHECK, offset=(5, 5), static=False):
-            #     self.p()
-            #     if products.first_or_none().timer.reached():
-            #         flag = True
-            #         continue
-            #     swipe_confirm.reset()
-            # else:
-            #     if self.appear(
-            #         product, offset=(5, 5), threshold=0.9, static=False
-            #     ) and product.match_appear_on(self.device.image, 10):
-            #         if click_timer.reached():
-            #             self.device.click(product)
-            #             click_timer.reset()
-            #     else:
-            #         if (
-            #             not swipe_confirm.reached(increase=False)
-            #             and click_timer.reached()
-            #         ):
-            #             self.device.swipe(
-            #                 (360, 1000), (360, 945), handle_control_check=False
-            #             )
-            #             self.device.sleep(1.6)
-            #             swipe_confirm.reached()
 
     def ensure_back(self, check: Button, skip_first_screenshot=True):
         confirm_timer = Timer(1, count=1).start()
@@ -318,17 +248,14 @@ class ShopBase(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(
-                    CANCEL, offset=(30, 30), interval=1, static=False
-            ):
+            if click_timer.reached() \
+                    and self.appear_then_click(CANCEL, offset=(30, 30), interval=1, static=False):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if (
-                    self.appear(check, offset=(10, 10), static=False)
-                    and confirm_timer.reached()
-            ):
+            if self.appear(check, offset=(10, 10), static=False) \
+                    and confirm_timer.reached():
                 break
 
 
@@ -377,9 +304,8 @@ class Shop(ShopBase):
         try:
             if self.config.ArenaShop_enable:
                 self.ensure_into_shop(GOTO_ARENA_SHOP, ARENA_SHOP_CHECK)
-                if self.config.ArenaShop_priority is None or not len(
-                        self.config.ArenaShop_priority.strip(" ")
-                ):
+                if self.config.ArenaShop_priority is None \
+                        or not len(self.config.ArenaShop_priority.strip(" ")):
                     raise ProductQueueIsEmpty
                 self.purchase(self.arena_shop_priority)
         except NotEnoughMoneyError:
