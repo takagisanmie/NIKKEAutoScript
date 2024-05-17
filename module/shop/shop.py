@@ -112,14 +112,14 @@ class ShopBase(UI):
             refresh=False,
             skip_first_screenshot=True,
     ):
-        timeout = Timer(1.2, 2).start()
+        timeout = Timer(2.7, 3).start()
         click_timer = Timer(0.3)
         product: Button = products.first_or_none().button
         logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
 
         while 1:
             try:
-                if timeout.reached() and not product.match_appear_on(self.device.image, threshold=10):
+                if timeout.reached():
                     timeout.reset()
                     products = products.delete([products.first_or_none()])
                     logger.attr("PENDING PRODUCT LIST", [i.name for i in products])
@@ -135,11 +135,12 @@ class ShopBase(UI):
                     self.device.screenshot()
 
                 if self.appear(PURCHASE_CHECK, offset=(5, 5), interval=0.6, static=False):
+                    timeout.reset()
                     self.p()
 
                 else:
-                    if self.appear(product, offset=(5, 5), threshold=0.9, interval=1.2, static=False) \
-                            and product.match_appear_on(self.device.image, 10):
+                    if self.appear(product, offset=(5, 5), threshold=0.9, interval=0.8, static=False) \
+                            and product.match_appear_on(self.device.image, 6):
                         if check_price and product.name != ORNAMENT.name:
                             area = _area_offset(product.button, (-50, 0, 50, 250))
                             img = self.device.image[area[1]: area[3], area[0]: area[2]]
