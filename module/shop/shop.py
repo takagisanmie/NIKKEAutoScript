@@ -238,7 +238,7 @@ class ShopBase(UI):
             if swipe_confirm.reached():
                 raise PurchaseTimeTooLong
 
-            self.device.swipe((360, 1000), (360, 965), handle_control_check=False)
+            self.device.swipe((505, 1000), (505, 965), handle_control_check=False)
             self.device.sleep(1)
 
     def ensure_back(self, check: Button, skip_first_screenshot=True):
