@@ -68,6 +68,7 @@ Event:
     option: [ 'normal','hard' ]
 Daily:
   EnhanceEquipment: false
+  CallReward: false
 Cookie:
    lip_user_name:
      value: ""

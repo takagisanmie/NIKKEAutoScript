@@ -161,6 +161,10 @@ class Daily(UI):
 
     def run(self):
         try:
+            if self.config.Daily_CallReward:
+                from module.reward.reward import Reward
+                Reward(config=self.config, device=self.device).run()
+
             if self.config.Daily_EnhanceEquipment:
                 self.ui_ensure(page_inventory)
                 self.enhance_equipment()

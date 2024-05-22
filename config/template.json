@@ -118,7 +118,8 @@
       "ServerUpdate": "04:00"
     },
     "Daily": {
-      "EnhanceEquipment": false
+      "EnhanceEquipment": false,
+      "CallReward": false
     },
     "Storage": {
       "Storage": {}

@@ -62,6 +62,7 @@ class GeneratedConfig:
 
     # Group `Daily`
     Daily_EnhanceEquipment = False
+    Daily_CallReward = False
 
     # Group `Cookie`
     Cookie_lip_user_name = None

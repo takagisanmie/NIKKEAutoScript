@@ -389,6 +389,10 @@
       "EnhanceEquipment": {
         "type": "checkbox",
         "value": false
+      },
+      "CallReward": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Storage": {

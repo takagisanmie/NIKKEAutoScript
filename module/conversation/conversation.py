@@ -84,25 +84,21 @@ class Conversation(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and COMMUNICATE_QUICKLY.match_appear_on(self.device.image,
-                                                                             threshold=6) and self.appear_then_click(
-                COMMUNICATE_QUICKLY, offset=(5, 5), interval=3
-            ):
+            if click_timer.reached() \
+                    and COMMUNICATE_QUICKLY.match_appear_on(self.device.image, threshold=6) \
+                    and self.appear_then_click(COMMUNICATE_QUICKLY, offset=5, interval=3):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            elif click_timer.reached() and COMMUNICATE.match_appear_on(self.device.image,
-                                                                       threshold=6) and self.appear_then_click(
-                COMMUNICATE, offset=(30, 30), interval=3
-            ):
+            elif click_timer.reached() \
+                    and COMMUNICATE.match_appear_on(self.device.image, threshold=6) \
+                    and self.appear_then_click(COMMUNICATE, offset=5, interval=3):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if self.appear(
-                    CONFIRM_B, offset=(5, 5), static=False
-            ):
+            if self.appear(CONFIRM_B, offset=(5, 5), static=False):
                 x, y = CONFIRM_B.location
                 self.device.click_minitouch(x - 75, y)
                 confirm_timer.reset()
@@ -118,9 +114,7 @@ class Conversation(UI):
                     and confirm_timer.reached():
                 return self.communicate()
 
-            if self.appear(
-                    AUTO_CLICK_CHECK, offset=(30, 30), interval=0.3
-            ):
+            if self.appear(AUTO_CLICK_CHECK, offset=(30, 30), interval=0.3):
                 self.device.click_minitouch(100, 100)
                 logger.info("Click %s @ %s" % (point2str(100, 100), "WAIT_TO_ANSWER"))
                 click_timer.reset()
