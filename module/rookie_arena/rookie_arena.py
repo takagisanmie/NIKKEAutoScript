@@ -127,7 +127,7 @@ class RookieArena(UI):
                 click_timer_2.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(SKIP, offset=(5, 5)):
+            if click_timer.reached() and self.appear_then_click(SKIP, offset=(5, 5), interval=1):
                 confirm_timer.reset()
                 click_timer.reset()
                 continue

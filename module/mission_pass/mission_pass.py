@@ -2,7 +2,7 @@ from module.base.timer import Timer
 from module.base.utils import point2str, _area_offset, crop
 from module.logger import logger
 from module.mission_pass.assets import *
-from module.ui.assets import PASS_CHECK, MAIN_GOTO_PASS, MAIN_CHECK
+from module.ui.assets import MAIN_GOTO_PASS, MAIN_CHECK
 from module.ui.page import page_main
 from module.ui.ui import UI
 
@@ -32,9 +32,9 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and RECEIVE.appear_on(self.device.image):
+            if click_timer.reached() and self.appear(RECEIVE, offset=(5, 5), interval=3, static=False):
                 self.device.click(RECEIVE)
-                confirm_timer.reset()
+                # confirm_timer.reset()
                 click_timer.reset()
                 continue
 
