@@ -72,7 +72,8 @@ class Daily(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(GOTO_EQUIPMENT_LIST, offset=(30, 30), interval=3):
+            if click_timer.reached() and self.appear_then_click(GOTO_EQUIPMENT_LIST, offset=(30, 30), interval=3,
+                                                                static=False):
                 click_timer.reset()
                 continue
 
