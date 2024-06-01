@@ -85,8 +85,6 @@ class Daily(UI):
                 break
 
         skip_first_screenshot = True
-        confirm_timer.limit = 5
-        confirm_timer.count = 5
         confirm_timer.reset()
         click_timer.reset()
         click_timer_2.reset()
@@ -132,7 +130,7 @@ class Daily(UI):
                 click_timer.reset()
                 continue
 
-            if confirm_timer.reached():
+            if not ENHANCE_CONFIRM.match_appear_on(self.device.image) and confirm_timer.reached():
                 if flag:
                     logger.info('already enhanced a random piece of equipment in the inventory')
                 else:
