@@ -72,5 +72,8 @@ class GeneratedConfig:
     Cookie_lip_expire_time = None
     Cookie_lip_picture_url = None
 
+    # Group `CollectionItems`
+    CollectionItems_NIKKE = 'All'  # All, Laplace, Frima, Diesel, Exia
+
     # Group `Storage`
     Storage_Storage = {}

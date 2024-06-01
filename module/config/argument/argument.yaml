@@ -70,21 +70,25 @@ Daily:
   EnhanceEquipment: false
   CallReward: false
 Cookie:
-   lip_user_name:
-     value: ""
-     valuetype: str
-   lip_uid:
-     value: ""
-     valuetype: str
-   lip_token:
-     value: ""
-     valuetype: str
-   lip_openid:
-     value: ""
-     valuetype: str
-   lip_expire_time:
-     value: ""
-     valuetype: str
-   lip_picture_url:
-     value: ""
-     valuetype: str
+  lip_user_name:
+    value: ""
+    valuetype: str
+  lip_uid:
+    value: ""
+    valuetype: str
+  lip_token:
+    value: ""
+    valuetype: str
+  lip_openid:
+    value: ""
+    valuetype: str
+  lip_expire_time:
+    value: ""
+    valuetype: str
+  lip_picture_url:
+    value: ""
+    valuetype: str
+CollectionItems:
+  NIKKE:
+    value: 'All'
+    option: [ 'All','Laplace','Frima','Diesel','Exia' ]

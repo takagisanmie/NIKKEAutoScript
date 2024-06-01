@@ -16,8 +16,8 @@ Reward:
     Enable:
       value: true
       type: lock
-    SuccessInterval: 120-240
-    FailureInterval: 120-240
+    SuccessInterval: 720-720
+    FailureInterval: 720-720
 
 Commission:
   Scheduler:

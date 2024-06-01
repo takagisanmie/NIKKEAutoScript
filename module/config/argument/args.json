@@ -124,12 +124,12 @@
       },
       "SuccessInterval": {
         "type": "input",
-        "value": "120-240",
+        "value": "720-720",
         "display": "hide"
       },
       "FailureInterval": {
         "type": "input",
-        "value": "120-240",
+        "value": "720-720",
         "display": "hide"
       },
       "ServerUpdate": {
@@ -228,6 +228,19 @@
         "type": "input",
         "value": "04:00",
         "display": "hide"
+      }
+    },
+    "CollectionItems": {
+      "NIKKE": {
+        "type": "select",
+        "value": "All",
+        "option": [
+          "All",
+          "Laplace",
+          "Frima",
+          "Diesel",
+          "Exia"
+        ]
       }
     },
     "Storage": {

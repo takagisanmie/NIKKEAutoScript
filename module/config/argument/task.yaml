@@ -19,6 +19,7 @@ Destruction:
 
 Commission:
   - Scheduler
+  - CollectionItems
 
 Mailbox:
   - Scheduler

@@ -350,3 +350,15 @@ Cookie:
   lip_picture_url:
     name: lip_picture_url
     help: ""
+CollectionItems:
+  _info:
+    name: 收藏品
+    help: ""
+  NIKKE:
+    name: NIKKE
+    help: '没做完'
+    All: '随机'
+    Laplace: '拉普拉斯'
+    Frima: '普琳玛'
+    Diesel: '迪塞尔'
+    Exia: '艾可希雅'

@@ -36,8 +36,8 @@
       "Enable": true,
       "NextRun": "1989-12-27 00:00:00",
       "Command": "Reward",
-      "SuccessInterval": "120-240",
-      "FailureInterval": "120-240",
+      "SuccessInterval": "720-720",
+      "FailureInterval": "720-720",
       "ServerUpdate": "04:00"
     },
     "Reward": {
@@ -69,6 +69,9 @@
       "SuccessInterval": "240-240",
       "FailureInterval": "120-240",
       "ServerUpdate": "04:00"
+    },
+    "CollectionItems": {
+      "NIKKE": "All"
     },
     "Storage": {
       "Storage": {}
