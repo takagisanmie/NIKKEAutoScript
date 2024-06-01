@@ -62,7 +62,7 @@ class Daily(UI):
     # enhance equipment
     def enhance_equipment(self, skip_first_screenshot=True):
         logger.hr('ENHANCE EQUIPMENT', 2)
-        confirm_timer = Timer(1, count=1).start()
+        confirm_timer = Timer(2, count=3).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(3)
 
@@ -85,8 +85,8 @@ class Daily(UI):
                 break
 
         skip_first_screenshot = True
-        confirm_timer.limit = 3
-        confirm_timer.count = 3
+        confirm_timer.limit = 5
+        confirm_timer.count = 5
         confirm_timer.reset()
         click_timer.reset()
         click_timer_2.reset()
