@@ -9,7 +9,7 @@ from module.ui.ui import UI
 
 class MissionPass(UI):
     def receive(self, button, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(2, count=2).start()
         _confirm_timer = Timer(1, count=2).start()
         click_timer = Timer(0.3)
         flag = True
@@ -32,11 +32,11 @@ class MissionPass(UI):
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(RECEIVE, offset=(5, 5), interval=3, static=False):
+            if click_timer.reached() and self.appear(RECEIVE, offset=(5, 5), interval=4, static=False):
                 self.device.click(RECEIVE)
                 # confirm_timer.reset()
-                click_timer.reset()
-                continue
+                # click_timer.reset()
+                # continue
 
             if click_timer.reached() and self.appear(RANK_UP_CHECK, offset=5, interval=1, static=False):
                 self.device.click_minitouch(1, 1)
