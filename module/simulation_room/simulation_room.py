@@ -62,7 +62,7 @@ class SimulationRoom(UI):
         return self.config.Area_EndingArea.upper()
 
     def get_next_event(self):
-        for i in ENEMY_EVENT_CHECK.match_several(self.device.image, static=False)[:3]:
+        for i in ENEMY_EVENT_CHECK.match_several(self.device.image, offset=5, threshold=0.95, static=False)[:3]:
             area = _area_offset(i.get('area'), (-45, -100, -14, -90))
             img = crop(self.device.image, area)
             if NORMAL_CHECK.match(img, threshold=0.75, static=False):
@@ -112,7 +112,7 @@ class SimulationRoom(UI):
 
     def choose_effect(self, skip_first_screenshot=True):
         logger.hr('Choose an effect', 3)
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(2, count=2).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(6)
 
