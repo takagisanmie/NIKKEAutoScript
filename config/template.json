@@ -66,8 +66,8 @@
       "Enable": false,
       "NextRun": "1989-12-27 00:00:00",
       "Command": "Commission",
-      "SuccessInterval": "240-240",
-      "FailureInterval": "120-240",
+      "SuccessInterval": "720-720",
+      "FailureInterval": "720-720",
       "ServerUpdate": "04:00"
     },
     "CollectionItems": {

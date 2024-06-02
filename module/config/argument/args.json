@@ -216,12 +216,12 @@
       },
       "SuccessInterval": {
         "type": "input",
-        "value": "240-240",
+        "value": "720-720",
         "display": "hide"
       },
       "FailureInterval": {
         "type": "input",
-        "value": "120-240",
+        "value": "720-720",
         "display": "hide"
       },
       "ServerUpdate": {
