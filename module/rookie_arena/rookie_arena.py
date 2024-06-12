@@ -26,7 +26,7 @@ class RookieArena(UI):
     @property
     def free_opportunity_remain(self) -> bool:
         result = FREE_OPPORTUNITY_CHECK.appear_on(self.device.image)
-        logger.info(f"[Free opportunity remain] {result}")
+        logger.info(f"[Free opportunities remain] {result}")
         return result
 
     @property

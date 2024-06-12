@@ -16,7 +16,7 @@ class NoItemsError(Exception):
 class Daily(UI):
     def receive(self, skip_first_screenshot=True):
         logger.hr('Reward receive', 2)
-        confirm_timer = Timer(2, count=2).start()
+        confirm_timer = Timer(2.7, count=2).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:

@@ -76,7 +76,7 @@ class Conversation(UI):
         self.ensure_wait_to_answer()
 
     def ensure_wait_to_answer(self, skip_first_screenshot=True):
-        confirm_timer = Timer(0.6, count=1).start()
+        confirm_timer = Timer(1.6, count=2).start()
         click_timer = Timer(0.9)
         while 1:
             if skip_first_screenshot:
