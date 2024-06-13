@@ -184,4 +184,4 @@ class Reward(UI):
                 self.receive_special_arena_point()
             except NoRewards:
                 self.ensure_back()
-        self.config.task_delay(success=True)
+        self.config.task_delay(server_update=True)

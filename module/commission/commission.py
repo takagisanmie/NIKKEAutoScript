@@ -42,4 +42,4 @@ class Commission(UI):
     def run(self):
         self.ui_ensure(page_commission)
         self.dispatch_and_claim()
-        self.config.task_delay(success=True)
+        self.config.task_delay(server_update=True)
