@@ -129,18 +129,18 @@ class MissionPass(UI):
                 break
 
         logger.attr('PENDING MISSION PASS', len(mp_list))
-        while 1:
-            self.device.screenshot()
-            if click_timer.reached() and self.appear(mp_list[0], offset=5):
-                self.receive(mp_list[0])
-                mp_list.remove(mp_list[0])
-                logger.attr('PENDING MISSION PASS', len(mp_list))
-                if not len(mp_list):
-                    break
+        if len(mp_list):
+            while 1:
+                self.device.screenshot()
+                if click_timer.reached() and self.appear(mp_list[0], offset=5):
+                    self.receive(mp_list[0])
+                    mp_list.remove(mp_list[0])
+                    logger.attr('PENDING MISSION PASS', len(mp_list))
+                    if not len(mp_list):
+                        break
 
-            if click_timer.reached() and self.appear_then_click(CHANGE, offset=5):
-                click_timer.reset()
-                self.confirm_transformation()
-                continue
-
+                if click_timer.reached() and self.appear_then_click(CHANGE, offset=5):
+                    click_timer.reset()
+                    self.confirm_transformation()
+                    continue
         self.config.task_delay(server_update=True)
