@@ -13,7 +13,7 @@ class NoCookie(Exception):
 
 class LIPass(UI):
     def run(self):
-        url = "https://pass.levelinfinite.com/api/rewards/proxy/lipass/Points/DailyCheckIn"
+        url = "https://api-pass.levelinfinite.com/api/rewards/proxy/lipass/Points/DailyCheckIn"
         local_now = datetime.now()
         _ = local_now.replace(hour=8, minute=0, second=0, microsecond=0)
         if local_now > _:
