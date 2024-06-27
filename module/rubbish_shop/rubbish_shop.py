@@ -66,7 +66,7 @@ class RubbishShop(ShopBase):
                 break
 
         img = crop(self.device.image, (300, 680, 450, 720))
-        result = int(re.sub("\D", "", self.ocr_models.cnocr.ocr_for_single_line(img)['text']))
+        result = int(re.sub("\D", "", self.ocr_models.cnocr.ocr(img)[0]['text']))
         logger.attr('Currency', result)
         skip_first_screenshot = True
         confirm_timer.reset()
@@ -108,5 +108,7 @@ class RubbishShop(ShopBase):
             self.ensure_back(RUBBISH_SHOP_CHECK)
         except PurchaseTimeTooLong:
             pass
+        except Exception as e:
+            logger.error(e)
         del_cached_property(self, "rubbish_shop_priority")
         self.config.task_delay(target=self.next_tuesday)
