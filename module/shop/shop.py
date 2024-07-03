@@ -157,7 +157,7 @@ class ShopBase(UI):
 
             except Refresh:
                 if not self.refreshed:
-                    click_timer = Timer(0.3)
+                    click_timer = Timer(0.6)
                     while 1:
                         if skip_first_screenshot:
                             skip_first_screenshot = False
@@ -172,8 +172,8 @@ class ShopBase(UI):
                             click_timer.reset()
 
                         if click_timer.reached() \
-                                and self.appear(GRATIS_REFRESH, offset=(5, 5), threshold=0.96, interval=1, static=False) \
-                                and self.appear_then_click(CONFIRM_B, offset=(5, 5), interval=1, static=False):
+                                and self.appear(GRATIS_REFRESH, offset=5, threshold=0.96, interval=1, static=False) \
+                                and self.appear_then_click(CONFIRM_B, offset=5, interval=1, static=False):
                             while 1:
                                 self.device.screenshot()
 
@@ -193,12 +193,12 @@ class ShopBase(UI):
                             break
 
                         if click_timer.reached() \
-                                and self.appear_then_click(CANCEL, offset=(5, 5), interval=2, static=False):
+                                and self.appear_then_click(CANCEL, offset=5, threshold=0.9, interval=2, static=False):
                             click_timer.reset()
                             while 1:
                                 self.device.screenshot()
                                 if click_timer.reached() \
-                                        and self.appear_then_click(CANCEL, offset=(5, 5), static=False):
+                                        and self.appear_then_click(CANCEL, offset=5, static=False):
                                     click_timer.reset()
                                 if self.appear(SHOP_CHECK, offset=5) and SHOP_CHECK.appear_on(self.device.image):
                                     break
