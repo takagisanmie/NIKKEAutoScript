@@ -15,7 +15,7 @@ class ChooseNextNIKKETooLong(Exception):
     pass
 
 
-class NoOpportunityRemain(Exception):
+class NoOpportunitiesRemain(Exception):
     pass
 
 
@@ -37,7 +37,7 @@ class Conversation(UI):
                                                                                           threshold=10):
             if OPPORTUNITY_B.match(self.device.image, offset=5, threshold=0.96, static=False):
                 logger.warning("There are no remaining opportunities")
-                raise NoOpportunityRemain
+                raise NoOpportunitiesRemain
 
             if not COMMUNICATE.match_appear_on(self.device.image, 10):
                 if self._confirm_timer.reached():
@@ -54,7 +54,7 @@ class Conversation(UI):
                 if CONVERSATION_CHECK.match(self.device.image, offset=5):
                     if not self.opportunity_remain:
                         logger.warning("There are no remaining opportunities")
-                        raise NoOpportunityRemain
+                        raise NoOpportunitiesRemain
                     r = [
                         i.get("area")
                         for i in FAVOURITE_CHECK.match_several(
@@ -196,7 +196,7 @@ class Conversation(UI):
                 self.communicate()
             except ChooseNextNIKKETooLong as e:
                 logger.error(e)
-            except NoOpportunityRemain as e:
+            except NoOpportunitiesRemain as e:
                 logger.error(e)
             except ConversationQueueIsEmpty as e:
                 logger.error(e)
