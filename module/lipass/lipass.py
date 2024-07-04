@@ -48,4 +48,4 @@ class LIPass(UI):
                 logger.error(e)
             self.config.task_delay(server_update=True)
         else:
-            self.config.task_delay(minute=60)
+            self.config.task_delay(target=_)
