@@ -27,16 +27,18 @@ class MissionPass(UI):
                 logger.info(
                     'Click %s @ %s' % (point2str(*_area_offset(COMPLETED_CHECK.location, (-80, 10))), 'COMPLETED')
                 )
-                interval = 2
+                interval = 4
                 confirm_timer.reset()
                 click_timer.reset()
                 continue
 
-            if click_timer.reached() and self.appear(RECEIVE, offset=(5, 5), interval=4, static=False):
-                self.device.click(RECEIVE)
-                # confirm_timer.reset()
-                # click_timer.reset()
-                # continue
+            if click_timer.reached() \
+                    and self.appear(PASS_CHECK, offset=5, interval=0.6) \
+                    and not RECEIVE.appear_on(self.device.image):
+                self.device.click_minitouch(360, 1190)
+                click_timer.reset()
+                confirm_timer.reset()
+                continue
 
             if click_timer.reached() and self.appear(RANK_UP_CHECK, offset=5, interval=1, static=False):
                 self.device.click_minitouch(1, 1)

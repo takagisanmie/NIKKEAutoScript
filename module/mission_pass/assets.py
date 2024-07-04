@@ -8,4 +8,4 @@ COMPLETED_CHECK = Button(area={'cn': (659, 389, 673, 412)}, color={'cn': (239, 2
 DOT = Button(area={'cn': (697, 169, 708, 183)}, color={'cn': (250, 126, 96)}, button={'cn': (697, 169, 708, 183)}, file={'cn': './assets/cn/mission_pass/DOT.png'})
 PASS_CHECK = Button(area={'cn': (137, 330, 181, 364)}, color={'cn': (108, 115, 120)}, button={'cn': (137, 330, 181, 364)}, file={'cn': './assets/cn/mission_pass/PASS_CHECK.png'})
 RANK_UP_CHECK = Button(area={'cn': (289, 587, 430, 617)}, color={'cn': (89, 92, 89)}, button={'cn': (289, 587, 430, 617)}, file={'cn': './assets/cn/mission_pass/RANK_UP_CHECK.png'})
-RECEIVE = Button(area={'cn': (319, 1184, 402, 1203)}, color={'cn': (154, 222, 251)}, button={'cn': (319, 1184, 402, 1203)}, file={'cn': './assets/cn/mission_pass/RECEIVE.png'})
+RECEIVE = Button(area={'cn': (318, 1182, 377, 1200)}, color={'cn': (155, 152, 152)}, button={'cn': (318, 1182, 377, 1200)}, file={'cn': './assets/cn/mission_pass/RECEIVE.png'})
