@@ -21,7 +21,7 @@ class Screenshot(DroidCast):
     @cached_property
     def screenshot_methods(self):
         return {
-            "DroidCast": self.screenshot_droidcast,
+            "DroidCast": self.screenshot_droidcast_raw,
         }
 
     @cached_property

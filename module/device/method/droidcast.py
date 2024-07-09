@@ -115,6 +115,10 @@ class DroidCast(Uiautomator2):
         """
         return f'http://127.0.0.1:{self._droidcast_port}{url}'
 
+
+    def droidcast_raw_url(self, url='/screenshot'):
+        return f'http://127.0.0.1:{self._droidcast_port}{url}?width={720}&height={1280}'
+
     def droidcast_init(self):
         logger.hr('Droidcast init')
         self.droidcast_stop()
@@ -125,10 +129,10 @@ class DroidCast(Uiautomator2):
         logger.info('Starting DroidCast apk')
         # CLASSPATH=/data/local/tmp/DroidCast.apk app_process / com.rayworks.droidcast.Main > /dev/null
         resp = self.u2_shell_background([
-            'CLASSPATH=/data/local/tmp/DroidCast.apk',
+            'CLASSPATH=/data/local/tmp/DroidCast_raw.apk',
             'app_process',
             '/',
-            'com.rayworks.droidcast.Main',
+            'ink.mol.droidcast_raw.Main',
             '>',
             '/dev/null'
         ])
@@ -158,6 +162,65 @@ class DroidCast(Uiautomator2):
                 yield proc
             if 'com.torther.droidcasts.Main' in proc.cmdline:
                 yield proc
+
+    @retry
+    def screenshot_droidcast_raw(self):
+        self.config.DROIDCAST_VERSION = 'DroidCast_raw'
+        shape = (1280, 720)
+        image = self.droidcast_session.get(self.droidcast_raw_url(), timeout=3).content
+        # DroidCast_raw returns a RGB565 bitmap
+
+        try:
+            arr = np.frombuffer(image, dtype=np.uint16)
+            arr = arr.reshape(shape)
+        except ValueError as e:
+            if len(image) < 500:
+                logger.warning(f'Unexpected screenshot: {image}')
+            # Try to load as `DroidCast`
+            image = np.frombuffer(image, np.uint8)
+            if image is not None:
+                image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+                if image is not None:
+                    raise DroidCastVersionIncompatible(
+                        'Requesting screenshots from `DroidCast_raw` but server is `DroidCast`')
+            # ValueError: cannot reshape array of size 0 into shape (720,1280)
+            raise ImageTruncated(str(e))
+
+        # Convert RGB565 to RGB888
+        # https://blog.csdn.net/happy08god/article/details/10516871
+
+        # r = (arr & 0b1111100000000000) >> (11 - 3)
+        # g = (arr & 0b0000011111100000) >> (5 - 2)
+        # b = (arr & 0b0000000000011111) << 3
+        # r |= (r & 0b11100000) >> 5
+        # g |= (g & 0b11000000) >> 6
+        # b |= (b & 0b11100000) >> 5
+        # r = r.astype(np.uint8)
+        # g = g.astype(np.uint8)
+        # b = b.astype(np.uint8)
+        # image = cv2.merge([r, g, b])
+
+        # The same as the code above but costs about 3~4ms instead of 10ms.
+        # Note that cv2.convertScaleAbs is 5x fast as cv2.multiply, cv2.add is 8x fast as cv2.convertScaleAbs
+        # Note that cv2.convertScaleAbs includes rounding
+        r = cv2.bitwise_and(arr, 0b1111100000000000)
+        r = cv2.convertScaleAbs(r, alpha=0.00390625)
+        m = cv2.convertScaleAbs(r, alpha=0.03125)
+        cv2.add(r, m, dst=r)
+
+        g = cv2.bitwise_and(arr, 0b0000011111100000)
+        g = cv2.convertScaleAbs(g, alpha=0.125)
+        m = cv2.convertScaleAbs(g, alpha=0.015625, dst=m)
+        cv2.add(g, m, dst=g)
+
+        b = cv2.bitwise_and(arr, 0b0000000000011111)
+        b = cv2.convertScaleAbs(b, alpha=8)
+        m = cv2.convertScaleAbs(b, alpha=0.03125, dst=m)
+        cv2.add(b, m, dst=b)
+
+        image = cv2.merge([r, g, b])
+
+        return image
 
     @retry
     def screenshot_droidcast(self):
