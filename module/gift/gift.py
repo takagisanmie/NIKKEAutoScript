@@ -101,7 +101,7 @@ class GiftBase(UI):
                 self.device.screenshot()
 
             if click_timer.reached() \
-                    and self.appear(GIFT, offset=(10, 10), static=False, interval=2) \
+                    and self.appear(GIFT, offset=5, static=False, interval=2) \
                     and GIFT.match_appear_on(self.device.image, threshold=10):
                 self.device.click_minitouch(*GIFT.location)
                 logger.info(
