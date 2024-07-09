@@ -222,7 +222,7 @@ class ShopBase(UI):
 
             for i in products:
                 if self.appear(i.button, offset=5, threshold=0.9, static=False) \
-                        and i.button.match_appear_on(self.device.image, 10):
+                        and i.button.match_appear_on(self.device.image, 15):
                     if click_timer.reached():
                         self.device.click(i.button)
                         img = self.device.image

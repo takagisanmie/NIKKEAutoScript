@@ -18,7 +18,7 @@ GRATIS_B = Button(area={'cn': (194, 860, 247, 903)}, color={'cn': (76, 88, 97)},
 GRATIS_REFRESH = Button(area={'cn': (379, 671, 427, 697)}, color={'cn': (69, 108, 139)}, button={'cn': (379, 671, 427, 697)}, file={'cn': './assets/cn/shop/GRATIS_REFRESH.png'})
 IRON_CODE = Button(area={'cn': (589, 707, 621, 767)}, color={'cn': (167, 123, 40)}, button={'cn': (589, 707, 621, 767)}, file={'cn': './assets/cn/shop/IRON_CODE.png'})
 MANUAL_SELECTION_BOX = Button(area={'cn': (186, 951, 243, 1001)}, color={'cn': (188, 175, 163)}, button={'cn': (186, 951, 243, 1001)}, file={'cn': './assets/cn/shop/MANUAL_SELECTION_BOX.png'})
-MAX = Button(area={'cn': (576, 782, 632, 800)}, color={'cn': (112, 112, 112)}, button={'cn': (576, 782, 632, 800)}, file={'cn': './assets/cn/shop/MAX.png'})
+MAX = Button(area={'cn': (590, 776, 618, 796)}, color={'cn': (124, 124, 124)}, button={'cn': (590, 776, 618, 796)}, file={'cn': './assets/cn/shop/MAX.png'})
 NO_MONEY = Button(area={'cn': (450, 877, 460, 911)}, color={'cn': (177, 45, 41)}, button={'cn': (450, 877, 460, 911)}, file={'cn': './assets/cn/shop/NO_MONEY.png'})
 ORNAMENT = Button(area={'cn': (386, 874, 442, 934)}, color={'cn': (135, 130, 139)}, button={'cn': (386, 874, 442, 934)}, file={'cn': './assets/cn/shop/ORNAMENT.png'})
 PURCHASE_CHECK = Button(area={'cn': (308, 211, 412, 242)}, color={'cn': (115, 167, 227)}, button={'cn': (308, 211, 412, 242)}, file={'cn': './assets/cn/shop/PURCHASE_CHECK.png'})
