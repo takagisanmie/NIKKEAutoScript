@@ -30,14 +30,7 @@ class MissionPass(UI):
                 interval = 4
                 confirm_timer.reset()
                 click_timer.reset()
-                continue
-
-            if click_timer.reached() \
-                    and self.appear(PASS_CHECK, offset=5, static=False) \
-                    and not RECEIVE.appear_on(self.device.image):
                 self.device.click_minitouch(360, 1190)
-                click_timer.reset()
-                confirm_timer.reset()
                 continue
 
             if click_timer.reached() and self.appear(RANK_UP_CHECK, offset=5, interval=1, static=False):
@@ -74,9 +67,6 @@ class MissionPass(UI):
                 break
 
     def run(self):
-        self.receive(None)
-        return
-
         self.ui_ensure(page_main)
         skip_first_screenshot = True
         click_timer = Timer(0.3)
