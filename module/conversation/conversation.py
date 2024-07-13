@@ -127,7 +127,6 @@ class Conversation(UI):
 
     def answer(self, skip_first_screenshot=True):
         click_timer = Timer(0.5)
-        answer_a_area = (82, 817, 640, 900)
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -139,9 +138,9 @@ class Conversation(UI):
                 break
 
             if click_timer.reached():
-                self.device.click_minitouch(*find_center(answer_a_area))
+                self.device.click_minitouch(*ANSWER_CHECK.location)
                 logger.info(
-                    "Click %s @ %s" % (point2str(*find_center(answer_a_area)), "ANSWER")
+                    "Click %s @ %s" % (point2str(*ANSWER_CHECK.location), "ANSWER")
                 )
                 click_timer.reset()
                 continue
