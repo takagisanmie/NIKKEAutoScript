@@ -193,7 +193,7 @@ class Uiautomator2(Connection):
         if not package_name:
             package_name = self.package
         try:
-            self.u2.app_start(package_name)
+            self.u2.app_start(package_name, use_monkey=True)
         except u2.exceptions.BaseError as e:
             # BaseError: package "com.proximabeta.nikke" not found
             logger.error(e)
