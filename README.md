@@ -15,12 +15,11 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 
 ------
 -1.可以加入qq划水群 823265807  
-0.保持在NIKKE中使用语言为简体中文，以及全高画质 ( 很重要 )  
-1.解压NKAS.7z，第一次使用时，运行updater.bat  
-2.在**\win-unpacked中，运行NikkeAutoScript.exe  
-3.在等待主程序加载完成后，在NKAS的设置中填写Serial  
-4.设置模拟器分辨率为720 * 1280 320DPI    
-5.运行调度器  
+1.https://www.bluestacks.cn/ 在此页面下载并安装 蓝叠模拟器5.20.101.6503  
+2.模拟器`显示`设置竖屏，720*1280，240DPI，`图像`设置图像渲染器为OpenGL，界面渲染器为OpenGL，`高级`打开Android调试  
+3.下载脚本和依赖，运行`updater.bat`(一般要开代理)，打开`NKAS\win-unpacked\NikkeAutoScript.exe`，在脚本设置中将`Serial`改为模拟器设置`高级 => Android调试`给出的127.0.0.1:xxxx  
+4.NIKKE画面设置如图(`光晕效果`和`颜色分级`一定要打开)，然后可以运行脚本了  
+![image](https://github.com/user-attachments/assets/5a8e340a-0736-4073-a1dc-b2d7c1fe13f0)
 
 ### 依赖相关
 
@@ -65,7 +64,5 @@ Alas的所有开发者，到现在我还是觉得Alas的源码不明觉厉
 ### 预览
 
 ------
-
-![Snipaste_2023-04-30_16-18-20.png](https://s2.loli.net/2023/04/30/zkSraMNEGgQv7iw.png)
 
 ![](https://profile-counter.glitch.me/takagisanmie-NIKKEAutoScript/count.svg)
