@@ -25,8 +25,9 @@ class RookieArenaIsUnavailable(Exception):
 class RookieArena(UI):
     @property
     def free_opportunity_remain(self) -> bool:
-        result = FREE_OPPORTUNITY_CHECK.appear_on(self.device.image)
-        logger.info(f"[Free opportunities remain] {result}")
+        result = FREE_OPPORTUNITY_CHECK.appear_on(self.device.image, 20)
+        if result:
+            logger.info(f"[Free opportunities remain] {result}")
         return result
 
     @property
@@ -115,7 +116,7 @@ class RookieArena(UI):
                     not already_start
                     and click_timer.reached()
                     and click_timer_2.reached()
-                    and FREE_OPPORTUNITY_CHECK.appear_on(self.device.image)
+                    and self.free_opportunity_remain
             ):
                 self.device.click_minitouch(580, 980)
                 logger.info(

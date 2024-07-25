@@ -182,7 +182,7 @@ class ShopBase(UI):
                                     click_timer.reset()
                                     continue
 
-                                if self.appear(SHOP_CHECK, offset=5) and SHOP_CHECK.appear_on(self.device.image):
+                                if self.appear(SHOP_CHECK, offset=5) and SHOP_CHECK.appear_on(self.device.image, 25):
                                     break
 
                             del self.__dict__["general_shop_priority"]
@@ -200,7 +200,7 @@ class ShopBase(UI):
                                 if click_timer.reached() \
                                         and self.appear_then_click(CANCEL, offset=5, static=False):
                                     click_timer.reset()
-                                if self.appear(SHOP_CHECK, offset=5) and SHOP_CHECK.appear_on(self.device.image):
+                                if self.appear(SHOP_CHECK, offset=5) and SHOP_CHECK.appear_on(self.device.image, 25):
                                     break
                             self.refreshed = True
                             timeout.reset()

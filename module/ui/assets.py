@@ -47,7 +47,7 @@ REWARD_CHECK = Button(area={'cn': (96, 307, 333, 342)}, color={'cn': (163, 165, 
 REWARD_GOTO_DESTROY = Button(area={'cn': (137, 1046, 296, 1090)}, color={'cn': (204, 237, 253)}, button={'cn': (137, 1046, 296, 1090)}, file={'cn': './assets/cn/ui/REWARD_GOTO_DESTROY.png'})
 REWARD_GOTO_MAIN = Button(area={'cn': (627, 166, 665, 203)}, color={'cn': (59, 148, 224)}, button={'cn': (627, 166, 665, 203)}, file={'cn': './assets/cn/ui/REWARD_GOTO_MAIN.png'})
 ROOKIE_ARENA_CHECK = Button(area={'cn': (199, 141, 518, 238)}, color={'cn': (90, 94, 101)}, button={'cn': (199, 141, 518, 238)}, file={'cn': './assets/cn/ui/ROOKIE_ARENA_CHECK.png'})
-SHOP_CHECK = Button(area={'cn': (20, 39, 91, 56)}, color={'cn': (132, 128, 122)}, button={'cn': (20, 39, 91, 56)}, file={'cn': './assets/cn/ui/SHOP_CHECK.png'})
+SHOP_CHECK = Button(area={'cn': (20, 39, 91, 56)}, color={'cn': (150, 147, 144)}, button={'cn': (20, 39, 91, 56)}, file={'cn': './assets/cn/ui/SHOP_CHECK.png'})
 SIMULATION_ROOM_CHECK = Button(area={'cn': (263, 602, 464, 686)}, color={'cn': (132, 136, 137)}, button={'cn': (263, 602, 464, 686)}, file={'cn': './assets/cn/ui/SIMULATION_ROOM_CHECK.png'})
 SPECIAL_ARENA_CHECK = Button(area={'cn': (204, 138, 524, 229)}, color={'cn': (87, 90, 97)}, button={'cn': (204, 138, 524, 229)}, file={'cn': './assets/cn/ui/SPECIAL_ARENA_CHECK.png'})
 SPECIAL_INTERCEPTION_CHECK = Button(area={'cn': (73, 831, 260, 862)}, color={'cn': (200, 199, 200)}, button={'cn': (73, 831, 260, 862)}, file={'cn': './assets/cn/ui/SPECIAL_INTERCEPTION_CHECK.png'})
