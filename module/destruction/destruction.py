@@ -9,7 +9,7 @@ from module.ui.ui import UI
 class Destruction(UI):
     def destroy(self, skip_first_screenshot=True):
         logger.hr('Destruction')
-        confirm_timer = Timer(1, count=3).start()
+        confirm_timer = Timer(3, count=3).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:

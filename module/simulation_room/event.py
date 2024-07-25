@@ -102,7 +102,7 @@ class EnemyEvent(EventBase):
 class HealingEvent(EventBase):
     def run(self, skip_first_screenshot=True):
         logger.hr('Start a healing event', 3)
-        confirm_timer = Timer(1, count=3).start()
+        confirm_timer = Timer(3, count=3).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -136,7 +136,7 @@ class RandomEvent(EventBase):
 
     def run(self, skip_first_screenshot=True):
         logger.hr('Start a random event', 3)
-        confirm_timer = Timer(1, count=3).start()
+        confirm_timer = Timer(2, count=3).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(5)
 
@@ -274,7 +274,7 @@ class RandomEvent(EventBase):
 class ImprovementEvent(EventBase):
     def run(self, skip_first_screenshot=True):
         logger.hr('Start an improvement event', 3)
-        confirm_timer = Timer(1, count=3).start()
+        confirm_timer = Timer(2, count=3).start()
         click_timer = Timer(0.3)
         click_timer_2 = Timer(5)
         while 1:
