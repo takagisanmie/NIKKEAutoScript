@@ -65,6 +65,9 @@ RookieArena:
 Interception:
   - Scheduler
 
+EventDaemon:
+  - Scheduler
+
 # ==================== Gift ====================
 
 DailyGift:

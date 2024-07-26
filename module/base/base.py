@@ -81,8 +81,8 @@ class ModuleBase:
 
         return appear
 
-    def appear_then_click(self, button, screenshot=False, offset=0, interval=0, threshold=None,
-                          static=True) -> bool:
+    def appear_then_click(self, button, offset=0, interval=0, threshold=None,
+                          static=True, screenshot=False) -> bool:
 
         appear = self.appear(button, offset=offset, interval=interval, threshold=threshold, static=static)
         if appear:

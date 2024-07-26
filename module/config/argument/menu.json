@@ -21,7 +21,8 @@
       "SimulationRoom",
       "TribeTower",
       "RookieArena",
-      "Interception"
+      "Interception",
+      "EventDaemon"
     ],
     "Gift": [
       "DailyGift",

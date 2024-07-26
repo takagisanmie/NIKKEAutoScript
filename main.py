@@ -245,6 +245,11 @@ class NikkeAutoScript:
 
         LIPass(config=self.config, device=self.device).run()
 
+    def event_daemon(self):
+        from module.event_daemon.event_daemon import EventDaemon
+
+        EventDaemon(config=self.config, device=self.device).run()
+
     def wait_until(self, future):
         """
         Wait until a specific time.
@@ -310,7 +315,7 @@ class NikkeAutoScript:
                     if not self.wait_until(task.next_run):
                         del self.__dict__['config']
                         continue
-                        
+
                     Returns:
                         bool: True if wait finished, False if config changed.
                 """
@@ -362,12 +367,12 @@ class NikkeAutoScript:
             self.device.click_record_clear()
             logger.hr(task, level=0)
             """
-            
+
                 https://inflection.readthedocs.io/en/latest/
-                
+
                 inflection.underscore('Restart') => 'restart'
                 inflection.underscore('DeviceType') => 'device_type'
-                
+
             """
 
             success = self.run(inflection.underscore(task))
