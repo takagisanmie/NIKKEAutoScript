@@ -163,6 +163,8 @@ class RookieArena(UI):
                 break
 
         if self.free_opportunity_remain:
+            self.device.click_record_clear()
+            self.device.stuck_record_clear()
             return self.start_competition()
 
     def ensure_into_rookie_arena(self, skip_first_screenshot=True):
