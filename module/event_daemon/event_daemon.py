@@ -38,7 +38,7 @@ class EventDaemon(UI):
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and self.appear_then_click(BATTLE_QUICKLY, 5):
+            if click_timer.reached() and self.appear_then_click(BATTLE_QUICKLY, 5, static=False):
                 click_timer.reset()
                 confirm_timer.reset()
                 timeout.reset()
@@ -50,13 +50,13 @@ class EventDaemon(UI):
                 timeout.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(FIGHT_2, 5):
+            if click_timer.reached() and self.appear_then_click(FIGHT_2, 5, static=False):
                 click_timer.reset()
                 confirm_timer.reset()
                 timeout.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(FIGHT, 5):
+            if click_timer.reached() and self.appear_then_click(FIGHT, 5, static=False):
                 click_timer.reset()
                 confirm_timer.reset()
                 timeout.reset()
