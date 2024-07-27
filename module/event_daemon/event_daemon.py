@@ -37,26 +37,28 @@ class EventDaemon(UI):
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
+                self.device.stuck_record_clear()
+                self.device.click_record_clear()
 
-            if click_timer.reached() and self.appear_then_click(BATTLE_QUICKLY, 5, static=False):
+            if click_timer.reached() and self.appear_then_click(BATTLE_QUICKLY, 5, interval=2, static=False):
                 click_timer.reset()
                 confirm_timer.reset()
                 timeout.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(MAX, 5, threshold=0.9):
+            if click_timer.reached() and self.appear_then_click(MAX, 5, interval=2, threshold=0.9):
                 click_timer.reset()
                 confirm_timer.reset()
                 timeout.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(FIGHT_2, 5, static=False):
+            if click_timer.reached() and self.appear_then_click(FIGHT_2, 5, interval=2, static=False):
                 click_timer.reset()
                 confirm_timer.reset()
                 timeout.reset()
                 continue
 
-            if click_timer.reached() and self.appear_then_click(FIGHT, 5, static=False):
+            if click_timer.reached() and self.appear_then_click(FIGHT, 5, interval=2, static=False):
                 click_timer.reset()
                 confirm_timer.reset()
                 timeout.reset()
