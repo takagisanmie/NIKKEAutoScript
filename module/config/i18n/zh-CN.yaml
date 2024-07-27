@@ -124,7 +124,7 @@ Task:
     help: ""
   EventDaemon:
     name: 半自动活动
-    help: ""
+    help: "需要手动选择关卡"
 Emulator:
   _info:
     name: 模拟器设置
