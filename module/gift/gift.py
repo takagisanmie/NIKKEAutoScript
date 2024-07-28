@@ -69,7 +69,7 @@ class GiftBase(UI):
                 raise NetworkError
 
     def receive_available_gift(self, button, check, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(3, count=2).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
@@ -87,7 +87,7 @@ class GiftBase(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(check, offset=(30, 30), static=False) and confirm_timer.reached():
+            if self.appear(check, offset=5, static=False) and confirm_timer.reached():
                 break
 
         skip_first_screenshot = True
@@ -121,11 +121,11 @@ class GiftBase(UI):
                 click_timer.reset()
                 continue
 
-            if self.appear(GOTO_BACK, offset=(30, 30), static=False) and confirm_timer.reached():
+            if self.appear(GOTO_BACK, offset=5, static=False) and confirm_timer.reached():
                 break
 
     def ensure_back(self, skip_first_screenshot=True):
-        confirm_timer = Timer(1, count=2).start()
+        confirm_timer = Timer(2, count=2).start()
         click_timer = Timer(0.3)
         while 1:
             if skip_first_screenshot:
