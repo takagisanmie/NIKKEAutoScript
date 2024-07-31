@@ -13,7 +13,7 @@ class EventDaemon(UI):
         # self.ui_goto_main()
         timeout = Timer(600, count=3).start()
         confirm_timer = Timer(2, count=3).start()
-        click_timer = Timer(0.6)
+        click_timer = Timer(0.9)
         # skip_first_screenshot = True
         # while 1:
         #     if skip_first_screenshot:
