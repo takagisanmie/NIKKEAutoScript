@@ -106,7 +106,7 @@ class Conversation(UI):
                 continue
 
             if self.appear(ANSWER_CHECK, offset=1, threshold=0.9, static=False):
-                return self.answer()
+                self.answer()
 
             elif not COMMUNICATE.match_appear_on(self.device.image, threshold=6) \
                     and self.appear(DETAIL_CHECK, offset=(5, 5), static=False) \
@@ -146,7 +146,7 @@ class Conversation(UI):
                 continue
 
         self.device.sleep(2.5)
-        return self.communicate()
+        # return self.communicate()
         # self.ensure_back()
 
     def ensure_back(self, skip_first_screenshot=True):
