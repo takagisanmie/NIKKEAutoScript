@@ -118,10 +118,10 @@ class RookieArena(UI):
                     and click_timer_2.reached()
                     and self.free_opportunity_remain
             ):
-                self.device.click_minitouch(580, 980)
+                self.device.click_minitouch(580, 1080)
                 logger.info(
                     "Click %s @ %s"
-                    % (point2str(580, 980), "START_COMPETITION")
+                    % (point2str(580, 1080), "START_COMPETITION")
                 )
                 confirm_timer.reset()
                 click_timer.reset()

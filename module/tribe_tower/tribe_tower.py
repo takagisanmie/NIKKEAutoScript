@@ -41,7 +41,7 @@ class TribeTower(UI):
             for index, i in enumerate(
                 [ELYSION_CHECK, MISSILIS_CHECK, TETRA_CHECK, PILGRIM_CHECK]
             ):
-                if self.appear(i, offset=(5, 5), threshold=0.9, static=False):
+                if self.appear(i, offset=(5, 5), threshold=0.82, static=False):
                     self.company.append(
                         {"name": i.name.split("_")[0], "button": i.location}
                     )
