@@ -3,7 +3,17 @@ from module.base.utils import (
     point2str,
     find_center,
 )
-from module.conversation.assets import *
+from module.conversation.assets import (
+    DETAIL_CHECK,
+    GIFT,
+    OPPORTUNITY,
+    OPPORTUNITY_B,
+    COMMUNICATE,
+    FAVOURITE_CHECK,
+    ANSWER_CHECK,
+    RANK_INCREASE_COMFIRM,
+    COMMUNICATE_QUICKLY,
+)
 from module.handler.assets import CONFIRM_B, AUTO_CLICK_CHECK
 from module.logger import logger
 from module.ui.assets import CONVERSATION_CHECK, GOTO_BACK
@@ -189,6 +199,9 @@ class Conversation(UI):
 
     def run(self):
         self.ui_ensure(page_conversation, confirm_wait=1)
+        for i in range(3):
+            self.device.click_minitouch(412, 445)
+            self.device.sleep(0.3)
         if self.ensure_opportunity_remain():
             self._confirm_timer.reset().start()
             try:

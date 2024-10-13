@@ -219,6 +219,11 @@ class DroidCast(Uiautomator2):
         cv2.add(b, m, dst=b)
 
         image = cv2.merge([r, g, b])
+        
+        # import time
+        # # Save raw image locally with timestamp
+        # timestamp = int(time.time())
+        # cv2.imwrite(f'./screenshots/{timestamp}.png', cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
 
         return image
 

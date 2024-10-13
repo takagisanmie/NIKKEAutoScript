@@ -1,5 +1,5 @@
 from module.base.timer import Timer
-from module.interception.assets import *
+from module.interception.assets import BATTLE, BATTLE_QUICKLY
 from module.simulation_room.assets import END_FIGHTING, AUTO_SHOOT, AUTO_BURST
 from module.ui.assets import INTERCEPTION_CHECK, SPECIAL_INTERCEPTION_CHECK
 from module.ui.page import page_interception
@@ -21,7 +21,7 @@ class Interception(UI):
                 self.device.screenshot()
 
             if click_timer.reached() and INTERCEPTION_CHECK.match(self.device.image):
-                self.device.click_minitouch(460, 990)
+                self.device.click_minitouch(372, 1043)
                 click_timer.reset()
 
             if SPECIAL_INTERCEPTION_CHECK.match(self.device.image) and confirm_timer.reached():
@@ -35,14 +35,9 @@ class Interception(UI):
         self.device.click_record_clear()
         self.device.stuck_record_clear()
 
-        if self.appear(TRAIN, offset=(5, 5)):
-            for i in range(3):
-                self.device.click_minitouch(340, 850)
-                self.device.sleep(0.3)
-        else:
-            for i in range(3):
-                self.device.click_minitouch(420, 850)
-                self.device.sleep(0.3)
+        for i in range(3):
+            self.device.click_minitouch(340, 850)
+            self.device.sleep(0.3)
 
         while 1:
             if skip_first_screenshot:
