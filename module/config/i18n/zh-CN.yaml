@@ -267,6 +267,7 @@ ArenaShop:
                 WIND_CODE: 风压代码\n
                 MANUAL_SELECTION_BOX: 代码自选箱\n
                 ORNAMENT: 简介装饰品\n
+                WEAPON: 公司武器熔炉\n
              "
 RubbishShop:
   _info:
