@@ -26,7 +26,7 @@ class InfoHandler(ModuleBase):
 
     def handle_login_reward(self):
         if CLOSE_DAILY_LOGIN.appear_on(self.device.image):
-            self.device.click_minitouch(20, 600)
+            self.device.click_minitouch(1, 420)
             return True
         # Daily Login, Memories Spring, Monthly Card, etc.
         if self.appear_text_then_click("_领取奖励", interval=5):
@@ -44,7 +44,7 @@ class InfoHandler(ModuleBase):
                 self.device.click_minitouch(x, y)
                 return True
             else:
-                self.device.click_minitouch(20, 600)
+                self.device.click_minitouch(1, 420)
 
         """
             出现登录奖励时，点击没有被覆盖的位置 

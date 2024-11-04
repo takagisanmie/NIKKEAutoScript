@@ -51,10 +51,10 @@ class Conversation(UI):
                 return
         else:
             try:
+                if not self.opportunity_remain:
+                    logger.warning("There are no remaining opportunities")
+                    raise NoOpportunitiesRemain
                 if CONVERSATION_CHECK.match(self.device.image, offset=5):
-                    if not self.opportunity_remain:
-                        logger.warning("There are no remaining opportunities")
-                        raise NoOpportunitiesRemain
                     r = [
                         i.get("area")
                         for i in FAVOURITE_CHECK.match_several(
@@ -62,7 +62,10 @@ class Conversation(UI):
                         )
                     ]
                     r.sort(key=lambda x: x[1])
-                    self.device.click_minitouch(*find_center(r[0]))
+                    if len(r) > 0:
+                        self.device.click_minitouch(*find_center(r[0]))
+                    else:
+                        self.device.click_minitouch(380, 450)
             except Exception:
                 pass
 

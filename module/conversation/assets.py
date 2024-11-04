@@ -8,7 +8,7 @@ CASE_CLOSED = Button(area={'cn': (583, 637, 686, 647)}, color={'cn': (103, 205, 
 COMMUNICATE = Button(area={'cn': (460, 1017, 559, 1064)}, color={'cn': (87, 149, 207)}, button={'cn': (460, 1017, 559, 1064)}, file={'cn': './assets/cn/conversation/COMMUNICATE.png'})
 COMMUNICATE_QUICKLY = Button(area={'cn': (472, 952, 580, 988)}, color={'cn': (254, 143, 101)}, button={'cn': (472, 952, 580, 988)}, file={'cn': './assets/cn/conversation/COMMUNICATE_QUICKLY.png'})
 DETAIL_CHECK = Button(area={'cn': (514, 1173, 621, 1197)}, color={'cn': (254, 141, 129)}, button={'cn': (514, 1173, 621, 1197)}, file={'cn': './assets/cn/conversation/DETAIL_CHECK.png'})
-FAVOURITE_CHECK = Button(area={'cn': (27, 394, 45, 499)}, color={'cn': (254, 98, 83)}, button={'cn': (27, 394, 45, 499)}, file={'cn': './assets/cn/conversation/FAVOURITE_CHECK.png'})
+FAVOURITE_CHECK = Button(area={'cn': (134, 371, 159, 400)}, color={'cn': (254, 83, 69)}, button={'cn': (134, 371, 159, 400)}, file={'cn': './assets/cn/conversation/FAVOURITE_CHECK.png'})
 GIFT = Button(area={'cn': (160, 1018, 225, 1059)}, color={'cn': (254, 177, 79)}, button={'cn': (160, 1018, 225, 1059)}, file={'cn': './assets/cn/conversation/GIFT.png'})
 OPPORTUNITY = Button(area={'cn': (83, 295, 183, 325)}, color={'cn': (70, 192, 249)}, button={'cn': (83, 295, 183, 325)}, file={'cn': './assets/cn/conversation/OPPORTUNITY.png'})
 OPPORTUNITY_B = Button(area={'cn': (506, 1068, 541, 1087)}, color={'cn': (192, 191, 194)}, button={'cn': (506, 1068, 541, 1087)}, file={'cn': './assets/cn/conversation/OPPORTUNITY_B.png'})

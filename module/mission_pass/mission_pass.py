@@ -30,6 +30,7 @@ class MissionPass(UI):
                 interval = 4
                 confirm_timer.reset()
                 click_timer.reset()
+                self.device.sleep(1)
                 self.device.click_minitouch(360, 1190)
                 continue
 
