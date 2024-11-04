@@ -23,7 +23,7 @@ FRIEND_CHECK = Button(area={'cn': (311, 147, 414, 175)}, color={'cn': (125, 174,
 FRIEND_GOTO_MAIN = Button(area={'cn': (621, 139, 661, 178)}, color={'cn': (56, 145, 223)}, button={'cn': (621, 139, 661, 178)}, file={'cn': './assets/cn/ui/FRIEND_GOTO_MAIN.png'})
 GOTO_BACK = Button(area={'cn': (29, 1193, 53, 1222)}, color={'cn': (120, 197, 235)}, button={'cn': (29, 1193, 53, 1222)}, file={'cn': './assets/cn/ui/GOTO_BACK.png'})
 GOTO_MAIN = Button(area={'cn': (181, 1194, 212, 1223)}, color={'cn': (117, 199, 239)}, button={'cn': (181, 1194, 212, 1223)}, file={'cn': './assets/cn/ui/GOTO_MAIN.png'})
-INTERCEPTION_CHECK = Button(area={'cn': (409, 662, 505, 770)}, color={'cn': (102, 72, 68)}, button={'cn': (409, 662, 505, 770)}, file={'cn': './assets/cn/ui/INTERCEPTION_CHECK.png'})
+INTERCEPTION_CHECK = Button(area={'cn': (547, 1227, 696, 1252)}, color={'cn': (86, 4, 0)}, button={'cn': (547, 1227, 696, 1252)}, file={'cn': './assets/cn/ui/INTERCEPTION_CHECK.png'})
 INVENTORY_CHECK = Button(area={'cn': (47, 114, 248, 141)}, color={'cn': (129, 130, 130)}, button={'cn': (47, 114, 248, 141)}, file={'cn': './assets/cn/ui/INVENTORY_CHECK.png'})
 MAILBOX_CHECK = Button(area={'cn': (308, 159, 411, 192)}, color={'cn': (159, 197, 240)}, button={'cn': (308, 159, 411, 192)}, file={'cn': './assets/cn/ui/MAILBOX_CHECK.png'})
 MAILBOX_GOTO_MAIN = Button(area={'cn': (625, 158, 654, 188)}, color={'cn': (77, 156, 224)}, button={'cn': (625, 158, 654, 188)}, file={'cn': './assets/cn/ui/MAILBOX_GOTO_MAIN.png'})

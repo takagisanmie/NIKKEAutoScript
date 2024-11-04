@@ -1,7 +1,6 @@
 from module.base.timer import Timer
 from module.interception.assets import *
 from module.simulation_room.assets import END_FIGHTING, AUTO_SHOOT, AUTO_BURST
-from module.ui.assets import INTERCEPTION_CHECK, SPECIAL_INTERCEPTION_CHECK
 from module.ui.page import page_interception
 from module.ui.ui import UI
 
@@ -12,21 +11,24 @@ class NoOpportunity(Exception):
 
 class Interception(UI):
     def _run(self, skip_first_screenshot=True):
-        confirm_timer = Timer(3, count=3).start()
-        click_timer = Timer(1.2)
+        confirm_timer = Timer(1.2, count=2).start()
+        click_timer = Timer(0.7)
         while 1:
             if skip_first_screenshot:
                 skip_first_screenshot = False
             else:
                 self.device.screenshot()
 
-            if click_timer.reached() and INTERCEPTION_CHECK.match(self.device.image):
-                self.device.click_minitouch(460, 990)
+            if click_timer.reached() and KRAKEN_CHECK.match(self.device.image):
+                self.device.click_minitouch(360, 1030)
                 click_timer.reset()
+                confirm_timer.reset()
 
-            if SPECIAL_INTERCEPTION_CHECK.match(self.device.image) and confirm_timer.reached():
-                if not BATTLE.match_appear_on(self.device.image, 10):
-                    raise NoOpportunity
+            elif click_timer.reached() and self.appear_then_click(KRAKEN, offset=5):
+                click_timer.reset()
+                confirm_timer.reset()
+
+            if ABNORMAL_INTERCEPTION_CHECK.match(self.device.image) and confirm_timer.reached():
                 break
 
         skip_first_screenshot = True
@@ -34,15 +36,6 @@ class Interception(UI):
         click_timer.reset()
         self.device.click_record_clear()
         self.device.stuck_record_clear()
-
-        if self.appear(TRAIN, offset=(5, 5)):
-            for i in range(3):
-                self.device.click_minitouch(340, 850)
-                self.device.sleep(0.3)
-        else:
-            for i in range(3):
-                self.device.click_minitouch(420, 850)
-                self.device.sleep(0.3)
 
         while 1:
             if skip_first_screenshot:
@@ -52,14 +45,14 @@ class Interception(UI):
 
             if click_timer.reached() \
                     and BATTLE_QUICKLY.match_appear_on(self.device.image, 10) \
-                    and self.appear_then_click(BATTLE_QUICKLY, offset=(5, 5)):
+                    and self.appear_then_click(BATTLE_QUICKLY, offset=5):
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
 
             elif click_timer.reached() \
                     and BATTLE.match_appear_on(self.device.image, 10) \
-                    and self.appear_then_click(BATTLE, offset=(5, 5)):
+                    and self.appear_then_click(BATTLE, offset=5):
                 click_timer.reset()
                 confirm_timer.reset()
                 continue
@@ -79,7 +72,7 @@ class Interception(UI):
                 confirm_timer.reset()
                 continue
 
-            if self.appear(SPECIAL_INTERCEPTION_CHECK, offset=(5, 5), interval=2) and not BATTLE.match_appear_on(
+            if self.appear(ABNORMAL_INTERCEPTION_CHECK, offset=5, interval=2) and not BATTLE.match_appear_on(
                     self.device.image, 10) and confirm_timer.reached():
                 raise NoOpportunity
 
