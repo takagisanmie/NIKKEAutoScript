@@ -1,6 +1,5 @@
 from module.base.timer import Timer
-from module.event_daemon.assets import FIGHT_2, SKIP
-from module.interception.assets import BATTLE_QUICKLY
+from module.event_daemon.assets import FIGHT_2, SKIP, BATTLE_QUICKLY
 from module.shop.assets import MAX
 from module.simulation_room.assets import END_FIGHTING, FIGHT, AUTO_SHOOT, AUTO_BURST
 from module.tribe_tower.assets import NEXT_STAGE
