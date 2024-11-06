@@ -145,7 +145,7 @@ class RookieArena(UI):
                 continue
 
             if click_timer.reached() and self.appear(
-                    END_COMPETITION, offset=(30, 30), interval=2
+                    END_COMPETITION, offset=5, interval=2
             ):
                 logger.info("Click %s @ %s" % (point2str(100, 100), "END_COMPETITION"))
                 self.device.handle_control_check(END_COMPETITION)
