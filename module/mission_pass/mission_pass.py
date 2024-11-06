@@ -30,7 +30,7 @@ class MissionPass(UI):
                 interval = 4
                 confirm_timer.reset()
                 click_timer.reset()
-                self.device.sleep(1)
+                self.device.sleep(1.27)
                 self.device.click_minitouch(360, 1190)
                 continue
 
@@ -64,7 +64,7 @@ class MissionPass(UI):
         confirm_timer = Timer(0.6, count=1).start()
         while 1:
             self.device.screenshot()
-            if self.appear(CHANGE, offset=5, threshold=0.96, static=False) and confirm_timer.reached():
+            if self.appear(CHANGE, offset=5, threshold=0.9, static=False) and confirm_timer.reached():
                 break
 
     def run(self):
